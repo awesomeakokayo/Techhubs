@@ -40,12 +40,11 @@ export function Navbar() {
   return (
     <>
       <header
-        className="sticky top-0 z-[100] h-16 border-b border-border-subtle"
-        style={{ background: 'rgba(13, 17, 23, 0.85)', backdropFilter: 'blur(16px)' }}
+        className="sticky top-0 z-[100] h-16 border-b border-border-subtle bg-surface/85 backdrop-blur-md"
       >
         <div className="container flex h-full items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2.5 no-underline">
-            <span className="font-display text-xl font-extrabold gradient-text">TSH</span>
+            <span className="font-display text-xl font-extrabold text-text-primary">TSH</span>
             <span className="hidden font-display text-sm font-semibold text-text-primary sm:inline">
               Tech Skills Hub
             </span>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import {
-  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase,
+  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock,
 } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
@@ -83,10 +83,7 @@ export function TrackPageView({ track }: { track: Track }) {
   return (
     <div className="pb-20">
       <div
-        className="border-b border-border-subtle"
-        style={{
-          background: `linear-gradient(135deg, ${track.colorHex}0D 0%, transparent 60%)`,
-        }}
+        className="border-b border-border-subtle bg-void"
       >
         <div className="container py-10">
           <Breadcrumbs
@@ -108,7 +105,10 @@ export function TrackPageView({ track }: { track: Track }) {
               <p className="mt-2 text-lg text-text-secondary">{track.tagline}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="badge badge-teal">{track.difficultyLabel}</span>
-                <span className="badge badge-purple">⏱ {track.timeEstimate}</span>
+                <span className="badge badge-purple inline-flex items-center gap-1">
+                  <Clock size={11} aria-hidden />
+                  <span>{track.timeEstimate}</span>
+                </span>
                 <span className="badge badge-blue uppercase">{track.category}</span>
               </div>
               <div className="mt-6 max-w-md" key={progressKey}>

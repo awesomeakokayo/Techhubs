@@ -28,7 +28,7 @@ export function Footer() {
               href="/"
               className="inline-flex items-center gap-2 no-underline"
             >
-              <span className="font-display text-2xl font-extrabold gradient-text">
+              <span className="font-display text-2xl font-extrabold text-text-primary">
                 TSH
               </span>
             </Link>
@@ -78,7 +78,7 @@ export function Footer() {
 
         <div className="mt-12 border-t border-border-subtle pt-8 text-center">
           <p className="text-sm text-text-secondary">
-            Built with 🤍 by awesomeakokayo © 2026
+            Built with care by awesomeakokayo © 2026
           </p>
         </div>
       </div>

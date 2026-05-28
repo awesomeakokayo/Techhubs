@@ -5,29 +5,29 @@
 @tailwind utilities;
 
 :root {
-  --bg-void: #080B10; --bg-deep: #0D1117; --bg-surface: #161B22;
-  --bg-elevated: #1C2333; --bg-overlay: #21262D;
-  --border-subtle: #21262D; --border-default: #30363D; --border-active: #388BFD;
-  --text-primary: #E6EDF3; --text-secondary: #8B949E; --text-muted: #484F58; --text-inverse: #0D1117;
-  --accent-primary: #00D4AA; --accent-primary-dim: #00A884; --accent-primary-bright: #00FFCC;
-  --accent-primary-glow: rgba(0,212,170,0.18); --accent-primary-bg: rgba(0,212,170,0.07);
-  --accent-primary-border: rgba(0,212,170,0.25);
-  --accent-secondary: #F0A500; --accent-secondary-dim: #C47D00; --accent-secondary-bg: rgba(240,165,0,0.08);
-  --accent-tertiary: #A78BFA; --accent-tertiary-dim: #7C5CDB; --accent-tertiary-bg: rgba(167,139,250,0.08);
-  --track-frontend: #61DAFB; --track-backend: #68D391; --track-fullstack: #F6AD55;
-  --track-python: #FFD43B; --track-uiux: #F687B3; --track-qa: #76E4F7;
-  --track-data: #9F7AEA; --track-datascience: #B794F4; --track-devops: #FC8181;
-  --track-cyber: #48BB78; --track-mobile: #63B3ED; --track-video: #FBB040;
-  --track-youtube: #FF4E4E; --track-marketing: #68D391; --track-ai: #00D4AA;
-  --track-nocode: #A78BFA; --track-writing: #E2C97E;
-  --color-success: #3FB950; --color-warning: #D29922; --color-error: #F85149; --color-info: #388BFD;
-  --gradient-hero: linear-gradient(135deg, #080B10 0%, #0D1117 50%, #0A1628 100%);
-  --gradient-text: linear-gradient(92deg, #00D4AA 0%, #61DAFB 45%, #A78BFA 100%);
-  --gradient-accent: linear-gradient(90deg, #00D4AA, #A78BFA);
-  --gradient-warm: linear-gradient(135deg, #F0A500, #FC8181);
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.25);
-  --shadow-raised: 0 8px 24px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
-  --shadow-glow-teal: 0 0 16px rgba(0,212,170,0.3), 0 0 48px rgba(0,212,170,0.08);
+  --bg-void: #FFFFFF; --bg-deep: #FAFAFA; --bg-surface: #FFFFFF;
+  --bg-elevated: #F4F4F5; --bg-overlay: #E4E4E7;
+  --border-subtle: #F4F4F5; --border-default: #E4E4E7; --border-active: #0F172A;
+  --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B; --text-inverse: #FFFFFF;
+  --accent-primary: #0F172A; --accent-primary-dim: #334155; --accent-primary-bright: #0F172A;
+  --accent-primary-glow: rgba(15,23,42,0.05); --accent-primary-bg: rgba(15,23,42,0.03);
+  --accent-primary-border: rgba(15,23,42,0.1);
+  --accent-secondary: #D97706; --accent-secondary-dim: #B45309; --accent-secondary-bg: rgba(217,119,6,0.05);
+  --accent-tertiary: #7C3AED; --accent-tertiary-dim: #6D28D9; --accent-tertiary-bg: rgba(124,58,237,0.05);
+  --track-frontend: #0284C7; --track-backend: #16A34A; --track-fullstack: #D97706;
+  --track-python: #CA8A04; --track-uiux: #DB2777; --track-qa: #0891B2;
+  --track-data: #7C3AED; --track-datascience: #6D28D9; --track-devops: #DC2626;
+  --track-cyber: #059669; --track-mobile: #2563EB; --track-video: #D97706;
+  --track-youtube: #DC2626; --track-marketing: #16A34A; --track-ai: #0D9488;
+  --track-nocode: #7C3AED; --track-writing: #B45309;
+  --color-success: #16A34A; --color-warning: #D97706; --color-error: #DC2626; --color-info: #2563EB;
+  --gradient-hero: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 100%);
+  --gradient-text: linear-gradient(0deg, #0F172A 0%, #0F172A 100%);
+  --gradient-accent: linear-gradient(0deg, #0F172A 0%, #0F172A 100%);
+  --gradient-warm: linear-gradient(0deg, #334155 0%, #334155 100%);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-raised: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+  --shadow-glow-teal: 0 0 0 2px rgba(15,23,42,0.1);
   --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
@@ -132,12 +132,12 @@ strong { font-weight: 600; color: var(--text-primary); }
 .progress-bar-fill { height: 100%; background: var(--gradient-accent); border-radius: var(--radius-full); transition: width 0.6s var(--ease-spring); }
 
 .bg-grid {
-  background-image: linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(15,23,42,0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(15,23,42,0.02) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 .bg-dot {
-  background-image: radial-gradient(rgba(0,212,170,0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(15,23,42,0.04) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 

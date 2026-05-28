@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Clock } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge'
@@ -39,7 +39,10 @@ export function TrackCard({ track }: TrackCardProps) {
       </div>
       <div className="mt-auto flex flex-wrap items-center gap-3 border-t border-border-subtle pt-3">
         <DifficultyBadge difficulty={track.difficulty} label={track.difficultyLabel} />
-        <span className="text-xs text-text-secondary">⏱ {track.timeEstimate}</span>
+        <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
+          <Clock size={11} className="text-text-muted animate-fade-in" aria-hidden />
+          <span>{track.timeEstimate}</span>
+        </span>
       </div>
     </Link>
   )

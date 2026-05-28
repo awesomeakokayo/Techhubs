@@ -26,7 +26,7 @@ export default function AIGuidePage() {
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'AI Guide' }]}
         />
 
-        <div className="rounded-2xl border border-border-default bg-gradient-hero p-8 md:p-12 text-center">
+        <div className="rounded-2xl border border-border-default bg-surface p-8 md:p-12 text-center">
           <div className="mx-auto flex max-w-md items-center justify-center gap-4">
             <span className="rounded-full border border-teal px-4 py-2 font-display font-semibold text-teal">You</span>
             <span className="text-2xl text-text-muted" aria-hidden>↔</span>
