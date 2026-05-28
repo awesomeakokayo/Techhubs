@@ -29,7 +29,7 @@ export const TRACKS: Track[] = [
     techStack: ["HTML", "CSS", "JavaScript", "React", "Next.js", "Tailwind"],
     overview: {
       description:
-        "Frontend developers build the visual layer of the web â€” layouts, buttons, forms, animations, and everything users interact with. You translate designs into working code using HTML, CSS, and JavaScript, then build complex interfaces using React.",
+        "Frontend developers build the visual layer of the web, layouts, buttons, forms, animations, and everything users interact with. You translate designs into working code using HTML, CSS, and JavaScript, then build complex interfaces using React.",
       whatYouCanBuild: [
         "Responsive websites",
         "Web applications",
@@ -114,7 +114,7 @@ export const TRACKS: Track[] = [
           "Verifying AI code",
         ],
         description:
-          "Use AI as a powerful assistant â€” not a replacement for understanding. Build faster without losing the ability to think.",
+          "Use AI as a powerful assistant, not a replacement for understanding. Build faster without losing the ability to think.",
       },
     ],
     resources: [
@@ -162,7 +162,7 @@ export const TRACKS: Track[] = [
         id: "fe-5",
         title: "HTML Crash Course",
         description:
-          "Traversy Media â€” perfect introduction for absolute beginners.",
+          "Traversy Media, perfect introduction for absolute beginners.",
         url: "https://www.youtube.com/watch?v=UB1O30fR-EE",
         type: "video",
         free: true,
@@ -239,7 +239,7 @@ export const TRACKS: Track[] = [
         id: "fe-13",
         title: "Tailwind CSS Docs",
         description:
-          "Official Tailwind documentation â€” the fastest way to style anything.",
+          "Official Tailwind documentation, the fastest way to style anything.",
         url: "https://tailwindcss.com/docs",
         type: "docs",
         free: true,
@@ -370,7 +370,7 @@ export const TRACKS: Track[] = [
       ],
     },
     careerTip:
-      "Build your portfolio site first â€” use it as living proof of skill. Deploy every project. Employers want live links, not just GitHub repos.",
+      "Build your portfolio site first, use it as living proof of skill. Deploy every project. Employers want live links, not just GitHub repos.",
   },
   {
     id: "backend",
@@ -394,7 +394,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "Backend developers build the server-side logic, databases, and APIs that power every application. You handle data, security, authentication, and performance â€” none of which users see, but everything depends on.",
+        "Backend developers build the server-side logic, databases, and APIs that power every application. You handle data, security, authentication, and performance, none of which users see, but everything depends on.",
       whatYouCanBuild: [
         "REST APIs",
         "Authentication systems",
@@ -491,7 +491,7 @@ export const TRACKS: Track[] = [
         id: "be-1",
         title: "CS50 Web Programming",
         description:
-          "Harvard free web course â€” Python, Django, SQL, JavaScript.",
+          "Harvard free web course, Python, Django, SQL, JavaScript.",
         url: "https://cs50.harvard.edu/web",
         type: "docs",
         free: true,
@@ -520,7 +520,7 @@ export const TRACKS: Track[] = [
         id: "be-4",
         title: "PostgreSQL Full Course",
         description:
-          "Learn PostgreSQL from scratch â€” tables, queries, joins, and more.",
+          "Learn PostgreSQL from scratch, tables, queries, joins, and more.",
         url: "https://www.youtube.com/watch?v=qw--VYLpxG4",
         type: "video",
         free: true,
@@ -550,7 +550,7 @@ export const TRACKS: Track[] = [
         id: "be-7",
         title: "Docker Full Course",
         description:
-          "Learn Docker from ground up â€” images, containers, Compose.",
+          "Learn Docker from ground up, images, containers, Compose.",
         url: "https://www.youtube.com/watch?v=fqMOX6JJhGo",
         type: "video",
         free: true,
@@ -579,7 +579,7 @@ export const TRACKS: Track[] = [
         id: "be-10",
         title: "Full Stack Open",
         description:
-          "University of Helsinki â€” Node, Express, MongoDB, GraphQL.",
+          "University of Helsinki, Node, Express, MongoDB, GraphQL.",
         url: "https://fullstackopen.com/en",
         type: "docs",
         free: true,
@@ -637,7 +637,7 @@ export const TRACKS: Track[] = [
         "Suggesting database schema improvements",
       ],
       notFor: [
-        "Security-sensitive auth logic â€” always review yourself",
+        "Security-sensitive auth logic, always review yourself",
         "Business logic requiring domain knowledge",
         "Replacing testing",
       ],
@@ -671,7 +671,7 @@ export const TRACKS: Track[] = [
     id: "fullstack",
     slug: "full-stack-development",
     name: "Full-Stack Development",
-    tagline: "Design it, build it, deploy it â€” end to end, all by yourself.",
+    tagline: "Design it, build it, deploy it, end to end, all by yourself.",
     category: "build",
     colorHex: "#F6AD55",
     icon: "Layers",
@@ -689,7 +689,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "Full-stack developers build complete applications â€” the interface, APIs, and databases. You can take a product from idea to deployed, working software entirely on your own.",
+        "Full-stack developers build complete applications, the interface, APIs, and databases. You can take a product from idea to deployed, working software entirely on your own.",
       whatYouCanBuild: [
         "Complete SaaS products",
         "E-commerce platforms",
@@ -730,7 +730,7 @@ export const TRACKS: Track[] = [
           "Authentication",
         ],
         description:
-          "Then complete the Backend Development track â€” especially REST APIs, authentication, and PostgreSQL.",
+          "Then complete the Backend Development track, especially REST APIs, authentication, and PostgreSQL.",
       },
       {
         id: 3,
@@ -863,7 +863,7 @@ export const TRACKS: Track[] = [
         id: "fs-p4",
         title: "AI Productivity App",
         description:
-          "Notes + tasks + AI summarization and scheduling â€” like Notion + AI.",
+          "Notes + tasks + AI summarization and scheduling, like Notion + AI.",
         level: "advanced",
         techTags: ["Next.js", "Groq API", "PostgreSQL", "Redis"],
       },
@@ -883,7 +883,7 @@ export const TRACKS: Track[] = [
       tools: [
         {
           name: "Cursor",
-          use: "Full AI editor â€” excellent for full-stack projects",
+          use: "Full AI editor, excellent for full-stack projects",
           url: "https://cursor.sh",
         },
         {
@@ -910,7 +910,7 @@ export const TRACKS: Track[] = [
     slug: "python-development",
     name: "Python Development",
     tagline:
-      "The most versatile language in tech â€” automation, APIs, AI, and data.",
+      "The most versatile language in tech, automation, APIs, AI, and data.",
     category: "build",
     colorHex: "#FFD43B",
     icon: "Code2",
@@ -927,7 +927,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "Python is used for backend APIs, automation, data science, and AI. It has the simplest syntax of any mainstream language â€” perfect for beginners â€” while being powerful enough for the world's largest tech companies.",
+        "Python is used for backend APIs, automation, data science, and AI. It has the simplest syntax of any mainstream language, perfect for beginners, while being powerful enough for the world's largest tech companies.",
       whatYouCanBuild: [
         "REST APIs",
         "Automation scripts",
@@ -986,7 +986,7 @@ export const TRACKS: Track[] = [
           "API documentation",
         ],
         description:
-          "Build real APIs. FastAPI is the modern choice â€” fast, typed, with beautiful automatic docs.",
+          "Build real APIs. FastAPI is the modern choice, fast, typed, with beautiful automatic docs.",
       },
       {
         id: 4,
@@ -1031,7 +1031,7 @@ export const TRACKS: Track[] = [
         id: "py-2",
         title: "Python Full Course for Beginners",
         description:
-          "4.5-hour Python beginner course â€” the best single video to start with.",
+          "4.5-hour Python beginner course, the best single video to start with.",
         url: "https://www.youtube.com/watch?v=rfscVS0vtbw",
         type: "video",
         free: true,
@@ -1070,7 +1070,7 @@ export const TRACKS: Track[] = [
         id: "py-6",
         title: "FastAPI Full Course",
         description:
-          "Complete FastAPI tutorial â€” routing, auth, databases, deployment.",
+          "Complete FastAPI tutorial, routing, auth, databases, deployment.",
         url: "https://www.youtube.com/watch?v=0sOvCWFmrtA",
         type: "video",
         free: true,
@@ -1090,7 +1090,7 @@ export const TRACKS: Track[] = [
         id: "py-8",
         title: "LangChain Python Docs",
         description:
-          "Build AI-powered apps with LangChain â€” agents, chains, and memory.",
+          "Build AI-powered apps with LangChain, agents, chains, and memory.",
         url: "https://python.langchain.com/docs/get_started/introduction",
         type: "docs",
         free: true,
@@ -1154,7 +1154,7 @@ export const TRACKS: Track[] = [
         "Refactoring messy code",
       ],
       notFor: [
-        "Understanding concepts for the first time â€” work through them yourself",
+        "Understanding concepts for the first time, work through them yourself",
         "Replacing testing",
         "Security-sensitive code without thorough review",
       ],
@@ -1177,7 +1177,7 @@ export const TRACKS: Track[] = [
       ],
     },
     careerTip:
-      "Python is a gateway language â€” it leads to backend, data, AI, and automation. Once solid at fundamentals, specialize. Pick one direction: APIs, data, or AI, and go deep.",
+      "Python is a gateway language, it leads to backend, data, AI, and automation. Once solid at fundamentals, specialize. Pick one direction: APIs, data, or AI, and go deep.",
   },
   {
     id: "uiux",
@@ -1251,7 +1251,7 @@ export const TRACKS: Track[] = [
           "Developer handoff",
         ],
         description:
-          "Figma is the industry-standard design tool. Learn it deeply â€” components, auto-layout, and interactive prototypes.",
+          "Figma is the industry-standard design tool. Learn it deeply, components, auto-layout, and interactive prototypes.",
       },
       {
         id: 4,
@@ -1296,7 +1296,7 @@ export const TRACKS: Track[] = [
         id: "ux-2",
         title: "Figma Official Tutorials",
         description:
-          "Learn Figma from its creators â€” the fastest way to get started.",
+          "Learn Figma from its creators, the fastest way to get started.",
         url: "https://help.figma.com/hc/en-us/categories/360002051613",
         type: "docs",
         free: true,
@@ -1316,7 +1316,7 @@ export const TRACKS: Track[] = [
         id: "ux-4",
         title: "Interaction Design Foundation",
         description:
-          "Comprehensive UX courses â€” many free. Strong theoretical foundation.",
+          "Comprehensive UX courses, many free. Strong theoretical foundation.",
         url: "https://www.interaction-design.org/courses",
         type: "docs",
         free: false,
@@ -1326,7 +1326,7 @@ export const TRACKS: Track[] = [
         id: "ux-5",
         title: "DesignCourse YouTube",
         description:
-          "Gary Simon's channel â€” excellent UI design tutorials and Figma walkthroughs.",
+          "Gary Simon's channel, excellent UI design tutorials and Figma walkthroughs.",
         url: "https://www.youtube.com/@DesignCourse",
         type: "video",
         free: true,
@@ -1356,7 +1356,7 @@ export const TRACKS: Track[] = [
         id: "ux-8",
         title: "Google Material Design",
         description:
-          "Google's complete design system â€” typography, components, and patterns.",
+          "Google's complete design system, typography, components, and patterns.",
         url: "https://material.io/design",
         type: "docs",
         free: true,
@@ -1423,7 +1423,7 @@ export const TRACKS: Track[] = [
         "Brainstorming component variations",
       ],
       notFor: [
-        "Making final design decisions â€” that requires human judgment and taste",
+        "Making final design decisions, that requires human judgment and taste",
         "Replacing real user research",
         "Building a consistent design system automatically",
       ],
@@ -1462,7 +1462,7 @@ export const TRACKS: Track[] = [
     slug: "qa-engineering",
     name: "QA Engineering",
     tagline:
-      "Find what breaks before users do â€” and make sure it stays fixed.",
+      "Find what breaks before users do, and make sure it stays fixed.",
     category: "grow",
     colorHex: "#76E4F7",
     icon: "Bug",
@@ -1540,7 +1540,7 @@ export const TRACKS: Track[] = [
           "Test reporting",
         ],
         description:
-          "Go beyond functional testing â€” performance, security, and integrating tests into development pipelines.",
+          "Go beyond functional testing, performance, security, and integrating tests into development pipelines.",
       },
     ],
     resources: [
@@ -1588,7 +1588,7 @@ export const TRACKS: Track[] = [
         id: "qa-5",
         title: "Cypress Full Course",
         description:
-          "Frontend test automation with Cypress â€” the most popular frontend testing tool.",
+          "Frontend test automation with Cypress, the most popular frontend testing tool.",
         url: "https://www.youtube.com/watch?v=BQqzfHQkREo",
         type: "video",
         free: true,
@@ -1598,7 +1598,7 @@ export const TRACKS: Track[] = [
         id: "qa-6",
         title: "Ministry of Testing",
         description:
-          "The premier QA community â€” articles, courses, and a global network of testers.",
+          "The premier QA community, articles, courses, and a global network of testers.",
         url: "https://www.ministryoftesting.com",
         type: "community",
         free: true,
@@ -1608,7 +1608,7 @@ export const TRACKS: Track[] = [
         id: "qa-7",
         title: "k6 Performance Testing",
         description:
-          "Load testing with k6 â€” write performance tests in JavaScript.",
+          "Load testing with k6, write performance tests in JavaScript.",
         url: "https://k6.io/docs",
         type: "docs",
         free: true,
@@ -1620,7 +1620,7 @@ export const TRACKS: Track[] = [
         id: "qa-p1",
         title: "Login Page Test Cases",
         description:
-          "Write a complete manual test case document for a login form â€” all paths.",
+          "Write a complete manual test case document for a login form, all paths.",
         level: "beginner",
         techTags: ["Manual Testing", "Documentation"],
       },
@@ -1805,7 +1805,7 @@ export const TRACKS: Track[] = [
         id: "da-3",
         title: "Pandas Full Course",
         description:
-          "Learn Python Pandas â€” loading, cleaning, transforming, and analyzing data.",
+          "Learn Python Pandas, loading, cleaning, transforming, and analyzing data.",
         url: "https://www.youtube.com/watch?v=vmEHCJofslg",
         type: "video",
         free: true,
@@ -1825,7 +1825,7 @@ export const TRACKS: Track[] = [
         id: "da-5",
         title: "Excel Full Course",
         description:
-          "Master Excel for data analysis â€” formulas, pivot tables, charts, power query.",
+          "Master Excel for data analysis, formulas, pivot tables, charts, power query.",
         url: "https://www.youtube.com/watch?v=Vl0H-qTclOg",
         type: "video",
         free: true,
@@ -1835,7 +1835,7 @@ export const TRACKS: Track[] = [
         id: "da-6",
         title: "Power BI Full Course",
         description:
-          "Complete Power BI course â€” connect data and build interactive reports.",
+          "Complete Power BI course, connect data and build interactive reports.",
         url: "https://www.youtube.com/watch?v=TmhQCQr_DCA",
         type: "video",
         free: true,
@@ -1907,7 +1907,7 @@ export const TRACKS: Track[] = [
       notFor: [
         "Interpreting business context it does not know",
         "Replacing statistical understanding",
-        "Making business decisions â€” that is your job",
+        "Making business decisions, that is your job",
       ],
       tools: [
         {
@@ -1985,7 +1985,7 @@ export const TRACKS: Track[] = [
           "Data visualization",
         ],
         description:
-          "Data Science builds on Data Analysis. Complete that track first â€” especially Python, Pandas, and statistics.",
+          "Data Science builds on Data Analysis. Complete that track first, especially Python, Pandas, and statistics.",
       },
       {
         id: 2,
@@ -2097,7 +2097,7 @@ export const TRACKS: Track[] = [
         id: "ds-6",
         title: "PyTorch Official Tutorials",
         description:
-          "Official PyTorch tutorials â€” the industry-standard deep learning framework.",
+          "Official PyTorch tutorials, the industry-standard deep learning framework.",
         url: "https://pytorch.org/tutorials",
         type: "docs",
         free: true,
@@ -2156,7 +2156,7 @@ export const TRACKS: Track[] = [
         "Explaining statistical concepts",
       ],
       notFor: [
-        "Replacing mathematical understanding â€” you must grasp why models work",
+        "Replacing mathematical understanding, you must grasp why models work",
         "Validating results without your own analysis",
       ],
       tools: [
@@ -2289,7 +2289,7 @@ export const TRACKS: Track[] = [
         id: "dv-1",
         title: "Linux Full Course",
         description:
-          "Complete Linux course â€” command line, file system, processes, and scripting.",
+          "Complete Linux course, command line, file system, processes, and scripting.",
         url: "https://www.youtube.com/watch?v=j5Zsa_eOXeY",
         type: "video",
         free: true,
@@ -2299,7 +2299,7 @@ export const TRACKS: Track[] = [
         id: "dv-2",
         title: "Docker Full Course",
         description:
-          "Learn Docker from the ground up â€” images, containers, volumes, Compose.",
+          "Learn Docker from the ground up, images, containers, volumes, Compose.",
         url: "https://www.youtube.com/watch?v=fqMOX6JJhGo",
         type: "video",
         free: true,
@@ -2329,7 +2329,7 @@ export const TRACKS: Track[] = [
         id: "dv-5",
         title: "TechWorld with Nana",
         description:
-          "The best DevOps YouTube channel â€” Docker, Kubernetes, CI/CD, cloud.",
+          "The best DevOps YouTube channel, Docker, Kubernetes, CI/CD, cloud.",
         url: "https://www.youtube.com/@TechWorldwithNana",
         type: "video",
         free: true,
@@ -2339,7 +2339,7 @@ export const TRACKS: Track[] = [
         id: "dv-6",
         title: "Terraform Learn",
         description:
-          "HashiCorp's official Terraform learning platform â€” Infrastructure as Code.",
+          "HashiCorp's official Terraform learning platform, Infrastructure as Code.",
         url: "https://learn.hashicorp.com/terraform",
         type: "docs",
         free: true,
@@ -2411,7 +2411,7 @@ export const TRACKS: Track[] = [
       ],
     },
     careerTip:
-      "Get the AWS Cloud Practitioner certification while learning â€” it is free to study for and validates foundational knowledge. Then aim for AWS Solutions Architect Associate.",
+      "Get the AWS Cloud Practitioner certification while learning, it is free to study for and validates foundational knowledge. Then aim for AWS Solutions Architect Associate.",
   },
   {
     id: "cyber",
@@ -2475,7 +2475,7 @@ export const TRACKS: Track[] = [
           "OWASP Top 10",
         ],
         description:
-          "Learn the language of security â€” attacks, defenses, and the frameworks professionals use.",
+          "Learn the language of security, attacks, defenses, and the frameworks professionals use.",
       },
       {
         id: 3,
@@ -2627,7 +2627,7 @@ export const TRACKS: Track[] = [
       ],
     },
     careerTip:
-      "Certifications matter more in cybersecurity than any other tech track. Aim for CompTIA Security+ first â€” it is widely recognized and achievable for beginners.",
+      "Certifications matter more in cybersecurity than any other tech track. Aim for CompTIA Security+ first, it is widely recognized and achievable for beginners.",
   },
   {
     id: "mobile",
@@ -2650,7 +2650,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "Mobile developers build apps for Android and iOS. React Native (JavaScript/TypeScript) and Flutter (Dart) are the two most popular cross-platform frameworks â€” write once, deploy to both platforms.",
+        "Mobile developers build apps for Android and iOS. React Native (JavaScript/TypeScript) and Flutter (Dart) are the two most popular cross-platform frameworks, write once, deploy to both platforms.",
       whatYouCanBuild: [
         "Chat apps",
         "Finance trackers",
@@ -2691,7 +2691,7 @@ export const TRACKS: Track[] = [
           "Device APIs: camera, location",
         ],
         description:
-          "Build your first real screens. Mobile development feels different from web â€” learn the patterns that make apps feel native.",
+          "Build your first real screens. Mobile development feels different from web, learn the patterns that make apps feel native.",
       },
       {
         id: 3,
@@ -2725,7 +2725,7 @@ export const TRACKS: Track[] = [
         id: "mob-1",
         title: "React Native Official Docs",
         description:
-          "The complete React Native documentation â€” components, APIs, and guides.",
+          "The complete React Native documentation, components, APIs, and guides.",
         url: "https://reactnative.dev/docs/getting-started",
         type: "docs",
         free: true,
@@ -2745,7 +2745,7 @@ export const TRACKS: Track[] = [
         id: "mob-3",
         title: "React Native Full Course",
         description:
-          "Complete React Native course by freeCodeCamp â€” components to deployment.",
+          "Complete React Native course by freeCodeCamp, components to deployment.",
         url: "https://www.youtube.com/watch?v=0-S5a0eXPoc",
         type: "video",
         free: true,
@@ -2765,7 +2765,7 @@ export const TRACKS: Track[] = [
         id: "mob-5",
         title: "Flutter Full Course",
         description:
-          "Complete Flutter course from zero â€” widgets, navigation, Firebase, deployment.",
+          "Complete Flutter course from zero, widgets, navigation, Firebase, deployment.",
         url: "https://www.youtube.com/watch?v=VPvVD8t02U8",
         type: "video",
         free: true,
@@ -2824,7 +2824,7 @@ export const TRACKS: Track[] = [
         "Debugging Firebase integration issues",
       ],
       notFor: [
-        "Device-specific behavior testing â€” you need physical devices",
+        "Device-specific behavior testing, you need physical devices",
         "App Store review policy decisions",
       ],
       tools: [
@@ -2946,7 +2946,7 @@ export const TRACKS: Track[] = [
       },
       {
         id: "vid-2",
-        title: "Casey Faris â€” DaVinci Resolve",
+        title: "Casey Faris, DaVinci Resolve",
         description:
           "Best DaVinci Resolve YouTube channel. Clear tutorials for all levels.",
         url: "https://www.youtube.com/@CaseyFaris",
@@ -2958,7 +2958,7 @@ export const TRACKS: Track[] = [
         id: "vid-3",
         title: "Adobe Premiere Pro Tutorials",
         description:
-          "Official Adobe tutorials for Premiere Pro â€” industry standard for professional editing.",
+          "Official Adobe tutorials for Premiere Pro, industry standard for professional editing.",
         url: "https://helpx.adobe.com/premiere-pro/tutorials.html",
         type: "docs",
         free: false,
@@ -2976,7 +2976,7 @@ export const TRACKS: Track[] = [
       },
       {
         id: "vid-5",
-        title: "Pexels â€” Free Stock Video",
+        title: "Pexels, Free Stock Video",
         description:
           "High-quality free stock video for practice projects and B-roll.",
         url: "https://www.pexels.com",
@@ -3029,7 +3029,7 @@ export const TRACKS: Track[] = [
         "Suggesting pacing and structure improvements",
       ],
       notFor: [
-        "Making creative editing decisions â€” that requires human taste",
+        "Making creative editing decisions, that requires human taste",
         "Replacing the craft of storytelling",
       ],
       tools: [
@@ -3071,7 +3071,7 @@ export const TRACKS: Track[] = [
     techStack: ["Canva", "ElevenLabs", "CapCut", "vidIQ", "TubeBuddy"],
     overview: {
       description:
-        "YouTube automation is building channels that produce video content systematically â€” using scripts, AI voices, stock footage, and editors â€” without being on camera. It is a content business model as much as a skill.",
+        "YouTube automation is building channels that produce video content systematically, using scripts, AI voices, stock footage, and editors, without being on camera. It is a content business model as much as a skill.",
       whatYouCanBuild: [
         "Faceless YouTube channels",
         "Niche content businesses",
@@ -3165,7 +3165,7 @@ export const TRACKS: Track[] = [
         id: "yt-3",
         title: "Canva",
         description:
-          "Design thumbnails, channel art, and graphics â€” free plan is sufficient to start.",
+          "Design thumbnails, channel art, and graphics, free plan is sufficient to start.",
         url: "https://www.canva.com",
         type: "tool",
         free: true,
@@ -3185,7 +3185,7 @@ export const TRACKS: Track[] = [
         id: "yt-5",
         title: "TubeBuddy",
         description:
-          "YouTube channel growth tool â€” keyword research, A/B thumbnail testing.",
+          "YouTube channel growth tool, keyword research, A/B thumbnail testing.",
         url: "https://tubebuddy.com",
         type: "tool",
         free: true,
@@ -3286,7 +3286,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "Digital marketers promote products and services through online channels. It is a broad field with many specializations â€” SEO, paid ads, email marketing, social media, and content. Every business needs it.",
+        "Digital marketers promote products and services through online channels. It is a broad field with many specializations, SEO, paid ads, email marketing, social media, and content. Every business needs it.",
       whatYouCanBuild: [
         "SEO content strategies",
         "Paid ad campaigns",
@@ -3330,7 +3330,7 @@ export const TRACKS: Track[] = [
           "Copywriting basics",
         ],
         description:
-          "Master the organic channels first â€” SEO and content marketing compound over time and cost nothing but effort.",
+          "Master the organic channels first, SEO and content marketing compound over time and cost nothing but effort.",
       },
       {
         id: 3,
@@ -3482,7 +3482,7 @@ export const TRACKS: Track[] = [
       ],
     },
     careerTip:
-      "Get Google's free Digital Marketing certification first â€” it validates baseline knowledge. Then specialize: SEO is the highest long-term value marketing skill.",
+      "Get Google's free Digital Marketing certification first, it validates baseline knowledge. Then specialize: SEO is the highest long-term value marketing skill.",
   },
   {
     id: "ai",
@@ -3506,7 +3506,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "AI tools are now part of every professional workflow. This track teaches you to use them intelligently â€” as tools that amplify your thinking, not replace it. It applies to every other track in this hub.",
+        "AI tools are now part of every professional workflow. This track teaches you to use them intelligently, as tools that amplify your thinking, not replace it. It applies to every other track in this hub.",
       whatYouCanBuild: [
         "AI-assisted workflows",
         "Custom prompt libraries",
@@ -3533,7 +3533,7 @@ export const TRACKS: Track[] = [
           "Hallucinations and fact-checking",
         ],
         description:
-          "Before using AI effectively, you must understand what it is â€” and critically, what it cannot do.",
+          "Before using AI effectively, you must understand what it is, and critically, what it cannot do.",
       },
       {
         id: 2,
@@ -3619,7 +3619,7 @@ export const TRACKS: Track[] = [
       },
       {
         id: "ai-5",
-        title: "Neural Networks â€” 3Blue1Brown",
+        title: "Neural Networks, 3Blue1Brown",
         description:
           "Visual, intuitive explanation of how neural networks learn. Beautiful and clear.",
         url: "https://www.youtube.com/watch?v=aircAruvnKk",
@@ -3631,7 +3631,7 @@ export const TRACKS: Track[] = [
         id: "ai-6",
         title: "fast.ai Practical Data Ethics",
         description:
-          "Think critically about AI â€” bias, fairness, safety, and ethics.",
+          "Think critically about AI, bias, fairness, safety, and ethics.",
         url: "https://ethics.fast.ai",
         type: "docs",
         free: true,
@@ -3665,7 +3665,7 @@ export const TRACKS: Track[] = [
       },
     ],
     aiGuide: {
-      goodFor: ["Everything in this track â€” AI teaches you to use AI"],
+      goodFor: ["Everything in this track, AI teaches you to use AI"],
       notFor: [
         "This is the one track where the entire point is learning AI tools",
       ],
@@ -3707,7 +3707,7 @@ export const TRACKS: Track[] = [
       ],
     },
     careerTip:
-      "The professionals thriving with AI use it to go deeper, not shallower. Use AI to understand things faster â€” then push further on your own. That combination is unbeatable.",
+      "The professionals thriving with AI use it to go deeper, not shallower. Use AI to understand things faster, then push further on your own. That combination is unbeatable.",
   },
   {
     id: "nocode",
@@ -3764,7 +3764,7 @@ export const TRACKS: Track[] = [
           "Logic and workflows",
         ],
         description:
-          "Build functional applications with user accounts, databases, and business logic â€” all without code.",
+          "Build functional applications with user accounts, databases, and business logic, all without code.",
       },
       {
         id: 3,
@@ -3865,7 +3865,7 @@ export const TRACKS: Track[] = [
         "Planning data structure for your app",
       ],
       notFor: [
-        "This track is about visual building â€” AI keeps you focused on the tools",
+        "This track is about visual building, AI keeps you focused on the tools",
       ],
       tools: [
         {
@@ -3875,12 +3875,12 @@ export const TRACKS: Track[] = [
         },
       ],
       samplePrompts: [
-        "I am building a membership platform in Bubble for freelance designers. Design the database schema â€” what tables, fields, and relationships do I need?",
+        "I am building a membership platform in Bubble for freelance designers. Design the database schema, what tables, fields, and relationships do I need?",
         "Write homepage copy for a freelance web design studio: hero headline, subheadline, 3 service descriptions, testimonial placeholder, and CTA.",
       ],
     },
     careerTip:
-      "No-code is a multiplier. Add basic HTML/CSS and SQL knowledge and you can break out of tool limitations when needed â€” and charge significantly more.",
+      "No-code is a multiplier. Add basic HTML/CSS and SQL knowledge and you can break out of tool limitations when needed, and charge significantly more.",
   },
   {
     id: "writing",
@@ -3904,7 +3904,7 @@ export const TRACKS: Track[] = [
     ],
     overview: {
       description:
-        "Technical writers create documentation that makes complex systems understandable â€” API docs, user guides, tutorials, and changelogs. If you can write clearly about technical things, you are in demand.",
+        "Technical writers create documentation that makes complex systems understandable, API docs, user guides, tutorials, and changelogs. If you can write clearly about technical things, you are in demand.",
       whatYouCanBuild: [
         "API documentation",
         "User manuals and guides",
@@ -3933,7 +3933,7 @@ export const TRACKS: Track[] = [
           "Tone and consistency",
         ],
         description:
-          "Good technical writing is not about big vocabulary â€” it is about clarity. Say complex things simply.",
+          "Good technical writing is not about big vocabulary, it is about clarity. Say complex things simply.",
       },
       {
         id: 2,
@@ -4011,7 +4011,7 @@ export const TRACKS: Track[] = [
         id: "tw-4",
         title: "Markdown Guide",
         description:
-          "Complete reference for Markdown syntax â€” the format of most technical documentation.",
+          "Complete reference for Markdown syntax, the format of most technical documentation.",
         url: "https://www.markdownguide.org/cheat-sheet",
         type: "docs",
         free: true,
@@ -4023,7 +4023,7 @@ export const TRACKS: Track[] = [
         id: "tw-p1",
         title: "API Documentation",
         description:
-          "Document a public API or one you built â€” endpoints, parameters, responses, errors.",
+          "Document a public API or one you built, endpoints, parameters, responses, errors.",
         level: "beginner",
         techTags: ["Markdown", "ReadMe", "APIs"],
       },
