@@ -1,4 +1,5 @@
 import { ResourcesClient } from './ResourcesClient'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 export const metadata = {
   title: 'Resources | Tech Skills Learning Hub',
@@ -6,5 +7,10 @@ export const metadata = {
 }
 
 export default function ResourcesPage() {
-  return <ResourcesClient />
+  return (
+    <>
+      <PageViewTracker path="/resources" eventName="resources_page_open" />
+      <ResourcesClient />
+    </>
+  )
 }

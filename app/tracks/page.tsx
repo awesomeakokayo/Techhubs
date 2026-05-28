@@ -6,6 +6,7 @@ import { TRACKS, TrackCategory } from '@/lib/tracks'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
 import { TrackCardLarge } from '@/components/tracks/TrackCardLarge'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 const CATEGORY_OPTIONS = [
   { id: 'all', label: 'All' },
@@ -45,6 +46,7 @@ export default function TracksPage() {
   return (
     <div className="section pt-28">
       <div className="container">
+        <PageViewTracker path="/tracks" eventName="tracks_page_open" />
         <PageHeader
           title="All Learning Tracks"
           subtitle="17 paths from beginner to professional."

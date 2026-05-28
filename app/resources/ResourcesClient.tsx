@@ -1,11 +1,13 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { TRACKS, ResourceType } from '@/lib/tracks'
 import { FEATURED_RESOURCES } from '@/lib/site-content'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
 import { ResourceItem } from '@/components/tracks/ResourceItem'
+import { TrackedLink } from '@/components/ui/tracked-link'
+import { trackEvent, trackSearch } from '@/lib/analytics'
 
 function filterByQuery(
   items: typeof allResources,
@@ -56,6 +58,16 @@ export function ResourcesClient() {
     return filterByQuery(byFilters, query)
   }, [query, trackFilter, typeFilter])
 
+  useEffect(() => {
+    if (!query.trim()) return
+    trackSearch({
+      path: '/resources',
+      query_length: query.trim().length,
+      result_count: filtered.length,
+      search_category: typeFilter,
+    })
+  }, [query, filtered.length, typeFilter])
+
   return (
     <div className="section pt-28">
       <div className="container">
@@ -69,16 +81,17 @@ export function ResourcesClient() {
           <h2 className="font-display text-xl font-bold">Featured — Essential 10</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURED_RESOURCES.map((r) => (
-              <a
+              <TrackedLink
                 key={r.url}
                 href={r.url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="card border-teal/30 bg-teal/5 no-underline hover:border-teal"
+                path="/resources"
+                resourceTitle={r.title}
+                resourceType="featured"
               >
                 <h3 className="font-display font-semibold text-teal">{r.title}</h3>
                 <p className="mt-1 text-sm text-text-secondary">{r.description}</p>
-              </a>
+              </TrackedLink>
             ))}
           </div>
         </section>
@@ -99,14 +112,20 @@ export function ResourcesClient() {
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={() => setView('cards')}
+              onClick={() => {
+                setView('cards')
+                trackEvent({ event_name: 'resources_view_mode_change', path: '/resources', search_category: 'cards' })
+              }}
               className={`min-h-[44px] rounded-full px-4 text-xs font-mono uppercase ${view === 'cards' ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'}`}
             >
               Cards
             </button>
             <button
               type="button"
-              onClick={() => setView('table')}
+              onClick={() => {
+                setView('table')
+                trackEvent({ event_name: 'resources_view_mode_change', path: '/resources', search_category: 'table' })
+              }}
               className={`min-h-[44px] rounded-full px-4 text-xs font-mono uppercase ${view === 'table' ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'}`}
             >
               Table
@@ -141,9 +160,16 @@ export function ResourcesClient() {
                       </span>
                     </td>
                     <td className="p-4">
-                      <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-teal hover:underline">
+                      <TrackedLink
+                        href={r.url}
+                        className="text-teal hover:underline"
+                        path="/resources"
+                        trackSlug={r.trackId}
+                        resourceTitle={r.title}
+                        resourceType={r.type}
+                      >
                         Open ↗
-                      </a>
+                      </TrackedLink>
                     </td>
                   </tr>
                 ))}
@@ -153,7 +179,7 @@ export function ResourcesClient() {
         ) : (
           <div className="mt-6 space-y-3">
             {filtered.map((r) => (
-              <ResourceItem key={r.id} resource={r} />
+              <ResourceItem key={r.id} resource={r} trackSlug={r.trackId} path="/resources" />
             ))}
           </div>
         )}

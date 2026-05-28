@@ -15,6 +15,7 @@ import { PromptCard } from './PromptCard'
 import { getTrackPercent, startTrack, getTrackProgress } from '@/lib/progress'
 import { WHO_IS_FOR } from '@/lib/site-content'
 import type { ResourceType } from '@/lib/tracks'
+import { trackEvent } from '@/lib/analytics'
 
 const SECTIONS = [
   { id: 'overview', label: 'Overview', icon: LayoutList },
@@ -45,7 +46,12 @@ export function TrackPageView({ track }: { track: Track }) {
 
   useEffect(() => {
     startTrack(track.id)
-  }, [track.id])
+    trackEvent({
+      event_name: 'track_page_open',
+      track_slug: track.slug,
+      path: `/tracks/${track.slug}`,
+    })
+  }, [track.id, track.slug])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -209,6 +215,13 @@ export function TrackPageView({ track }: { track: Track }) {
                   key={tab.id}
                   type="button"
                   onClick={() => setResourceTab(tab.id)}
+                  onClickCapture={() =>
+                    trackEvent({
+                      event_name: 'resource_tab_change',
+                      track_slug: track.slug,
+                      resource_type: String(tab.id),
+                    })
+                  }
                   className={`min-h-[44px] rounded-full px-4 py-2 text-xs font-mono uppercase tracking-wider ${
                     resourceTab === tab.id
                       ? 'bg-teal text-text-inverse'
@@ -221,7 +234,12 @@ export function TrackPageView({ track }: { track: Track }) {
             </div>
             <div className="mt-6 space-y-3">
               {filteredResources.map((r) => (
-                <ResourceItem key={r.id} resource={r} />
+                <ResourceItem
+                  key={r.id}
+                  resource={r}
+                  trackSlug={track.slug}
+                  path={`/tracks/${track.slug}`}
+                />
               ))}
             </div>
           </section>
@@ -239,6 +257,7 @@ export function TrackPageView({ track }: { track: Track }) {
                       <ProjectCard
                         key={p.id}
                         trackId={track.id}
+                        trackSlug={track.slug}
                         project={p}
                         index={i}
                         onProgressChange={refresh}
@@ -284,6 +303,15 @@ export function TrackPageView({ track }: { track: Track }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="card no-underline hover:border-teal/40"
+                    onClick={() =>
+                      trackEvent({
+                        event_name: 'outbound_resource_click',
+                        track_slug: track.slug,
+                        resource_title: tool.name,
+                        resource_type: 'tool',
+                        outbound_url: tool.url,
+                      })
+                    }
                   >
                     <h4 className="font-medium text-teal">{tool.name}</h4>
                     <p className="mt-1 text-sm text-text-secondary">{tool.use}</p>

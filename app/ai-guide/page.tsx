@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
 import { PageHeader } from '@/components/ui/PageHeader'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { TrackedLink } from '@/components/ui/tracked-link'
 import {
   AI_PHILOSOPHY,
   PROMPT_TIPS,
@@ -17,6 +19,7 @@ export default function AIGuidePage() {
   return (
     <div className="section pt-28">
       <div className="container">
+        <PageViewTracker path="/ai-guide" eventName="ai_guide_page_open" />
         <PageHeader
           title="Use AI Like a Pro"
           subtitle="Not as a shortcut. As a thinking partner."
@@ -112,16 +115,17 @@ export default function AIGuidePage() {
           <h2 className="font-display text-2xl font-bold">Tools Directory</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {AI_TOOLS_GLOBAL.map((tool) => (
-              <a
+              <TrackedLink
                 key={tool.name}
                 href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="card no-underline hover:border-teal/40"
+                path="/ai-guide"
+                resourceTitle={tool.name}
+                resourceType="tool"
               >
                 <h3 className="font-display font-semibold text-teal">{tool.name}</h3>
                 <p className="mt-1 text-sm text-text-secondary">{tool.use}</p>
-              </a>
+              </TrackedLink>
             ))}
           </div>
         </section>

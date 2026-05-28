@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
 import { Stage } from '@/lib/tracks'
 import { toggleStage, getTrackProgress } from '@/lib/progress'
+import { trackEvent, trackRoadmapCompletion } from '@/lib/analytics'
 
 interface RoadmapTimelineProps {
   trackId: string
@@ -17,7 +18,25 @@ export function RoadmapTimeline({ trackId, stages, colorHex, onProgressChange }:
   const progress = getTrackProgress(trackId)
 
   const handleToggle = (stageId: number) => {
+    const stage = stages.find((s) => s.id === stageId)
+    const isCompleted = progress.completedStages.includes(stageId)
     toggleStage(trackId, stageId, stages.length)
+    if (!isCompleted) {
+      trackEvent({
+        event_name: 'stage_complete',
+        track_slug: trackId,
+        roadmap_stage: stage ? stage.title : `Stage ${stageId}`,
+      })
+      trackEvent({
+        event_name: 'roadmap_stage_complete',
+        track_slug: trackId,
+        roadmap_stage: stage ? stage.title : `Stage ${stageId}`,
+      })
+      trackRoadmapCompletion({
+        track_slug: trackId,
+        roadmap_stage: stage ? stage.title : `Stage ${stageId}`,
+      })
+    }
     onProgressChange?.()
   }
 
@@ -75,7 +94,21 @@ export function RoadmapTimeline({ trackId, stages, colorHex, onProgressChange }:
                 </div>
                 <button
                   type="button"
-                  onClick={() => setExpanded(isExpanded ? null : stage.id)}
+                  onClick={() => {
+                    setExpanded(isExpanded ? null : stage.id)
+                    trackEvent({
+                      event_name: isExpanded ? 'stage_close' : 'stage_open',
+                      track_slug: trackId,
+                      roadmap_stage: stage.title,
+                    })
+                    if (!isExpanded) {
+                      trackEvent({
+                        event_name: 'roadmap_stage_expand',
+                        track_slug: trackId,
+                        roadmap_stage: stage.title,
+                      })
+                    }
+                  }}
                   className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-text-secondary hover:text-teal"
                   aria-expanded={isExpanded}
                   aria-label={isExpanded ? 'Collapse stage' : 'Expand stage'}

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TRACKS } from '@/lib/tracks'
 import { saveQuizResult } from '@/lib/progress'
+import { trackEvent, trackQuizCompletion } from '@/lib/analytics'
 
 const QUESTIONS = [
   {
@@ -41,8 +42,13 @@ export function TrackQuiz() {
   const [step, setStep] = useState(0)
   const [scores, setScores] = useState<Record<string, number>>({})
   const [done, setDone] = useState(false)
+  const [started, setStarted] = useState(false)
 
   const pick = (optionScores: Record<string, number | undefined>) => {
+    if (!started) {
+      setStarted(true)
+      trackEvent({ event_name: 'quiz_started', path: '/start-here' })
+    }
     const next = { ...scores }
     Object.entries(optionScores).forEach(([k, v]) => {
       if (v) next[k] = (next[k] ?? 0) + v
@@ -56,6 +62,8 @@ export function TrackQuiz() {
         .slice(0, 3)
         .map(([id]) => id)
       saveQuizResult(top)
+      trackQuizCompletion(top, '/start-here')
+      trackEvent({ event_name: 'recommended_tracks_generated', path: '/start-here', quiz_result: top })
     }
   }
 

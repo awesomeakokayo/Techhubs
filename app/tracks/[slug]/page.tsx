@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { getTrackBySlug, getTrackSlugs } from '@/lib/tracks'
 import { TrackPageView } from '@/components/tracks/TrackPageView'
 import type { Metadata } from 'next'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 interface Props {
   params: { slug: string }
@@ -23,5 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function TrackPage({ params }: Props) {
   const track = getTrackBySlug(params.slug)
   if (!track) notFound()
-  return <TrackPageView track={track} />
+  return (
+    <>
+      <PageViewTracker path={`/tracks/${track.slug}`} eventName="track_page_open" />
+      <TrackPageView track={track} />
+    </>
+  )
 }

@@ -3,11 +3,14 @@ import { ExternalLink, ArrowRight } from 'lucide-react'
 import { ROADMAPS } from '@/lib/roadmaps'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { AnimateIn } from '@/components/ui/AnimateIn'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { TrackedLink } from '@/components/ui/tracked-link'
 
 export default function RoadmapsPage() {
   return (
     <div className="section pt-28">
       <div className="container">
+        <PageViewTracker path="/roadmaps" eventName="roadmap_page_open" />
         <PageHeader
           title="Visual Roadmaps"
           subtitle="Where you're going before you start walking."
@@ -41,14 +44,16 @@ export default function RoadmapsPage() {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-3 border-t border-border-subtle pt-4">
-                  <a
+                  <TrackedLink
                     href={rm.roadmapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-sm text-teal hover:underline"
+                    path="/roadmaps"
+                    trackSlug={rm.trackSlug}
+                    resourceTitle={rm.title}
+                    resourceType="roadmap"
                   >
                     View Full Roadmap <ExternalLink size={14} />
-                  </a>
+                  </TrackedLink>
                   {rm.trackSlug && (
                     <Link
                       href={`/tracks/${rm.trackSlug}`}

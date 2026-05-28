@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import { Check, Copy } from 'lucide-react'
+import { trackEvent } from '@/lib/analytics'
 
 export function PromptCard({ prompt }: { prompt: string }) {
   const [copied, setCopied] = useState(false)
 
   const copy = async () => {
     await navigator.clipboard.writeText(prompt)
+    trackEvent({ event_name: 'ai_prompt_copy' })
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }

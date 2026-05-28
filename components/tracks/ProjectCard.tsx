@@ -3,15 +3,17 @@
 import { Check } from 'lucide-react'
 import { Project } from '@/lib/tracks'
 import { toggleProject, getTrackProgress } from '@/lib/progress'
+import { trackEvent } from '@/lib/analytics'
 
 interface ProjectCardProps {
   trackId: string
+  trackSlug?: string
   project: Project
   index: number
   onProgressChange?: () => void
 }
 
-export function ProjectCard({ trackId, project, index, onProgressChange }: ProjectCardProps) {
+export function ProjectCard({ trackId, trackSlug, project, index, onProgressChange }: ProjectCardProps) {
   const done = getTrackProgress(trackId).completedProjects.includes(project.id)
 
   return (
@@ -24,6 +26,11 @@ export function ProjectCard({ trackId, project, index, onProgressChange }: Proje
           type="button"
           onClick={() => {
             toggleProject(trackId, project.id)
+            trackEvent({
+              event_name: 'project_mark_complete',
+              track_slug: trackSlug ?? trackId,
+              project_name: project.title,
+            })
             onProgressChange?.()
           }}
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors ${

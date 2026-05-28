@@ -1,5 +1,7 @@
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TrackQuiz } from '@/components/quiz/TrackQuiz'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { TrackedLink } from '@/components/ui/tracked-link'
 import {
   SURVIVAL_STEPS,
   FIRST_WEEK_PLAN,
@@ -16,6 +18,7 @@ export default function StartHerePage() {
   return (
     <div className="section pt-28">
       <div className="container max-w-3xl">
+        <PageViewTracker path="/start-here" eventName="start_here_page_open" />
         <PageHeader
           title="Start Here"
           subtitle="You're in the right place. This guide is for students starting from zero."
@@ -69,31 +72,33 @@ export default function StartHerePage() {
           <h3 className="mt-8 font-display text-lg font-semibold">Online</h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {COMMUNITIES_ONLINE.map((c) => (
-              <a
+              <TrackedLink
                 key={c.url}
                 href={c.url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="card no-underline hover:border-teal/40 py-4"
+                path="/start-here"
+                resourceTitle={c.name}
+                resourceType="community"
               >
                 <h4 className="font-medium text-teal">{c.name}</h4>
                 <p className="text-xs text-text-secondary">{c.description}</p>
-              </a>
+              </TrackedLink>
             ))}
           </div>
           <h3 className="mt-10 font-display text-lg font-semibold">African & Nigerian</h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {COMMUNITIES_AFRICA.map((c) => (
-              <a
+              <TrackedLink
                 key={c.url}
                 href={c.url}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="card no-underline hover:border-teal/40 py-4"
+                path="/start-here"
+                resourceTitle={c.name}
+                resourceType="community"
               >
                 <h4 className="font-medium text-teal">{c.name}</h4>
                 <p className="text-xs text-text-secondary">{c.description}</p>
-              </a>
+              </TrackedLink>
             ))}
           </div>
         </section>

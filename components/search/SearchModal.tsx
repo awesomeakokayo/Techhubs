@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { Search, X } from 'lucide-react'
 import { search, searchSync, groupResults, SearchResult, SearchResultType } from '@/lib/search'
+import { trackOutboundClick, trackSearch } from '@/lib/analytics'
 
 const TYPE_LABELS: Record<SearchResultType, string> = {
   track: 'Tracks',
@@ -47,6 +48,20 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
     }
   }, [query])
 
+  useEffect(() => {
+    if (!open || !query.trim()) return
+    const grouped = groupResults(results)
+    const topCategory = (Object.keys(grouped) as SearchResultType[]).find(
+      (key) => grouped[key].length > 0
+    )
+    trackSearch({
+      path: window.location.pathname,
+      query_length: query.trim().length,
+      result_count: results.length,
+      search_category: topCategory ?? 'none',
+    })
+  }, [open, query, results])
+
   const handleKey = useCallback(
     (e: KeyboardEvent) => {
       if (!open) return
@@ -61,7 +76,15 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       }
       if (e.key === 'Enter' && results[selected]) {
         const url = results[selected].url
-        if (url.startsWith('http')) window.open(url, '_blank')
+        if (url.startsWith('http')) {
+          trackOutboundClick({
+            path: window.location.pathname,
+            resource_title: results[selected].title,
+            resource_type: results[selected].type,
+            outbound_url: url,
+          })
+          window.open(url, '_blank')
+        }
         else window.location.href = url
         onClose()
       }

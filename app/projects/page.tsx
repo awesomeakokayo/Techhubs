@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { TRACKS } from '@/lib/tracks'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 const LEVELS = [
   { id: 'all', label: 'All Levels' },
@@ -52,6 +53,7 @@ export default function ProjectsPage() {
   return (
     <div className="section pt-28">
       <div className="container">
+        <PageViewTracker path="/projects" eventName="projects_page_open" />
         <PageHeader
           title="Projects Hub"
           subtitle="Building projects is how you prove skill. Theory without projects is just knowledge, not capability."

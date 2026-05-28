@@ -1,5 +1,6 @@
 import { ExternalLink, FileText, Play, BookOpen, Wrench, Users } from 'lucide-react'
 import { Resource, ResourceType } from '@/lib/tracks'
+import { TrackedLink } from '@/components/ui/tracked-link'
 
 const TYPE_ICONS: Record<ResourceType, typeof FileText> = {
   docs: FileText,
@@ -12,17 +13,21 @@ const TYPE_ICONS: Record<ResourceType, typeof FileText> = {
 
 interface ResourceItemProps {
   resource: Resource
+  trackSlug?: string
+  path?: string
 }
 
-export function ResourceItem({ resource }: ResourceItemProps) {
+export function ResourceItem({ resource, trackSlug, path }: ResourceItemProps) {
   const Icon = TYPE_ICONS[resource.type] ?? FileText
 
   return (
-    <a
+    <TrackedLink
       href={resource.url}
-      target="_blank"
-      rel="noopener noreferrer"
       className="card group flex gap-4 no-underline hover:border-teal/40"
+      trackSlug={trackSlug}
+      path={path}
+      resourceTitle={resource.title}
+      resourceType={resource.type}
     >
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal/10 text-teal">
         <Icon size={18} aria-hidden />
@@ -38,6 +43,6 @@ export function ResourceItem({ resource }: ResourceItemProps) {
         <p className="mt-2 font-mono text-xs text-text-muted truncate">{resource.url.replace(/^https?:\/\//, '')}</p>
       </div>
       <ExternalLink size={16} className="shrink-0 text-text-muted opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden />
-    </a>
+    </TrackedLink>
   )
 }
