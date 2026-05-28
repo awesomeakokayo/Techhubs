@@ -24,8 +24,13 @@ export function Footer() {
       <div className="container py-16">
         <div className="grid gap-12 md:grid-cols-3 mt-12">
           <div>
-            <Link href="/" className="inline-flex items-center gap-2 no-underline">
-              <span className="font-display text-2xl font-extrabold gradient-text">TSH</span>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 no-underline"
+            >
+              <span className="font-display text-2xl font-extrabold gradient-text">
+                TSH
+              </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-text-secondary">
               A free learning hub for the next generation of tech talent.
@@ -39,7 +44,10 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               {QUICK_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-text-secondary hover:text-teal">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-text-secondary hover:text-teal"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -75,5 +83,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
