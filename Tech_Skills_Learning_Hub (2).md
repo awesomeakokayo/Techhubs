@@ -39,10 +39,11 @@
 📁 17 — AI FOR WORK & PRODUCTIVITY
 📁 18 — NO-CODE DEVELOPMENT
 📁 19 — TECHNICAL WRITING
-📁 20 — CAREER PREPARATION
-📁 21 — PROJECTS HUB
-📁 22 — CHEAT SHEETS & TEMPLATES
-📁 23 — CERTIFICATES & TRACKING
+📁 20 — CRYPTO & WEB3 DEVELOPMENT
+📁 21 — CAREER PREPARATION
+📁 22 — PROJECTS HUB
+📁 23 — CHEAT SHEETS & TEMPLATES
+📁 24 — CERTIFICATES & TRACKING
 ```
 
 ---
@@ -99,6 +100,7 @@ Ask yourself:
 | Git & GitHub | https://roadmap.sh/git-github |
 | Docker | https://roadmap.sh/docker |
 | System Design | https://roadmap.sh/system-design |
+| Blockchain Developer | https://roadmap.sh/blockchain |
 
 > 💡 **roadmap.sh** is the single best place for structured visual roadmaps. Bookmark it.
 
@@ -1279,7 +1281,383 @@ Technical writers create documentation — API docs, user manuals, guides, tutor
 
 ---
 
-## 📁 20 — CAREER PREPARATION
+## 📁 20 — CRYPTO & WEB3 DEVELOPMENT
+
+### What Is Crypto & Web3?
+
+Crypto is not just Bitcoin. Web3 is not just NFTs.
+
+At the core, this is a field about building decentralised systems — applications, protocols, and financial tools that run on public blockchains without a central authority controlling them. It combines cryptography, economics, software engineering, and financial thinking in a way no other field does.
+
+The people who understand it deeply are rare. The people who can build on it are rarer. That combination is where the real opportunity is.
+
+This track covers three lanes you can specialise in:
+- **Blockchain Fundamentals** — how it actually works under the hood
+- **Web3 Development** — building smart contracts and decentralised apps (dApps)
+- **DeFi & On-Chain Analysis** — understanding and working with decentralised finance protocols
+
+You do not need to pick all three. You need to understand all three to know which one you are built for.
+
+### Jobs You Can Get
+
+Smart Contract Developer, Web3 Frontend Developer, Blockchain Engineer, DeFi Analyst, Protocol Researcher, Crypto Security Auditor, On-Chain Data Analyst, Web3 Product Manager, DAO Contributor, Tokenomics Designer
+
+**Salary Range:** $70,000–$200,000+/year (Web3 developers are among the highest paid in all of software)
+
+---
+
+### 🗺️ ROADMAP
+
+#### STAGE 1 — How Blockchain Actually Works
+**Duration: 2–3 weeks**
+
+Most people who say they "know crypto" skip this stage. Don't.
+
+**Topics:**
+- What a blockchain is and why it exists (the Byzantine Generals problem)
+- How cryptographic hashing works (SHA-256, keccak-256)
+- Public key cryptography — how wallets, addresses, and signatures work
+- What a transaction is and how it moves through the network
+- Consensus mechanisms: Proof of Work vs Proof of Stake vs other variants
+- Block structure: headers, nonces, merkle trees, and why they matter
+- Nodes and validators — who actually runs the network
+- Layer 1 vs Layer 2 — what scaling actually means
+- Gas fees — why they exist, how they are calculated, why they spike
+- The difference between Bitcoin, Ethereum, Solana, and other chains
+
+**Why This Matters Even If You Already Trade Crypto:**
+When you understand *why* gas fees spike during network congestion, you stop paying 10× more than you need to. When you understand how wallet signatures work, you stop clicking phishing links. When you understand consensus, you can evaluate whether a new chain's claims are realistic or marketing. This knowledge has real economic value.
+
+#### STAGE 2 — Wallets, Keys & On-Chain Security
+**Duration: 1–2 weeks**
+
+This stage will save you money. Possibly a lot of it.
+
+**Topics:**
+- Private keys vs public keys vs seed phrases — what each actually is
+- How HD wallets work (BIP-32, BIP-39, BIP-44 derivation paths)
+- Hot wallets vs cold wallets vs hardware wallets
+- How wallet signatures work — what you are actually signing when you approve a transaction
+- Common attack vectors: phishing, clipboard hijacking, approval exploits, fake tokens
+- How to read a transaction before signing it (etherscan, on-chain data)
+- Multi-sig wallets — what they are and when to use them
+- Smart contract approvals — how unlimited approvals work and why to revoke them
+- OPSEC for crypto: how serious people protect their assets
+
+**What Even Intermediate Crypto Users Often Get Wrong:**
+Most people do not understand that approving a token in MetaMask is a separate action from a trade — it grants the smart contract permission to spend your tokens, sometimes infinitely. Understanding `approve()` and `allowance()` at a contract level prevents one of the most common exploit vectors.
+
+#### STAGE 3 — Solidity & Smart Contract Development
+**Duration: 6–8 weeks**
+
+This is where you go from user to builder.
+
+**Topics:**
+- What Solidity is and how it compiles to EVM bytecode
+- Solidity syntax: variables, types, functions, modifiers, events
+- Contract state vs memory vs calldata — the difference and when to use each
+- Mappings, arrays, structs — data structures in Solidity
+- The ERC-20 token standard — how every fungible token works
+- The ERC-721 standard — how NFTs actually work under the hood
+- The ERC-1155 multi-token standard
+- Writing and deploying your first smart contract
+- Hardhat development environment — compile, test, deploy
+- Foundry — the modern, faster alternative to Hardhat
+- Writing unit tests for smart contracts (critical — bugs are permanent)
+- OpenZeppelin — battle-tested contract libraries every developer uses
+- Events and how to listen to them from a frontend
+
+**What Separates Beginners from Real Smart Contract Developers:**
+Anyone can copy-paste a Solidity tutorial. The developers who get hired know *why* `uint256` is preferred over `uint8` (gas costs from packing), why `storage` reads are expensive, what a `reentrancy attack` is, and why the checks-effects-interactions pattern exists. That deeper knowledge starts here.
+
+#### STAGE 4 — DeFi Mechanics & Protocol Understanding
+**Duration: 3–4 weeks**
+
+DeFi is not just "crypto but faster." It is a completely new financial system with its own primitives. Understanding these makes you valuable both as a developer and an analyst.
+
+**Topics:**
+- AMMs (Automated Market Makers) — how Uniswap pricing actually works (x × y = k)
+- Liquidity pools — how they work, how LP tokens represent your share, impermanent loss explained properly
+- Lending protocols — how Aave and Compound calculate borrow rates dynamically
+- Collateralisation, health factors, and liquidations — how bad debt is handled on-chain
+- Stablecoins — the three types: fiat-backed (USDC), overcollateralised (DAI), algorithmic (and why most fail)
+- Yield farming — what it is, how APY is calculated, and why unsustainable yields collapse
+- Oracles — how smart contracts get real-world price data (Chainlink, Pyth)
+- Flash loans — what they are, how they work, and how they are used in exploits
+- MEV (Maximal Extractable Value) — how validators and searchers extract value from transaction ordering
+- Cross-chain bridges — how they work and why they are consistently the most exploited part of DeFi
+- DAOs — governance tokens, voting mechanisms, and how protocol decisions get made on-chain
+
+**What Advanced DeFi Understanding Unlocks:**
+When you understand AMM pricing, you can identify arbitrage opportunities. When you understand liquidation mechanics, you can build bots. When you understand oracle design, you can audit protocols for manipulation vectors. This is the knowledge that separates DeFi tourists from DeFi professionals.
+
+#### STAGE 5 — Web3 Frontend & dApp Development
+**Duration: 4–5 weeks**
+
+A great smart contract with no frontend is a protocol without users. Learn to connect your contracts to interfaces real people can use.
+
+**Topics:**
+- ethers.js — the standard library for interacting with Ethereum from JavaScript
+- wagmi — the React library for Web3 that makes wallet connections, contract calls, and transaction management clean
+- RainbowKit or ConnectKit — wallet connection UI components
+- Reading on-chain data: calling view functions, querying balances, listening to events
+- Writing transactions from the frontend: signing, submitting, tracking status
+- The Graph Protocol — indexing and querying blockchain data efficiently (the web3 version of a database query)
+- IPFS — decentralised file storage, how metadata is stored for NFTs
+- Building a complete dApp: wallet connect → read data → write transaction → show result
+- Handling the transaction lifecycle: pending, confirmed, failed states
+
+#### STAGE 6 — Smart Contract Security & Auditing
+**Duration: 3–4 weeks**
+
+This is the highest-paid specialisation in all of Web3. A single critical vulnerability can drain hundreds of millions of dollars. Auditors who can find them before deployment are worth what they charge.
+
+**Topics:**
+- The most exploited smart contract vulnerabilities:
+  - Reentrancy attacks (The DAO hack, $60M lost)
+  - Access control failures (most common cause of exploits)
+  - Oracle manipulation attacks
+  - Flash loan attack vectors
+  - Frontrunning and sandwich attacks
+  - Denial of service patterns
+  - Signature replay attacks
+- Slither — static analysis tool for finding vulnerabilities automatically
+- Mythril — symbolic execution tool
+- Foundry fuzzing — property-based testing to find edge cases
+- How to read a security audit report
+- How to write a security audit report
+- Common audit checklists and frameworks
+- The SWC Registry (Smart Contract Weakness Classification)
+- Post-mortems of real exploits — reading them is the best education
+
+**Why Even Non-Auditors Need This:**
+If you write smart contracts that handle money, you are responsible for their security. Understanding common attack patterns is not optional — it is the minimum standard of care. Every smart contract developer should be able to audit their own code before it touches mainnet.
+
+#### STAGE 7 — On-Chain Data Analysis
+**Duration: 2–3 weeks**
+
+Everything that happens on a public blockchain is permanently visible. This means a skilled analyst can see things that are invisible in traditional finance — where money moves, which wallets are accumulating, which protocols are actually used.
+
+**Topics:**
+- Reading and navigating Etherscan and block explorers for any chain
+- Dune Analytics — writing SQL queries against blockchain data
+- Nansen — wallet labelling and money flow analysis
+- Glassnode — on-chain metrics for Bitcoin and Ethereum
+- Key on-chain metrics:
+  - Active addresses
+  - Exchange inflows/outflows (what whales are doing)
+  - Stablecoin flows
+  - Realized profit/loss (SOPR)
+  - Network Value to Transactions (NVT) ratio
+  - Total Value Locked (TVL) and what it actually measures
+- Whale watching — how to track large wallet movements
+- Smart money tracking — following wallets that historically perform well
+- Reading mempool data — seeing pending transactions before they confirm
+- Building custom dashboards on Dune
+
+#### STAGE 8 — AI-Assisted Crypto Workflow
+**Duration: Ongoing**
+
+**What AI is good for:**
+- Explaining complex DeFi mechanisms in plain terms
+- Reviewing Solidity code for obvious vulnerabilities
+- Writing boilerplate contract code to a specification
+- Generating test cases for smart contracts
+- Summarising audit reports and protocol documentation
+- Helping you understand transaction traces from Tenderly
+
+**What AI cannot do:**
+- Audit smart contracts reliably — it misses subtle logic errors that cost millions
+- Predict token prices — anyone claiming otherwise is selling something
+- Replace your own understanding of cryptographic primitives
+- Verify on-chain data — always check the block explorer yourself
+
+**Sample Prompts for Web3 Developers:**
+```
+"Explain how the x*y=k invariant in Uniswap V2 determines token price and 
+why large trades cause more slippage than small ones."
+
+"Review this Solidity function for reentrancy vulnerabilities and suggest 
+how to apply the checks-effects-interactions pattern: [paste code]"
+
+"Write a Foundry fuzz test for this ERC-20 transfer function that tests 
+for balance underflow, approval bypass, and zero-address transfers: [paste function]"
+
+"Explain the difference between msg.sender and tx.origin in Solidity, 
+when each is used, and what the security implications of using tx.origin are."
+
+"I found this transaction on Etherscan: [tx hash]. Walk me through what 
+each internal transaction is doing and what protocol it is interacting with."
+```
+
+---
+
+### 📚 RESOURCES
+
+#### Blockchain Fundamentals
+| Resource | Description | Type | Free | Link |
+|---|---|---|---|---|
+| Bitcoin Whitepaper | Satoshi Nakamoto's original 9-page paper. Required reading. | Docs | ✓ | https://bitcoin.org/bitcoin.pdf |
+| Ethereum Whitepaper | Vitalik's original Ethereum vision document | Docs | ✓ | https://ethereum.org/en/whitepaper |
+| Ethereum.org Learn | Best official Ethereum learning resource. Comprehensive and regularly updated | Docs | ✓ | https://ethereum.org/en/learn |
+| Andrej Karpathy — Bitcoin from Scratch | Building Bitcoin in Python from cryptographic primitives. Mind-expanding | Video | ✓ | https://www.youtube.com/watch?v=l0kwadt2Z6M |
+| 3Blue1Brown — How Bitcoin Works | Visual explanation of blockchain cryptography | Video | ✓ | https://www.youtube.com/watch?v=bBC-nXj3Ng4 |
+| Computerphile — Public Key Cryptography | The mathematical foundation of wallets and signatures | Video | ✓ | https://www.youtube.com/watch?v=GSIDS_lvRv4 |
+| Blockchain Demo | Visual, interactive demonstration of how hashing and blockchains work | Practice | ✓ | https://andersbrownworth.com/blockchain |
+
+#### Solidity & Smart Contracts
+| Resource | Description | Type | Free | Link |
+|---|---|---|---|---|
+| CryptoZombies | The best Solidity beginner course. Learn by building a game on-chain | Practice | ✓ | https://cryptozombies.io |
+| Solidity Official Docs | The complete language reference. Bookmark this | Docs | ✓ | https://docs.soliditylang.org |
+| Patrick Collins — Solidity Full Course | The single most comprehensive free Solidity course. 32 hours | Video | ✓ | https://www.youtube.com/watch?v=umepbfKp5rI |
+| OpenZeppelin Docs | Battle-tested smart contract libraries. Read the source code | Docs | ✓ | https://docs.openzeppelin.com/contracts |
+| Hardhat Documentation | The standard development environment for Ethereum | Docs | ✓ | https://hardhat.org/docs |
+| Foundry Book | Documentation for Foundry — the faster, better alternative to Hardhat | Docs | ✓ | https://book.getfoundry.sh |
+| Speedrun Ethereum | Project-based Solidity learning with increasing difficulty | Practice | ✓ | https://speedrunethereum.com |
+| Ethernaut | Smart contract security challenges — solve real exploit scenarios | Practice | ✓ | https://ethernaut.openzeppelin.com |
+| Damn Vulnerable DeFi | Advanced DeFi exploit challenges used by real auditors to practice | Practice | ✓ | https://www.damnvulnerabledefi.xyz |
+
+#### Web3 Frontend
+| Resource | Description | Type | Free | Link |
+|---|---|---|---|---|
+| ethers.js Documentation | The standard JS library for Ethereum interaction | Docs | ✓ | https://docs.ethers.org/v6 |
+| wagmi Documentation | React hooks for Ethereum. The cleanest way to build Web3 UIs | Docs | ✓ | https://wagmi.sh |
+| RainbowKit Documentation | Wallet connection UI that works out of the box | Docs | ✓ | https://www.rainbowkit.com/docs/introduction |
+| The Graph Documentation | Query blockchain data like a database | Docs | ✓ | https://thegraph.com/docs/en |
+| Scaffold-ETH 2 | Full-stack dApp starter kit — the fastest way to start building | Docs | ✓ | https://scaffoldeth.io |
+
+#### DeFi Understanding
+| Resource | Description | Type | Free | Link |
+|---|---|---|---|---|
+| Finematics YouTube | DeFi concepts explained visually. Start with Uniswap and Aave | Video | ✓ | https://www.youtube.com/c/Finematics |
+| Uniswap V2 Whitepaper | Read this to understand AMMs from first principles | Docs | ✓ | https://uniswap.org/whitepaper.pdf |
+| DeFi MOOC — UC Berkeley | Full university-level DeFi course. Lectures by researchers and founders | Video | ✓ | https://defi-learning.org |
+| Whiteboard Crypto | Beginner-friendly visual explanations of DeFi concepts | Video | ✓ | https://www.youtube.com/c/WhiteboardCrypto |
+| Rekt News | Post-mortems of every major DeFi exploit. Essential reading for developers | Docs | ✓ | https://rekt.news |
+
+#### Security & Auditing
+| Resource | Description | Type | Free | Link |
+|---|---|---|---|---|
+| SWC Registry | Smart Contract Weakness Classification — the vulnerability encyclopedia | Docs | ✓ | https://swcregistry.io |
+| Trail of Bits — Building Secure Contracts | A practical security guide from one of the top audit firms | Docs | ✓ | https://github.com/crytic/building-secure-contracts |
+| Cyfrin Updraft Security Course | The best free smart contract security and auditing curriculum | Video | ✓ | https://updraft.cyfrin.io |
+| Slither Documentation | Static analysis tool for finding Solidity vulnerabilities | Tool | ✓ | https://github.com/crytic/slither |
+| Code4rena | Competitive audit platform where you earn by finding bugs in real protocols | Practice | ✓ | https://code4rena.com |
+| Sherlock | Another competitive audit platform. Some of the highest payouts in the field | Practice | ✓ | https://www.sherlock.xyz |
+
+#### On-Chain Data & Analysis
+| Resource | Description | Type | Free | Link |
+|---|---|---|---|---|
+| Dune Analytics | Write SQL queries against blockchain data. Build public dashboards | Tool | ✓ | https://dune.com |
+| Etherscan | The Ethereum block explorer. Learn to read it deeply | Tool | ✓ | https://etherscan.io |
+| Glassnode Academy | On-chain metrics education from the leading analytics platform | Docs | ✓ | https://academy.glassnode.com |
+| Nansen | Wallet labelling and smart money tracking (some free features) | Tool | ✗ | https://www.nansen.ai |
+| Tenderly | Debug and simulate transactions. Essential for developers | Tool | ✓ | https://tenderly.co |
+| DefiLlama | Track TVL, protocol revenue, and stablecoin data across all chains | Tool | ✓ | https://defillama.com |
+
+#### Communities
+| Resource | Description | Type | Link |
+|---|---|---|---|
+| Ethereum Stack Exchange | Q&A for Ethereum developers. Very high signal | Community | https://ethereum.stackexchange.com |
+| Developer DAO | Global community of Web3 builders | Community | https://www.developerdao.com |
+| Cyfrin Discord | Smart contract security community | Community | https://discord.gg/cyfrin |
+| Buildspace | Projects-first Web3 community (now archived but content is free) | Community | https://buildspace.so |
+
+---
+
+### 🔨 PROJECTS
+
+#### Beginner
+**1. Deploy Your Own ERC-20 Token**
+Write, test, and deploy a custom ERC-20 token to a testnet.
+Include: name, symbol, supply cap, minting function with access control.
+*Tags: Solidity, Hardhat, OpenZeppelin*
+
+**2. On-Chain Guestbook**
+A contract that stores messages on-chain with the sender's address and timestamp.
+Frontend: wallet connect, write message, display all messages in order.
+*Tags: Solidity, ethers.js, React*
+
+**3. On-Chain Data Dashboard**
+Using Dune Analytics, build a public dashboard for one protocol (e.g., Uniswap daily volume, Aave borrow rates, ETH gas tracker). Write and explain every SQL query.
+*Tags: Dune, SQL, On-Chain Analysis*
+
+#### Intermediate
+**4. Decentralised Voting System**
+A smart contract where token holders vote on proposals.
+Features: proposal creation, time-locked voting, result tallying, quorum requirement.
+Write full test coverage with Foundry.
+*Tags: Solidity, Foundry, Governance*
+
+**5. NFT Collection with On-Chain Metadata**
+A full ERC-721 collection with metadata stored on IPFS and a minting frontend.
+Include: mint limit, whitelist phase, reveal mechanism, royalties (ERC-2981).
+*Tags: Solidity, IPFS, React, wagmi*
+
+**6. DeFi Protocol Analysis Report**
+Pick any top-10 DeFi protocol (Uniswap, Aave, Compound, Curve, etc.).
+Write a full technical breakdown: how the protocol works, how it makes money, what the risks are, what smart money wallets hold, TVL trends over 12 months.
+*Tags: DeFi, On-Chain Analysis, Research Writing*
+
+#### Advanced
+**7. Simplified AMM (Automated Market Maker)**
+Build a basic constant-product AMM from scratch.
+Features: add/remove liquidity, token swap, LP token minting/burning, fee collection.
+No OpenZeppelin scaffolding — write it yourself so you understand every line.
+Write a fuzzing test suite with Foundry.
+*Tags: Solidity, DeFi, AMM Mechanics, Foundry Fuzzing*
+
+**8. Security Audit Report**
+Select an unaudited or lightly audited open-source smart contract on GitHub.
+Run Slither, write Foundry fuzz tests, manually review the logic.
+Write a professional audit report: scope, findings (critical/high/medium/low/informational), proof of concept for each, and recommended fixes.
+*Tags: Security, Slither, Auditing, Technical Writing*
+
+**9. Cross-Chain dApp**
+Build a dApp that interacts with two different blockchains.
+Example: deploy on Polygon for low fees, use Chainlink CCIP or LayerZero for cross-chain messaging.
+*Tags: Multi-chain, Solidity, Bridges, Advanced*
+
+---
+
+### 💼 CAREER PATH
+
+#### Web3 Developer Path
+Junior → Mid → Senior Smart Contract Developer
+→ Lead Protocol Engineer → Founding Engineer at a DeFi protocol
+
+**How to get hired:**
+- Deploy real contracts on testnets and link them in your GitHub
+- Contribute to open source Web3 projects (look at protocol GitHub repositories)
+- Participate in hackathons — ETHGlobal runs them globally, often with large prize pools (https://ethglobal.com)
+- Compete on Code4rena or Sherlock even as a beginner — finding one low/medium severity issue gets you on the map
+
+#### Security Auditor Path
+One of the highest-paid roles in all of software.
+
+Entry route:
+1. Complete Cyfrin Updraft Security Course
+2. Complete Ethernaut and Damn Vulnerable DeFi
+3. Compete on Code4rena (start by reading winning reports, then submit)
+4. Build a public portfolio of audit reports on GitHub
+5. Apply to audit firms: Trail of Bits, Consensys Diligence, Spearbit, Cyfrin, Pashov
+
+**Realistic earning potential:** $150,000–$500,000+/year for senior auditors working independently
+
+#### DeFi Analyst / Researcher Path
+- Build Dune dashboards and publish them publicly
+- Write research threads on Twitter/X about protocol mechanics
+- Contribute to protocol governance discussions with data-backed arguments
+- Apply to: Messari, Delphi Digital, Chainalysis, Nansen, or directly to DeFi protocol research teams
+
+### CAREER TIP
+
+The fastest way into a paying Web3 role is not a degree or a bootcamp certificate. It is a GitHub with deployed contracts, a public Dune dashboard people actually use, or a Code4rena finding that got paid out. On-chain proof beats credentials every time in this field. Start building in public immediately.
+
+---
+
+## 📁 21 — CAREER PREPARATION
 
 > This section applies to every track. Complete it when you are in Stage 3 or 4 of your chosen path.
 
@@ -1327,7 +1705,7 @@ Technical writers create documentation — API docs, user manuals, guides, tutor
 
 ---
 
-## 📁 21 — PROJECTS HUB
+## 📁 22 — PROJECTS HUB
 
 > Building projects is how you prove skill. Theory without projects is just knowledge, not capability.
 
@@ -1353,7 +1731,7 @@ Technical writers create documentation — API docs, user manuals, guides, tutor
 
 ---
 
-## 📁 22 — CHEAT SHEETS & TEMPLATES
+## 📁 23 — CHEAT SHEETS & TEMPLATES
 
 > Save these links for quick reference.
 
@@ -1372,7 +1750,7 @@ Technical writers create documentation — API docs, user manuals, guides, tutor
 
 ---
 
-## 📁 23 — CERTIFICATES & TRACKING
+## 📁 24 — CERTIFICATES & TRACKING
 
 ### Free Certifications Worth Getting
 | Certificate | Provider | Link |
@@ -2966,11 +3344,14 @@ You do not need to write perfectly. You need to write consistently. The audience
 | Awwwards | Design Inspiration | https://www.awwwards.com |
 | Behance | Design Portfolio | https://www.behance.net |
 | BigO Cheatsheet | Algorithms Reference | https://www.bigocheatsheet.com |
+| Bitcoin Whitepaper | Blockchain Docs | https://bitcoin.org/bitcoin.pdf |
+| Blockchain Demo | Blockchain Practice | https://andersbrownworth.com/blockchain |
 | Bubble | No-Code | https://bubble.io |
 | Canva | Design | https://www.canva.com |
 | CapCut | Video Editing | https://www.capcut.com |
 | Casey Faris | DaVinci Resolve | https://www.youtube.com/@CaseyFaris |
 | Cloudinary | Media Storage | https://cloudinary.com |
+| Code4rena | Blockchain Practice | https://code4rena.com |
 | Codepen | Frontend Playground | https://codepen.io |
 | Codewars | Coding Challenges | https://www.codewars.com |
 | Coolors | Color Tools | https://coolors.co |
@@ -2978,20 +3359,29 @@ You do not need to write perfectly. You need to write consistently. The audience
 | Coursera | Online Courses | https://www.coursera.org |
 | CS50x | Computing Foundations | https://cs50.harvard.edu/x |
 | CS50 Web | Web Programming | https://cs50.harvard.edu/web |
+| CryptoZombies | Blockchain Practice | https://cryptozombies.io |
 | CSS Battle | CSS Practice | https://cssbattle.dev |
 | CSS Grid Garden | CSS Grid | https://cssgridgarden.com |
 | Cursor | AI Code Editor | https://cursor.sh |
 | Cybrary | Cybersecurity | https://www.cybrary.it |
+| Cyfrin Updraft Security Course | Blockchain Video | https://updraft.cyfrin.io |
 | DaVinci Resolve Training | Video Editing | https://www.blackmagicdesign.com/products/davinciresolve/training |
 | David Bombal | Cybersecurity | https://www.youtube.com/@davidbombal |
+| Damn Vulnerable DeFi | Blockchain Practice | https://www.damnvulnerabledefi.xyz |
 | deeplearning.ai | AI/ML Courses | https://www.deeplearning.ai/short-courses |
+| DefiLlama | Blockchain Tool | https://defillama.com |
+| DeFi MOOC — UC Berkeley | Blockchain Docs | https://defi-learning.org |
 | DEV Community | Developer Articles | https://dev.to |
 | DesignCourse | UI/UX + Frontend | https://www.youtube.com/@DesignCourse |
 | Descript | AI Video Editing | https://www.descript.com |
 | Devhints | Cheatsheets | https://devhints.io |
 | Docker Docs | DevOps | https://docs.docker.com |
 | Dribbble | Design Portfolio | https://dribbble.com |
+| Dune Analytics | Blockchain Tool | https://dune.com |
 | Eloquent JavaScript | JavaScript | https://eloquentjavascript.net |
+| Ethernaut | Blockchain Practice | https://ethernaut.openzeppelin.com |
+| Ethereum.org Learn | Blockchain Docs | https://ethereum.org/en/learn |
+| ETHGlobal Hackathons | Blockchain Community | https://ethglobal.com |
 | ElevenLabs | AI Voice | https://elevenlabs.io |
 | Ethics.fast.ai | AI Ethics | https://ethics.fast.ai |
 | Excalidraw | Diagramming | https://excalidraw.com |
@@ -3002,7 +3392,9 @@ You do not need to write perfectly. You need to write consistently. The audience
 | FastAPI Docs | Backend | https://fastapi.tiangolo.com |
 | Figma | UI/UX Design | https://www.figma.com |
 | Figma Community | Design Resources | https://www.figma.com/community |
+| Finematics YouTube | Blockchain Video | https://www.youtube.com/c/Finematics |
 | Fireship | Web Dev | https://www.youtube.com/@Fireship |
+| Foundry Book | Blockchain Docs | https://book.getfoundry.sh |
 | Fiverr | Freelancing | https://www.fiverr.com |
 | Flutter Docs | Mobile | https://flutter.dev/docs |
 | ForrestKnight | Career | https://www.youtube.com/@ForrestKnight |
@@ -3073,10 +3465,12 @@ You do not need to write perfectly. You need to write consistently. The audience
 | Obsidian | Note-Taking | https://obsidian.md |
 | OpenAI Python Quickstart | AI | https://platform.openai.com/docs/quickstart |
 | OWASP Top 10 | Security | https://owasp.org/www-project-top-ten |
+| OpenZeppelin Docs | Blockchain Docs | https://docs.openzeppelin.com/contracts |
 | Pandas Docs | Data | https://pandas.pydata.org/docs |
 | Payoneer | Payments | https://www.payoneer.com |
 | Perplexity AI | AI Research | https://www.perplexity.ai |
 | Pexels | Stock Media | https://www.pexels.com |
+| Patrick Collins — Solidity Full Course | Blockchain Video | https://www.youtube.com/watch?v=umepbfKp5rI |
 | PicoCTF | Cybersecurity | https://picoctf.org |
 | Pinecone Learn | Vector Databases | https://www.pinecone.io/learn |
 | Playwright Docs | QA | https://playwright.dev/docs/intro |
@@ -3091,6 +3485,7 @@ You do not need to write perfectly. You need to write consistently. The audience
 | Railway | Backend Hosting | https://railway.app |
 | React Docs | Frontend | https://react.dev |
 | React Native Docs | Mobile | https://reactnative.dev/docs |
+| Rekt News | Blockchain Docs | https://rekt.news |
 | Real Python | Python | https://realpython.com |
 | ReadMe | API Docs | https://readme.com |
 | Reddit r/learnprogramming | Community | https://www.reddit.com/r/learnprogramming |
@@ -3106,6 +3501,8 @@ You do not need to write perfectly. You need to write consistently. The audience
 | She Code Africa | Women in Tech | https://shecodeafrica.org |
 | Selenium Docs | QA | https://www.selenium.dev/documentation |
 | Software Testing Help | QA | https://www.softwaretestinghelp.com |
+| Solidity Official Docs | Blockchain Docs | https://docs.soliditylang.org |
+| Speedrun Ethereum | Blockchain Practice | https://speedrunethereum.com |
 | SQLZoo | SQL Practice | https://sqlzoo.net |
 | Stack Overflow | Developer Q&A | https://stackoverflow.com |
 | StatQuest | Statistics | https://www.youtube.com/@statquest |
@@ -3128,6 +3525,7 @@ You do not need to write perfectly. You need to write consistently. The audience
 | Unsplash | Free Photos | https://unsplash.com |
 | Upwork | Freelancing | https://www.upwork.com |
 | v0.dev | UI Generation | https://v0.dev |
+| wagmi Documentation | Blockchain Docs | https://wagmi.sh |
 | Vercel | Frontend Hosting | https://vercel.com |
 | vidIQ | YouTube SEO | https://vidiq.com |
 | VS Code | Code Editor | https://code.visualstudio.com |
@@ -3146,6 +3544,6 @@ You do not need to write perfectly. You need to write consistently. The audience
 ---
 
 *Tech Skills Learning Hub — Part 3 Complete.*  
-*The full document now contains: 23 folder sections, 16+ full roadmaps, hundreds of curated resource links, AI integration guides for every track, interview prep, freelancing guidance, semester plans, project rubrics, mindset guides, community resources, and a master A–Z resource index.*
+*The full document now contains: 24 folder sections, 17+ full roadmaps, hundreds of curated resource links, AI integration guides for every track, interview prep, freelancing guidance, semester plans, project rubrics, mindset guides, community resources, and a master A–Z resource index.*
 
 *Total coverage: Everything a student needs from zero knowledge to first job or first client.*
