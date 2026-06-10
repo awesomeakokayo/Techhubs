@@ -7,7 +7,7 @@ const STEPS = [
     icon: MapPin,
     title: 'Pick Your Track',
     description:
-      "Choose from 17 career paths. Don't know where to start? Take the 2-minute quiz.",
+      "Choose from 18 career paths. Don't know where to start? Take the 2-minute quiz.",
   },
   {
     num: '02',

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     'tech learning, programming roadmap, frontend development, Nigeria tech, African students, free coding resources, career in tech',
   openGraph: {
     title: 'Tech Skills Learning Hub',
-    description: 'Your complete guide into tech — 17 tracks, 300+ resources, 100% free.',
+    description: 'Your complete guide into tech — 18 tracks, 300+ resources, 100% free.',
     type: 'website',
   },
   twitter: {

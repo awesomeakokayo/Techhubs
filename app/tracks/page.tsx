@@ -49,7 +49,7 @@ export default function TracksPage() {
         <PageViewTracker path="/tracks" eventName="tracks_page_open" />
         <PageHeader
           title="All Learning Tracks"
-          subtitle="17 paths from beginner to professional."
+          subtitle="18 paths from beginner to professional."
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Tracks' }]}
         />
 

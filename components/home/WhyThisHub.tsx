@@ -5,7 +5,7 @@ import { AnimateIn } from '@/components/ui/AnimateIn'
 import { motion, useReducedMotion } from 'framer-motion'
 
 const CHECKLIST = [
-  '17 complete learning tracks',
+  '18 complete learning tracks',
   'Roadmaps from beginner to job-ready',
   '300+ curated, verified resource links',
   'AI usage guides built into every track',
