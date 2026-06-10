@@ -28,11 +28,82 @@
   --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.02);
   --shadow-raised: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
   --shadow-glow-teal: 0 0 0 2px rgba(15,23,42,0.1);
+  --grid-color: rgba(15,23,42,0.02);
+  --dot-color: rgba(15,23,42,0.04);
   --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 9999px;
   --t-fast: 150ms; --t-base: 250ms; --t-slow: 400ms;
   --ease-out: cubic-bezier(0.4,0,0.2,1); --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-void: #000000;
+    --bg-deep: #000000;
+    --bg-surface: #15181C;
+    --bg-elevated: #1E2022;
+    --bg-overlay: #2A2E30;
+    
+    --border-subtle: #191B1F;
+    --border-default: #2F3336;
+    --border-active: #EFF3F4;
+    
+    --text-primary: #EFF3F4;
+    --text-secondary: #94A3B8;
+    --text-muted: #71767B;
+    --text-inverse: #FFFFFF;
+    
+    --accent-primary: #1D9BF0; /* Twitter/X Blue */
+    --accent-primary-dim: #1A8CD8;
+    --accent-primary-bright: #30A7F2;
+    --accent-primary-glow: rgba(29, 155, 240, 0.15);
+    --accent-primary-bg: rgba(29, 155, 240, 0.08);
+    --accent-primary-border: rgba(29, 155, 240, 0.2);
+    
+    --accent-secondary: #F59E0B;
+    --accent-secondary-dim: #D97706;
+    --accent-secondary-bg: rgba(245, 158, 11, 0.1);
+    
+    --accent-tertiary: #A78BFA;
+    --accent-tertiary-dim: #7C3AED;
+    --accent-tertiary-bg: rgba(167, 139, 250, 0.1);
+    
+    --track-frontend: #38BDF8;
+    --track-backend: #4ADE80;
+    --track-fullstack: #F59E0B;
+    --track-python: #FACC15;
+    --track-uiux: #F472B6;
+    --track-qa: #22D3EE;
+    --track-data: #C084FC;
+    --track-datascience: #A78BFA;
+    --track-devops: #F87171;
+    --track-cyber: #34D399;
+    --track-mobile: #60A5FA;
+    --track-video: #F59E0B;
+    --track-youtube: #EF4444;
+    --track-marketing: #4ADE80;
+    --track-ai: #2DD4BF;
+    --track-nocode: #C084FC;
+    --track-writing: #F59E0B;
+    
+    --color-success: #4ADE80;
+    --color-warning: #F59E0B;
+    --color-error: #F87171;
+    --color-info: #60A5FA;
+    
+    --gradient-hero: linear-gradient(180deg, #090D16 0%, #000000 100%);
+    --gradient-text: linear-gradient(180deg, #FFFFFF 0%, #EFF3F4 100%);
+    --gradient-accent: linear-gradient(90deg, #1D9BF0 0%, #30A7F2 100%);
+    --gradient-warm: linear-gradient(180deg, #EFF3F4 0%, #D7DBDC 100%);
+    
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+    --shadow-raised: 0 10px 15px -3px rgba(0,0,0,0.7), 0 4px 6px -2px rgba(0,0,0,0.5);
+    --shadow-glow-teal: 0 0 0 2px rgba(29, 155, 240, 0.25);
+    
+    --grid-color: rgba(239, 243, 244, 0.015);
+    --dot-color: rgba(239, 243, 244, 0.03);
+  }
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -132,12 +203,12 @@ strong { font-weight: 600; color: var(--text-primary); }
 .progress-bar-fill { height: 100%; background: var(--gradient-accent); border-radius: var(--radius-full); transition: width 0.6s var(--ease-spring); }
 
 .bg-grid {
-  background-image: linear-gradient(rgba(15,23,42,0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(15,23,42,0.02) 1px, transparent 1px);
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 .bg-dot {
-  background-image: radial-gradient(rgba(15,23,42,0.04) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
