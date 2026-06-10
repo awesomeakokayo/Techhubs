@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spotlight'
 
@@ -49,8 +50,8 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Link href="/start-here" className="btn btn-primary">
-                Start Learning →
+              <Link href="/start-here" className="btn btn-primary inline-flex items-center gap-1.5">
+                Start Learning <ArrowRight size={16} className="shrink-0" />
               </Link>
               <Link href="#tracks" className="btn btn-secondary">
                 Browse All Tracks

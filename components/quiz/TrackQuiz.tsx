@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
 import { saveQuizResult } from '@/lib/progress'
 import { trackEvent, trackQuizCompletion } from '@/lib/analytics'
@@ -124,8 +125,8 @@ export function TrackQuiz() {
                       <h4 className="font-display font-semibold">{track.name}</h4>
                       <p className="text-sm text-text-secondary">{track.tagline}</p>
                     </div>
-                    <Link href={`/tracks/${track.slug}`} className="btn btn-primary shrink-0">
-                      Start This Track →
+                    <Link href={`/tracks/${track.slug}`} className="btn btn-primary shrink-0 inline-flex items-center gap-1.5">
+                      Start This Track <ArrowRight size={16} className="shrink-0" />
                     </Link>
                   </div>
                 ) : null

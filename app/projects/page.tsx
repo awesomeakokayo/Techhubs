@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
@@ -102,9 +103,9 @@ export default function ProjectsPage() {
               </div>
               <Link
                 href={`/tracks/${track.slug}#projects`}
-                className="mt-4 inline-block text-sm text-teal hover:underline"
+                className="mt-4 inline-flex items-center gap-1 text-sm text-teal hover:underline"
               >
-                View in track →
+                View in track <ArrowRight size={14} className="shrink-0" />
               </Link>
             </article>
           ))}

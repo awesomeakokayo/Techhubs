@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import {
-  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock,
+  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight,
 } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
@@ -341,8 +341,8 @@ export function TrackPageView({ track }: { track: Track }) {
               <p className="text-text-primary">{track.careerTip}</p>
             </div>
             <div className="mt-6">
-              <a href="/career" className="btn btn-secondary">
-                Full Career Prep Guide →
+              <a href="/career" className="btn btn-secondary inline-flex items-center gap-1.5">
+                Full Career Prep Guide <ArrowRight size={16} className="shrink-0" />
               </a>
             </div>
           </section>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import {
   COMMUNITIES_AFRICA,
   COMMUNITIES_ONLINE,
@@ -68,9 +69,10 @@ export function CareerTabs() {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="card block no-underline hover:border-teal/40"
+              className="card flex items-center justify-between no-underline hover:border-teal/40"
             >
-              {link.title} ↗
+              <span>{link.title}</span>
+              <ArrowUpRight size={16} className="shrink-0 text-text-muted opacity-70" />
             </a>
           )
         )}
@@ -93,17 +95,19 @@ export function CareerSections() {
           href="https://rxresu.me"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-primary mt-6"
+          className="btn btn-primary mt-6 inline-flex items-center gap-1.5"
         >
-          Build Resume on rxresu.me ↗
+          Build Resume on rxresu.me
+          <ArrowUpRight size={16} className="shrink-0 opacity-70" />
         </a>
         <a
           href="https://www.youtube.com/watch?v=y8YH0Qbu5h4"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-secondary mt-3 ml-0 sm:ml-3"
+          className="btn btn-secondary mt-3 ml-0 sm:ml-3 inline-flex items-center gap-1.5"
         >
-          Tech Resume Tips (freeCodeCamp) ↗
+          Tech Resume Tips (freeCodeCamp)
+          <ArrowUpRight size={16} className="shrink-0 opacity-70" />
         </a>
       </section>
 
@@ -166,9 +170,10 @@ export function CareerSections() {
           href="https://university.linkedin.com/linkedin-for-students"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-secondary mt-6"
+          className="btn btn-secondary mt-6 inline-flex items-center gap-1.5"
         >
-          LinkedIn for Students Guide ↗
+          LinkedIn for Students Guide
+          <ArrowUpRight size={16} className="shrink-0 opacity-70" />
         </a>
       </section>
 

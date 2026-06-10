@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, ArrowLeftRight, ArrowRight } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
@@ -29,7 +29,7 @@ export default function AIGuidePage() {
         <div className="rounded-2xl border border-border-default bg-surface p-8 md:p-12 text-center">
           <div className="mx-auto flex max-w-md items-center justify-center gap-4">
             <span className="rounded-full border border-teal px-4 py-2 font-display font-semibold text-teal">You</span>
-            <span className="text-2xl text-text-muted" aria-hidden>↔</span>
+            <ArrowLeftRight size={20} className="text-text-muted shrink-0" aria-hidden />
             <span className="rounded-full border border-violet px-4 py-2 font-display font-semibold text-violet">AI</span>
           </div>
           <p className="mt-6 text-text-secondary">
@@ -101,8 +101,8 @@ export default function AIGuidePage() {
                         ))}
                       </ul>
                     </div>
-                    <Link href={`/tracks/${track.slug}#ai-guide`} className="text-sm text-teal hover:underline">
-                      Full AI guide on track page →
+                    <Link href={`/tracks/${track.slug}#ai-guide`} className="inline-flex items-center gap-1 text-sm text-teal hover:underline">
+                      Full AI guide on track page <ArrowRight size={14} className="shrink-0" />
                     </Link>
                   </div>
                 )}

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, Search, X } from 'lucide-react'
+import { Menu, Search, X, ArrowRight } from 'lucide-react'
 import { SearchModal } from '@/components/search/SearchModal'
 
 const NAV_LINKS = [
@@ -105,8 +105,8 @@ export function Navbar() {
               ))}
             </nav>
             <div className="mt-auto border-t border-border-subtle pt-6">
-              <Link href="/start-here" className="btn btn-primary w-full justify-center" onClick={() => setMenuOpen(false)}>
-                Start Learning →
+              <Link href="/start-here" className="btn btn-primary w-full justify-center inline-flex items-center gap-1.5" onClick={() => setMenuOpen(false)}>
+                Start Learning <ArrowRight size={16} className="shrink-0" />
               </Link>
             </div>
           </div>

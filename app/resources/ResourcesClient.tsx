@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { TRACKS, ResourceType } from '@/lib/tracks'
 import { FEATURED_RESOURCES } from '@/lib/site-content'
 import { PageHeader } from '@/components/ui/PageHeader'
@@ -162,13 +163,13 @@ export function ResourcesClient() {
                     <td className="p-4">
                       <TrackedLink
                         href={r.url}
-                        className="text-teal hover:underline"
+                        className="inline-flex items-center gap-0.5 text-teal hover:underline"
                         path="/resources"
                         trackSlug={r.trackId}
                         resourceTitle={r.title}
                         resourceType={r.type}
                       >
-                        Open ↗
+                        Open <ArrowUpRight size={14} className="shrink-0" />
                       </TrackedLink>
                     </td>
                   </tr>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
 export function QuizTeaser() {
@@ -13,8 +14,8 @@ export function QuizTeaser() {
                 <p className="mt-3 text-text-secondary max-w-none">
                   Answer 3 quick questions and we&apos;ll point you to the right track.
                 </p>
-                <Link href="/start-here#quiz" className="btn btn-primary mt-8">
-                  Take the Quiz →
+                <Link href="/start-here#quiz" className="btn btn-primary mt-8 inline-flex items-center gap-1.5">
+                  Take the Quiz <ArrowRight size={16} className="shrink-0" />
                 </Link>
               </div>
 

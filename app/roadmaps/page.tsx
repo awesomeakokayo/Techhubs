@@ -37,7 +37,7 @@ export default function RoadmapsPage() {
                         {stage}
                       </span>
                       {si < rm.stages.length - 1 && (
-                        <span className="text-text-muted shrink-0" aria-hidden>→</span>
+                        <ArrowRight size={12} className="text-text-muted shrink-0" aria-hidden />
                       )}
                     </div>
                   ))}

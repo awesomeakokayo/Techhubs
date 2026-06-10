@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ArrowUpRight } from 'lucide-react'
 
 const QUICK_LINKS = [
   { href: '/start-here', label: 'Start Here' },
@@ -66,9 +67,10 @@ export function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-text-secondary hover:text-teal"
+                    className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-teal"
                   >
-                    {link.label} ↗
+                    {link.label}
+                    <ArrowUpRight size={14} className="shrink-0 opacity-70" />
                   </a>
                 </li>
               ))}
