@@ -7,7 +7,7 @@ import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spotlight'
 
 const STATS = [
-  { value: '18+', label: 'Learning Tracks' },
+  { value: '22', label: 'Learning Tracks' },
   { value: '300+', label: 'Curated Resources' },
   { value: '100%', label: 'Free & Public' },
 ]
