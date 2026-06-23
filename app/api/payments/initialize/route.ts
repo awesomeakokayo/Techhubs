@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 
+export const dynamic = 'force-dynamic'
+
 const PLAN_CONFIG = {
   monthly: { name: 'Tech Skills Hub Monthly', amount: 245000, interval: 'monthly' },
   yearly: { name: 'Tech Skills Hub Yearly', amount: 1470000, interval: 'annually' },

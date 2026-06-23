@@ -3,6 +3,8 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import type { SubscriptionStatus } from '@prisma/client'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST() {
   const session = await auth()
   if (!session?.user?.id) {
