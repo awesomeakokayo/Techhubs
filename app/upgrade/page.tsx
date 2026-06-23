@@ -29,7 +29,7 @@ export default function UpgradePage() {
     }
   }, [status, router])
 
-  const subscribe = async (plan: 'monthly' | 'yearly') => {
+  const subscribe = async (plan: 'monthly' | 'threeMonths' | 'yearly') => {
     if (status !== 'authenticated' || !session?.user) {
       router.push('/login?next=/upgrade')
       return
@@ -88,7 +88,7 @@ export default function UpgradePage() {
         <p className="text-[var(--color-error)] text-sm mb-6">{error}</p>
       )}
 
-      <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+      <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         <div className="card text-left">
           <h3 className="text-lg font-display font-semibold text-[var(--text-primary)]">Monthly</h3>
           <p className="text-3xl font-display font-bold text-[var(--text-primary)] mt-2">
@@ -110,6 +110,27 @@ export default function UpgradePage() {
         </div>
 
         <div className="card text-left border-[var(--accent-primary-border)] relative">
+          <span className="badge badge-teal absolute -top-3 right-4">30% OFF</span>
+          <h3 className="text-lg font-display font-semibold text-[var(--text-primary)]">3 Months</h3>
+          <p className="text-3xl font-display font-bold text-[var(--text-primary)] mt-2">
+            ₦5,145<span className="text-sm text-[var(--text-secondary)] font-body">/3 months</span>
+          </p>
+          <p className="text-xs text-[var(--text-muted)] mt-1 line-through">₦7,350</p>
+          <ul className="mt-4 space-y-2 text-sm text-[var(--text-secondary)]">
+            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> Everything in Monthly</li>
+            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> <strong>30% off</strong> — save ₦2,205</li>
+            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> 3 months of guided learning</li>
+          </ul>
+          <button
+            onClick={() => subscribe('threeMonths')}
+            disabled={loading === 'threeMonths'}
+            className="btn btn-primary w-full mt-6 justify-center"
+          >
+            {loading === 'threeMonths' ? 'Redirecting to Paystack...' : 'Choose 3 Months'}
+          </button>
+        </div>
+
+        <div className="card text-left relative">
           <span className="badge badge-teal absolute -top-3 right-4">BEST VALUE</span>
           <h3 className="text-lg font-display font-semibold text-[var(--text-primary)]">Yearly</h3>
           <p className="text-3xl font-display font-bold text-[var(--text-primary)] mt-2">
@@ -123,7 +144,7 @@ export default function UpgradePage() {
           <button
             onClick={() => subscribe('yearly')}
             disabled={loading === 'yearly'}
-            className="btn btn-primary w-full mt-6 justify-center"
+            className="btn btn-secondary w-full mt-6 justify-center"
           >
             {loading === 'yearly' ? 'Redirecting to Paystack...' : 'Choose Yearly'}
           </button>

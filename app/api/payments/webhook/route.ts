@@ -37,21 +37,21 @@ export async function POST(req: Request) {
         where: { userId },
         update: {
           status: 'ACTIVE',
-          plan: metadata?.plan === 'yearly' ? 'YEARLY' : 'MONTHLY',
+          plan: metadata?.plan === 'yearly' ? 'YEARLY' : metadata?.plan === 'threeMonths' ? 'THREE_MONTHS' : 'MONTHLY',
           paystackCustomerCode: customer.customer_code,
           paystackPlanCode: plan?.plan_code,
           currentPeriodEnd: new Date(
-            Date.now() + (metadata?.plan === 'yearly' ? 365 : 30) * 24 * 60 * 60 * 1000
+            Date.now() + (metadata?.plan === 'yearly' ? 365 : metadata?.plan === 'threeMonths' ? 90 : 30) * 24 * 60 * 60 * 1000
           ),
         },
         create: {
           userId,
           status: 'ACTIVE',
-          plan: metadata?.plan === 'yearly' ? 'YEARLY' : 'MONTHLY',
+          plan: metadata?.plan === 'yearly' ? 'YEARLY' : metadata?.plan === 'threeMonths' ? 'THREE_MONTHS' : 'MONTHLY',
           paystackCustomerCode: customer.customer_code,
           paystackPlanCode: plan?.plan_code,
           currentPeriodEnd: new Date(
-            Date.now() + (metadata?.plan === 'yearly' ? 365 : 30) * 24 * 60 * 60 * 1000
+            Date.now() + (metadata?.plan === 'yearly' ? 365 : metadata?.plan === 'threeMonths' ? 90 : 30) * 24 * 60 * 60 * 1000
           ),
         },
       })
