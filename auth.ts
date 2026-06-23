@@ -3,9 +3,24 @@ import Google from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/lib/prisma'
 
+const cookieOptions = {
+  httpOnly: true,
+  sameSite: 'lax' as const,
+  path: '/',
+  secure: true,
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: 'jwt' },
+  trustHost: true,
+  cookies: {
+    sessionToken: { name: 'next-auth.session-token', options: cookieOptions },
+    callbackUrl: { name: 'next-auth.callback-url', options: cookieOptions },
+    csrfToken: { name: 'next-auth.csrf-token', options: cookieOptions },
+    state: { name: 'next-auth.state', options: cookieOptions },
+    pkceCodeVerifier: { name: 'next-auth.pkce.code_verifier', options: cookieOptions },
+  },
   pages: {
     signIn: '/login',
   },

@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   const isGuidedPath = pathname.startsWith('/guided-path')
-  const isAccount = pathname.startsWith('/account')
+  const isAccount = pathname === '/account' || pathname.startsWith('/account/')
 
   if (isGuidedPath || isAccount) {
     const token = await getToken({ req, secret: process.env.AUTH_SECRET })
@@ -24,5 +24,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/guided-path/:path*', '/account/:path*'],
+  matcher: ['/guided-path/:path*', '/account', '/account/:path*'],
 }
