@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import {
   CheckCircle2, XCircle, AlertTriangle, RefreshCw, ExternalLink,
@@ -39,6 +39,7 @@ export function AccountClient({
   tracks: Track[]
 }) {
   const router = useRouter()
+  const { update: updateSession } = useSession()
   const { toast } = useToast()
   const [subscription, setSubscription] = useState<Subscription | null>(initialSubscription)
   const [refreshing, setRefreshing] = useState(false)
@@ -55,8 +56,9 @@ export function AccountClient({
     if (params.get('subscribed') === 'true') {
       setShowOnboarding(true)
       window.history.replaceState({}, '', '/account')
+      updateSession()
     }
-  }, [isSubscribed])
+  }, [isSubscribed, updateSession])
 
   useEffect(() => {
     if (!isSubscribed) return

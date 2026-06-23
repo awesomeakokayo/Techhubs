@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck, GraduationCap, RotateCcw, ChevronLeft } from 'lucide-react'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { TRACKS } from '@/lib/tracks'
@@ -22,6 +23,7 @@ function getYouTubeId(url: string): string | null {
 export default function GuidedPathPage() {
   const params = useParams()
   const router = useRouter()
+  const { update } = useSession()
   const trackId = params.trackId as string
 
   const [steps, setSteps] = useState<GuidedStep[]>([])
@@ -34,6 +36,7 @@ export default function GuidedPathPage() {
   const [showCelebration, setShowCelebration] = useState(false)
 
   useEffect(() => {
+    let cancelled = false
     fetch(`/api/guided-path/${trackId}`)
       .then((res) => {
         if (res.status === 403) {
@@ -44,19 +47,23 @@ export default function GuidedPathPage() {
         return res.json()
       })
       .then((data) => {
-        if (!data) return
+        if (cancelled || !data) return
         setSteps(data.steps)
         setCurrentIndex(data.currentStepIndex)
         setCompletedIndices(
           Array.from({ length: data.currentStepIndex }, (_, i) => i)
         )
         setLoading(false)
+        update()
       })
       .catch((err) => {
-        setError(err.message)
-        setLoading(false)
+        if (!cancelled) {
+          setError(err.message)
+          setLoading(false)
+        }
       })
-  }, [trackId, router])
+    return () => { cancelled = true }
+  }, [trackId, router, update])
 
   const markComplete = useCallback(async (stepIndex: number) => {
     await fetch(`/api/guided-path/${trackId}`, {
