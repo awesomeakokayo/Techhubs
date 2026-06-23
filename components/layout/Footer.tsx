@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
-const LINKS = {
+type NavLink = { href: string; label: string; external?: boolean }
+
+const LINKS: Record<string, NavLink[]> = {
   Learn: [
     { href: '/tracks', label: 'Tracks' },
     { href: '/roadmaps', label: 'Roadmaps' },
@@ -40,24 +42,24 @@ export function Footer() {
             <div key={group}>
               <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">{group}</p>
               <ul className="mt-3 space-y-2">
-                {items.map(({ href, label, external = false }) => (
-                  <li key={label}>
-                    {external ? (
+                {items.map((item) => (
+                  <li key={item.label}>
+                    {item.external ? (
                       <a
-                        href={href}
+                        href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-sm text-text-secondary transition-colors hover:text-teal no-underline"
                       >
-                        {label}
+                        {item.label}
                         <ArrowUpRight size={13} className="shrink-0 opacity-60" />
                       </a>
                     ) : (
                       <Link
-                        href={href}
+                        href={item.href}
                         className="text-sm text-text-secondary transition-colors hover:text-teal no-underline"
                       >
-                        {label}
+                        {item.label}
                       </Link>
                     )}
                   </li>
