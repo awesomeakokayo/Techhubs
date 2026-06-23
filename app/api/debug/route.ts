@@ -15,7 +15,7 @@ export async function GET() {
     hasUser: !!session?.user,
     sessionId: session?.user?.id ?? null,
     sessionCookieName: sessionCookie?.name ?? null,
-    sessionCookieValue: sessionCookie?.value?.substring(0, 20) + '...' ?? null,
+    sessionCookieValue: sessionCookie ? sessionCookie.value.substring(0, 20) + '...' : null,
     allCookieNames: allCookies.map(ck => ck.name),
     host: h.get('host'),
     nexthost: h.get('x-forwarded-host'),
