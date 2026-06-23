@@ -100,6 +100,7 @@ export function AccountClient({
       if (data.status === 'ACTIVE') {
         toast('Subscription verified! Your guided path is ready.', 'success')
       }
+      await updateSession()
     } catch {
       toast('Could not refresh subscription. Try again later.', 'error')
     } finally {
@@ -119,6 +120,7 @@ export function AccountClient({
       if (data.status === 'CANCELLED') {
         setSubscription((prev) => prev ? { ...prev, status: 'CANCELLED' } : prev)
         toast('Subscription cancelled. You can still access guided paths until the period ends.', 'info')
+        await updateSession()
       } else {
         toast(data.error || 'Failed to cancel. Please try again.', 'error')
       }
