@@ -6,7 +6,7 @@ const PLAN_CONFIG = {
   yearly: { name: 'Tech Skills Hub Yearly', amount: 1470000, interval: 'annually' },
 }
 
-async function getOrCreatePlan(
+async function createPlan(
   config: { name: string; amount: number; interval: string },
   secretKey: string
 ): Promise<string> {
@@ -16,22 +16,15 @@ async function getOrCreatePlan(
       Authorization: `Bearer ${secretKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(config),
+    body: JSON.stringify({
+      ...config,
+      name: config.name + ' ' + Date.now(),
+      currency: 'NGN',
+    }),
   })
   const data = await res.json()
-  if (data.status) return data.data.plan_code
-
-  // Plan likely already exists — find it by name
-  const listRes = await fetch('https://api.paystack.co/plan?perPage=100', {
-    headers: { Authorization: `Bearer ${secretKey}` },
-  })
-  const listData = await listRes.json()
-  if (listData.status) {
-    const match = listData.data?.find((p: any) => p.name === config.name)
-    if (match) return match.plan_code
-  }
-
-  throw new Error(data.message || 'Failed to create plan')
+  if (!data.status) throw new Error(data.message)
+  return data.data.plan_code
 }
 
 export async function POST(req: Request) {
@@ -51,7 +44,7 @@ export async function POST(req: Request) {
   let planCode: string
 
   try {
-    planCode = await getOrCreatePlan(config, secretKey)
+    planCode = await createPlan(config, secretKey)
   } catch (e) {
     return NextResponse.json(
       { error: e instanceof Error ? e.message : 'Plan setup failed' },
@@ -68,6 +61,7 @@ export async function POST(req: Request) {
     body: JSON.stringify({
       email: session.user.email,
       plan: planCode,
+      currency: 'NGN',
       callback_url: `${process.env.NEXTAUTH_URL}/account`,
       metadata: {
         userId: session.user.id,

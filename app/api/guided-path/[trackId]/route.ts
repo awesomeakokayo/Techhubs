@@ -3,6 +3,8 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { buildGuidedPath } from '@/lib/guided-path'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(
   _req: Request,
   { params }: { params: { trackId: string } }
