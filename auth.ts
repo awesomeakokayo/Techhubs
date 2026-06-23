@@ -19,17 +19,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token }) {
       if (token.sub) {
-        const sub = await prisma.subscription.findUnique({
-          where: { userId: token.sub },
-        })
-        token.isSubscribed = sub?.status === 'ACTIVE'
+        try {
+          const sub = await prisma.subscription.findUnique({
+            where: { userId: token.sub },
+          })
+          token.isSubscribed = sub?.status === 'ACTIVE'
+        } catch {
+          token.isSubscribed = false
+        }
       }
       return token
     },
     async session({ session, token }) {
       if (session.user && token.sub) {
         session.user.id = token.sub
-        session.user.isSubscribed = token.isSubscribed as boolean
+        session.user.isSubscribed = (token.isSubscribed as boolean) ?? false
       }
       return session
     },
