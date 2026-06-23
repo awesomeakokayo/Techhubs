@@ -16,17 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       checks: ['state'],
     }),
   ],
-  cookies: {
-    pkceCodeVerifier: {
-      name: 'next-auth.pkce.code_verifier',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: true,
-      },
-    },
-  },
   callbacks: {
     async jwt({ token }) {
       if (token.sub) {
@@ -46,13 +35,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async signIn({ user }) {
       if (user.id) {
-        const existing = await prisma.subscription.findUnique({
-          where: { userId: user.id },
-        })
-        if (!existing) {
-          await prisma.subscription.create({
-            data: { userId: user.id, status: 'NONE' },
+        try {
+          const existing = await prisma.subscription.findUnique({
+            where: { userId: user.id },
           })
+          if (!existing) {
+            await prisma.subscription.create({
+              data: { userId: user.id, status: 'NONE' },
+            })
+          }
+        } catch {
+          // Best-effort; subscription created on subsequent visits
         }
       }
       return true
