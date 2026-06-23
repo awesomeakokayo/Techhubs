@@ -40,7 +40,7 @@ export function Footer() {
             <div key={group}>
               <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">{group}</p>
               <ul className="mt-3 space-y-2">
-                {items.map(({ href, label, external }) => (
+                {items.map(({ href, label, external = false }) => (
                   <li key={label}>
                     {external ? (
                       <a
