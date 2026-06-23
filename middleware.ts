@@ -9,7 +9,12 @@ export async function middleware(req: NextRequest) {
   const isAccount = pathname === '/account' || pathname.startsWith('/account/')
 
   if (isGuidedPath || isAccount) {
-    const token = await getToken({ req, secret: process.env.AUTH_SECRET })
+    const token = await getToken({
+      req,
+      secret: process.env.AUTH_SECRET,
+      secureCookie: true,
+      cookieName: 'next-auth.session-token',
+    })
 
     if (!token) {
       return NextResponse.redirect(new URL('/login?next=' + pathname, req.url))
