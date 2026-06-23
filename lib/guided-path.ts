@@ -30,6 +30,7 @@ export interface QuizQuestion {
 
 const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
   frontend: {
+    'fe-0a': 1,
     'fe-1': 1, 'fe-2': 1, 'fe-5': 1, 'fe-9': 1, 'fe-10': 1,
     'fe-3': 2, 'fe-6': 2, 'fe-14': 2,
     'fe-4': 3, 'fe-7': 3, 'fe-11': 3, 'fe-12': 3, 'fe-13': 3,
@@ -37,6 +38,7 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'fe-16': 4, 'fe-17': 4, 'fe-18': 1,
   },
   backend: {
+    'be-0': 1, 'be-0b': 2,
     'be-1': 1, 'be-2': 2, 'be-3': 2, 'be-6': 2,
     'be-4': 3, 'be-5': 3, 'be-9': 3,
     'be-7': 4, 'be-8': 4, 'be-10': 4,
@@ -61,23 +63,27 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'ux-10': 5, 'ux-11': 5, 'ux-12': 5,
   },
   qa: {
+    'qa-0a': 1,
     'qa-1': 1, 'qa-2': 1, 'qa-6': 1,
     'qa-4': 2,
     'qa-3': 3, 'qa-5': 3,
     'qa-7': 4, 'qa-8': 4, 'qa-9': 4,
   },
   data: {
+    'da-0a': 1,
     'da-5': 1, 'da-1': 2, 'da-2': 2, 'da-8': 2,
     'da-3': 3, 'da-4': 3, 'da-7': 3,
     'da-6': 4,
     'da-9': 5, 'da-10': 5,
   },
   datascience: {
+    'ds-0a': 1,
     'ds-1': 1, 'ds-2': 2, 'ds-3': 3, 'ds-5': 3,
     'ds-4': 2, 'ds-6': 4, 'ds-7': 2,
     'ds-8': 5, 'ds-9': 5,
   },
   devops: {
+    'dv-0': 1, 'dv-0b': 2,
     'dv-1': 1, 'dv-2': 3, 'dv-3': 2,
     'dv-4': 4, 'dv-5': 1, 'dv-6': 4, 'dv-7': 4,
     'dv-8': 5, 'dv-9': 5,
@@ -124,6 +130,7 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'tw-5': 1, 'tw-6': 2, 'tw-7': 3,
   },
   crypto: {
+    'cr-0a': 1, 'cr-0b': 3,
     'cr-1': 1, 'cr-2': 1, 'cr-3': 3,
     'cr-4': 3, 'cr-5': 3, 'cr-6': 4,
     'cr-7': 3, 'cr-8': 6, 'cr-9': 6,

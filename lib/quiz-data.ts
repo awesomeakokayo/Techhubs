@@ -581,12 +581,12 @@ export const QUIZ_DATA: Record<string, QuizQuestion[]> = {
     { question: 'Is Dune Analytics free?', options: ['No, fully paid', 'Yes, with a free tier for building and publishing dashboards', 'Free trial only', 'Enterprise only'], correctIndex: 1, explanation: 'Dune has a free tier for building and sharing public dashboards.' },
   ],
   'cr-14': [
-    { question: 'What does Rekt News publish?', options: ['Bitcoin price predictions', 'Post-mortems of major DeFi exploits and hacks', 'NFT minting guides', 'Wallet reviews'], correctIndex: 1, explanation: 'Rekt News publishes detailed post-mortems of every major DeFi security incident.' },
-    { question: 'Why is Rekt News valuable for learning?', options: ['It predicts hacks', 'It provides real-world security education through exploit analysis', 'It lists token prices', 'It reviews exchanges'], correctIndex: 1, explanation: 'Reading exploit post-mortems is one of the most effective ways to learn smart contract security.' },
+    { question: 'What does the OpenZeppelin Security Blog publish?', options: ['Crypto price news', 'Post-mortems of DeFi exploits and security audits of smart contracts', 'NFT design guides', 'Trading strategies'], correctIndex: 1, explanation: 'The OpenZeppelin Security Blog provides analysis on smart contract security audits, vulnerabilities, and exploit post-mortems.' },
+    { question: 'Why is studying smart contract audits valuable for developers?', options: ['It increases block rewards', 'It helps developers recognize common security pitfalls and patterns in code', 'It speeds up compiler execution', 'It guarantees zero code errors'], correctIndex: 1, explanation: 'Studying audit findings and post-mortems helps developers design secure smart contracts by learning from real-world vulnerabilities.' },
   ],
   'cr-15': [
-    { question: 'What is Speedrun Ethereum?', options: ['A blockchain game', 'Project-based Solidity learning with increasing difficulty', 'A mining tool', 'A wallet app'], correctIndex: 1, explanation: 'Speedrun Ethereum offers graded Solidity projects that build in difficulty.' },
-    { question: 'Who built Speedrun Ethereum?', options: ['Ethereum Foundation', 'The Scaffold-ETH team (BuidlGuidl)', 'OpenZeppelin', 'ConsenSys'], correctIndex: 1, explanation: 'Speedrun Ethereum was created by the same team behind Scaffold-ETH.' },
+    { question: 'What is Solidity by Example?', options: ['A compiler error check list', 'An interactive coding game', 'A website with concise, practical code examples of Solidity smart contracts', 'A paid course on Solidity'], correctIndex: 2, explanation: 'Solidity by Example is a popular reference site containing clean, self-contained examples of Solidity code.' },
+    { question: 'What is the main benefit of using Solidity by Example?', options: ['It writes the code for you automatically', 'It provides simple, readable code snippets for standard contract patterns and syntax', 'It runs security audits on your files', 'It hosts web pages for your dApp'], correctIndex: 1, explanation: 'It offers clear, step-by-step code demonstrations of Solidity features, from simple types to advanced patterns.' },
   ],
   'cr-16': [
     { question: 'What is ETHGlobal?', options: ['A cryptocurrency exchange', 'The premier Web3 hackathon series', 'A wallet app', 'A blockchain network'], correctIndex: 1, explanation: 'ETHGlobal runs the world largest Web3 hackathons with substantial prizes.' },
@@ -597,8 +597,8 @@ export const QUIZ_DATA: Record<string, QuizQuestion[]> = {
     { question: 'How do auditors earn on Code4rena?', options: ['Subscription fees', 'Getting paid for valid bug findings in real protocols', 'Selling courses', 'Mining tokens'], correctIndex: 1, explanation: 'Auditors earn by finding and submitting valid vulnerabilities in audit contests.' },
   ],
   'cr-18': [
-    { question: 'What does DefiLlama track?', options: ['Cryptocurrency prices only', 'TVL, protocol revenue, and stablecoin data across all chains', 'NFT sales only', 'Mining difficulty'], correctIndex: 1, explanation: 'DefiLlama tracks Total Value Locked and other metrics across all major chains.' },
-    { question: 'Is DefiLlama open source?', options: ['No', 'Yes, it is free and open source', 'Only the API is open', 'Paid license required'], correctIndex: 1, explanation: 'DefiLlama is fully open source and community-maintained.' },
+    { question: 'What is DeFi Pulse?', options: ['A cryptocurrency exchange', 'A leaderboard tracking the Total Value Locked (TVL) in DeFi protocols', 'A smart contract audit firm', 'A blockchain network'], correctIndex: 1, explanation: 'DeFi Pulse is a well-known resource that tracks TVL across major decentralized finance protocols.' },
+    { question: 'What does TVL stand for in DeFi?', options: ['Total Volume Liquidation', 'Total Value Locked', 'Token Value Leverage', 'Transfer Volume Limit'], correctIndex: 1, explanation: 'TVL stands for Total Value Locked, representing the dollar amount of assets staked/locked in a smart contract.' },
   ],
   'cr-19': [
     { question: 'What does Anders Brownworth blockchain demo show?', options: ['How to mine Bitcoin', 'A visual interactive demonstration of hashing and blockchain mechanics', 'How to trade NFTs', 'Smart contract development'], correctIndex: 1, explanation: 'Anders Brownworth demo provides an interactive, visual explanation of how blockchains work.' },
@@ -925,12 +925,12 @@ export const QUIZ_DATA: Record<string, QuizQuestion[]> = {
   ],
   // ─── Crypto (cr-21 to cr-22) ───
   'cr-21': [
-    { question: 'What is a cold wallet?', options: ['A wallet connected to the internet', 'A wallet stored offline, not connected to the internet', 'A mobile wallet app', 'A wallet with zero balance'], correctIndex: 1, explanation: 'Cold wallets store private keys offline, providing maximum security against online threats.' },
-    { question: 'What is a multi-sig wallet?', options: ['A wallet that supports multiple cryptocurrencies', 'A wallet requiring multiple signatures to authorise a transaction', 'A smart contract wallet', 'A hardware wallet brand'], correctIndex: 1, explanation: 'Multi-sig wallets require multiple private key signatures to execute a transaction, adding security.' },
+    { question: 'Where does MetaMask store your private keys?', options: ['On MetaMask cloud servers', 'Locally on your device within your browser storage', 'On the Ethereum blockchain', 'In your email inbox'], correctIndex: 1, explanation: 'MetaMask is a non-custodial wallet; it stores your keys locally on your device, not on any server.' },
+    { question: 'What should you do if a website asks for your seed phrase to "verify" your wallet?', options: ['Enter it immediately', 'Never share it; no legitimate application or support agent will ever ask for your seed phrase', 'Type only the first 6 words', 'Email it to MetaMask support'], correctIndex: 1, explanation: 'You must never share your seed phrase. Anyone who has it can steal all your funds.' },
   ],
   'cr-22': [
-    { question: 'What is a seed phrase?', options: ['A single password for your wallet', 'A 12-to-24-word phrase that can recover your wallet', 'A crypto trading strategy', 'A type of smart contract'], correctIndex: 1, explanation: 'A seed phrase (or recovery phrase) can restore full wallet access and all its funds on any compatible wallet.' },
-    { question: 'How should you store your seed phrase?', options: ['In a cloud document for backup', 'On a piece of paper stored securely offline, never photographed or typed online', 'In a text file on your computer', 'Shared with a trusted friend via email'], correctIndex: 1, explanation: 'Seed phrases should be stored offline, ideally on paper or metal, and never entered into any website or app.' },
+    { question: 'What is a the primary role of a crypto wallet?', options: ['To hold actual coins inside a hardware chip', 'To store your private keys and interact with the blockchain to sign transactions', 'To mine new blocks', 'To trade tokens automatically'], correctIndex: 1, explanation: 'Crypto wallets don\'t store coins (coins live on the blockchain); they store your private keys, which authorize transactions.' },
+    { question: 'Which of the following is a key safety rule for generating a seed phrase?', options: ['Write it down on paper and store it offline, away from internet-connected devices', 'Take a screenshot of it and save it in the cloud', 'Copy it to your clipboard and paste it in a text file', 'Send it to yourself in an encrypted chat app'], correctIndex: 0, explanation: 'Generating and storing your seed phrase completely offline prevents digital hackers from stealing it.' },
   ],
   // ─── New Resources (be-14 to be-15) ───
   'be-14': [
@@ -990,5 +990,46 @@ export const QUIZ_DATA: Record<string, QuizQuestion[]> = {
   'son-11': [
     { question: 'What does the Deploying to Sonic Mainnet guide cover?', options: ['Building a Sonic node from scratch', 'Step-by-step process of deploying smart contracts from testnet to Sonic mainnet', 'Creating a Sonic wallet', 'Sonic token trading strategies'], correctIndex: 1, explanation: 'The official guide provides step-by-step instructions for deploying smart contracts to Sonic mainnet from testnet.' },
     { question: 'After testing on a testnet, what should a developer do before deploying to mainnet?', options: ['Deploy immediately without changes', 'Conduct security audits, optimize gas usage, and verify contract functionality', 'Delete the testnet contracts', 'Only change the contract address'], correctIndex: 1, explanation: 'Before mainnet deployment, contracts should be audited, optimized for gas, and thoroughly verified on testnet first.' },
+  ],
+  // ─── New Beginner and Hands-on Resources ───
+  'fe-0a': [
+    { question: 'What does CSS stand for?', options: ['Creative Style Sheets', 'Cascading Style Sheets', 'Computer Style Sheets', 'Colorful Style Sheets'], correctIndex: 1, explanation: 'CSS stands for Cascading Style Sheets.' },
+    { question: 'Which CSS property controls the text size?', options: ['font-style', 'text-size', 'font-size', 'text-style'], correctIndex: 2, explanation: 'The font-size property is used to control text size.' },
+  ],
+  'be-0': [
+    { question: 'What does REST stand for in REST API?', options: ['Random Execution State Transfer', 'Representational State Transfer', 'Routing Elements with Simple Tasks', 'Response External Source Transit'], correctIndex: 1, explanation: 'REST stands for Representational State Transfer.' },
+    { question: 'Which HTTP method is typically used to create a new resource on the server?', options: ['GET', 'POST', 'PUT', 'DELETE'], correctIndex: 1, explanation: 'POST requests are typically used to send data to create new resources on a server.' },
+  ],
+  'be-0b': [
+    { question: 'What is Node.js?', options: ['A CSS framework', 'A JavaScript runtime environment that runs outside the browser', 'A Python package manager', 'A database engine'], correctIndex: 1, explanation: 'Node.js is a runtime environment that allows you to run JavaScript on the server/machine outside of a web browser.' },
+    { question: 'How do you print "Hello World" to the console in Node.js?', options: ['print("Hello World")', 'console.log("Hello World")', 'echo "Hello World"', 'System.out.println("Hello World")'], correctIndex: 1, explanation: 'In Node.js, console.log("Hello World") prints text to the console.' },
+  ],
+  'dv-0': [
+    { question: 'What is a Docker container?', options: ['A physical server hardware unit', 'A lightweight, standalone, executable package of software that includes everything needed to run it', 'A database table partition', 'A Git repository folder'], correctIndex: 1, explanation: 'A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably.' },
+    { question: 'What is the main difference between a Virtual Machine (VM) and a Docker container?', options: ['Containers require a physical monitor, VMs do not', 'Containers share the host OS kernel, making them much lighter than VMs which run a full guest OS', 'VMs only run Linux, while containers only run Windows', 'There is no difference'], correctIndex: 1, explanation: 'Containers share the host system\'s kernel, avoiding the overhead of running a full guest OS per virtual machine.' },
+  ],
+  'dv-0b': [
+    { question: 'Which Docker command runs a container from an image?', options: ['docker create', 'docker run', 'docker build', 'docker start'], correctIndex: 1, explanation: '`docker run` is the command used to run a container from an image.' },
+    { question: 'What happens when you run `docker run hello-world` for the first time?', options: ['It throws an error because the image is missing', 'Docker pulls the hello-world image from Docker Hub and runs it, printing an informational message', 'It formats your hard drive', 'It starts a web server on port 8080'], correctIndex: 1, explanation: 'If the image isn\'t locally cached, Docker automatically downloads (pulls) it from Docker Hub and executes it.' },
+  ],
+  'qa-0a': [
+    { question: 'What is a test case in QA?', options: ['A software bug report', 'A set of actions, inputs, and expected results used to verify a specific software feature works', 'A piece of automated test code', 'A project planning meeting'], correctIndex: 1, explanation: 'A test case details the inputs, execution conditions, testing procedure, and expected results to verify a feature.' },
+    { question: 'Which component is essential in a standard test case template?', options: ['Budget allocation', 'Expected Result and Actual Result fields', 'Compiler type', 'Developer\'s email address'], correctIndex: 1, explanation: 'A test case template must define the Expected Result to verify if the test passes or fails based on Actual Result.' },
+  ],
+  'da-0a': [
+    { question: 'What is a Jupyter / Kaggle notebook?', options: ['A text file with code comments only', 'An interactive document containing live code, equations, visualizations, and narrative text', 'A spreadsheet file format', 'A compiler software application'], correctIndex: 1, explanation: 'Kaggle Notebooks (built on Jupyter) allow analysts to combine code execution, rich text, and charts in one document.' },
+    { question: 'Why are notebooks popular in Data Analysis?', options: ['They compile into mobile apps', 'They allow step-by-step code execution and immediate visualization of data outputs', 'They replace the SQL database entirely', 'They do not require programming skills'], correctIndex: 1, explanation: 'Executing code cells line-by-line lets analysts inspect dataframes, clean data, and plot figures incrementally.' },
+  ],
+  'ds-0a': [
+    { question: 'What is a Decision Tree in Machine Learning?', options: ['A flowchart-like tree structure used for classification and regression tasks', 'A database indexes list', 'A neural network architecture layer', 'A type of search engine indexing algorithm'], correctIndex: 1, explanation: 'A decision tree splits data based on feature values to predict target labels in a tree-like hierarchy.' },
+    { question: 'Which library is standard for training Decision Trees in Python?', options: ['Django', 'scikit-learn', 'Flask', 'NumPy'], correctIndex: 1, explanation: '`scikit-learn` is the primary Python library for training classical machine learning models like Decision Trees.' },
+  ],
+  'cr-0a': [
+    { question: 'What is a blockchain?', options: ['A centralized cloud database', 'A distributed ledger that stores data securely across a network in chronological blocks', 'A web design layout tool', 'A local text file encryption format'], correctIndex: 1, explanation: 'A blockchain is a decentralized, distributed database system where records (blocks) are cryptographically linked.' },
+    { question: 'What mechanism makes blocks in a blockchain tamper-resistant?', options: ['Having a strong server password', 'Each block containing the cryptographic hash of the previous block, creating a linked chain', 'Restricting read access to the database', 'Deleting transaction logs regularly'], correctIndex: 1, explanation: 'Changing a block alters its hash, which invalidates all subsequent blocks because they contain the previous block\'s hash.' },
+  ],
+  'cr-0b': [
+    { question: 'What is the ERC-20 standard?', options: ['A protocol for storing images on-chain', 'A technical standard for fungible tokens on the Ethereum blockchain', 'A security audit checklist', 'A compiler version number'], correctIndex: 1, explanation: 'ERC-20 defines a common list of rules and functions that Ethereum tokens must implement to be fungible and compatible with wallets/exchanges.' },
+    { question: 'Which function in an ERC-20 contract is used to send tokens to another address?', options: ['approve', 'transfer', 'mint', 'allowance'], correctIndex: 1, explanation: 'The `transfer` function moves tokens from the caller\'s address to the recipient\'s address.' },
   ],
 }
