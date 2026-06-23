@@ -124,7 +124,7 @@ export default function UpgradePage() {
           <button
             onClick={() => subscribe('threeMonths')}
             disabled={loading === 'threeMonths'}
-            className="btn btn-primary w-full mt-6 justify-center"
+            className="btn btn-secondary w-full mt-6 justify-center"
           >
             {loading === 'threeMonths' ? 'Redirecting to Paystack...' : 'Choose 3 Months'}
           </button>
@@ -144,7 +144,7 @@ export default function UpgradePage() {
           <button
             onClick={() => subscribe('yearly')}
             disabled={loading === 'yearly'}
-            className="btn btn-secondary w-full mt-6 justify-center"
+            className="btn btn-primary w-full mt-6 justify-center"
           >
             {loading === 'yearly' ? 'Redirecting to Paystack...' : 'Choose Yearly'}
           </button>
