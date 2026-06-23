@@ -1,89 +1,77 @@
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 
-const QUICK_LINKS = [
-  { href: '/start-here', label: 'Start Here' },
-  { href: '/tracks', label: 'All Tracks' },
-  { href: '/roadmaps', label: 'Roadmaps' },
-  { href: '/resources', label: 'Resources' },
-  { href: '/ai-guide', label: 'AI Guide' },
-  { href: '/career', label: 'Career Prep' },
-  { href: '/projects', label: 'Projects' },
-]
-
-const COMMUNITY_LINKS = [
-  { href: 'https://ingressive.org', label: 'Ingressive for Good', external: true },
-  { href: 'https://hng.tech', label: 'HNG Internship', external: true },
-  { href: 'https://shecodeafrica.org', label: 'She Code Africa', external: true },
-  { href: 'https://www.freecodecamp.org/forum', label: 'freeCodeCamp Forum', external: true },
-  { href: 'https://discord.com/invite/the-odin-project', label: 'The Odin Project Discord', external: true },
-]
+const LINKS = {
+  Learn: [
+    { href: '/tracks', label: 'Tracks' },
+    { href: '/roadmaps', label: 'Roadmaps' },
+    { href: '/resources', label: 'Resources' },
+    { href: '/career', label: 'Career' },
+  ],
+  Tools: [
+    { href: '/ai-guide', label: 'AI Guide' },
+    { href: '/start-here', label: 'Start Here' },
+    { href: '/upgrade', label: 'Guided Path' },
+  ],
+  Community: [
+    { href: 'https://discord.gg/example', label: 'Discord', external: true },
+    { href: 'https://linkedin.com/company/example', label: 'LinkedIn', external: true },
+    { href: 'https://twitter.com/example', label: 'Twitter', external: true },
+  ],
+}
 
 export function Footer() {
   return (
-    <footer className="border-t border-border-subtle bg-void">
-      <div className="container py-16">
-        <div className="grid gap-12 md:grid-cols-3 mt-12">
+    <footer className="border-t border-border-subtle bg-surface">
+      <div className="container py-12">
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
+          {/* Brand */}
           <div>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 no-underline"
-            >
-              <span className="font-display text-2xl font-extrabold text-text-primary">
-                TSH
-              </span>
+            <Link href="/" className="font-display text-lg font-extrabold text-text-primary no-underline">
+              TSH
             </Link>
-            <p className="mt-4 max-w-xs text-sm text-text-secondary">
-              A free learning hub for the next generation of tech talent.
+            <p className="mt-2 text-sm text-text-muted max-w-[200px]">
+              Learn the skills that get you hired.
             </p>
           </div>
 
-          <div>
-            <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-text-primary">
-              Quick Links
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {QUICK_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-text-secondary hover:text-teal"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-text-primary">
-              Community
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {COMMUNITY_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-teal"
-                  >
-                    {link.label}
-                    <ArrowUpRight size={14} className="shrink-0 opacity-70" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Links */}
+          {Object.entries(LINKS).map(([group, items]) => (
+            <div key={group}>
+              <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">{group}</p>
+              <ul className="mt-3 space-y-2">
+                {items.map(({ href, label, external }) => (
+                  <li key={label}>
+                    {external ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm text-text-secondary transition-colors hover:text-teal no-underline"
+                      >
+                        {label}
+                        <ArrowUpRight size={13} className="shrink-0 opacity-60" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={href}
+                        className="text-sm text-text-secondary transition-colors hover:text-teal no-underline"
+                      >
+                        {label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="mt-12 border-t border-border-subtle pt-8 text-center">
-          <p className="text-sm text-text-secondary">
-            Built with care by awesomeakokayo © 2026
-          </p>
+        <div className="mt-10 border-t border-border-subtle pt-6 flex flex-wrap items-center justify-between gap-4">
+          <p className="text-xs text-text-muted">© 2025 Tech Skills Hub. All rights reserved.</p>
+          <p className="text-xs text-text-muted">Made with focus, not fluff.</p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

@@ -14,10 +14,10 @@ export default function HomePage() {
       <Hero />
       <ContinueLearningBanner />
       <HowItWorks />
+      <QuizTeaser />
       <TrackCategories />
       <WhyThisHub />
       <UpgradeTeaser />
-      <QuizTeaser />
     </>
   )
 }
