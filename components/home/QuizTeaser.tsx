@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, Zap } from 'lucide-react'
 
@@ -10,18 +11,18 @@ export function QuizTeaser() {
 
   return (
     <section className="container py-10 md:py-14">
-      <div className="relative overflow-hidden rounded-2xl border border-teal/20 bg-teal/[0.04] px-8 py-10 md:px-12 md:py-12">
+      <div className="relative overflow-hidden rounded-2xl border px-8 py-10 md:px-12 md:py-12" style={{ borderColor: 'var(--accent-primary-border)', background: 'var(--accent-primary-bg)' }}>
         {/* Decorative glow */}
         <div
-          className="pointer-events-none absolute -top-20 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full opacity-25 blur-3xl"
-          style={{ backgroundColor: 'var(--color-teal)' }}
+          className="pointer-events-none absolute -top-20 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full opacity-20 blur-3xl"
+          style={{ backgroundColor: 'var(--accent-primary)' }}
           aria-hidden
         />
 
         <div className="relative flex flex-col items-center gap-6 text-center md:flex-row md:text-left md:gap-12 md:items-center">
           {/* Left */}
           <div className="flex-1">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-teal/15 border border-teal/25 px-4 py-1.5 text-sm font-semibold text-teal">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-semibold" style={{ borderColor: 'var(--accent-primary-border)', background: 'var(--accent-primary-bg)', color: 'var(--accent-primary)' }}>
               <Zap size={13} />
               2-minute quiz
             </div>
@@ -41,7 +42,7 @@ export function QuizTeaser() {
           </div>
 
           {/* Right — sample track pills */}
-          <div className="flex flex-wrap justify-center gap-2 md:flex-col md:items-start md:gap-3 md:justify-start shrink-0" aria-hidden>
+          <div className="flex flex-wrap justify-center gap-2 md:flex-col md:items-start md:gap-3 md:justify-start shrink-0">
             {QUIZ_OPTIONS.map((opt, i) => (
               <span
                 key={opt}
@@ -51,9 +52,13 @@ export function QuizTeaser() {
                 {opt}
               </span>
             ))}
-            <span className="rounded-xl border border-teal/30 bg-teal/10 px-4 py-2 text-sm font-semibold text-teal">
+            <Link
+              href="/tracks"
+              className="rounded-xl border px-4 py-2 text-sm font-semibold no-underline transition hover:opacity-80"
+              style={{ borderColor: 'var(--accent-primary-border)', background: 'var(--accent-primary-bg)', color: 'var(--accent-primary)' }}
+            >
               + more →
-            </span>
+            </Link>
           </div>
         </div>
       </div>
