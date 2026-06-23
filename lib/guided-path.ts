@@ -18,6 +18,7 @@ export interface GuidedStep {
   techTags?: string[]
   resourceType?: string
   resourceSource?: string
+  resourceFree?: boolean
 }
 
 export interface QuizQuestion {
@@ -182,17 +183,29 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
       const quiz = getQuizForResource(resource.id)
       steps.push({
         index: index++,
-        type: quiz ? 'quiz' : 'resource',
+        type: 'resource',
         title: resource.title,
         description: resource.description,
         estimatedTime: '30–90 min',
         resourceUrl: resource.url,
         resourceId: resource.id,
         stageId: stage.id,
-        quizQuestions: quiz,
         resourceType: resource.type,
         resourceSource: resource.source,
+        resourceFree: resource.free,
       })
+      if (quiz) {
+        steps.push({
+          index: index++,
+          type: 'quiz',
+          title: `Check Your Understanding — ${resource.title}`,
+          description: `Verify what you learned from "${resource.title}" before moving on.`,
+          estimatedTime: '5–10 min',
+          resourceId: resource.id,
+          stageId: stage.id,
+          quizQuestions: quiz,
+        })
+      }
     }
 
     const levelMap: Record<number, string> = { 1: 'beginner', 2: 'beginner', 3: 'intermediate', 4: 'intermediate', 5: 'advanced' }

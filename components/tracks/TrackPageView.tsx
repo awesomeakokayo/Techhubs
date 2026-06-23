@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import {
-  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles,
+  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles, GraduationCap, CheckCircle2,
 } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
@@ -36,6 +37,8 @@ const RESOURCE_TABS: { id: ResourceType | 'all'; label: string }[] = [
 ]
 
 export function TrackPageView({ track }: { track: Track }) {
+  const { data: session } = useSession()
+  const isSubscribed = session?.user?.isSubscribed ?? false
   const [activeSection, setActiveSection] = useState('overview')
   const [resourceTab, setResourceTab] = useState<ResourceType | 'all'>('all')
   const [progressKey, setProgressKey] = useState(0)
@@ -115,16 +118,28 @@ export function TrackPageView({ track }: { track: Track }) {
                 <ProgressBar percent={percent} label="Your Progress" />
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
-                <a
-                  href={`/guided-path/${track.id}`}
-                  className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
-                >
-                  <Sparkles size={16} />
-                  Start Guided Path
-                </a>
-                <a href="/upgrade" className="btn btn-ghost text-sm">
-                  Unlock Premium
-                </a>
+                {isSubscribed ? (
+                  <a
+                    href={`/guided-path/${track.id}`}
+                    className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
+                  >
+                    <GraduationCap size={16} />
+                    Your Learning Path
+                  </a>
+                ) : (
+                  <>
+                    <a
+                      href={`/guided-path/${track.id}`}
+                      className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
+                    >
+                      <Sparkles size={16} />
+                      Start Guided Path
+                    </a>
+                    <a href="/upgrade" className="btn btn-ghost text-sm">
+                      Unlock Premium
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           </div>

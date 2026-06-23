@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck } from 'lucide-react'
-import type { GuidedStep, QuizQuestion } from '@/lib/guided-path'
+import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck, GraduationCap, RotateCcw } from 'lucide-react'
+import type { GuidedStep } from '@/lib/guided-path'
 
 function getYouTubeId(url: string): string | null {
   try {
@@ -77,6 +77,11 @@ export default function GuidedPathPage() {
     setQuizSubmitted(true)
   }, [])
 
+  const handleQuizRetry = useCallback(() => {
+    setQuizAnswers({})
+    setQuizSubmitted(false)
+  }, [])
+
   const allQuizCorrect = (() => {
     const step = steps[currentIndex]
     if (!step || step.type !== 'quiz' || !step.quizQuestions) return false
@@ -125,8 +130,16 @@ export default function GuidedPathPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-6">
+      <div className="flex items-center gap-2 mb-6">
+        <span className="badge" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff' }}>
+          <GraduationCap size={12} className="mr-1" />
+          PRO
+        </span>
+        <span className="text-xs text-[var(--text-muted)]">Guided Path &middot; Cross-device sync</span>
+      </div>
+
       <div className="mb-8">
-        <p className="section-label">YOUR GUIDED PATH</p>
+        <p className="section-label">YOUR LEARNING PATH</p>
         <div className="progress-bar-container mt-3">
           <div
             className="progress-bar-fill"
@@ -147,6 +160,7 @@ export default function GuidedPathPage() {
           setQuizAnswers={setQuizAnswers}
           quizSubmitted={quizSubmitted}
           onQuizSubmit={handleQuizSubmit}
+          onQuizRetry={handleQuizRetry}
           allQuizCorrect={allQuizCorrect}
           isLastStep={isLastStep}
         />
@@ -161,7 +175,7 @@ export default function GuidedPathPage() {
             <Lock size={16} className="text-[var(--text-muted)]" />
             <div>
               <p className="text-sm font-medium text-[var(--text-secondary)]">{step.title}</p>
-              <p className="text-xs text-[var(--text-muted)]">Unlocks after current step</p>
+              <p className="text-xs text-[var(--text-muted)]">Complete current step to unlock</p>
             </div>
           </div>
         ))}
@@ -205,6 +219,7 @@ function StepCard({
   setQuizAnswers,
   quizSubmitted,
   onQuizSubmit,
+  onQuizRetry,
   allQuizCorrect,
   isLastStep,
 }: {
@@ -215,14 +230,15 @@ function StepCard({
   setQuizAnswers: (fn: (prev: Record<string, number>) => Record<string, number>) => void
   quizSubmitted: boolean
   onQuizSubmit: () => void
+  onQuizRetry: () => void
   allQuizCorrect: boolean
   isLastStep: boolean
 }) {
   const typeStyles: Record<string, { icon: typeof BookOpen; label: string; color: string }> = {
-    concept: { icon: BookOpen, label: 'LEARN', color: 'var(--accent-tertiary)' },
-    resource: { icon: BookOpen, label: 'READ', color: 'var(--accent-primary)' },
-    quiz: { icon: Sparkles, label: 'QUIZ', color: 'var(--accent-secondary)' },
-    project: { icon: Code2, label: 'BUILD', color: 'var(--color-success)' },
+    concept: { icon: BookOpen, label: 'STAGE', color: 'var(--accent-tertiary)' },
+    resource: { icon: Youtube, label: 'RESOURCE', color: 'var(--accent-primary)' },
+    quiz: { icon: Sparkles, label: 'VERIFY', color: 'var(--accent-secondary)' },
+    project: { icon: Code2, label: 'PROJECT', color: 'var(--color-success)' },
     checkpoint: { icon: Trophy, label: 'MILESTONE', color: 'var(--color-info)' },
   }
   const config = typeStyles[step.type] || typeStyles.resource
@@ -250,13 +266,18 @@ function StepCard({
             {rtMeta.label}
           </span>
         )}
+        {step.resourceFree === true && (
+          <span className="badge" style={{ background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)' }}>
+            Free
+          </span>
+        )}
         {step.resourceSource && (
           <span className="text-xs text-[var(--text-muted)]">{step.resourceSource}</span>
         )}
       </div>
 
       <h2 className="text-xl font-display font-bold text-[var(--text-primary)] mb-2">
-        {step.title}
+        {step.type === 'quiz' ? '📝 ' : ''}{step.title}
       </h2>
 
       <p className="text-[var(--text-secondary)] mb-4">{step.description}</p>
@@ -275,6 +296,17 @@ function StepCard({
         </div>
       )}
 
+      {step.type === 'resource' && (
+        <div className="mb-4 p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+          <p className="text-xs font-medium text-[var(--text-muted)] mb-2">YOUR LEARNING TASK</p>
+          <p className="text-sm text-[var(--text-secondary)]">
+            1. Open the resource below and study it thoroughly.<br />
+            2. Come back when you feel confident.<br />
+            3. Click <strong>&quot;I&apos;ve Learned This&quot;</strong> to mark complete and unlock the quiz.
+          </p>
+        </div>
+      )}
+
       {youtubeId && (
         <div className="mb-4 rounded-lg overflow-hidden" style={{ aspectRatio: '16/9', background: '#000' }}>
           <iframe
@@ -289,6 +321,11 @@ function StepCard({
 
       {step.type === 'quiz' && step.quizQuestions && step.quizQuestions.length > 0 && (
         <div className="mb-4 space-y-6">
+          <div className="p-3 rounded-lg" style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+            <p className="text-xs font-medium" style={{ color: '#f59e0b' }}>
+              ⚠️ You must answer all questions correctly to pass.
+            </p>
+          </div>
           {step.quizQuestions.map((q, qi) => {
             const answerKey = `${step.index}-${qi}`
             const selected = quizAnswers[answerKey]
@@ -351,14 +388,21 @@ function StepCard({
             </button>
           )}
           {quizSubmitted && allQuizCorrect && (
-            <p className="text-sm font-medium" style={{ color: 'var(--color-success)' }}>
-              All correct! Well done.
-            </p>
+            <div className="p-3 rounded-lg" style={{ background: 'rgba(22,163,74,0.08)', border: '1px solid rgba(22,163,74,0.2)' }}>
+              <p className="text-sm font-medium" style={{ color: 'var(--color-success)' }}>
+                ✅ All correct! You really learned this.
+              </p>
+            </div>
           )}
           {quizSubmitted && !allQuizCorrect && (
-            <p className="text-xs text-[var(--text-muted)]">
-              Review the explanations above, then try again.
-            </p>
+            <div className="flex flex-col gap-2">
+              <p className="text-xs text-[var(--text-muted)]">
+                Review the explanations above, then try again.
+              </p>
+              <button onClick={onQuizRetry} className="btn btn-secondary text-sm self-start">
+                <RotateCcw size={14} className="mr-1" /> Try Again
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -383,36 +427,66 @@ function StepCard({
           </div>
           <div className="mt-3 space-y-1">
             <p className="text-xs text-[var(--text-secondary)]">
-              💡 <strong>Need help?</strong> Search YouTube for &quot;{step.title.replace('Build: ', '')} tutorial&quot;
+              💡 Search YouTube for &quot;{step.title.replace('Build: ', '')} tutorial&quot;
             </p>
             <p className="text-xs text-[var(--text-secondary)]">
-              🔗 Try <a href="https://www.freecodecamp.org/news/search/?query={step.title.replace('Build: ', '')}" target="_blank" rel="noopener noreferrer" className="underline">freeCodeCamp</a> or <a href="https://github.com/topics/{step.techTags[0]?.toLowerCase() || ''}" target="_blank" rel="noopener noreferrer" className="underline">GitHub examples</a> for reference
+              🔗 Try <a href="https://www.freecodecamp.org/news/search/" target="_blank" rel="noopener noreferrer" className="underline">freeCodeCamp</a> or <a href={`https://github.com/topics/${step.techTags[0]?.toLowerCase() || ''}`} target="_blank" rel="noopener noreferrer" className="underline">GitHub examples</a>
             </p>
           </div>
         </div>
       )}
 
       <div className="flex flex-wrap gap-3 mt-4">
-        {step.resourceUrl && step.type !== 'quiz' && (
+        {step.resourceUrl && (
           <a
             href={step.resourceUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-secondary text-sm"
           >
-            Open Resource <ExternalLink size={14} />
+            <ExternalLink size={14} className="mr-1" /> Open Resource
           </a>
         )}
-        <button
-          onClick={() => onComplete(stepIndex)}
-          disabled={
-            step.type === 'quiz' && quizSubmitted && !allQuizCorrect
-          }
-          className="btn btn-primary text-sm"
-        >
-          {isLastStep ? 'Finish Path' : 'Mark Complete & Continue'}{' '}
-          <ArrowRight size={16} />
-        </button>
+        {step.type === 'resource' && (
+          <button
+            onClick={() => onComplete(stepIndex)}
+            className="btn btn-primary text-sm"
+          >
+            <CheckCircle2 size={14} className="mr-1" /> I&apos;ve Learned This — Mark Complete
+          </button>
+        )}
+        {step.type === 'quiz' && allQuizCorrect && (
+          <button
+            onClick={() => onComplete(stepIndex)}
+            className="btn btn-primary text-sm"
+          >
+            {isLastStep ? 'Finish Path' : 'Continue'} <ArrowRight size={14} className="ml-1" />
+          </button>
+        )}
+        {step.type === 'project' && (
+          <button
+            onClick={() => onComplete(stepIndex)}
+            className="btn btn-primary text-sm"
+          >
+            <CheckCircle2 size={14} className="mr-1" /> Mark Complete
+          </button>
+        )}
+        {step.type === 'concept' && (
+          <button
+            onClick={() => onComplete(stepIndex)}
+            className="btn btn-primary text-sm"
+          >
+            Got It — Start Learning <ArrowRight size={14} className="ml-1" />
+          </button>
+        )}
+        {step.type === 'checkpoint' && (
+          <button
+            onClick={() => onComplete(stepIndex)}
+            className="btn btn-primary text-sm"
+          >
+            Continue to Next Stage <ArrowRight size={14} className="ml-1" />
+          </button>
+        )}
       </div>
 
       {step.type === 'quiz' && quizSubmitted && !allQuizCorrect && (
