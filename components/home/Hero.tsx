@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spotlight'
 
@@ -70,6 +70,25 @@ export function Hero() {
                   <div className="text-xs text-text-muted mt-0.5">{stat.label}</div>
                 </div>
               ))}
+            </motion.div>
+
+            <motion.div
+              className="mt-6 flex flex-wrap items-center gap-2 rounded-xl border border-accent/20 bg-accent/5 px-4 py-3"
+              initial={reduced ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.55 }}
+            >
+              <Sparkles size={16} className="text-accent shrink-0" aria-hidden />
+              <span className="text-sm text-text-secondary">
+                <strong className="text-text-primary">Guided Path</strong> upgrade available &mdash;
+                step-by-step with quizzes, projects &amp; cross-device sync.{' '}
+                <Link
+                  href="/upgrade"
+                  className="inline-flex items-center gap-1 font-medium text-accent hover:underline"
+                >
+                  From ₦2,450/month <ArrowRight size={14} className="shrink-0" />
+                </Link>
+              </span>
             </motion.div>
           </div>
 

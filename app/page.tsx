@@ -4,6 +4,7 @@ import { HowItWorks } from '@/components/home/HowItWorks'
 import { TrackCategories } from '@/components/home/TrackCategories'
 import { WhyThisHub } from '@/components/home/WhyThisHub'
 import { QuizTeaser } from '@/components/home/QuizTeaser'
+import { UpgradeTeaser } from '@/components/home/UpgradeTeaser'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
       <HowItWorks />
       <TrackCategories />
       <WhyThisHub />
+      <UpgradeTeaser />
       <QuizTeaser />
     </>
   )

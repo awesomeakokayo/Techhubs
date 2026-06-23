@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import {
-  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight,
+  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles,
 } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
@@ -113,6 +113,18 @@ export function TrackPageView({ track }: { track: Track }) {
               </div>
               <div className="mt-6 max-w-md" key={progressKey}>
                 <ProgressBar percent={percent} label="Your Progress" />
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a
+                  href={`/guided-path/${track.id}`}
+                  className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
+                >
+                  <Sparkles size={16} />
+                  Start Guided Path
+                </a>
+                <a href="/upgrade" className="btn btn-ghost text-sm">
+                  Unlock Premium
+                </a>
               </div>
             </div>
           </div>

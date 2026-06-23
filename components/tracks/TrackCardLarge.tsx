@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Clock } from 'lucide-react'
+import { ArrowRight, Clock, Sparkles } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge'
@@ -38,6 +38,10 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
         <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
           <Clock size={11} className="text-text-muted animate-fade-in" aria-hidden />
           <span>{track.timeEstimate}</span>
+        </span>
+        <span className="inline-flex items-center gap-1 rounded-full bg-purple/10 px-2 py-0.5 text-[0.65rem] font-medium text-purple">
+          <Sparkles size={10} />
+          Guided Path
         </span>
       </div>
 

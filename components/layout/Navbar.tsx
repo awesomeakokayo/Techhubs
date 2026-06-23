@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, Search, X, ArrowRight } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { Menu, Search, X, ArrowRight, User } from 'lucide-react'
 import { SearchModal } from '@/components/search/SearchModal'
 
 const NAV_LINKS = [
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 ]
 
 export function Navbar() {
+  const { data: session } = useSession()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
 
@@ -63,6 +65,22 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
+            {session ? (
+              <Link
+                href="/account"
+                className="flex h-11 w-11 items-center justify-center rounded-md text-text-secondary hover:text-teal"
+                aria-label="Account"
+              >
+                <User size={20} />
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden rounded-md px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:text-teal lg:inline-flex"
+              >
+                Sign In
+              </Link>
+            )}
             <button
               type="button"
               className="flex h-11 w-11 items-center justify-center rounded-md text-text-secondary hover:text-teal"
