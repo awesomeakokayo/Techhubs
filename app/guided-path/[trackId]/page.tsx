@@ -2,8 +2,19 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy } from 'lucide-react'
+import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck } from 'lucide-react'
 import type { GuidedStep, QuizQuestion } from '@/lib/guided-path'
+
+function getYouTubeId(url: string): string | null {
+  try {
+    const u = new URL(url)
+    if (u.hostname.includes('youtube.com') || u.hostname.includes('youtu.be')) {
+      if (u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0] || null
+      return u.searchParams.get('v')
+    }
+    return null
+  } catch { return null }
+}
 
 export default function GuidedPathPage() {
   const params = useParams()
@@ -15,7 +26,7 @@ export default function GuidedPathPage() {
   const [completedIndices, setCompletedIndices] = useState<number[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [quizAnswer, setQuizAnswer] = useState<number | null>(null)
+  const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({})
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
 
@@ -52,7 +63,7 @@ export default function GuidedPathPage() {
     })
     setCompletedIndices((prev) => [...prev, stepIndex])
     setCurrentIndex(stepIndex + 1)
-    setQuizAnswer(null)
+    setQuizAnswers({})
     setQuizSubmitted(false)
     setShowCelebration(false)
 
@@ -62,9 +73,16 @@ export default function GuidedPathPage() {
     }
   }, [trackId, steps])
 
-  const handleQuizSubmit = useCallback((stepIndex: number) => {
+  const handleQuizSubmit = useCallback(() => {
     setQuizSubmitted(true)
   }, [])
+
+  const allQuizCorrect = (() => {
+    const step = steps[currentIndex]
+    if (!step || step.type !== 'quiz' || !step.quizQuestions) return false
+    if (!quizSubmitted) return false
+    return step.quizQuestions.every((q, qi) => quizAnswers[`${step.index}-${qi}`] === q.correctIndex)
+  })()
 
   if (loading) {
     return (
@@ -125,10 +143,11 @@ export default function GuidedPathPage() {
           step={currentStep}
           stepIndex={currentIndex}
           onComplete={markComplete}
-          quizAnswer={quizAnswer}
-          setQuizAnswer={setQuizAnswer}
+          quizAnswers={quizAnswers}
+          setQuizAnswers={setQuizAnswers}
           quizSubmitted={quizSubmitted}
           onQuizSubmit={handleQuizSubmit}
+          allQuizCorrect={allQuizCorrect}
           isLastStep={isLastStep}
         />
       )}
@@ -169,23 +188,34 @@ export default function GuidedPathPage() {
   )
 }
 
+const resourceTypeMeta: Record<string, { icon: typeof BookOpen; label: string }> = {
+  video: { icon: Youtube, label: 'Video' },
+  docs: { icon: FileText, label: 'Guide' },
+  practice: { icon: BookOpenCheck, label: 'Practice' },
+  tool: { icon: Wrench, label: 'Tool' },
+  community: { icon: Users, label: 'Community' },
+  book: { icon: BookOpen, label: 'Book' },
+}
+
 function StepCard({
   step,
   stepIndex,
   onComplete,
-  quizAnswer,
-  setQuizAnswer,
+  quizAnswers,
+  setQuizAnswers,
   quizSubmitted,
   onQuizSubmit,
+  allQuizCorrect,
   isLastStep,
 }: {
   step: GuidedStep
   stepIndex: number
   onComplete: (i: number) => void
-  quizAnswer: number | null
-  setQuizAnswer: (v: number | null) => void
+  quizAnswers: Record<string, number>
+  setQuizAnswers: (fn: (prev: Record<string, number>) => Record<string, number>) => void
   quizSubmitted: boolean
-  onQuizSubmit: (i: number) => void
+  onQuizSubmit: () => void
+  allQuizCorrect: boolean
   isLastStep: boolean
 }) {
   const typeStyles: Record<string, { icon: typeof BookOpen; label: string; color: string }> = {
@@ -198,32 +228,32 @@ function StepCard({
   const config = typeStyles[step.type] || typeStyles.resource
   const Icon = config.icon
 
-  const allQuizCorrect =
-    step.type === 'quiz' &&
-    step.quizQuestions &&
-    quizSubmitted &&
-    quizAnswer !== null &&
-    quizAnswer === step.quizQuestions[0]?.correctIndex
-
-  const quizFailed =
-    step.type === 'quiz' &&
-    quizSubmitted &&
-    quizAnswer !== null &&
-    step.quizQuestions &&
-    quizAnswer !== step.quizQuestions[0]?.correctIndex
+  const youtubeId = step.resourceUrl ? getYouTubeId(step.resourceUrl) : null
+  const rtMeta = step.type === 'resource' && step.resourceType ? resourceTypeMeta[step.resourceType] : null
 
   return (
     <div className="card border-[var(--accent-primary-border)]">
-      <span
-        className="badge mb-3 inline-flex"
-        style={{
-          background: `${config.color}15`,
-          color: config.color,
-        }}
-      >
-        <Icon size={12} className="mr-1" />
-        {config.label} &middot; {step.estimatedTime}
-      </span>
+      <div className="flex items-center gap-2 mb-3 flex-wrap">
+        <span
+          className="badge inline-flex"
+          style={{
+            background: `${config.color}15`,
+            color: config.color,
+          }}
+        >
+          <Icon size={12} className="mr-1" />
+          {config.label} &middot; {step.estimatedTime}
+        </span>
+        {rtMeta && (
+          <span className="badge" style={{ background: 'var(--bg-elevated)', color: 'var(--text-muted)' }}>
+            <rtMeta.icon size={12} className="mr-1" />
+            {rtMeta.label}
+          </span>
+        )}
+        {step.resourceSource && (
+          <span className="text-xs text-[var(--text-muted)]">{step.resourceSource}</span>
+        )}
+      </div>
 
       <h2 className="text-xl font-display font-bold text-[var(--text-primary)] mb-2">
         {step.title}
@@ -231,80 +261,134 @@ function StepCard({
 
       <p className="text-[var(--text-secondary)] mb-4">{step.description}</p>
 
-      {step.type === 'quiz' && step.quizQuestions && step.quizQuestions.length > 0 && (
+      {step.type === 'concept' && step.topics && step.topics.length > 0 && (
         <div className="mb-4 p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
-          <p className="font-medium text-sm text-[var(--text-primary)] mb-3">
-            {step.quizQuestions[0].question}
-          </p>
-          <div className="space-y-2">
-            {step.quizQuestions[0].options.map((opt, oi) => {
-              let borderColor = 'var(--border-default)'
-              let bgColor = 'transparent'
-              if (quizSubmitted) {
-                if (oi === step.quizQuestions![0].correctIndex) {
-                  borderColor = 'var(--color-success)'
-                  bgColor = 'rgba(22,163,74,0.08)'
-                } else if (oi === quizAnswer) {
-                  borderColor = 'var(--color-error)'
-                  bgColor = 'rgba(220,38,38,0.08)'
-                }
-              } else if (oi === quizAnswer) {
-                borderColor = 'var(--accent-primary)'
-                bgColor = 'var(--accent-primary-bg)'
-              }
-              return (
-                <button
-                  key={oi}
-                  onClick={() => !quizSubmitted && setQuizAnswer(oi)}
-                  className="w-full text-left p-3 rounded-md text-sm transition-all"
-                  style={{
-                    border: `1px solid ${borderColor}`,
-                    background: bgColor,
-                    cursor: quizSubmitted ? 'default' : 'pointer',
-                  }}
-                >
-                  {opt}
-                </button>
-              )
-            })}
-          </div>
+          <p className="text-xs font-medium text-[var(--text-muted)] mb-2">WHAT YOU WILL LEARN</p>
+          <ul className="space-y-1.5">
+            {step.topics.map((topic, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                <span style={{ color: 'var(--accent-tertiary)' }} className="mt-0.5 shrink-0">▸</span>
+                {topic}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {youtubeId && (
+        <div className="mb-4 rounded-lg overflow-hidden" style={{ aspectRatio: '16/9', background: '#000' }}>
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={step.title}
+          />
+        </div>
+      )}
+
+      {step.type === 'quiz' && step.quizQuestions && step.quizQuestions.length > 0 && (
+        <div className="mb-4 space-y-6">
+          {step.quizQuestions.map((q, qi) => {
+            const answerKey = `${step.index}-${qi}`
+            const selected = quizAnswers[answerKey]
+            return (
+              <div key={qi} className="p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+                <p className="font-medium text-sm text-[var(--text-primary)] mb-3">
+                  {qi + 1}. {q.question}
+                </p>
+                <div className="space-y-2">
+                  {q.options.map((opt, oi) => {
+                    let borderColor = 'var(--border-default)'
+                    let bgColor = 'transparent'
+                    if (quizSubmitted) {
+                      if (oi === q.correctIndex) {
+                        borderColor = 'var(--color-success)'
+                        bgColor = 'rgba(22,163,74,0.08)'
+                      } else if (oi === selected) {
+                        borderColor = 'var(--color-error)'
+                        bgColor = 'rgba(220,38,38,0.08)'
+                      }
+                    } else if (oi === selected) {
+                      borderColor = 'var(--accent-primary)'
+                      bgColor = 'var(--accent-primary-bg)'
+                    }
+                    return (
+                      <button
+                        key={oi}
+                        onClick={() => {
+                          if (!quizSubmitted) {
+                            setQuizAnswers((prev) => ({ ...prev, [answerKey]: oi }))
+                          }
+                        }}
+                        className="w-full text-left p-3 rounded-md text-sm transition-all"
+                        style={{
+                          border: `1px solid ${borderColor}`,
+                          background: bgColor,
+                          cursor: quizSubmitted ? 'default' : 'pointer',
+                        }}
+                      >
+                        {opt}
+                      </button>
+                    )
+                  })}
+                </div>
+                {quizSubmitted && (
+                  <p className={`text-xs mt-2 ${selected === q.correctIndex ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'}`}>
+                    {q.explanation}
+                  </p>
+                )}
+              </div>
+            )
+          })}
           {!quizSubmitted && (
             <button
-              onClick={() => onQuizSubmit(stepIndex)}
-              disabled={quizAnswer === null}
-              className="btn btn-primary text-sm mt-3"
+              onClick={onQuizSubmit}
+              disabled={step.quizQuestions.some((_, qi) => quizAnswers[`${step.index}-${qi}`] === undefined)}
+              className="btn btn-primary text-sm"
             >
-              Submit Answer
+              Submit Answers
             </button>
           )}
-          {quizSubmitted && (
-            <div className="mt-3">
-              {allQuizCorrect ? (
-                <p className="text-sm font-medium" style={{ color: 'var(--color-success)' }}>
-                  Correct! {step.quizQuestions[0].explanation}
-                </p>
-              ) : quizFailed ? (
-                <p className="text-sm font-medium" style={{ color: 'var(--color-error)' }}>
-                  Not quite. {step.quizQuestions[0].explanation}
-                </p>
-              ) : (
-                <p className="text-sm text-[var(--text-muted)]">
-                  Select an answer and submit.
-                </p>
-              )}
-            </div>
+          {quizSubmitted && allQuizCorrect && (
+            <p className="text-sm font-medium" style={{ color: 'var(--color-success)' }}>
+              All correct! Well done.
+            </p>
+          )}
+          {quizSubmitted && !allQuizCorrect && (
+            <p className="text-xs text-[var(--text-muted)]">
+              Review the explanations above, then try again.
+            </p>
           )}
         </div>
       )}
 
-      {step.type === 'project' && (
+      {step.type === 'project' && step.techTags && step.techTags.length > 0 && (
         <div className="mb-4 p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
-          <p className="text-sm text-[var(--text-secondary)]">
-            <strong className="text-[var(--text-primary)]">Tech:</strong> Check the track page for project tech stack and hints.
-          </p>
-          <p className="text-xs text-[var(--text-muted)] mt-2">
-            Search YouTube or freeCodeCamp for tutorials on building this project.
-          </p>
+          <p className="text-xs font-medium text-[var(--text-muted)] mb-2">TECH STACK</p>
+          <div className="flex flex-wrap gap-2">
+            {step.techTags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs px-2.5 py-1 rounded-full"
+                style={{
+                  background: 'var(--accent-primary-bg)',
+                  color: 'var(--accent-primary)',
+                  border: '1px solid var(--accent-primary-border)',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <div className="mt-3 space-y-1">
+            <p className="text-xs text-[var(--text-secondary)]">
+              💡 <strong>Need help?</strong> Search YouTube for &quot;{step.title.replace('Build: ', '')} tutorial&quot;
+            </p>
+            <p className="text-xs text-[var(--text-secondary)]">
+              🔗 Try <a href="https://www.freecodecamp.org/news/search/?query={step.title.replace('Build: ', '')}" target="_blank" rel="noopener noreferrer" className="underline">freeCodeCamp</a> or <a href="https://github.com/topics/{step.techTags[0]?.toLowerCase() || ''}" target="_blank" rel="noopener noreferrer" className="underline">GitHub examples</a> for reference
+            </p>
+          </div>
         </div>
       )}
 
@@ -333,7 +417,7 @@ function StepCard({
 
       {step.type === 'quiz' && quizSubmitted && !allQuizCorrect && (
         <p className="text-xs text-[var(--text-muted)] mt-2">
-          Review the explanation above, then try again.
+          Answer all questions correctly to continue.
         </p>
       )}
     </div>

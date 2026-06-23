@@ -14,6 +14,10 @@ export interface GuidedStep {
   projectId?: string
   stageId: number
   quizQuestions?: QuizQuestion[]
+  topics?: string[]
+  techTags?: string[]
+  resourceType?: string
+  resourceSource?: string
 }
 
 export interface QuizQuestion {
@@ -34,10 +38,12 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'be-1': 1, 'be-2': 2, 'be-3': 2, 'be-6': 2,
     'be-4': 3, 'be-5': 3, 'be-9': 3,
     'be-7': 4, 'be-8': 4, 'be-10': 4,
+    'be-11': 5, 'be-12': 5, 'be-13': 5,
   },
   fullstack: {
     'fs-1': 1, 'fs-2': 1, 'fs-3': 2,
     'fs-4': 3, 'fs-5': 4, 'fs-6': 4,
+    'fs-7': 5, 'fs-8': 5, 'fs-9': 5,
   },
   python: {
     'py-1': 1, 'py-2': 1, 'py-5': 1,
@@ -49,44 +55,55 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'ux-2': 2, 'ux-4': 2,
     'ux-5': 3, 'ux-9': 3,
     'ux-6': 4,
+    'ux-10': 5, 'ux-11': 5, 'ux-12': 5,
   },
   qa: {
     'qa-1': 1, 'qa-2': 1, 'qa-6': 1,
     'qa-4': 2,
     'qa-3': 3, 'qa-5': 3,
+    'qa-7': 4, 'qa-8': 4, 'qa-9': 4,
   },
   data: {
     'da-5': 1, 'da-1': 2, 'da-2': 2, 'da-8': 2,
     'da-3': 3, 'da-4': 3, 'da-7': 3,
     'da-6': 4,
+    'da-9': 5, 'da-10': 5,
   },
   datascience: {
     'ds-1': 1, 'ds-2': 2, 'ds-3': 3, 'ds-5': 3,
     'ds-4': 2, 'ds-6': 4, 'ds-7': 2,
+    'ds-8': 5, 'ds-9': 5,
   },
   devops: {
     'dv-1': 1, 'dv-2': 3, 'dv-3': 2,
     'dv-4': 4, 'dv-5': 1, 'dv-6': 4, 'dv-7': 4,
+    'dv-8': 5, 'dv-9': 5,
   },
   cyber: {
     'cy-1': 3, 'cy-2': 3, 'cy-3': 3,
     'cy-4': 2, 'cy-5': 1, 'cy-6': 2, 'cy-7': 3,
+    'cy-8': 4, 'cy-9': 4,
   },
   mobile: {
     'mob-1': 2, 'mob-2': 2, 'mob-3': 2,
     'mob-4': 1, 'mob-5': 2, 'mob-6': 3,
+    'mob-7': 4, 'mob-8': 4,
   },
   video: {
     'vid-1': 1, 'vid-2': 1, 'vid-3': 3,
     'vid-4': 1, 'vid-5': 2, 'vid-6': 3,
+    'vid-7': 4, 'vid-8': 4,
   },
   youtube: {
     'yt-1': 1, 'yt-2': 2, 'yt-3': 2,
     'yt-4': 3, 'yt-5': 3, 'yt-6': 2,
+    'yt-7': 4, 'yt-8': 4,
   },
   marketing: {
     'mkt-1': 1, 'mkt-2': 2, 'mkt-3': 2,
     'mkt-4': 2, 'mkt-5': 2, 'mkt-6': 2,
+    'mkt-7': 3, 'mkt-9': 3,
+    'mkt-8': 4, 'mkt-10': 4,
   },
   ai: {
     'ai-1': 1, 'ai-2': 2, 'ai-3': 2,
@@ -107,20 +124,24 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'cr-13': 7, 'cr-14': 6, 'cr-15': 3,
     'cr-16': 5, 'cr-17': 6, 'cr-18': 4,
     'cr-19': 1, 'cr-20': 4,
+    'cr-21': 2, 'cr-22': 2,
   },
   projectmgmt: {
     'pm-1': 1, 'pm-2': 2, 'pm-3': 2, 'pm-4': 1,
     'pm-5': 3, 'pm-6': 2, 'pm-7': 5, 'pm-8': 3, 'pm-9': 3,
+    'pm-10': 4, 'pm-11': 4,
   },
   productmgmt: {
     'prd-1': 1, 'prd-2': 7, 'prd-3': 1,
     'prd-4': 7, 'prd-5': 3, 'prd-6': 5,
     'prd-7': 5, 'prd-8': 7, 'prd-9': 6,
+    'prd-10': 2, 'prd-11': 2, 'prd-12': 4, 'prd-13': 4,
   },
   dart: {
     'dart-1': 1, 'dart-2': 1, 'dart-3': 1,
     'dart-4': 1, 'dart-5': 4, 'dart-6': 1,
     'dart-7': 4, 'dart-8': 4,
+    'dart-9': 2, 'dart-10': 3, 'dart-11': 3,
   },
   sonic: {
     'son-1': 1, 'son-2': 2, 'son-3': 3,
@@ -144,6 +165,7 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
       description: stage.description,
       estimatedTime: stage.duration,
       stageId: stage.id,
+      topics: stage.topics,
     })
 
     const stageResources = track.resources
@@ -168,6 +190,8 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         resourceId: resource.id,
         stageId: stage.id,
         quizQuestions: quiz,
+        resourceType: resource.type,
+        resourceSource: resource.source,
       })
     }
 
@@ -190,6 +214,7 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         estimatedTime: '1–3 days',
         projectId: matchingProject.id,
         stageId: stage.id,
+        techTags: matchingProject.techTags,
       })
     }
 

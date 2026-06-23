@@ -756,4 +756,180 @@ export const QUIZ_DATA: Record<string, QuizQuestion[]> = {
     { question: 'What is the Sonic Discord for?', options: ['Gaming', 'Official developer community for help and collaboration', 'Trading signals', 'NFT marketplace'], correctIndex: 1, explanation: 'Sonic Discord is the official developer community for getting help and finding collaborators.' },
     { question: 'What can you find in the Sonic developer community?', options: ['Token price predictions', 'Help, collaboration opportunities, and ecosystem updates', 'Job offers only', 'Design resources'], correctIndex: 1, explanation: 'The Sonic Discord community offers developer support, collaboration, and ecosystem news.' },
   ],
+  // ─── BACKEND (be-11 to be-13) ───
+  'be-11': [
+    { question: 'What does Render\'s free tier do after 15 minutes of inactivity?', options: ['Deletes the app', 'Spins down the web service', 'Charges a fee', 'Sends an alert'], correctIndex: 1, explanation: 'Render free web services spin down after 15 minutes without traffic, then spin back up on the next request.' },
+    { question: 'Which service type can be deployed for free on Render?', options: ['Kubernetes clusters', 'Web services and static sites', 'Load balancers', 'VPNs'], correctIndex: 1, explanation: 'Render offers free web services and static sites for testing and hobby projects.' },
+  ],
+  'be-12': [
+    { question: 'How does Railway deploy applications?', options: ['Only from Docker Hub', 'From GitHub repos, CLI, or Docker', 'Only via CLI', 'Only from GitLab'], correctIndex: 1, explanation: 'Railway supports deployment from GitHub repositories, the Railway CLI, and Docker.' },
+    { question: 'What does Railway provide for databases?', options: ['Only MySQL', 'Managed PostgreSQL databases as services', 'Only SQLite', 'No database support'], correctIndex: 1, explanation: 'Railway offers managed PostgreSQL databases that can be added as services to a project.' },
+  ],
+  'be-13': [
+    { question: 'What is GitHub Actions primarily used for?', options: ['Code editing', 'CI/CD and workflow automation', 'Database management', 'Design prototyping'], correctIndex: 1, explanation: 'GitHub Actions automates CI/CD pipelines, testing, and deployment workflows.' },
+    { question: 'What language are GitHub Actions workflows written in?', options: ['JSON', 'YAML', 'XML', 'TOML'], correctIndex: 1, explanation: 'GitHub Actions workflows are defined using YAML syntax.' },
+  ],
+  // ─── FULLSTACK (fs-7 to fs-9) ───
+  'fs-7': [
+    { question: 'What is a key architectural pattern for SaaS applications?', options: ['Single-tenant deployment', 'Multi-tenant data isolation', 'Monolithic codebase', 'No database'], correctIndex: 1, explanation: 'Multi-tenant data isolation is a core SaaS pattern where each customer\'s data is separated.' },
+    { question: 'Why are webhooks used in SaaS billing?', options: ['For faster page loads', 'To decouple payment processing from application logic', 'To reduce server costs', 'For SEO'], correctIndex: 1, explanation: 'Webhook-based billing decouples payment processing from application logic through event-driven patterns.' },
+  ],
+  'fs-8': [
+    { question: 'What protocol enables real-time two-way communication between client and server?', options: ['HTTP', 'WebSockets', 'FTP', 'SMTP'], correctIndex: 1, explanation: 'WebSockets provide full-duplex communication channels over a single TCP connection.' },
+    { question: 'Which library is commonly used for WebSockets in Node.js?', options: ['Axios', 'Socket.io', 'Express', 'Lodash'], correctIndex: 1, explanation: 'Socket.io is the most popular library for WebSocket-based real-time communication in Node.js.' },
+  ],
+  'fs-9': [
+    { question: 'What is Bull used for in Node.js applications?', options: ['Logging', 'Background job and queue processing', 'Authentication', 'Testing'], correctIndex: 1, explanation: 'Bull is a Redis-based queue package for handling background jobs and delayed tasks in Node.js.' },
+    { question: 'What does Bull require as a dependency?', options: ['MongoDB', 'Redis', 'MySQL', 'PostgreSQL'], correctIndex: 1, explanation: 'Bull requires Redis as a backing store for its job queues.' },
+  ],
+  // ─── UI/UX (ux-10 to ux-12) ───
+  'ux-10': [
+    { question: 'What should a good design case study include?', options: ['Only final screenshots', 'The problem, process, and solution', 'Only sketches', 'Only the color palette'], correctIndex: 1, explanation: 'A compelling case study tells the story of the problem, the design process, and how the solution addresses it.' },
+    { question: 'Which platform is specifically built for creating design case studies?', options: ['Instagram', 'Behance', 'Twitter', 'LinkedIn'], correctIndex: 1, explanation: 'Behance is a platform designed for creative portfolios with features tailored for case studies.' },
+  ],
+  'ux-11': [
+    { question: 'How many case studies should a junior UX designer aim for?', options: ['One', 'Two or three', 'Ten or more', 'None'], correctIndex: 1, explanation: 'Junior designers with minimal experience should aim for two or three solid case studies.' },
+    { question: 'What is more important than just showing final screens in a portfolio?', options: ['Using many colors', 'Explaining your design process and decisions', 'Adding animations', 'Including every draft'], correctIndex: 1, explanation: 'Employers want to see your problem-solving approach and decision-making, not just final visuals.' },
+  ],
+  'ux-12': [
+    { question: 'What is the first step in a UX case study framework?', options: ['Final design', 'Introduction and project overview', 'User testing results', 'Code snippets'], correctIndex: 1, explanation: 'A UX case study begins with an introduction that sets the project background, problem, and your role.' },
+    { question: 'Why is including research important in a UX case study?', options: ['It makes the case study longer', 'It shows the foundation for design decisions', 'It replaces visual design', 'It is optional'], correctIndex: 1, explanation: 'Research demonstrates that design decisions are based on user needs and evidence, not assumptions.' },
+  ],
+  // ─── DATA ANALYSIS (da-9 to da-10) ───
+  'da-9': [
+    { question: 'What does the StatQuest channel specialize in?', options: ['Cooking recipes', 'Statistics and ML explained visually', 'Travel vlogging', 'Music production'], correctIndex: 1, explanation: 'StatQuest explains statistics and machine learning concepts with clear visual diagrams.' },
+    { question: 'Which statistical concept does StatQuest cover at the fundamentals level?', options: ['Quantum physics', 'Mean, variance, and standard deviation', 'Organic chemistry', 'Literature analysis'], correctIndex: 1, explanation: 'StatQuest fundamentals cover mean, variance, standard deviation, p-values, and other core statistics.' },
+  ],
+  'da-10': [
+    { question: 'What does Khan Academy offer for statistics learners?', options: ['Paid degrees', 'Free structured courses with practice exercises', 'Only video content', 'Only text articles'], correctIndex: 1, explanation: 'Khan Academy provides free statistics courses with video lessons and interactive practice exercises.' },
+    { question: 'Which statistics topic is covered in Khan Academy\'s curriculum?', options: ['Nuclear physics', 'Hypothesis testing and probability distributions', 'Astronomy', 'Geology'], correctIndex: 1, explanation: 'Khan Academy covers probability distributions, hypothesis testing, and other core statistics topics.' },
+  ],
+  // ─── DATA SCIENCE (ds-8 to ds-9) ───
+  'ds-8': [
+    { question: 'What is MLflow Model Registry used for?', options: ['Data visualization', 'Managing and versioning ML model lifecycles', 'Code compilation', 'Network monitoring'], correctIndex: 1, explanation: 'MLflow Model Registry manages the full lifecycle of ML models, including versioning, staging, and production deployment.' },
+    { question: 'How does MLflow package models for deployment?', options: ['As ZIP files', 'As Docker containers with dependencies', 'As plain text files', 'As Excel spreadsheets'], correctIndex: 1, explanation: 'MLflow uses Docker containers to package models with their dependencies for consistent deployment.' },
+  ],
+  'ds-9': [
+    { question: 'Which tools are used together in a typical MLOps pipeline?', options: ['Photoshop, Illustrator', 'MLflow, DVC, FastAPI, Docker', 'Word, Excel, PowerPoint', 'Figma, Sketch, InVision'], correctIndex: 1, explanation: 'A typical MLOps pipeline uses MLflow for tracking, DVC for data versioning, FastAPI for serving, and Docker for packaging.' },
+    { question: 'What is a key benefit of MLOps practices?', options: ['Faster internet', 'Reproducible ML workflows and model monitoring', 'Better graphics', 'More storage'], correctIndex: 1, explanation: 'MLOps ensures reproducibility of ML workflows and enables model monitoring in production.' },
+  ],
+  // ─── DEVOPS (dv-8 to dv-9) ───
+  'dv-8': [
+    { question: 'What is Prometheus primarily used for?', options: ['Code editing', 'Monitoring and alerting', 'Database management', 'Design prototyping'], correctIndex: 1, explanation: 'Prometheus is an open-source monitoring system for collecting and querying metrics.' },
+    { question: 'What visualization tool pairs commonly with Prometheus?', options: ['Tableau', 'Grafana', 'Power BI', 'Excel'], correctIndex: 1, explanation: 'Grafana provides dashboards and visualization for Prometheus metrics.' },
+  ],
+  'dv-9': [
+    { question: 'Which system metrics can Prometheus and Grafana monitor together?', options: ['CPU, memory, disk, network', 'Only CPU', 'Only memory', 'Only disk space'], correctIndex: 0, explanation: 'Prometheus and Grafana can monitor CPU, memory, disk, and network metrics comprehensively.' },
+    { question: 'What is Node Exporter used for in the Prometheus ecosystem?', options: ['Database management', 'Exporting system metrics from Linux hosts', 'Code compilation', 'Load balancing'], correctIndex: 1, explanation: 'Node Exporter collects hardware and OS metrics from Linux systems for Prometheus to scrape.' },
+  ],
+  // ─── CYBERSECURITY (cy-8 to cy-9) ───
+  'cy-8': [
+    { question: 'What type of tool is Splunk in cybersecurity?', options: ['Firewall', 'SIEM (Security Information and Event Management)', 'Antivirus', 'Password manager'], correctIndex: 1, explanation: 'Splunk is a leading SIEM tool for collecting, analyzing, and correlating security event data.' },
+    { question: 'What is Splunk primarily used for in a SOC?', options: ['Social media management', 'Log analysis and threat detection', 'Video editing', 'Web development'], correctIndex: 1, explanation: 'Splunk is used in Security Operations Centers for log analysis, threat detection, and incident investigation.' },
+  ],
+  'cy-9': [
+    { question: 'What does a Splunk SIEM home lab help you practice?', options: ['Video editing', 'Log ingestion, detection queries, and alert creation', 'Game development', 'Music production'], correctIndex: 1, explanation: 'A Splunk home lab teaches log ingestion, writing detection queries, creating alerts, and incident response workflows.' },
+    { question: 'What skill does building a Splunk home lab develop?', options: ['Hardware repair', 'SOC analyst and blue team skills', 'Network cabling', 'Graphic design'], correctIndex: 1, explanation: 'Setting up a Splunk home lab develops practical SOC analyst skills essential for blue team roles.' },
+  ],
+  // ─── MOBILE (mob-7 to mob-8) ───
+  'mob-7': [
+    { question: 'What format does Google Play require for new apps since August 2021?', options: ['APK', 'Android App Bundle (AAB)', 'ZIP', 'IPA'], correctIndex: 1, explanation: 'Google Play requires Android App Bundle (.aab) format for all new apps since August 2021.' },
+    { question: 'What is required before publishing an Android app on Google Play?', options: ['A physical store', 'A developer account ($25 fee)', 'A server', 'A domain name'], correctIndex: 1, explanation: 'To publish on Google Play, you need a developer account which costs a one-time $25 registration fee.' },
+  ],
+  'mob-8': [
+    { question: 'What is required to publish apps on the Apple App Store?', options: ['No fee', 'An Apple Developer Program membership ($99/year)', 'A Windows PC', 'A physical store'], correctIndex: 1, explanation: 'Publishing on the App Store requires an Apple Developer Program membership costing $99 per year.' },
+    { question: 'What does Apple review before publishing an app?', options: ['Nothing', 'App content, functionality, and design compliance', 'Only the app icon', 'Only the app name'], correctIndex: 1, explanation: 'Apple reviews apps for content, functionality, design guidelines, and safety compliance before approval.' },
+  ],
+  // ─── VIDEO EDITING (vid-7 to vid-8) ───
+  'vid-7': [
+    { question: 'What does YouTube Creator Academy teach?', options: ['Music production', 'Video creation, optimization, and channel growth', 'Graphic design', 'Web development'], correctIndex: 1, explanation: 'YouTube Creator Academy offers free training on video creation, editing, thumbnails, and audience growth.' },
+    { question: 'What is a key factor in YouTube video retention?', options: ['Video length', 'Audience retention and engagement', 'Number of comments', 'Upload time'], correctIndex: 1, explanation: 'Audience retention and engagement are critical factors that the YouTube algorithm uses to rank videos.' },
+  ],
+  'vid-8': [
+    { question: 'What is the maximum length for YouTube Shorts?', options: ['30 seconds', '60 seconds', '3 minutes', '10 minutes'], correctIndex: 1, explanation: 'YouTube Shorts can be up to 60 seconds long and are designed for vertical mobile viewing.' },
+    { question: 'What format are YouTube Shorts optimized for?', options: ['Horizontal widescreen', 'Vertical (9:16 aspect ratio)', 'Square (1:1)', 'Cinematic (21:9)'], correctIndex: 1, explanation: 'YouTube Shorts use a vertical 9:16 aspect ratio optimized for mobile viewing.' },
+  ],
+  // ─── YOUTUBE (yt-7 to yt-8) ───
+  'yt-7': [
+    { question: 'What is a key requirement for YouTube Partner Program monetization?', options: ['1,000 subscribers and 4,000 watch hours', '10,000 subscribers', 'A verified Twitter account', '100 videos'], correctIndex: 0, explanation: 'YPP requires 1,000 subscribers and 4,000 watch hours in the past 12 months.' },
+    { question: 'Which program handles YouTube ad revenue payments?', options: ['PayPal', 'AdSense', 'Stripe', 'Apple Pay'], correctIndex: 1, explanation: 'YouTube pays creators through Google AdSense after they join the YouTube Partner Program.' },
+  ],
+  'yt-8': [
+    { question: 'What is affiliate marketing?', options: ['Selling your own products', 'Earning commissions by promoting others\' products', 'Trading stocks', 'Running ads'], correctIndex: 1, explanation: 'Affiliate marketing involves promoting other companies\' products and earning a commission on resulting sales.' },
+    { question: 'Where can creators share affiliate links to earn commissions?', options: ['Only on their website', 'In video descriptions, blogs, and social media', 'Only in emails', 'Only on Twitter'], correctIndex: 1, explanation: 'Affiliate links can be shared across video descriptions, blog posts, social media, and email newsletters.' },
+  ],
+  // ─── MARKETING (mkt-7 to mkt-10) ───
+  'mkt-7': [
+    { question: 'What does Google Ads allow businesses to do?', options: ['Create websites', 'Display ads on Google Search and partner sites', 'Design logos', 'Host emails'], correctIndex: 1, explanation: 'Google Ads enables businesses to show ads on Google Search results, YouTube, and partner websites.' },
+    { question: 'What is a key metric in Google Ads campaigns?', options: ['Page views', 'Click-through rate (CTR)', 'Server uptime', 'Bounce rate'], correctIndex: 1, explanation: 'Click-through rate measures how often people click on your ad after seeing it.' },
+  ],
+  'mkt-8': [
+    { question: 'What is Google Analytics 4 primarily used for?', options: ['Email marketing', 'Website and app analytics and insights', 'SEO keyword research', 'Social media posting'], correctIndex: 1, explanation: 'GA4 tracks website and app user behavior, conversions, and provides analytics insights.' },
+    { question: 'What replaces Universal Analytics\' session-based model in GA4?', options: ['Page view model', 'Event-based data model', 'Click model', 'Time-based model'], correctIndex: 1, explanation: 'GA4 uses an event-based data model instead of the session-based model of Universal Analytics.' },
+  ],
+  'mkt-9': [
+    { question: 'Which platforms does Meta Ads cover?', options: ['Google and YouTube', 'Facebook and Instagram', 'Twitter and LinkedIn', 'TikTok and Snapchat'], correctIndex: 1, explanation: 'Meta Ads manages advertising across Facebook and Instagram platforms.' },
+    { question: 'What is a key feature of Meta Ads targeting?', options: ['Geographic only', 'Demographic, interest, and behavior targeting', 'Age only', 'Gender only'], correctIndex: 1, explanation: 'Meta Ads offers detailed targeting by demographics, interests, behaviors, and custom audiences.' },
+  ],
+  'mkt-10': [
+    { question: 'What is A/B testing used for in marketing?', options: ['Testing server performance', 'Comparing two versions to determine which performs better', 'Testing email delivery', 'Testing page load speed'], correctIndex: 1, explanation: 'A/B testing compares two versions of a webpage, email, or ad to determine which performs better.' },
+    { question: 'Why is statistical significance important in A/B testing?', options: ['It is optional', 'It ensures results are not due to random chance', 'It makes results look better', 'It speeds up testing'], correctIndex: 1, explanation: 'Statistical significance confirms that observed differences in A/B test results are likely not due to random variation.' },
+  ],
+  // ─── QA (qa-8 to qa-9) ───
+  'qa-8': [
+    { question: 'What testing framework does Playwright provide?', options: ['Unit testing only', 'Cross-browser end-to-end testing', 'API testing only', 'Load testing only'], correctIndex: 1, explanation: 'Playwright enables cross-browser end-to-end testing across Chromium, Firefox, and WebKit.' },
+    { question: 'What programming languages does Playwright support?', options: ['Only JavaScript', 'TypeScript, JavaScript, Python, C#, and Java', 'Only Python', 'Only Java'], correctIndex: 1, explanation: 'Playwright supports TypeScript, JavaScript, Python, C#, and Java.' },
+  ],
+  'qa-9': [
+    { question: 'What does OWASP ZAP help test for?', options: ['Performance issues', 'Web application security vulnerabilities', 'Database performance', 'UI design'], correctIndex: 1, explanation: 'OWASP ZAP is a web app security scanner that helps find vulnerabilities in web applications.' },
+    { question: 'Is OWASP ZAP free to use?', options: ['No, it is paid', 'Yes, it is free and open-source', 'Free trial only', 'Subscription required'], correctIndex: 1, explanation: 'OWASP ZAP is a free, open-source web application security scanner.' },
+  ],
+  // ─── Dart (dart-9 to dart-11) ───
+  'dart-9': [
+    { question: 'What keyword does Dart use to inherit from a class?', options: ['extends', 'implements', 'inherits', 'with'], correctIndex: 0, explanation: 'Dart uses `extends` for class inheritance, `implements` for interface conformance, and `with` for mixins.' },
+    { question: 'What is a mixin in Dart?', options: ['A class that can be instantiated', 'A way to reuse code across multiple class hierarchies', 'A type of interface', 'A built-in function'], correctIndex: 1, explanation: 'Mixins allow code reuse across multiple class hierarchies without using inheritance.' },
+  ],
+  'dart-10': [
+    { question: 'What does the `async` keyword do in Dart?', options: ['Makes a function run faster', 'Marks a function as asynchronous, returning a Future', 'Creates a new isolate', 'Pauses the program'], correctIndex: 1, explanation: 'The `async` keyword marks a function as asynchronous and makes it return a Future.' },
+    { question: 'What keyword do you use to wait for a Future in Dart?', options: ['pause', 'wait', 'await', 'delay'], correctIndex: 2, explanation: 'The `await` keyword is used to pause execution until a Future completes.' },
+  ],
+  'dart-11': [
+    { question: 'What is a Stream in Dart?', options: ['A sequence of asynchronous events', 'A file input/output operation', 'A type of list', 'A network connection'], correctIndex: 0, explanation: 'A Stream is a sequence of asynchronous events delivered over time.' },
+    { question: 'What is StreamController used for in Dart?', options: ['Managing database connections', 'Creating and controlling a stream of data', 'Controlling program flow', 'Managing HTTP requests'], correctIndex: 1, explanation: 'StreamController creates and controls a Stream, allowing you to add data events to the stream.' },
+  ],
+  // ─── Project Management (pm-10 to pm-11) ───
+  'pm-10': [
+    { question: 'What does CPI stand for in Earned Value Management?', options: ['Cost Performance Index', 'Current Performance Indicator', 'Cost Projection Index', 'Comparative Performance Index'], correctIndex: 0, explanation: 'CPI (Cost Performance Index) measures cost efficiency by comparing earned value to actual cost.' },
+    { question: 'What does a CPI of 0.8 indicate?', options: ['Over budget', 'Under budget', 'On budget', 'Ahead of schedule'], correctIndex: 0, explanation: 'A CPI less than 1.0 indicates the project is over budget. CPI greater than 1.0 means under budget.' },
+  ],
+  'pm-11': [
+    { question: 'What is the primary purpose of a project status report?', options: ['To assign blame for delays', 'To communicate progress, risks, and blockers to stakeholders', 'To request more budget', 'To document completed work only'], correctIndex: 1, explanation: 'Status reports keep stakeholders informed of progress, upcoming milestones, risks, and blockers.' },
+    { question: 'What do traffic light indicators (red/yellow/green) in status reports represent?', options: ['Team mood', 'Budget remaining', 'Status of tasks or milestones (on track, at risk, or blocked)', 'Priority level'], correctIndex: 2, explanation: 'Green means on track, yellow means at risk, red means blocked or behind schedule.' },
+  ],
+  // ─── Product Management (prd-10 to prd-13) ───
+  'prd-10': [
+    { question: 'What is the main lesson of The Mom Test?', options: ['Always listen to your mom', 'Ask leading questions to confirm your idea', 'Avoid bad data by not asking if people would buy your idea', 'Only talk to paying customers'], correctIndex: 2, explanation: 'The Mom Test teaches you to avoid asking if people would buy your idea — ask about their life and problems instead.' },
+    { question: 'Which of these is a good customer conversation question according to The Mom Test?', options: ['Would you use this product?', 'How do you currently solve this problem?', 'Do you like my idea?', 'How much would you pay for this?'], correctIndex: 1, explanation: 'Ask about current behaviour, not hypothetical future actions. This reveals real problems.' },
+  ],
+  'prd-11': [
+    { question: 'What is user story mapping used for?', options: ['Creating user interface mockups', 'Visualising the user journey and breaking it into stories for development', 'Tracking bugs in production', 'Writing marketing copy'], correctIndex: 1, explanation: 'Story mapping arranges user activities on a horizontal axis and breaks them into detailed stories vertically.' },
+    { question: 'What is the horizontal axis in a user story map?', options: ['Priority order', 'The user journey or chronological steps', 'Sprint backlogs', 'Team members assigned'], correctIndex: 1, explanation: 'The horizontal axis represents the user journey steps in chronological order.' },
+  ],
+  'prd-12': [
+    { question: 'What sections should a PRD include?', options: ['Only technical specifications', 'Problem statement, user personas, user stories, acceptance criteria, success metrics', 'Only design mockups', 'Only budget estimates'], correctIndex: 1, explanation: 'A good PRD includes problem, personas, stories, acceptance criteria, and success metrics.' },
+    { question: 'Who is the primary audience for a PRD?', options: ['Customers and users', 'Engineers, designers, and QA who need to build the feature', 'Investors and executives', 'Marketing team'], correctIndex: 1, explanation: 'The PRD communicates requirements to the team who will design, build, and test the feature.' },
+  ],
+  'prd-13': [
+    { question: 'What should good acceptance criteria define?', options: ['The budget for the feature', 'The conditions that must be met for a user story to be considered complete', 'The marketing plan for the feature', 'The UI colour scheme'], correctIndex: 1, explanation: 'Acceptance criteria define the conditions a story must meet to be accepted as done.' },
+    { question: 'Which format is commonly used for writing acceptance criteria?', options: ['SQL queries', 'Given/When/Then format', 'JSON objects', 'Figma frames'], correctIndex: 1, explanation: 'The Given/When/Then (Gherkin) format is popular for writing clear, testable acceptance criteria.' },
+  ],
+  // ─── Crypto (cr-21 to cr-22) ───
+  'cr-21': [
+    { question: 'What is a cold wallet?', options: ['A wallet connected to the internet', 'A wallet stored offline, not connected to the internet', 'A mobile wallet app', 'A wallet with zero balance'], correctIndex: 1, explanation: 'Cold wallets store private keys offline, providing maximum security against online threats.' },
+    { question: 'What is a multi-sig wallet?', options: ['A wallet that supports multiple cryptocurrencies', 'A wallet requiring multiple signatures to authorise a transaction', 'A smart contract wallet', 'A hardware wallet brand'], correctIndex: 1, explanation: 'Multi-sig wallets require multiple private key signatures to execute a transaction, adding security.' },
+  ],
+  'cr-22': [
+    { question: 'What is a seed phrase?', options: ['A single password for your wallet', 'A 12-to-24-word phrase that can recover your wallet', 'A crypto trading strategy', 'A type of smart contract'], correctIndex: 1, explanation: 'A seed phrase (or recovery phrase) can restore full wallet access and all its funds on any compatible wallet.' },
+    { question: 'How should you store your seed phrase?', options: ['In a cloud document for backup', 'On a piece of paper stored securely offline, never photographed or typed online', 'In a text file on your computer', 'Shared with a trusted friend via email'], correctIndex: 1, explanation: 'Seed phrases should be stored offline, ideally on paper or metal, and never entered into any website or app.' },
+  ],
 }

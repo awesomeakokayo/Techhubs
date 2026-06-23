@@ -585,6 +585,36 @@ export const TRACKS: Track[] = [
         free: true,
         source: "Univ. of Helsinki",
       },
+      {
+        id: "be-11",
+        title: "Render Deployment Guide",
+        description:
+          "Official guide to deploying web services, static sites, and databases on Render's free tier.",
+        url: "https://render.com/docs/your-first-deploy",
+        type: "docs",
+        free: true,
+        source: "Render",
+      },
+      {
+        id: "be-12",
+        title: "Railway Deployment Guides",
+        description:
+          "Step-by-step tutorials for deploying Node.js, Python, and Docker apps on Railway.",
+        url: "https://docs.railway.com/guides/express",
+        type: "docs",
+        free: true,
+        source: "Railway",
+      },
+      {
+        id: "be-13",
+        title: "GitHub Actions Documentation",
+        description:
+          "Official docs on CI/CD pipelines, workflow automation, and deployment with GitHub Actions.",
+        url: "https://docs.github.com/en/actions",
+        type: "docs",
+        free: true,
+        source: "GitHub",
+      },
     ],
     projects: [
       {
@@ -832,6 +862,36 @@ export const TRACKS: Track[] = [
         type: "video",
         free: true,
         source: "Traversy Media",
+      },
+      {
+        id: "fs-7",
+        title: "SaaS Architecture Guide",
+        description:
+          "Deep dive into multi-tenant architecture, billing integration, background jobs, and observability for SaaS apps.",
+        url: "https://render.com/articles/building-and-deploying-a-saas-application-from-scratch",
+        type: "docs",
+        free: true,
+        source: "Render",
+      },
+      {
+        id: "fs-8",
+        title: "WebSockets Full Course",
+        description:
+          "Complete guide to real-time communication with WebSockets, Socket.io, and Node.js.",
+        url: "https://www.youtube.com/watch?v=ZniVgo8U7ek",
+        type: "video",
+        free: true,
+        source: "freeCodeCamp",
+      },
+      {
+        id: "fs-9",
+        title: "Bull Queue Overview",
+        description:
+          "Learn background job processing with Bull, Redis queues, and delayed tasks in Node.js.",
+        url: "https://optimalbits.github.io/bull/",
+        type: "docs",
+        free: true,
+        source: "OptimalBits",
       },
     ],
     projects: [
@@ -1372,6 +1432,36 @@ export const TRACKS: Track[] = [
         free: true,
         source: "Dribbble",
       },
+      {
+        id: "ux-10",
+        title: "Behance Case Study Guide",
+        description:
+          "Behance official guide on building compelling design case studies that showcase your process.",
+        url: "https://www.behance.net/resources/articles/building-the-perfect-case-study",
+        type: "docs",
+        free: true,
+        source: "Behance",
+      },
+      {
+        id: "ux-11",
+        title: "Dribbble Portfolio Guide",
+        description:
+          "Expert tips on creating a UI/UX portfolio and case studies that get you hired.",
+        url: "https://dribbble.com/resources/career/ui-ux-portfolio",
+        type: "docs",
+        free: true,
+        source: "Dribbble",
+      },
+      {
+        id: "ux-12",
+        title: "UX Case Study Complete Guide",
+        description:
+          "Step-by-step guide to writing a UX case study from initial research to final design.",
+        url: "https://uxcel.com/blog/ux-case-study",
+        type: "docs",
+        free: true,
+        source: "Uxcel",
+      },
     ],
     projects: [
       {
@@ -1613,6 +1703,26 @@ export const TRACKS: Track[] = [
         type: "docs",
         free: true,
         source: "Grafana",
+      },
+      {
+        id: "qa-8",
+        title: "Playwright Automation Full Course",
+        description:
+          "Complete Playwright course covering end-to-end testing, page object model, and CI integration.",
+        url: "https://www.youtube.com/watch?v=FjojYq0KxPg",
+        type: "video",
+        free: true,
+        source: "freeCodeCamp",
+      },
+      {
+        id: "qa-9",
+        title: "OWASP ZAP Security Testing",
+        description:
+          "Free web app security scanner. Learn security testing basics with the OWASP ZAP tool.",
+        url: "https://www.zaproxy.org/docs/",
+        type: "docs",
+        free: true,
+        source: "OWASP",
       },
     ],
     projects: [
@@ -1860,6 +1970,26 @@ export const TRACKS: Track[] = [
         type: "book",
         free: true,
         source: "Zi Chong Kao",
+      },
+      {
+        id: "da-9",
+        title: "StatQuest Statistics",
+        description:
+          "YouTube channel covering statistics fundamentals with clear, visual explanations. Mean, variance, p-values, and more.",
+        url: "https://statquest.org/video_index.html",
+        type: "video",
+        free: true,
+        source: "StatQuest",
+      },
+      {
+        id: "da-10",
+        title: "Khan Academy Statistics",
+        description:
+          "Complete free course on statistics and probability, from basics to hypothesis testing, with practice exercises.",
+        url: "https://www.khanacademy.org/math/statistics-probability",
+        type: "docs",
+        free: true,
+        source: "Khan Academy",
       },
     ],
     projects: [
@@ -2113,6 +2243,26 @@ export const TRACKS: Track[] = [
         free: true,
         source: "StatQuest",
       },
+      {
+        id: "ds-8",
+        title: "MLflow Deployment Guide",
+        description:
+          "Official MLflow guide for packaging, deploying, and serving ML models in production.",
+        url: "https://mlflow.org/docs/latest/ml/deployment/",
+        type: "docs",
+        free: true,
+        source: "MLflow",
+      },
+      {
+        id: "ds-9",
+        title: "Build Your First MLOps Pipeline",
+        description:
+          "Hands-on tutorial: build a complete MLOps pipeline with MLflow, FastAPI, Docker, and Prometheus monitoring.",
+        url: "https://kodekloud.com/blog/how-to-build-your-first-mlops-pipeline/",
+        type: "docs",
+        free: true,
+        source: "KodeKloud",
+      },
     ],
     projects: [
       {
@@ -2354,6 +2504,26 @@ export const TRACKS: Track[] = [
         free: true,
         source: "freeCodeCamp",
       },
+      {
+        id: "dv-8",
+        title: "Prometheus & Grafana Setup Guide",
+        description:
+          "Complete guide to installing Prometheus and Grafana for Linux system monitoring with custom dashboards.",
+        url: "https://grafana.com/docs/grafana/latest/fundamentals/getting-started/get-started-grafana-prometheus/",
+        type: "docs",
+        free: true,
+        source: "Grafana Labs",
+      },
+      {
+        id: "dv-9",
+        title: "Linux Monitoring with Prometheus & Grafana",
+        description:
+          "Step-by-step tutorial for monitoring CPU, memory, disk, and network metrics with open-source tools.",
+        url: "https://www.devopsness.com/blog/linux-system-monitoring-prometheus-grafana",
+        type: "docs",
+        free: true,
+        source: "DevOpsNess",
+      },
     ],
     projects: [
       {
@@ -2576,6 +2746,26 @@ export const TRACKS: Track[] = [
         free: true,
         source: "CMU",
       },
+      {
+        id: "cy-8",
+        title: "Splunk SIEM Tutorial",
+        description:
+          "Hands-on Splunk tutorial covering log analysis, threat detection, alerting, and SIEM fundamentals.",
+        url: "https://www.youtube.com/watch?v=pTvGrj3QOmU",
+        type: "video",
+        free: true,
+        source: "CyberInsight",
+      },
+      {
+        id: "cy-9",
+        title: "Splunk SIEM Home Lab",
+        description:
+          "Complete guide to setting up a Splunk SIEM home lab for log analysis, detection queries, and incident response.",
+        url: "https://github.com/0xrajneesh/Splunk-SIEM-Home-Lab",
+        type: "practice",
+        free: true,
+        source: "Rajneesh",
+      },
     ],
     projects: [
       {
@@ -2780,6 +2970,26 @@ export const TRACKS: Track[] = [
         type: "docs",
         free: true,
         source: "Google",
+      },
+      {
+        id: "mob-7",
+        title: "Publish to Google Play Guide",
+        description:
+          "Official Android Developers guide on preparing and publishing your app to the Play Store.",
+        url: "https://developer.android.com/studio/publish",
+        type: "docs",
+        free: true,
+        source: "Google",
+      },
+      {
+        id: "mob-8",
+        title: "Publish to App Store Guide",
+        description:
+          "Apple's official App Store publishing guide covering app preparation, review, and distribution.",
+        url: "https://developer.apple.com/app-store/submitting/",
+        type: "docs",
+        free: true,
+        source: "Apple",
       },
     ],
     projects: [
@@ -2994,6 +3204,26 @@ export const TRACKS: Track[] = [
         free: false,
         source: "Descript",
       },
+      {
+        id: "vid-7",
+        title: "YouTube Creator Academy",
+        description:
+          "Official YouTube training on platform-specific editing, formats, thumbnails, and audience retention.",
+        url: "https://creatoracademy.youtube.com/",
+        type: "docs",
+        free: true,
+        source: "YouTube",
+      },
+      {
+        id: "vid-8",
+        title: "YouTube Shorts Fundamentals",
+        description:
+          "Learn how to create engaging vertical Shorts, optimize for the Shorts feed, and grow with short-form content.",
+        url: "https://www.youtube.com/creators/how-things-work/shorts/",
+        type: "docs",
+        free: true,
+        source: "YouTube",
+      },
     ],
     projects: [
       {
@@ -3199,6 +3429,26 @@ export const TRACKS: Track[] = [
         type: "tool",
         free: true,
         source: "Pexels",
+      },
+      {
+        id: "yt-7",
+        title: "YouTube Monetization Guide",
+        description:
+          "Official YouTube guide on monetization, YPP requirements, AdSense, and revenue optimization.",
+        url: "https://support.google.com/youtube/answer/72857",
+        type: "docs",
+        free: true,
+        source: "Google",
+      },
+      {
+        id: "yt-8",
+        title: "Affiliate Marketing for Creators",
+        description:
+          "Free hub on affiliate marketing strategies, networks, and best practices for content creators.",
+        url: "https://affiliate-marketing-for-beginners.netlify.app/",
+        type: "docs",
+        free: true,
+        source: "Affiliate Marketing Guide",
       },
     ],
     projects: [
@@ -3419,6 +3669,46 @@ export const TRACKS: Track[] = [
         type: "video",
         free: true,
         source: "Ahrefs",
+      },
+      {
+        id: "mkt-7",
+        title: "Google Ads Fundamentals",
+        description:
+          "Official Google Ads training covering search, display, video, and measurement fundamentals.",
+        url: "https://skillshop.withgoogle.com/courses/google-ads-fundamentals",
+        type: "docs",
+        free: true,
+        source: "Google",
+      },
+      {
+        id: "mkt-8",
+        title: "Google Analytics 4 Guide",
+        description:
+          "Free GA4 course covering setup, reports, conversions, audiences, and insights.",
+        url: "https://skillshop.withgoogle.com/courses/google-analytics-4",
+        type: "docs",
+        free: true,
+        source: "Google",
+      },
+      {
+        id: "mkt-9",
+        title: "Meta Ads (Facebook/Instagram)",
+        description:
+          "Official Meta Ads training covering campaign setup, targeting, creative, and optimization.",
+        url: "https://www.facebook.com/business/ads",
+        type: "docs",
+        free: true,
+        source: "Meta",
+      },
+      {
+        id: "mkt-10",
+        title: "A/B Testing Course",
+        description:
+          "Free course on A/B testing methodology, statistical significance, and conversion rate optimization.",
+        url: "https://www.coursera.org/learn/ab-testing",
+        type: "docs",
+        free: false,
+        source: "Coursera / Google",
       },
     ],
     projects: [
@@ -4240,6 +4530,8 @@ export const TRACKS: Track[] = [
       { id: 'cr-18', title: 'DefiLlama', description: 'Track TVL, protocol revenue, and stablecoin data across every chain. Free and open source.', url: 'https://defillama.com', type: 'tool', free: true, source: 'DefiLlama' },
       { id: 'cr-19', title: 'Blockchain Demo — Anders Brownworth', description: 'The most visual, interactive demonstration of how hashing and blockchains work. Use this in Stage 1.', url: 'https://andersbrownworth.com/blockchain', type: 'practice', free: true, source: 'Anders Brownworth' },
       { id: 'cr-20', title: 'DeFi MOOC — UC Berkeley', description: 'Full university-level DeFi course. Lectures by researchers and actual protocol founders. Free.', url: 'https://defi-learning.org', type: 'docs', free: true, source: 'UC Berkeley' },
+      { id: 'cr-21', title: 'Crypto Wallet Security Guide', description: 'Ledger\'s comprehensive guide to wallet security: seed phrases, cold vs hot wallets, multi-sig, phishing prevention.', url: 'https://www.ledger.com/academy/crypto-wallet-security-beginners-guide', type: 'docs', free: true, source: 'Ledger' },
+      { id: 'cr-22', title: 'Seed Phrase Safety Checklist', description: 'Practical checklist for securely generating, storing, and recovering seed phrases. Essential before putting real funds on-chain.', url: 'https://www.coinbase.com/learn/crypto-basics/what-is-a-seed-phrase', type: 'docs', free: true, source: 'Coinbase' },
     ],
     projects: [
       { id: 'cr-p1', title: 'Deploy Your Own ERC-20 Token', description: 'Write, test, and deploy a custom token to a testnet with name, symbol, supply cap, and access-controlled minting.', level: 'beginner', techTags: ['Solidity', 'Hardhat', 'OpenZeppelin'] },
@@ -4315,6 +4607,8 @@ export const TRACKS: Track[] = [
       { id: 'pm-7', title: 'PMI Official Site', description: 'The Project Management Institute — home of the PMP certification. Free resources available.', url: 'https://www.pmi.org', type: 'docs', free: true, source: 'PMI' },
       { id: 'pm-8', title: 'ProjectLibre', description: 'Free open-source alternative to MS Project. Build full Gantt charts and project plans.', url: 'https://www.projectlibre.com', type: 'tool', free: true, source: 'ProjectLibre' },
       { id: 'pm-9', title: 'Notion PM Templates', description: 'Free project management templates — sprint boards, project trackers, meeting notes.', url: 'https://www.notion.so/templates/category/project-management', type: 'tool', free: true, source: 'Notion' },
+      { id: 'pm-10', title: 'Earned Value Management Explained', description: 'Guide to EVM fundamentals: planned value, earned value, actual cost, CPI, SPI, and forecasting.', url: 'https://www.pmi.org/learning/library/earned-value-management-systems-basics-6347', type: 'docs', free: true, source: 'PMI' },
+      { id: 'pm-11', title: 'Project Status Reporting Guide', description: 'Best practices for writing effective project status reports with KPIs, traffic lights, and stakeholder communication.', url: 'https://www.smartsheet.com/content/project-status-report-templates', type: 'docs', free: true, source: 'Smartsheet' },
     ],
     projects: [
       { id: 'pm-p1', title: 'Project Charter', description: 'Write a full project charter for a real or hypothetical project — objectives, scope, stakeholders, risks, timeline, and budget estimate.', level: 'beginner', techTags: ['Documentation', 'Planning', 'Stakeholder Management'] },
@@ -4375,6 +4669,10 @@ export const TRACKS: Track[] = [
       { id: 'prd-7', title: 'Hotjar', description: 'Heatmaps and session recordings. See what users actually do on a page rather than guessing.', url: 'https://www.hotjar.com', type: 'tool', free: true, source: 'Hotjar' },
       { id: 'prd-8', title: 'Mind the Product', description: 'The largest PM community. Articles, events, job board, and a global Slack community.', url: 'https://www.mindtheproduct.com', type: 'community', free: true, source: 'Mind the Product' },
       { id: 'prd-9', title: 'ProductHunt', description: 'Platform where products launch. Essential for understanding what resonates and what does not.', url: 'https://www.producthunt.com', type: 'community', free: true, source: 'Product Hunt' },
+      { id: 'prd-10', title: 'The Mom Test Summary', description: 'The most useful book ever written about customer conversations. This summary gives you the framework in 15 minutes.', url: 'https://www.youtube.com/watch?v=HXo4b62GkJ0', type: 'video', free: true, source: 'YouTube' },
+      { id: 'prd-11', title: 'User Story Mapping Guide', description: 'How to use story mapping to go from user research to actionable product requirements. Free guide.', url: 'https://www.productplan.com/learn/user-story-mapping/', type: 'docs', free: true, source: 'ProductPlan' },
+      { id: 'prd-12', title: 'PRD Template & Examples', description: 'A practical PRD template with real examples from top tech companies. Fill in the blanks to get started.', url: 'https://www.notion.so/templates/product-requirements-document-template', type: 'tool', free: true, source: 'Notion' },
+      { id: 'prd-13', title: 'Writing Good Acceptance Criteria', description: 'Guide to writing acceptance criteria that developers and QA can actually use. Examples included.', url: 'https://www.atlassian.com/agile/requirements/acceptance-criteria', type: 'docs', free: true, source: 'Atlassian' },
     ],
     projects: [
       { id: 'prd-p1', title: 'Product Teardown', description: 'Pick any daily-use app. Write a teardown: target user, jobs-to-be-done, North Star Metric, what works, and what you would change with justification.', level: 'beginner', techTags: ['Product Thinking', 'Analysis', 'Documentation'] },
@@ -4431,6 +4729,9 @@ export const TRACKS: Track[] = [
       { id: 'dart-6', title: 'Dart Null Safety Guide', description: 'The most important modern Dart feature explained clearly. Essential reading before writing real code.', url: 'https://dart.dev/null-safety', type: 'docs', free: true, source: 'Google / Dart' },
       { id: 'dart-7', title: 'pub.dev', description: 'The official Dart and Flutter package repository. Where you find packages and publish your own.', url: 'https://pub.dev', type: 'tool', free: true, source: 'Google' },
       { id: 'dart-8', title: 'Flutter Official Docs', description: 'Where your Dart skills are applied. The official Flutter documentation — thorough and up to date.', url: 'https://flutter.dev/docs', type: 'docs', free: true, source: 'Google' },
+      { id: 'dart-9', title: 'Dart OOP Tutorial', description: 'Deep dive into Dart classes, constructors, inheritance, mixins, and interfaces with clear examples.', url: 'https://www.youtube.com/watch?v=Ej_Pcr4uC2Q', type: 'video', free: true, source: 'freeCodeCamp' },
+      { id: 'dart-10', title: 'Dart Async Programming', description: 'Official Dart guide to Futures, async/await, streams, and isolates for concurrent programming.', url: 'https://dart.dev/codelabs/async-await', type: 'docs', free: true, source: 'Google / Dart' },
+      { id: 'dart-11', title: 'Dart Streams Tutorial', description: 'Learn Dart StreamController, stream transformations, subscriptions, and broadcast streams.', url: 'https://dart.dev/tutorials/language/streams', type: 'docs', free: true, source: 'Google / Dart' },
     ],
     projects: [
       { id: 'dart-p1', title: 'CLI Calculator', description: 'Command-line calculator handling all operations, division-by-zero errors, and user exit gracefully.', level: 'beginner', techTags: ['Dart', 'CLI', 'Error Handling'] },
