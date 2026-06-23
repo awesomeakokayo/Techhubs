@@ -34,12 +34,14 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'fe-3': 2, 'fe-6': 2, 'fe-14': 2,
     'fe-4': 3, 'fe-7': 3, 'fe-11': 3, 'fe-12': 3, 'fe-13': 3,
     'fe-8': 4, 'fe-15': 5,
+    'fe-16': 4, 'fe-17': 4, 'fe-18': 1,
   },
   backend: {
     'be-1': 1, 'be-2': 2, 'be-3': 2, 'be-6': 2,
     'be-4': 3, 'be-5': 3, 'be-9': 3,
     'be-7': 4, 'be-8': 4, 'be-10': 4,
     'be-11': 5, 'be-12': 5, 'be-13': 5,
+    'be-14': 1, 'be-15': 1,
   },
   fullstack: {
     'fs-1': 1, 'fs-2': 1, 'fs-3': 2,
@@ -89,16 +91,19 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'mob-1': 2, 'mob-2': 2, 'mob-3': 2,
     'mob-4': 1, 'mob-5': 2, 'mob-6': 3,
     'mob-7': 4, 'mob-8': 4,
+    'mob-9': 1,
   },
   video: {
     'vid-1': 1, 'vid-2': 1, 'vid-3': 3,
     'vid-4': 1, 'vid-5': 2, 'vid-6': 3,
     'vid-7': 4, 'vid-8': 4,
+    'vid-9': 2,
   },
   youtube: {
     'yt-1': 1, 'yt-2': 2, 'yt-3': 2,
     'yt-4': 3, 'yt-5': 3, 'yt-6': 2,
     'yt-7': 4, 'yt-8': 4,
+    'yt-9': 1,
   },
   marketing: {
     'mkt-1': 1, 'mkt-2': 2, 'mkt-3': 2,
@@ -116,6 +121,7 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
   },
   writing: {
     'tw-1': 1, 'tw-2': 4, 'tw-3': 3, 'tw-4': 2,
+    'tw-5': 1, 'tw-6': 2, 'tw-7': 3,
   },
   crypto: {
     'cr-1': 1, 'cr-2': 1, 'cr-3': 3,
@@ -148,6 +154,7 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'son-1': 1, 'son-2': 2, 'son-3': 3,
     'son-4': 3, 'son-5': 4, 'son-6': 3,
     'son-7': 2, 'son-8': 3, 'son-9': 5,
+    'son-10': 6, 'son-11': 6,
   },
 }
 
@@ -174,10 +181,7 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         const map = RESOURCE_STAGE_MAP[trackId]
         return map ? map[r.id] === stage.id : true
       })
-      .sort((a, b) => {
-        const order: Record<string, number> = { docs: 0, video: 1, practice: 2, book: 3, tool: 4, community: 5 }
-        return (order[a.type] ?? 9) - (order[b.type] ?? 9)
-      })
+      .sort((a, b) => track.resources.indexOf(a) - track.resources.indexOf(b))
 
     for (const resource of stageResources) {
       const quiz = getQuizForResource(resource.id)

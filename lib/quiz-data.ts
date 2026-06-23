@@ -932,4 +932,63 @@ export const QUIZ_DATA: Record<string, QuizQuestion[]> = {
     { question: 'What is a seed phrase?', options: ['A single password for your wallet', 'A 12-to-24-word phrase that can recover your wallet', 'A crypto trading strategy', 'A type of smart contract'], correctIndex: 1, explanation: 'A seed phrase (or recovery phrase) can restore full wallet access and all its funds on any compatible wallet.' },
     { question: 'How should you store your seed phrase?', options: ['In a cloud document for backup', 'On a piece of paper stored securely offline, never photographed or typed online', 'In a text file on your computer', 'Shared with a trusted friend via email'], correctIndex: 1, explanation: 'Seed phrases should be stored offline, ideally on paper or metal, and never entered into any website or app.' },
   ],
+  // ─── New Resources (be-14 to be-15) ───
+  'be-14': [
+    { question: 'What does the HTTP Crash Course cover?', options: ['Database design patterns', 'How HTTP, URLs, and web servers work', 'CSS layout techniques', 'React component architecture'], correctIndex: 1, explanation: 'The HTTP Crash Course by Traversy Media teaches how HTTP, URLs, and web servers work in a concise 30-minute video.' },
+    { question: 'Why is HTTP fundamental for backend developers?', options: ['It compiles JavaScript code', 'It defines the protocol for client-server communication on the web', 'It renders HTML pages', 'It manages database connections'], correctIndex: 1, explanation: 'HTTP is the foundation of data communication on the web, defining how clients request resources and servers respond.' },
+  ],
+  'be-15': [
+    { question: 'What does the "How the Internet Works" video explain?', options: ['Python programming syntax', 'DNS, TCP/IP, and how data moves across the web', 'React component architecture', 'SQL query optimization'], correctIndex: 1, explanation: 'This freeCodeCamp video provides a visual guide to DNS, TCP/IP, and how data moves across the web.' },
+    { question: 'What does DNS do?', options: ['Secures network connections', 'Translates domain names into IP addresses', 'Routes data packets', 'Encrypts web traffic'], correctIndex: 1, explanation: 'DNS translates human-readable domain names into IP addresses that computers use to identify each other on networks.' },
+  ],
+  // ─── New Frontend Resources ───
+  'fe-18': [
+    { question: 'What does the CSS Crash Course by Traversy Media cover?', options: ['JavaScript ES6 syntax only', 'CSS selectors, box model, flexbox, and responsive design', 'React hooks and state management', 'Node.js backend development'], correctIndex: 1, explanation: 'The CSS Crash Course covers everything from selectors and the box model to flexbox and responsive design in one video.' },
+    { question: 'Why should a frontend beginner learn CSS after HTML?', options: ['CSS is optional for web development', 'HTML provides structure, CSS provides styling and layout — both are essential for building websites', 'CSS replaces HTML entirely', 'HTML can style content without CSS'], correctIndex: 1, explanation: 'HTML structures content while CSS controls visual presentation — both are fundamental building blocks of the web.' },
+  ],
+  'fe-16': [
+    { question: 'What does the Git & GitHub Crash Course teach?', options: ['Database management', 'Essential Git commands and GitHub workflow', 'CSS animation techniques', 'React state management'], correctIndex: 1, explanation: 'The Git & GitHub Crash Course covers essential Git commands and GitHub workflow every developer must know.' },
+    { question: 'Why is Git essential for frontend developers?', options: ['It replaces CSS frameworks', 'It enables version control, collaboration, and code history tracking', 'It compiles JavaScript code', 'It hosts websites'], correctIndex: 1, explanation: 'Git tracks changes to code, enables collaboration with other developers, and maintains a full history of project changes.' },
+  ],
+  'fe-17': [
+    { question: 'What does Google\'s Web Performance Optimization guide cover?', options: ['Backend server configuration', 'Core Web Vitals, lazy loading, and performance best practices', 'Database query optimization', 'CSS color theory'], correctIndex: 1, explanation: 'Google\'s web.dev guide covers Core Web Vitals, lazy loading, and performance optimization best practices for faster websites.' },
+    { question: 'Why is web performance important?', options: ['Only SEO experts care about performance', 'Faster websites provide better user experience, higher conversion rates, and better search rankings', 'Performance only affects mobile users', 'Performance is unrelated to user satisfaction'], correctIndex: 1, explanation: 'Fast-loading websites significantly improve user experience, engagement, conversion rates, and search engine rankings.' },
+  ],
+  // ─── Mobile New Resource ───
+  'mob-9': [
+    { question: 'What does the React Native Full Course teach?', options: ['Building iOS apps with Swift', 'Building mobile apps from scratch using React Native', 'Android development with Kotlin', 'Backend API development'], correctIndex: 1, explanation: 'The freeCodeCamp course teaches building a first mobile app from scratch using React Native for absolute beginners.' },
+    { question: 'React Native allows developers to:', options: ['Write mobile apps using only Java', 'Build cross-platform mobile apps using JavaScript and React', 'Develop iOS-only applications', 'Create backend APIs'], correctIndex: 1, explanation: 'React Native enables building mobile apps for both iOS and Android using JavaScript and React patterns.' },
+  ],
+  // ─── Video New Resource ───
+  'vid-9': [
+    { question: 'What does the Storytelling for Video Editors resource teach?', options: ['Color grading techniques', 'Principles of visual storytelling, pacing, and emotional sequencing', 'Audio mixing fundamentals', 'Animation keyframing'], correctIndex: 1, explanation: 'This video teaches the principles of visual storytelling, pacing, and emotional sequencing for video editors.' },
+    { question: 'Why is storytelling important for video editors?', options: ['It only matters for fiction films', 'Good storytelling keeps viewers engaged, conveys messages effectively, and makes content memorable', 'Technical skills are all that matter', 'Storytelling replaces the need for editing skills'], correctIndex: 1, explanation: 'Strong storytelling makes videos more engaging and effective, whether for entertainment, education, or marketing.' },
+  ],
+  // ─── YouTube New Resource ───
+  'yt-9': [
+    { question: 'What does the YouTube for Beginners Guide cover?', options: ['Advanced video editing techniques', 'Setting up a channel, choosing a niche, equipment, and filming first video', 'YouTube algorithm manipulation', 'Paid advertising strategies'], correctIndex: 1, explanation: 'Think Media\'s guide covers the complete process of setting up a channel, choosing a niche, equipment, and creating the first video.' },
+    { question: 'What is the first step in starting a YouTube channel?', options: ['Buying expensive equipment', 'Choosing your niche and understanding your target audience', 'Uploading multiple videos immediately', 'Applying for monetization'], correctIndex: 1, explanation: 'The first step is choosing a niche and understanding who your content is for, which guides all subsequent decisions.' },
+  ],
+  // ─── Writing New Resources ───
+  'tw-5': [
+    { question: 'What does the Technical Writing for Beginners video cover?', options: ['Advanced API documentation', 'Everything needed to start a career in technical writing', 'Fiction writing techniques', 'Book publishing strategies'], correctIndex: 1, explanation: 'This freeCodeCamp video covers everything you need to know to start a career in technical writing.' },
+    { question: 'What skills are essential for technical writers?', options: ['Only creative writing skills', 'Clear communication, understanding of technical concepts, and ability to explain complex topics simply', 'Only programming knowledge', 'Graphic design expertise'], correctIndex: 1, explanation: 'Technical writers need to understand technical concepts and communicate them clearly to varied audiences.' },
+  ],
+  'tw-6': [
+    { question: 'What does the GitHub for Technical Writers resource teach?', options: ['Advanced Git internals', 'Using pull requests, branches, and Markdown rendering for documentation workflows', 'Video editing with GitHub', 'Database management'], correctIndex: 1, explanation: 'This resource teaches technical writers how to use GitHub for documentation including pull requests, branches, and Markdown.' },
+    { question: 'Why should technical writers learn GitHub?', options: ['GitHub is only for developers', 'Many documentation projects use GitHub for version control and collaboration on docs', 'GitHub replaces all writing tools', 'GitHub is a writing platform'], correctIndex: 1, explanation: 'GitHub enables version control, review workflows, and collaboration on documentation projects, making it essential for modern tech writing.' },
+  ],
+  'tw-7': [
+    { question: 'What does the API Documentation Guide cover?', options: ['Frontend development techniques', 'Best practices for writing API documentation that developers find useful', 'Database schema design', 'UI/UX design principles'], correctIndex: 1, explanation: 'This guide covers best practices for writing API documentation that developers actually want to read and use.' },
+    { question: 'What makes good API documentation?', options: ['Listing every endpoint without context', 'Clear examples, consistent structure, error explanations, and getting started guides', 'Only describing authentication methods', 'Copying the source code directly'], correctIndex: 1, explanation: 'Good API docs include practical examples, clear structure, error handling guidance, and onboarding tutorials for new users.' },
+  ],
+  // ─── Sonic New Resources ───
+  'son-10': [
+    { question: 'What does the Sonic FeeM Strategy Guide explain?', options: ['How to deploy smart contracts', 'Sonic\'s Fee Monetization mechanism and how to optimize dApp revenue', 'How to run a Sonic node', 'Sonic token economics'], correctIndex: 1, explanation: 'The official guide explains Sonic\'s Fee Monetization (FeeM) mechanism and how to optimize dApp revenue on Sonic.' },
+    { question: 'What is unique about Sonic\'s FeeM mechanism compared to other chains?', options: ['It charges no fees at all', 'It allows dApps to earn a portion of network fees, creating a new revenue model', 'It only supports stablecoin transactions', 'Fees are paid to validators only'], correctIndex: 1, explanation: 'Sonic\'s FeeM mechanism shares network transaction fees with dApp developers, creating a sustainable revenue model.' },
+  ],
+  'son-11': [
+    { question: 'What does the Deploying to Sonic Mainnet guide cover?', options: ['Building a Sonic node from scratch', 'Step-by-step process of deploying smart contracts from testnet to Sonic mainnet', 'Creating a Sonic wallet', 'Sonic token trading strategies'], correctIndex: 1, explanation: 'The official guide provides step-by-step instructions for deploying smart contracts to Sonic mainnet from testnet.' },
+    { question: 'After testing on a testnet, what should a developer do before deploying to mainnet?', options: ['Deploy immediately without changes', 'Conduct security audits, optimize gas usage, and verify contract functionality', 'Delete the testnet contracts', 'Only change the contract address'], correctIndex: 1, explanation: 'Before mainnet deployment, contracts should be audited, optimized for gas, and thoroughly verified on testnet first.' },
+  ],
 }
