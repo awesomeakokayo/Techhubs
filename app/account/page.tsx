@@ -1,6 +1,7 @@
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
+import { TRACKS } from '@/lib/tracks'
 import { AccountClient } from './AccountClient'
 
 export const dynamic = 'force-dynamic'
@@ -22,5 +23,5 @@ export default async function AccountPage() {
       }
     : null
 
-  return <AccountClient subscription={serialized} user={session.user} />
+  return <AccountClient subscription={serialized} user={session.user} tracks={TRACKS} />
 }

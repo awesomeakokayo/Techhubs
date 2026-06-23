@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { SessionProvider } from '@/components/providers/SessionProvider'
+import { ToastProvider } from '@/components/ui/toast'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import '@/styles/globals.css'
@@ -35,9 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
         <SessionProvider>
-          <Navbar />
-          <main id="main-content">{children}</main>
-          <Footer />
+          <ToastProvider>
+            <Navbar />
+            <main id="main-content">{children}</main>
+            <Footer />
+          </ToastProvider>
         </SessionProvider>
         <Analytics />
         <SpeedInsights />

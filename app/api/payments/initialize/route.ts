@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       email: session.user.email,
       amount: String(amount),
       currency: 'NGN',
-      callback_url: `${process.env.NEXTAUTH_URL}/account`,
+      callback_url: `${process.env.NEXTAUTH_URL}/account?subscribed=true`,
       metadata: {
         userId: session.user.id,
         plan,

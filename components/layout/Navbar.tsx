@@ -122,7 +122,16 @@ export function Navbar() {
                 </Link>
               ))}
             </nav>
-            <div className="mt-auto border-t border-border-subtle pt-6">
+            <div className="mt-auto border-t border-border-subtle pt-6 space-y-3">
+              {!session && (
+                <Link
+                  href="/login"
+                  className="btn btn-secondary w-full justify-center inline-flex items-center gap-1.5"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
               <Link href="/start-here" className="btn btn-primary w-full justify-center inline-flex items-center gap-1.5" onClick={() => setMenuOpen(false)}>
                 Start Learning <ArrowRight size={16} className="shrink-0" />
               </Link>

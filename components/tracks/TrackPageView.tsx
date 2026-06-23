@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import {
-  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles, GraduationCap, CheckCircle2,
+  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles, GraduationCap, CheckCircle2, Loader2, RefreshCw,
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { Track } from '@/lib/tracks'
@@ -13,7 +13,8 @@ import { RoadmapTimeline } from './RoadmapTimeline'
 import { ResourceItem } from './ResourceItem'
 import { ProjectCard } from './ProjectCard'
 import { PromptCard } from './PromptCard'
-import { getTrackPercent, startTrack, getTrackProgress } from '@/lib/progress'
+import { PremiumModal } from '@/components/ui/PremiumModal'
+import { getTrackPercent, startTrack, getTrackProgress, syncTrackProgressToServer, loadTrackProgressFromServer } from '@/lib/progress'
 import { WHO_IS_FOR } from '@/lib/site-content'
 import type { ResourceType } from '@/lib/tracks'
 import { trackEvent } from '@/lib/analytics'
@@ -42,9 +43,17 @@ export function TrackPageView({ track }: { track: Track }) {
   const [activeSection, setActiveSection] = useState('overview')
   const [resourceTab, setResourceTab] = useState<ResourceType | 'all'>('all')
   const [progressKey, setProgressKey] = useState(0)
+  const [premiumOpen, setPremiumOpen] = useState(false)
+  const [syncing, setSyncing] = useState(false)
   const Icon = getTrackIcon(track.icon)
 
-  const refresh = useCallback(() => setProgressKey((k) => k + 1), [])
+  const refresh = useCallback(() => {
+    setProgressKey((k) => k + 1)
+    if (isSubscribed) {
+      setSyncing(true)
+      syncTrackProgressToServer(track.id).finally(() => setSyncing(false))
+    }
+  }, [isSubscribed, track.id])
   const percent = getTrackPercent(track.id, track.roadmap.length, track.projects.length)
 
   useEffect(() => {
@@ -55,6 +64,10 @@ export function TrackPageView({ track }: { track: Track }) {
       path: `/tracks/${track.slug}`,
     })
   }, [track.id, track.slug])
+
+  useEffect(() => {
+    if (isSubscribed) loadTrackProgressFromServer(track.id).then(refresh)
+  }, [isSubscribed, track.id, refresh])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -115,6 +128,19 @@ export function TrackPageView({ track }: { track: Track }) {
                 <span className="badge badge-blue uppercase">{track.category}</span>
               </div>
               <div className="mt-6 max-w-md" key={progressKey}>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-text-muted font-mono">Progress</span>
+                  {isSubscribed && syncing && (
+                    <span className="text-xs text-teal inline-flex items-center gap-1">
+                      <Loader2 size={11} className="animate-spin" /> syncing
+                    </span>
+                  )}
+                  {isSubscribed && !syncing && (
+                    <span className="text-xs text-text-muted inline-flex items-center gap-1">
+                      <RefreshCw size={11} /> synced
+                    </span>
+                  )}
+                </div>
                 <ProgressBar percent={percent} label="Your Progress" />
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
@@ -128,13 +154,14 @@ export function TrackPageView({ track }: { track: Track }) {
                   </a>
                 ) : (
                   <>
-                    <a
-                      href={`/guided-path/${track.id}`}
+                    <button
+                      type="button"
+                      onClick={() => setPremiumOpen(true)}
                       className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
                     >
                       <Sparkles size={16} />
                       Start Guided Path
-                    </a>
+                    </button>
                     <a href="/upgrade" className="btn btn-ghost text-sm">
                       Unlock Premium
                     </a>
@@ -375,6 +402,11 @@ export function TrackPageView({ track }: { track: Track }) {
           </section>
         </div>
       </div>
+      <PremiumModal
+        open={premiumOpen}
+        onClose={() => setPremiumOpen(false)}
+        trackName={track.name}
+      />
     </div>
   )
 }

@@ -239,6 +239,17 @@ strong { font-weight: 600; color: var(--text-primary); }
   animation: grid-drift 20s linear infinite;
 }
 
+@keyframes slide-right {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-in-slide-right { animation: slide-right 0.3s var(--ease-spring); }
+.animate-in-scale { animation: scale-in 0.25s var(--ease-spring); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

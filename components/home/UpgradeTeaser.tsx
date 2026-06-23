@@ -1,8 +1,15 @@
+'use client'
+
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 import { Sparkles, ArrowRight } from 'lucide-react'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
 export function UpgradeTeaser() {
+  const { data: session } = useSession()
+  const isAuthenticated = !!session
+  const ctaHref = isAuthenticated ? '/upgrade' : '/login?next=/upgrade'
+
   return (
     <section className="section">
       <div className="container">
@@ -22,13 +29,15 @@ export function UpgradeTeaser() {
                   progress sync. <strong>₦2,450/month</strong> or <strong>₦14,700/year</strong> (50% off).
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
-                  <Link href="/upgrade" className="btn btn-primary inline-flex items-center gap-1.5">
+                  <Link href={ctaHref} className="btn btn-primary inline-flex items-center gap-1.5">
                     <Sparkles size={16} />
-                    Upgrade Now <ArrowRight size={16} className="shrink-0" />
+                    {isAuthenticated ? 'Upgrade Now' : 'Get Started'} <ArrowRight size={16} className="shrink-0" />
                   </Link>
-                  <Link href="/login" className="btn btn-ghost text-sm">
-                    Sign in to get started
-                  </Link>
+                  {!isAuthenticated && (
+                    <Link href="/upgrade" className="btn btn-ghost text-sm">
+                      See pricing
+                    </Link>
+                  )}
                 </div>
               </div>
 

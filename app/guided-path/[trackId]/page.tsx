@@ -2,7 +2,10 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck, GraduationCap, RotateCcw } from 'lucide-react'
+import Link from 'next/link'
+import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck, GraduationCap, RotateCcw, ChevronLeft } from 'lucide-react'
+import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
+import { TRACKS } from '@/lib/tracks'
 import type { GuidedStep } from '@/lib/guided-path'
 
 function getYouTubeId(url: string): string | null {
@@ -128,8 +131,26 @@ export default function GuidedPathPage() {
     )
   }
 
+  const track = TRACKS.find((t) => t.id === trackId)
+
   return (
     <div className="max-w-2xl mx-auto py-12 px-6">
+      <div className="mb-6">
+        <Breadcrumbs
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tracks', href: '/tracks' },
+            { label: track?.name || trackId, href: `/tracks/${track?.slug || trackId}` },
+            { label: 'Guided Path' },
+          ]}
+        />
+        <Link
+          href={`/tracks/${track?.slug || trackId}`}
+          className="mt-3 inline-flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] no-underline"
+        >
+          <ChevronLeft size={14} /> Back to {track?.name || 'Track'}
+        </Link>
+      </div>
       <div className="flex items-center gap-2 mb-6">
         <span className="badge" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff' }}>
           <GraduationCap size={12} className="mr-1" />

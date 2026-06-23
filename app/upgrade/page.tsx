@@ -1,27 +1,76 @@
 'use client'
 
-import { useState } from 'react'
-import { Check } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { Check, Sparkles, ArrowRight, HelpCircle } from 'lucide-react'
+import { useToast } from '@/components/ui/toast'
+
+const FAQS = [
+  { q: 'What is the Guided Path?', a: 'A step-by-step sequential learning experience for each track. Instead of browsing resources on your own, you get a curated path with concepts, resources, quizzes, and projects in the right order.' },
+  { q: 'What happens to my free access?', a: 'Nothing changes. All tracks, roadmaps, resources, and AI guides remain completely free forever. The subscription only unlocks the Guided Path and cross-device sync.' },
+  { q: 'Can I cancel anytime?', a: 'Yes. You can cancel from the Account page. Your access continues until the end of the current billing period.' },
+  { q: 'How does cross-device sync work?', a: 'When you sign in, your progress is saved to your account. Pick up on any device — phone, laptop, tablet — exactly where you left off.' },
+  { q: 'Is there a free trial?', a: 'There is no trial, but you can explore all tracks and resources for free. Upgrade only when you are ready for a structured path.' },
+  { q: 'What payment methods are accepted?', a: 'Paystack processes all payments. Cards, bank transfers, and mobile money (Nigeria) are supported.' },
+]
 
 export default function UpgradePage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const { toast } = useToast()
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [faqOpen, setFaqOpen] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login?next=/upgrade')
+    }
+  }, [status, router])
 
   const subscribe = async (plan: 'monthly' | 'yearly') => {
+    if (status !== 'authenticated' || !session?.user) {
+      router.push('/login?next=/upgrade')
+      return
+    }
     setLoading(plan)
     setError('')
-    const res = await fetch('/api/payments/initialize', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan }),
-    })
-    const data = await res.json()
-    if (data.authorizationUrl) {
-      window.location.href = data.authorizationUrl
-    } else {
-      setError(data.error || 'Something went wrong. Please try again.')
+    try {
+      const res = await fetch('/api/payments/initialize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+      })
+      const data = await res.json()
+      if (data.authorizationUrl) {
+        window.location.href = data.authorizationUrl
+      } else {
+        setError(data.error || 'Something went wrong. Please try again.')
+        toast(data.error || 'Something went wrong. Please try again.', 'error')
+        setLoading(null)
+      }
+    } catch {
+      setError('Unable to connect. Please check your internet and try again.')
+      toast('Unable to connect. Please check your internet and try again.', 'error')
       setLoading(null)
     }
+  }
+
+  if (status === 'loading') {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="text-text-secondary text-lg">Loading...</div>
+      </div>
+    )
+  }
+
+  if (status === 'unauthenticated') {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="text-text-secondary">Redirecting to sign in...</div>
+      </div>
+    )
   }
 
   return (
@@ -56,7 +105,7 @@ export default function UpgradePage() {
             disabled={loading === 'monthly'}
             className="btn btn-secondary w-full mt-6 justify-center"
           >
-            {loading === 'monthly' ? 'Redirecting...' : 'Choose Monthly'}
+            {loading === 'monthly' ? 'Redirecting to Paystack...' : 'Choose Monthly'}
           </button>
         </div>
 
@@ -76,7 +125,7 @@ export default function UpgradePage() {
             disabled={loading === 'yearly'}
             className="btn btn-primary w-full mt-6 justify-center"
           >
-            {loading === 'yearly' ? 'Redirecting...' : 'Choose Yearly'}
+            {loading === 'yearly' ? 'Redirecting to Paystack...' : 'Choose Yearly'}
           </button>
         </div>
       </div>
@@ -85,6 +134,37 @@ export default function UpgradePage() {
         Free access to all tracks, roadmaps, and resources continues forever &mdash; no account needed.
         This upgrade unlocks the Guided Path and cross-device progress sync.
       </p>
+
+      {/* FAQ */}
+      <section className="mt-20 max-w-2xl mx-auto text-left">
+        <h2 className="text-xl font-display font-bold text-[var(--text-primary)] text-center mb-8">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-3">
+          {FAQS.map((faq, i) => (
+            <div key={i} className="card py-4 px-5">
+              <button
+                type="button"
+                onClick={() => setFaqOpen(faqOpen === i ? null : i)}
+                className="flex w-full items-center justify-between gap-4 text-left"
+              >
+                <span className="font-medium text-[var(--text-primary)] text-sm">{faq.q}</span>
+                <HelpCircle
+                  size={16}
+                  className={`shrink-0 text-[var(--text-muted)] transition-transform duration-200 ${
+                    faqOpen === i ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+              {faqOpen === i && (
+                <p className="mt-3 text-sm text-[var(--text-secondary)] leading-relaxed">
+                  {faq.a}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

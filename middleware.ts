@@ -1,32 +1,23 @@
-import { getToken } from 'next-auth/jwt'
+import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 
-export async function middleware(req: NextRequest) {
+export default auth((req) => {
   const { pathname } = req.nextUrl
-
   const isGuidedPath = pathname.startsWith('/guided-path')
   const isAccount = pathname === '/account' || pathname.startsWith('/account/')
 
   if (isGuidedPath || isAccount) {
-    const token = await getToken({
-      req,
-      secret: process.env.AUTH_SECRET,
-      secureCookie: true,
-      cookieName: 'next-auth.session-token',
-    })
-
-    if (!token) {
+    if (!req.auth) {
       return NextResponse.redirect(new URL('/login?next=' + pathname, req.url))
     }
 
-    if (isGuidedPath && !token.isSubscribed) {
+    if (isGuidedPath && !req.auth.user?.isSubscribed) {
       return NextResponse.redirect(new URL('/upgrade', req.url))
     }
   }
 
   return NextResponse.next()
-}
+})
 
 export const config = {
   matcher: ['/guided-path/:path*', '/account', '/account/:path*'],
