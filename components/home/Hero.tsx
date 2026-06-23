@@ -199,7 +199,7 @@ export function Hero() {
         }}
       />
 
-      <div className="container relative py-20 md:py-28">
+      <div className="container relative py-10 md:py-10">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
 
           {/* ── Copy ── */}

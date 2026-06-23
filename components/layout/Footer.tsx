@@ -24,7 +24,7 @@ const LINKS: Record<string, NavLink[]> = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-border-subtle bg-surface">
+    <footer className=" p-3 border-t border-border-subtle bg-surface">
       <div className="container py-12">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           {/* Brand */}
@@ -70,7 +70,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-border-subtle pt-6 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-xs text-text-muted">© 2025 Tech Skills Hub. All rights reserved.</p>
+          <p className="text-xs text-text-muted">© 2026 Tech Skills Hub. All rights reserved.</p>
           <p className="text-xs text-text-muted">Made with focus, not fluff.</p>
         </div>
       </div>
