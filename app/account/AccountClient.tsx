@@ -31,7 +31,7 @@ interface User {
 
 export function AccountClient({
   subscription: initialSubscription,
-  user,
+  user: serverUser,
   tracks,
 }: {
   subscription: Subscription | null
@@ -39,8 +39,9 @@ export function AccountClient({
   tracks: Track[]
 }) {
   const router = useRouter()
-  const { update: updateSession } = useSession()
+  const { data: session, update: updateSession } = useSession()
   const { toast } = useToast()
+  const user = session?.user ?? serverUser
   const [subscription, setSubscription] = useState<Subscription | null>(initialSubscription)
   const [refreshing, setRefreshing] = useState(false)
   const [cancelling, setCancelling] = useState(false)
@@ -361,8 +362,7 @@ export function AccountClient({
       <button
         onClick={async () => {
           clearProgress()
-          await signOut({ callbackUrl: '/', redirect: false })
-          window.location.href = '/'
+          await signOut({ callbackUrl: '/' })
         }}
         className="btn btn-ghost text-sm"
       >
