@@ -61,12 +61,15 @@ export function ResourcesClient() {
 
   useEffect(() => {
     if (!query.trim()) return
-    trackSearch({
-      path: '/resources',
-      query_length: query.trim().length,
-      result_count: filtered.length,
-      search_category: typeFilter,
-    })
+    const timer = setTimeout(() => {
+      trackSearch({
+        path: '/resources',
+        query_length: query.trim().length,
+        result_count: filtered.length,
+        search_category: typeFilter,
+      })
+    }, 400)
+    return () => clearTimeout(timer)
   }, [query, filtered.length, typeFilter])
 
   return (

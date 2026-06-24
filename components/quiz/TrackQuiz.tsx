@@ -46,8 +46,10 @@ export function TrackQuiz() {
   const [scores, setScores] = useState<Record<string, number>>({})
   const [done, setDone] = useState(false)
   const [started, setStarted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const pick = (optionScores: Record<string, number | undefined>) => {
+    if (submitting || done) return
     if (!started) {
       setStarted(true)
       trackEvent({ event_name: 'quiz_started', path: '/start-here' })
@@ -59,12 +61,13 @@ export function TrackQuiz() {
     setScores(next)
     if (step < QUESTIONS.length - 1) setStep(step + 1)
     else {
+      setSubmitting(true)
       setDone(true)
       const top = Object.entries(next)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 3)
         .map(([id]) => id)
-      saveQuizResult(top)
+      try { saveQuizResult(top) } catch { /* localStorage error */ }
       trackQuizCompletion(top, '/start-here')
       trackEvent({ event_name: 'recommended_tracks_generated', path: '/start-here', quiz_result: top })
     }

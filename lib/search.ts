@@ -26,7 +26,7 @@ function buildIndex(): SearchResult[] {
       trackSlug: track.slug,
     })
 
-    track.resources.forEach((r) => {
+    ;(track.resources ?? []).forEach((r) => {
       items.push({
         id: r.id,
         type: 'resource',
@@ -38,7 +38,7 @@ function buildIndex(): SearchResult[] {
       })
     })
 
-    track.projects.forEach((p) => {
+    ;(track.projects ?? []).forEach((p) => {
       items.push({
         id: p.id,
         type: 'project',
@@ -50,7 +50,7 @@ function buildIndex(): SearchResult[] {
       })
     })
 
-    track.roadmap.forEach((s) => {
+    ;(track.roadmap ?? []).forEach((s) => {
       items.push({
         id: `${track.id}-stage-${s.id}`,
         type: 'roadmap',

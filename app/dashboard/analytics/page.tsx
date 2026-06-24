@@ -1,12 +1,14 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { TRACKS } from '@/lib/tracks'
 import { getProgress } from '@/lib/progress'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 export default function AnalyticsDashboardPage() {
+  const [refreshKey, setRefreshKey] = useState(0)
+  useEffect(() => { const t = setInterval(() => setRefreshKey((k) => k + 1), 5000); return () => clearInterval(t) }, [])
   const summary = useMemo(() => {
     const progress = getProgress()
     const trackEntries = Object.entries(progress.tracks ?? {})
@@ -25,7 +27,7 @@ export default function AnalyticsDashboardPage() {
       .slice(0, 8)
 
     return { activeTrackCount, completedStages, completedProjects, topTracks }
-  }, [])
+  }, [refreshKey])
 
   return (
     <div className="section pt-28">

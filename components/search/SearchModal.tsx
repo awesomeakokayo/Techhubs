@@ -41,7 +41,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
     setSelected(0)
     let cancelled = false
     search(query).then((fuseResults) => {
-      if (!cancelled && fuseResults.length > 0) setResults(fuseResults)
+      if (!cancelled) setResults(fuseResults)
     })
     return () => {
       cancelled = true
@@ -50,16 +50,19 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
 
   useEffect(() => {
     if (!open || !query.trim()) return
-    const grouped = groupResults(results)
-    const topCategory = (Object.keys(grouped) as SearchResultType[]).find(
-      (key) => grouped[key].length > 0
-    )
-    trackSearch({
-      path: window.location.pathname,
-      query_length: query.trim().length,
-      result_count: results.length,
-      search_category: topCategory ?? 'none',
-    })
+    const timer = setTimeout(() => {
+      const grouped = groupResults(results)
+      const topCategory = (Object.keys(grouped) as SearchResultType[]).find(
+        (key) => grouped[key].length > 0
+      )
+      trackSearch({
+        path: window.location.pathname,
+        query_length: query.trim().length,
+        result_count: results.length,
+        search_category: topCategory ?? 'none',
+      })
+    }, 400)
+    return () => clearTimeout(timer)
   }, [open, query, results])
 
   const handleKey = useCallback(

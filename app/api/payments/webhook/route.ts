@@ -17,7 +17,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
   }
 
-  const event = JSON.parse(body)
+  let event: any
+  try { event = JSON.parse(body) }
+  catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
 
   switch (event.event) {
     case 'charge.success': {
@@ -59,6 +61,7 @@ export async function POST(req: Request) {
 
     case 'subscription.create': {
       const { subscription_code, customer } = event.data
+      if (!customer?.customer_code) break
       await prisma.subscription.updateMany({
         where: { paystackCustomerCode: customer.customer_code },
         data: { paystackSubscriptionCode: subscription_code, status: 'ACTIVE' },
@@ -68,6 +71,7 @@ export async function POST(req: Request) {
 
     case 'invoice.payment_failed': {
       const { customer } = event.data
+      if (!customer?.customer_code) break
       await prisma.subscription.updateMany({
         where: { paystackCustomerCode: customer.customer_code },
         data: { status: 'PAST_DUE' },
@@ -77,6 +81,7 @@ export async function POST(req: Request) {
 
     case 'subscription.disable': {
       const { customer } = event.data
+      if (!customer?.customer_code) break
       await prisma.subscription.updateMany({
         where: { paystackCustomerCode: customer.customer_code },
         data: { status: 'CANCELLED' },

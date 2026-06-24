@@ -186,7 +186,8 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
     const stageResources = track.resources
       .filter((r) => {
         const map = RESOURCE_STAGE_MAP[trackId]
-        return map ? map[r.id] === stage.id : true
+        if (!map) return false
+        return map[r.id] === stage.id
       })
       .sort((a, b) => track.resources.indexOf(a) - track.resources.indexOf(b))
 
@@ -222,7 +223,7 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
     const levelMap: Record<number, string> = { 1: 'beginner', 2: 'beginner', 3: 'intermediate', 4: 'intermediate', 5: 'advanced' }
     const matchingProject = track.projects.find((p) => {
       const target = p.level
-      const stageTarget = levelMap[stage.id] || 'beginner'
+      const stageTarget = levelMap[stage.id] || 'advanced'
       if (target === stageTarget) return true
       if (stage.id <= 2 && target === 'beginner') return true
       if (stage.id >= 4 && target === 'advanced') return true

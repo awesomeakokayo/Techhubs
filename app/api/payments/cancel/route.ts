@@ -20,6 +20,19 @@ export async function POST() {
 
   if (subscription.paystackSubscriptionCode) {
     const secretKey = process.env.PAYSTACK_SECRET_KEY!
+
+    // Fetch current subscription details from Paystack to get the email_token
+    const subRes = await fetch(
+      `https://api.paystack.co/subscription/${subscription.paystackSubscriptionCode}`,
+      { headers: { Authorization: `Bearer ${secretKey}` } }
+    )
+    const subData = await subRes.json()
+    const emailToken = subData?.data?.email_token
+
+    if (!emailToken) {
+      return NextResponse.json({ error: 'Could not retrieve email token for cancellation' }, { status: 400 })
+    }
+
     const response = await fetch(
       `https://api.paystack.co/subscription/${subscription.paystackSubscriptionCode}/manage/disable`,
       {
@@ -28,7 +41,7 @@ export async function POST() {
           Authorization: `Bearer ${secretKey}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ code: subscription.paystackSubscriptionCode, token: '' }),
+        body: JSON.stringify({ code: subscription.paystackSubscriptionCode, token: emailToken }),
       }
     )
 

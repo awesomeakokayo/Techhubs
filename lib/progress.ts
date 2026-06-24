@@ -54,7 +54,8 @@ export function getProgress(): ProgressData {
 
 export function saveProgress(data: ProgressData): void {
   if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)) }
+  catch { /* quota exceeded or storage full */ }
 }
 
 export function getTrackProgress(trackId: string): TrackProgress {
@@ -159,8 +160,14 @@ export async function loadAllServerProgress(): Promise<ProgressData | null> {
     const serverData = await res.json() as Record<string, { data: TrackProgress; updatedAt: string }>
 
     const merged: ProgressData = { tracks: {} }
+    const local = getProgress()
     for (const [trackId, entry] of Object.entries(serverData)) {
-      merged.tracks[trackId] = entry.data
+      const localTrack = local.tracks[trackId]
+      if (!localTrack || new Date(entry.updatedAt) > new Date(localTrack.lastVisited ?? 0)) {
+        merged.tracks[trackId] = entry.data
+      } else {
+        merged.tracks[trackId] = localTrack
+      }
     }
     return merged
   } catch {

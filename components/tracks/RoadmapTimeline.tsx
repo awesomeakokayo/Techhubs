@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
 import { Stage } from '@/lib/tracks'
 import { toggleStage, getTrackProgress } from '@/lib/progress'
@@ -16,10 +16,13 @@ interface RoadmapTimelineProps {
 export function RoadmapTimeline({ trackId, stages, colorHex, onProgressChange }: RoadmapTimelineProps) {
   const [expanded, setExpanded] = useState<number | null>(null)
   const progress = getTrackProgress(trackId)
+  const togglingRef = useRef(false)
 
   const handleToggle = (stageId: number) => {
+    if (togglingRef.current) return
+    togglingRef.current = true
     const stage = stages.find((s) => s.id === stageId)
-    const isCompleted = progress.completedStages.includes(stageId)
+    const isCompleted = getTrackProgress(trackId).completedStages.includes(stageId)
     toggleStage(trackId, stageId, stages.length)
     if (!isCompleted) {
       trackEvent({
@@ -38,6 +41,7 @@ export function RoadmapTimeline({ trackId, stages, colorHex, onProgressChange }:
       })
     }
     onProgressChange?.()
+    togglingRef.current = false
   }
 
   return (

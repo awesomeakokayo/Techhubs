@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import {
   LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles, GraduationCap, CheckCircle2, Loader2, RefreshCw,
 } from 'lucide-react'
@@ -46,6 +46,7 @@ export function TrackPageView({ track }: { track: Track }) {
   const [premiumOpen, setPremiumOpen] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const [userCheckVersion, setUserCheckVersion] = useState(0)
+  const syncedRef = useRef(false)
   const Icon = getTrackIcon(track.icon)
 
   const refresh = useCallback(() => {
@@ -61,7 +62,7 @@ export function TrackPageView({ track }: { track: Track }) {
       return 0
     }
     return getTrackPercent(track.id, track.roadmap.length, track.projects.length)
-  }, [track.id, track.roadmap.length, track.projects.length, session?.user?.id, userCheckVersion])
+  }, [track.id, track.roadmap.length, track.projects.length, session?.user?.id, userCheckVersion, progressKey])
 
   useEffect(() => {
     const stored = getStoredUserId()
@@ -81,8 +82,13 @@ export function TrackPageView({ track }: { track: Track }) {
   }, [track.id, track.slug, session?.user?.id])
 
   useEffect(() => {
-    if (isSubscribed) loadTrackProgressFromServer(track.id).then(refresh)
-  }, [isSubscribed, track.id, refresh])
+    if (isSubscribed && !syncedRef.current) {
+      syncedRef.current = true
+      loadTrackProgressFromServer(track.id).then(() => {
+        setProgressKey((k) => k + 1)
+      })
+    }
+  }, [isSubscribed, track.id])
 
   useEffect(() => {
     const observer = new IntersectionObserver(

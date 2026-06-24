@@ -75,8 +75,10 @@ export function AccountClient({
 
   useEffect(() => {
     if (!isSubscribed) return
+    let cancelled = false
     setSyncing(true)
     loadAllServerProgress().then((serverData) => {
+      if (cancelled) return
       if (!serverData) { setSyncing(false); return }
       const local = getProgress()
       for (const [id, tp] of Object.entries(serverData.tracks)) {
@@ -86,6 +88,7 @@ export function AccountClient({
       setSyncing(false)
       refreshProgress()
     })
+    return () => { cancelled = true }
   }, [isSubscribed, refreshProgress])
 
   const statusConfig: Record<string, { icon: typeof CheckCircle2; label: string; color: string }> = {
@@ -160,7 +163,7 @@ export function AccountClient({
         return { id, track, tp, percent }
       })
       .sort((a, b) => b.percent - a.percent)
-  }, [tracks, user.id, userCheckVersion])
+  }, [tracks, user.id, userCheckVersion, syncKey])
 
   const hasTracks = tracks.length > 0
 

@@ -38,11 +38,15 @@ export async function POST() {
     const paystackStatus = data.data.status
     const statusMap: Record<string, SubscriptionStatus> = {
       active: 'ACTIVE',
+      non_renewing: 'ACTIVE',
+      complete: 'ACTIVE',
       cancelled: 'CANCELLED',
       paused: 'PAST_DUE',
       expired: 'EXPIRED',
+      incomplete: 'PAST_DUE',
+      processing: 'PAST_DUE',
     }
-    const newStatus: SubscriptionStatus = statusMap[paystackStatus] || 'NONE'
+    const newStatus: SubscriptionStatus = statusMap[paystackStatus] ?? subscription.status as SubscriptionStatus
 
     await prisma.subscription.update({
       where: { userId: session.user.id },

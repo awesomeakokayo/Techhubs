@@ -127,7 +127,7 @@ export default function GuidedPathPage() {
   const progress = Math.round((currentIndex / steps.length) * 100)
   const isLastStep = currentIndex >= steps.length - 1
 
-  if (showCelebration) {
+  if (showCelebration && currentStep) {
     return (
       <CelebrationScreen
         steps={steps}

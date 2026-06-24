@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import { Check } from 'lucide-react'
 import { Project } from '@/lib/tracks'
 import { toggleProject, getTrackProgress } from '@/lib/progress'
@@ -15,6 +16,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ trackId, trackSlug, project, index, onProgressChange }: ProjectCardProps) {
   const done = getTrackProgress(trackId).completedProjects.includes(project.id)
+  const togglingRef = useRef(false)
 
   return (
     <article
@@ -25,6 +27,8 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
         <button
           type="button"
           onClick={() => {
+            if (togglingRef.current) return
+            togglingRef.current = true
             toggleProject(trackId, project.id)
             trackEvent({
               event_name: 'project_mark_complete',
@@ -32,6 +36,7 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
               project_name: project.title,
             })
             onProgressChange?.()
+            setTimeout(() => { togglingRef.current = false }, 300)
           }}
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors ${
             done
