@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import {
   LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles, GraduationCap, CheckCircle2, Loader2, RefreshCw,
 } from 'lucide-react'
@@ -14,7 +14,7 @@ import { ResourceItem } from './ResourceItem'
 import { ProjectCard } from './ProjectCard'
 import { PromptCard } from './PromptCard'
 import { PremiumModal } from '@/components/ui/PremiumModal'
-import { getTrackPercent, startTrack, getTrackProgress, syncTrackProgressToServer, loadTrackProgressFromServer } from '@/lib/progress'
+import { getTrackPercent, startTrack, getTrackProgress, syncTrackProgressToServer, loadTrackProgressFromServer, setStoredUserId, getStoredUserId, clearProgress } from '@/lib/progress'
 import { WHO_IS_FOR } from '@/lib/site-content'
 import type { ResourceType } from '@/lib/tracks'
 import { trackEvent } from '@/lib/analytics'
@@ -45,6 +45,7 @@ export function TrackPageView({ track }: { track: Track }) {
   const [progressKey, setProgressKey] = useState(0)
   const [premiumOpen, setPremiumOpen] = useState(false)
   const [syncing, setSyncing] = useState(false)
+  const [userCheckVersion, setUserCheckVersion] = useState(0)
   const Icon = getTrackIcon(track.icon)
 
   const refresh = useCallback(() => {
@@ -54,16 +55,30 @@ export function TrackPageView({ track }: { track: Track }) {
       syncTrackProgressToServer(track.id).finally(() => setSyncing(false))
     }
   }, [isSubscribed, track.id])
-  const percent = getTrackPercent(track.id, track.roadmap.length, track.projects.length)
+  const percent = useMemo(() => {
+    const storedUserId = getStoredUserId()
+    if (storedUserId && session?.user?.id && storedUserId !== session.user.id) {
+      return 0
+    }
+    return getTrackPercent(track.id, track.roadmap.length, track.projects.length)
+  }, [track.id, track.roadmap.length, track.projects.length, session?.user?.id, userCheckVersion])
 
   useEffect(() => {
+    const stored = getStoredUserId()
+    if (session?.user?.id && stored && stored !== session.user.id) {
+      clearProgress()
+      setUserCheckVersion((v) => v + 1)
+    }
+    if (session?.user?.id) {
+      setStoredUserId(session.user.id)
+    }
     startTrack(track.id)
     trackEvent({
       event_name: 'track_page_open',
       track_slug: track.slug,
       path: `/tracks/${track.slug}`,
     })
-  }, [track.id, track.slug])
+  }, [track.id, track.slug, session?.user?.id])
 
   useEffect(() => {
     if (isSubscribed) loadTrackProgressFromServer(track.id).then(refresh)

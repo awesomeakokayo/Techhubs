@@ -1,4 +1,23 @@
 const STORAGE_KEY = 'tsh-progress'
+const USER_KEY = 'tsh-user'
+
+export function getStoredUserId(): string | null {
+  if (typeof window === 'undefined') return null
+  try { return localStorage.getItem(USER_KEY) }
+  catch { return null }
+}
+
+export function setStoredUserId(id: string): void {
+  if (typeof window === 'undefined') return
+  try { localStorage.setItem(USER_KEY, id) }
+  catch { /* noop */ }
+}
+
+export function clearProgress(): void {
+  if (typeof window === 'undefined') return
+  try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(USER_KEY) }
+  catch { /* noop */ }
+}
 
 export interface TrackProgress {
   started: boolean

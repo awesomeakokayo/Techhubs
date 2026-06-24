@@ -1189,13 +1189,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "py-4",
-        title: "Real Python",
+        title: "Python for Everybody (freeCodeCamp)",
         description:
-          "High-quality Python tutorials on every topic imaginable. Some articles are free, but full access requires a paid subscription.",
-        url: "https://realpython.com",
-        type: "docs",
-        free: false,
-        source: "Real Python",
+          "Complete Python course from zero to data structures. Fully free, no signup required. One of the most popular free Python courses.",
+        url: "https://www.youtube.com/watch?v=8DvywoWv6fI",
+        type: "video",
+        free: true,
+        source: "freeCodeCamp / Dr. Chuck",
       },
       {
         id: "py-6",
@@ -1425,13 +1425,13 @@ export const TRACKS: Track[] = [
     resources: [
       {
         id: "ux-1",
-        title: "Google UX Design Certificate",
+        title: "UX Design Full Course (YouTube)",
         description:
-          "Google's 7-course UX certificate on Coursera. FREE TO AUDIT — certificate requires payment. Industry recognized if you pay.",
-        url: "https://www.coursera.org/professional-certificates/google-ux-design",
-        type: "docs",
-        free: false,
-        source: "Google / Coursera",
+          "Complete UX design course covering user research, wireframing, prototyping, and usability testing. Entirely free on YouTube.",
+        url: "https://www.youtube.com/watch?v=_lyzy-vCh5s",
+        type: "video",
+        free: true,
+        source: "CareerFoundry",
       },
       {
         id: "ux-7",
@@ -1465,13 +1465,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "ux-4",
-        title: "Interaction Design Foundation",
+        title: "UX Crash Course (The Futur)",
         description:
-          "Comprehensive UX courses, many free. Strong theoretical foundation.",
-        url: "https://www.interaction-design.org/courses",
-        type: "docs",
-        free: false,
-        source: "IDF",
+          "Practical UX and design thinking crash course. Free, no signup required, taught by industry professionals.",
+        url: "https://www.youtube.com/watch?v=3xTtT5rOBLw",
+        type: "video",
+        free: true,
+        source: "The Futur",
       },
       {
         id: "ux-2",
@@ -2286,13 +2286,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "ds-2",
-        title: "Andrew Ng ML Course",
+        title: "Practical Deep Learning (fast.ai)",
         description:
-          "The course that introduced millions to machine learning. FREE TO AUDIT on Coursera — official certificate requires payment.",
-        url: "https://www.coursera.org/specializations/machine-learning-introduction",
+          "Teaches modern deep learning from scratch. Completely free, no paywall, no certificate upsell. Builds real models from lesson one.",
+        url: "https://course.fast.ai",
         type: "docs",
-        free: false,
-        source: "DeepLearning.AI",
+        free: true,
+        source: "fast.ai",
       },
       {
         id: "ds-0a",
@@ -2829,13 +2829,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "cy-4",
-        title: "Google Cybersecurity Certificate",
+        title: "TryHackMe — Complete Beginner Path",
         description:
-          "Google's cybersecurity certificate on Coursera. Audit for free.",
-        url: "https://www.coursera.org/professional-certificates/google-cybersecurity",
-        type: "docs",
-        free: false,
-        source: "Google / Coursera",
+          "Hands-on cybersecurity training with browser-based labs. Free tier covers foundational security concepts, Linux, and web hacking basics.",
+        url: "https://tryhackme.com/paths",
+        type: "practice",
+        free: true,
+        source: "TryHackMe",
       },
       {
         id: "cy-6",
@@ -3357,23 +3357,23 @@ export const TRACKS: Track[] = [
       },
       {
         id: "vid-3",
-        title: "Adobe Premiere Pro Tutorials",
+        title: "DaVinci Resolve Official Training",
         description:
-          "Official Adobe tutorials for Premiere Pro, industry standard for professional editing. Requires paid Adobe Creative Cloud subscription.",
-        url: "https://helpx.adobe.com/premiere-pro/tutorials.html",
+          "Professional-grade video editing, color grading, and audio post-production. The full version is completely free — no subscription needed.",
+        url: "https://www.blackmagicdesign.com/products/davinciresolve/training",
         type: "docs",
-        free: false,
-        source: "Adobe",
+        free: true,
+        source: "Blackmagic Design",
       },
       {
         id: "vid-6",
-        title: "Descript",
+        title: "CapCut",
         description:
-          "AI-powered transcript-based video editing. Edit video like a document.",
-        url: "https://www.descript.com",
+          "Free video editor with AI features — auto-captions, text-to-speech, transitions, and effects. No watermark on the free tier.",
+        url: "https://www.capcut.com",
         type: "tool",
-        free: false,
-        source: "Descript",
+        free: true,
+        source: "ByteDance",
       },
     ],
     projects: [
@@ -3565,10 +3565,10 @@ export const TRACKS: Track[] = [
         id: "yt-2",
         title: "ElevenLabs",
         description:
-          "Industry-best AI voice generation. Indistinguishable from human narration.",
+          "Industry-best AI voice generation. Free tier includes generous monthly character quota — enough for several videos.",
         url: "https://elevenlabs.io",
         type: "tool",
-        free: false,
+        free: true,
         source: "ElevenLabs",
       },
       {
@@ -3863,13 +3863,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "mkt-10",
-        title: "A/B Testing Course",
+        title: "A/B Testing Guide (Optimizely)",
         description:
-          "FREE TO AUDIT on Coursera. Paid certificate available. Material is identical either way.",
-        url: "https://www.coursera.org/learn/ab-testing",
+          "Complete, free guide to A/B testing: hypothesis formation, statistical significance, sample sizing, and common pitfalls. No account required.",
+        url: "https://www.optimizely.com/optimization-glossary/ab-testing/",
         type: "docs",
-        free: false,
-        source: "Coursera / Google",
+        free: true,
+        source: "Optimizely",
       },
     ],
     projects: [
@@ -4791,7 +4791,7 @@ export const TRACKS: Track[] = [
       { id: 5, title: 'Certifications & Career', duration: 'Ongoing', topics: ['PMP — the gold standard', 'CAPM for entry-level', 'PSM I (Professional Scrum Master)', 'PRINCE2 basics', 'Building a PM portfolio without formal experience'], description: 'PM certifications open doors that experience alone cannot. Know which one fits your situation and how to prepare efficiently.' },
     ],
     resources: [
-      { id: 'pm-1', title: 'Google Project Management Certificate', description: 'Google\'s free-to-audit 6-course PM certification on Coursera. The best structured starting point available.', url: 'https://www.coursera.org/professional-certificates/google-project-management', type: 'docs', free: false, source: 'Google / Coursera' },
+      { id: 'pm-1', title: 'Project Management Full Course (freeCodeCamp)', description: 'Complete project management course covering methodologies, planning, budgeting, risk management, and stakeholder communication. Entirely free.', url: 'https://www.youtube.com/watch?v=uWPIsaYpY7U', type: 'video', free: true, source: 'Simplilearn / freeCodeCamp' },
       { id: 'pm-4', title: 'Project Management Full Course', description: 'Comprehensive project management course covering project life cycle, planning, scheduling, and tools.', url: 'https://www.youtube.com/watch?v=uWPIsaYpY7U', type: 'video', free: true, source: 'Simplilearn' },
       { id: 'pm-6', title: 'Agile Manifesto', description: 'The original 12 principles and 4 values. Read the source before reading anyone\'s interpretation of it.', url: 'https://agilemanifesto.org', type: 'docs', free: true, source: 'agilemanifesto.org' },
       { id: 'pm-2', title: 'Scrum Guide 2020', description: 'The official, definitive Scrum framework document. 13 pages. Read it before any Scrum course.', url: 'https://scrumguides.org/scrum-guide.html', type: 'book', free: true, source: 'Scrum.org' },
@@ -4861,7 +4861,7 @@ export const TRACKS: Track[] = [
       { id: 'prd-12', title: 'PRD Template & Examples', description: 'A practical PRD template with real examples from top tech companies. Fill in the blanks to get started.', url: 'https://www.notion.so/templates/product-requirements-document-template', type: 'tool', free: true, source: 'Notion' },
       { id: 'prd-7', title: 'Hotjar', description: 'Heatmaps and session recordings. See what users actually do on a page rather than guessing.', url: 'https://www.hotjar.com', type: 'tool', free: true, source: 'Hotjar' },
       { id: 'prd-6', title: 'Mixpanel', description: 'Product analytics platform. Understand exactly how users behave inside your product. Free tier.', url: 'https://mixpanel.com', type: 'tool', free: true, source: 'Mixpanel' },
-      { id: 'prd-1', title: 'Lenny\'s Newsletter', description: 'The best product management newsletter alive. Essays by top PMs at Airbnb, Uber, Figma, and more.', url: 'https://www.lennysnewsletter.com', type: 'docs', free: false, source: 'Lenny Rachitsky' },
+      { id: 'prd-1', title: 'Lenny\'s Newsletter', description: 'The best product management newsletter alive. Essays by top PMs at Airbnb, Uber, Figma, and more. Free weekly posts with the option to support.', url: 'https://www.lennysnewsletter.com', type: 'docs', free: true, source: 'Lenny Rachitsky' },
       { id: 'prd-2', title: 'Product School Free Resources', description: 'Free PM resources, webinars, and community from one of the most respected PM schools.', url: 'https://productschool.com/resources', type: 'docs', free: true, source: 'Product School' },
       { id: 'prd-9', title: 'ProductHunt', description: 'Platform where products launch. Essential for understanding what resonates and what does not.', url: 'https://www.producthunt.com', type: 'community', free: true, source: 'Product Hunt' },
       { id: 'prd-8', title: 'Mind the Product', description: 'The largest PM community. Articles, events, job board, and a global Slack community.', url: 'https://www.mindtheproduct.com', type: 'community', free: true, source: 'Mind the Product' },

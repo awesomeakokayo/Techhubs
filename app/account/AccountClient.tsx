@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import {
@@ -8,7 +8,7 @@ import {
   GraduationCap, ArrowRight, Sparkles, Trash2, Loader2,
 } from 'lucide-react'
 import type { Track } from '@/lib/tracks'
-import { getProgress, saveProgress, getTrackPercent, loadAllServerProgress } from '@/lib/progress'
+import { getProgress, saveProgress, getTrackPercent, loadAllServerProgress, getStoredUserId, setStoredUserId, clearProgress } from '@/lib/progress'
 import { getTrackIcon } from '@/lib/icons'
 import { useToast } from '@/components/ui/toast'
 
@@ -48,7 +48,19 @@ export function AccountClient({
   const isSubscribed = user.isSubscribed ?? false
   const [syncKey, setSyncKey] = useState(0)
   const [showOnboarding, setShowOnboarding] = useState(false)
+  const [userCheckVersion, setUserCheckVersion] = useState(0)
   const refreshProgress = useCallback(() => setSyncKey((k) => k + 1), [])
+
+  // Clear local progress when user changes — and force a re-render so the UI re-reads from localStorage
+  useEffect(() => {
+    const stored = getStoredUserId()
+    if (!user.id) return
+    if (stored && stored !== user.id) {
+      clearProgress()
+    }
+    setStoredUserId(user.id)
+    setUserCheckVersion((v) => v + 1)
+  }, [user.id])
 
   useEffect(() => {
     if (!isSubscribed) return
@@ -131,7 +143,11 @@ export function AccountClient({
     }
   }
 
-  const inProgress = (() => {
+  const inProgress = useMemo(() => {
+    const storedUserId = getStoredUserId()
+    if (storedUserId && user.id && storedUserId !== user.id) {
+      return []
+    }
     const local = getProgress()
     return Object.entries(local.tracks)
       .filter(([, tp]) => tp.started)
@@ -143,7 +159,7 @@ export function AccountClient({
         return { id, track, tp, percent }
       })
       .sort((a, b) => b.percent - a.percent)
-  })()
+  }, [tracks, user.id, userCheckVersion])
 
   const hasTracks = tracks.length > 0
 
@@ -344,6 +360,7 @@ export function AccountClient({
 
       <button
         onClick={async () => {
+          clearProgress()
           await signOut({ callbackUrl: '/', redirect: false })
           window.location.href = '/'
         }}
