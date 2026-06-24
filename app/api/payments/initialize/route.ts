@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic'
 
 const AMOUNTS: Record<string, number> = {
   monthly: 245000,
-  threeMonths: 514500,
+  sixMonths: 1029000,
   yearly: 1470000,
 }
 

@@ -26,7 +26,7 @@ export function UpgradeTeaser() {
                 </h2>
                 <p className="mt-3 text-text-secondary max-w-none">
                   Unlock a step-by-step learning experience with quizzes, projects, and cross-device
-                  progress sync. <strong>₦2,450/month</strong> or <strong>₦14,700/year</strong> (50% off).
+                  progress sync. From <strong>₦2,450/month</strong> — save up to 50% with yearly.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link href={ctaHref} className="btn btn-primary inline-flex items-center gap-1.5">
