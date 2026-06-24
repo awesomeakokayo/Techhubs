@@ -62,6 +62,7 @@ export async function POST() {
       status: newStatus,
       plan: subscription.plan,
       currentPeriodEnd: data.data.next_payment_date ?? null,
+      paystackSubscriptionCode: subscription.paystackSubscriptionCode,
     })
   }
 
@@ -69,5 +70,6 @@ export async function POST() {
     status: subscription.status,
     plan: subscription.plan,
     currentPeriodEnd: subscription.currentPeriodEnd?.toISOString() ?? null,
+    error: data.status === false ? (data.message || 'Paystack verification failed') : undefined,
   })
 }

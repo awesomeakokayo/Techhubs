@@ -107,14 +107,16 @@ export function AccountClient({
     try {
       const res = await fetch('/api/payments/verify', { method: 'POST' })
       const data = await res.json()
-      setSubscription({
+      setSubscription((prev) => ({
         status: data.status,
         plan: data.plan,
         currentPeriodEnd: data.currentPeriodEnd,
-        paystackSubscriptionCode: subscription?.paystackSubscriptionCode || null,
-      })
+        paystackSubscriptionCode: data.paystackSubscriptionCode ?? prev?.paystackSubscriptionCode ?? null,
+      }))
       if (data.status === 'ACTIVE') {
         toast('Subscription verified! Your guided path is ready.', 'success')
+      } else if (data.error) {
+        toast(data.error, 'error')
       }
       await updateSession()
     } catch {

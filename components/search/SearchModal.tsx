@@ -71,7 +71,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
       if (e.key === 'Escape') onClose()
       if (e.key === 'ArrowDown') {
         e.preventDefault()
-        setSelected((s) => Math.min(s + 1, results.length - 1))
+        setSelected((s) => results.length > 0 ? Math.min(s + 1, results.length - 1) : 0)
       }
       if (e.key === 'ArrowUp') {
         e.preventDefault()
@@ -169,7 +169,15 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`block rounded-lg px-3 py-2 no-underline ${selected === idx ? 'bg-teal/15' : 'hover:bg-overlay'}`}
-                      onClick={onClose}
+                      onClick={() => {
+                        trackOutboundClick({
+                          path: window.location.pathname,
+                          resource_title: item.title,
+                          resource_type: item.type,
+                          outbound_url: item.url,
+                        })
+                        onClose()
+                      }}
                     >
                       {inner}
                     </a>
