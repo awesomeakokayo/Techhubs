@@ -88,6 +88,7 @@ model Subscription {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([paystackSubscriptionCode])
+  @@index([paystackCustomerCode])
 }
 
 enum ProgressStatus {

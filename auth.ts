@@ -26,20 +26,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
       checks: ['state'],
     }),
   ],
   callbacks: {
-    async jwt({ token }) {
-      if (token.sub) {
+    async jwt({ token, trigger }) {
+      if (token.sub && (trigger === 'signIn' || trigger === 'signUp' || trigger === 'update')) {
         try {
           const sub = await prisma.subscription.findUnique({
             where: { userId: token.sub },
           })
           token.isSubscribed = sub?.status === 'ACTIVE'
-        } catch {
+        } catch (e) {
+          console.error('auth: failed to fetch subscription for', token.sub, e)
           token.isSubscribed = false
         }
       }
@@ -63,8 +64,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               data: { userId: user.id, status: 'NONE' },
             })
           }
-        } catch {
-          // Best-effort; subscription created on subsequent visits
+        } catch (e) {
+          console.error('auth: failed to create subscription for', user.id, e)
         }
       }
       return true
