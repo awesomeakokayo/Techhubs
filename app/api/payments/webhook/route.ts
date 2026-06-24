@@ -33,8 +33,8 @@ export async function POST(req: Request) {
 
       if (!userId) break
 
-      const periodDays = metadata?.plan === 'yearly' ? 365 : metadata?.plan === 'sixMonths' ? 180 : 30
-      const planEnum = metadata?.plan === 'yearly' ? 'YEARLY' as const : metadata?.plan === 'sixMonths' ? 'SIX_MONTHS' as const : 'MONTHLY' as const
+      const periodDays = metadata?.plan === 'yearly' ? 365 : metadata?.plan === 'threeMonths' ? 90 : 30
+      const planEnum = metadata?.plan === 'yearly' ? 'YEARLY' as const : metadata?.plan === 'threeMonths' ? 'THREE_MONTHS' as const : 'MONTHLY' as const
 
       await prisma.subscription.upsert({
         where: { userId },

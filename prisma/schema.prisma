@@ -69,7 +69,7 @@ enum SubscriptionStatus {
 
 enum SubscriptionPlan {
   MONTHLY
-  SIX_MONTHS
+  THREE_MONTHS
   YEARLY
 }
 

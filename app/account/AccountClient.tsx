@@ -279,7 +279,7 @@ export function AccountClient({
         </div>
         {subscription?.plan && (
           <p className="text-sm text-text-secondary mt-1">
-            {subscription.plan === 'YEARLY' ? 'Yearly' : subscription.plan === 'SIX_MONTHS' ? '6 Months' : 'Monthly'} plan
+            {subscription.plan === 'YEARLY' ? 'Yearly' : subscription.plan === 'THREE_MONTHS' ? '3 Months' : 'Monthly'} plan
           </p>
         )}
         {subscription?.currentPeriodEnd && (

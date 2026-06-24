@@ -61,7 +61,7 @@ export function PremiumModal({ open, onClose, trackName }: { open: boolean; onCl
             ₦2,450<span className="text-sm text-text-secondary font-body">/month</span>
           </p>
           <p className="text-xs text-text-muted mt-1">
-            <strong className="text-text-primary">₦10,290/6 months</strong> (30% off) &middot; <strong className="text-text-primary">₦14,700/year</strong> (50% off)
+            <strong className="text-text-primary">₦5,145/3 months</strong> (30% off) &middot; <strong className="text-text-primary">₦14,700/year</strong> (50% off)
           </p>
         </div>
 

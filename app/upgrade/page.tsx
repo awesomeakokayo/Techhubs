@@ -29,7 +29,7 @@ export default function UpgradePage() {
     }
   }, [status, router])
 
-  const subscribe = async (plan: 'monthly' | 'sixMonths' | 'yearly') => {
+  const subscribe = async (plan: 'monthly' | 'threeMonths' | 'yearly') => {
     if (status !== 'authenticated' || !session?.user) {
       router.push('/login?next=/upgrade')
       return
@@ -111,22 +111,22 @@ export default function UpgradePage() {
 
         <div className="card text-left border-[var(--accent-primary-border)] relative">
           <span className="badge badge-teal absolute -top-3 right-4">30% OFF</span>
-          <h3 className="text-lg font-display font-semibold text-[var(--text-primary)]">6 Months</h3>
+          <h3 className="text-lg font-display font-semibold text-[var(--text-primary)]">3 Months</h3>
           <p className="text-3xl font-display font-bold text-[var(--text-primary)] mt-2">
-            ₦10,290<span className="text-sm text-[var(--text-secondary)] font-body">/6 months</span>
+            ₦5,145<span className="text-sm text-[var(--text-secondary)] font-body">/3 months</span>
           </p>
-          <p className="text-xs text-[var(--text-muted)] mt-1 line-through">₦14,700</p>
+          <p className="text-xs text-[var(--text-muted)] mt-1 line-through">₦7,350</p>
           <ul className="mt-4 space-y-2 text-sm text-[var(--text-secondary)]">
             <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> Everything in Monthly</li>
-            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> <strong>30% off</strong> — save ₦4,410</li>
-            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> 6 months of guided learning</li>
+            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> <strong>30% off</strong> — save ₦2,205</li>
+            <li className="flex items-center gap-2"><Check size={14} className="text-[var(--accent-primary)]" /> 3 months of guided learning</li>
           </ul>
           <button
-            onClick={() => subscribe('sixMonths')}
-            disabled={loading === 'sixMonths'}
+            onClick={() => subscribe('threeMonths')}
+            disabled={loading === 'threeMonths'}
             className="btn btn-secondary w-full mt-6 justify-center"
           >
-            {loading === 'sixMonths' ? 'Redirecting to Paystack...' : 'Choose 6 Months'}
+            {loading === 'threeMonths' ? 'Redirecting to Paystack...' : 'Choose 3 Months'}
           </button>
         </div>
 
