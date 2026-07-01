@@ -15,12 +15,24 @@ export const metadata: Metadata = {
     'tech learning, programming roadmap, frontend development, Nigeria tech, African students, free coding resources, career in tech',
   openGraph: {
     title: 'Tech Skills Learning Hub',
-    description: 'Your complete guide into tech — 22 tracks, 300+ resources, 100% free.',
+    description: '22 tracks. 300+ resources. 100% free. Your complete guide into tech.',
+    url: 'https://techskillhub.cv',
+    siteName: 'Tech Skills Hub',
+    images: [
+      {
+        url: 'https://techskillhub.cv/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Tech Skills Learning Hub',
+      },
+    ],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tech Skills Learning Hub',
+    description: '22 tracks. 300+ resources. 100% free.',
+    images: ['https://techskillhub.cv/og-image.png'],
   },
 }
 
