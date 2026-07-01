@@ -8,7 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
-  title: 'Tech Skills Learning Hub — Free Roadmaps & Resources for Tech Careers',
+  title: 'Tech Skills Hub — Free Roadmaps & Career Guides',
   description:
     'Free learning paths, roadmaps, and curated resources for Frontend, Backend, UI/UX, Data, Mobile, Cybersecurity, and more. Built for African students.',
   keywords:
