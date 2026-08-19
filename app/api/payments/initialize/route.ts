@@ -10,7 +10,7 @@ import {
   resolveCheckoutPricing,
 } from '@/lib/pricing'
 import type { PlanKey } from '@/lib/pricing'
-import { planKeyToEnum, getIpCountryFromHeaders } from '@/lib/payments'
+import { planKeyToEnum, getIpCountryFromHeaders, friendlyPaystackInitError } from '@/lib/payments'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
 import { trackEvent } from '@/lib/analytics'
 
@@ -120,10 +120,13 @@ export async function POST(req: Request) {
         reference,
         orderId: order.id,
         userId: session.user.id,
-        error: data?.message ?? 'no_authorization_url',
+        currency: price.currency,
+        region: price.region,
+        httpStatus: response.status,
+        paystackMessage: data?.message ?? 'no_authorization_url',
       })
       return NextResponse.json(
-        { error: 'We could not start your payment. Please try again.' },
+        { error: friendlyPaystackInitError({ message: data?.message, status: data?.status }) },
         { status: 502 }
       )
     }

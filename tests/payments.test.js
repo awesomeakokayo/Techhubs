@@ -7,6 +7,7 @@ const {
   planKeyToEnum,
   planEnumToDays,
   getIpCountryFromHeaders,
+  friendlyPaystackInitError,
 } = require('../.test-dist/payments.js')
 
 const order = { reference: 'TSH_abc123_REFERENCE', currency: 'NGN', amount: 245000 }
@@ -86,4 +87,25 @@ test('IP country read from trusted header only', () => {
   assert.equal(getIpCountryFromHeaders(new Headers({ cookie: 'tsh-region=ng' })), null)
   assert.equal(getIpCountryFromHeaders(new Headers({ 'x-forwarded-for': '1.2.3.4' })), null)
   assert.equal(getIpCountryFromHeaders({ 'x-vercel-ip-country': 'GB' }), 'GB')
+})
+
+test('USD-unavailable Paystack error maps to actionable message', () => {
+  const msg = friendlyPaystackInitError({
+    message: 'Merchant [PAYSTACK PAYMENTS LTD] does not support currency [USD]',
+    status: false,
+  })
+  assert.match(msg, /International \(USD\) checkout is not enabled/)
+})
+
+test('international-payments disabled error maps to actionable message', () => {
+  const msg = friendlyPaystackInitError({
+    message: 'Merchant is not enabled for international transactions',
+    status: false,
+  })
+  assert.match(msg, /International \(USD\) checkout is not enabled/)
+})
+
+test('unrelated error falls back to generic message', () => {
+  const msg = friendlyPaystackInitError({ message: 'An internal error occurred', status: false })
+  assert.match(msg, /We could not start your payment/)
 })

@@ -40,6 +40,24 @@ export function getIpCountryFromHeaders(
 }
 
 /**
+ * Map a Paystack initialize rejection to a safe user-facing message. The raw
+ * Paystack response is never surfaced, but the known "currency not supported /
+ * international not enabled" cases get a precise, actionable explanation.
+ */
+export function friendlyPaystackInitError(data: {
+  message?: string | null
+  status?: boolean | null
+}): string {
+  const msg = (data?.message ?? '').toLowerCase()
+  if (
+    /currency|does not support|international|not enabled|not supported/i.test(msg)
+  ) {
+    return 'International (USD) checkout is not enabled for this payment account yet. Please try again later, or contact support.'
+  }
+  return 'We could not start your payment. Please try again.'
+}
+
+/**
  * Pure comparison between a Paystack verify payload and the internal order.
  * Exact subunit integer comparison — a mismatch must never fulfill.
  */
