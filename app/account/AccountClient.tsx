@@ -5,16 +5,13 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import {
   CheckCircle2, XCircle, AlertTriangle, RefreshCw, ExternalLink,
-  GraduationCap, ArrowRight, Sparkles, Trash2, Loader2, Globe, Clock,
+  GraduationCap, ArrowRight, Sparkles, Trash2, Loader2, Clock,
 } from 'lucide-react'
 import type { Track } from '@/lib/tracks'
 import { getProgress, saveProgress, getTrackPercent, loadAllServerProgress, getStoredUserId, setStoredUserId, clearProgress } from '@/lib/progress'
 import { getNextStep } from '@/lib/guided-path'
 import { getTrackIcon } from '@/lib/icons'
 import { useToast } from '@/components/ui/toast'
-import { RegionPicker } from '@/components/purchase/RegionPicker'
-import type { RegionKey } from '@/lib/pricing'
-import { detectRegionClient } from '@/lib/pricing'
 
 interface Subscription {
   status: string
@@ -72,7 +69,6 @@ export function AccountClient({
   const [cancelling, setCancelling] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const isSubscribed = user.isSubscribed ?? false
-  const [region, setRegion] = useState<RegionKey>(() => detectRegionClient())
   const [syncKey, setSyncKey] = useState(0)
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [userCheckVersion, setUserCheckVersion] = useState(0)
@@ -171,13 +167,12 @@ export function AccountClient({
 
     ;(async () => {
       const reference = params.get('reference')
-      const sessionId = params.get('session_id')
       try {
-        if (reference || sessionId) {
+        if (reference) {
           const res = await fetch('/api/payments/confirm', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reference ? { reference } : { sessionId }),
+            body: JSON.stringify({ reference }),
           })
           const data = await res.json()
           if (!cancelled) {
@@ -187,8 +182,6 @@ export function AccountClient({
               toast(data.error || 'We could not confirm your payment yet.', 'error')
             }
           }
-        } else if (!cancelled) {
-          toast('Payment received! Your course is unlocked.', 'success')
         }
       } catch {
         if (!cancelled) {
@@ -292,12 +285,6 @@ export function AccountClient({
         <h2 className="text-sm font-medium text-text-muted mb-1">Profile</h2>
         <p className="text-text-primary font-medium">{user.name || 'User'}</p>
         <p className="text-sm text-text-secondary">{user.email}</p>
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="text-xs text-text-muted inline-flex items-center gap-1">
-            <Globe size={13} /> Billing region
-          </span>
-          <RegionPicker value={region} onChange={setRegion} />
-        </div>
       </div>
 
       {inProgress.length > 0 && (

@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Check, Sparkles, GraduationCap, ArrowRight, Loader2, Globe } from 'lucide-react'
-import { PRICING, PLAN_LABEL, type RegionKey, type PlanKey } from '@/lib/pricing'
-import { RegionPicker } from '@/components/purchase/RegionPicker'
+import { Check, Sparkles, GraduationCap, ArrowRight, Loader2 } from 'lucide-react'
+import { PRICING, PLAN_LABEL, PAYMENT_PROVIDER } from '@/lib/pricing'
+import type { RegionKey, PlanKey, Currency } from '@/lib/pricing'
 import { useToast } from '@/components/ui/toast'
 
 const FEATURES = [
@@ -18,7 +18,9 @@ export function PurchaseClient({
   trackId,
   trackName,
   trackSlug,
-  region: initialRegion,
+  region,
+  regionLabel,
+  currency,
   hasAccess,
   grandfathered,
 }: {
@@ -26,11 +28,12 @@ export function PurchaseClient({
   trackName: string
   trackSlug: string
   region: RegionKey
+  regionLabel: string
+  currency: Currency
   hasAccess: boolean
   grandfathered: boolean
 }) {
   const { toast } = useToast()
-  const [region, setRegion] = useState<RegionKey>(initialRegion)
   const [tier, setTier] = useState<PlanKey>('threeMonths')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -128,13 +131,10 @@ export function PurchaseClient({
           <div className="card p-6">
             <div className="flex items-center justify-between gap-2 flex-wrap">
               <h2 className="font-display font-bold text-text-primary">Choose a plan</h2>
-              <div className="flex items-center gap-1 text-xs text-text-muted">
-                <Globe size={13} /> <RegionPicker value={region} onChange={setRegion} compact />
-              </div>
             </div>
 
             <div className="mt-1 text-xs text-text-muted">
-              Pricing shown per course — {region === 'ng' ? 'Nigeria (₦) via Paystack' : 'International ($) via Stripe'}
+              Pricing shown per course in {currency} — paid securely via {PAYMENT_PROVIDER}.
             </div>
 
             <div className="mt-5 space-y-3" role="radiogroup" aria-label="Plan">
@@ -181,7 +181,7 @@ export function PurchaseClient({
               {loading ? (
                 <>
                   <Loader2 size={16} className="animate-spin" />
-                  Redirecting to {regionCfg.provider === 'PAYSTACK' ? 'Paystack' : 'Stripe'}...
+                  Redirecting to Paystack...
                 </>
               ) : (
                 <>
@@ -191,8 +191,7 @@ export function PurchaseClient({
               )}
             </button>
             <p className="mt-3 text-center text-xs text-text-muted">
-              Secure checkout via {regionCfg.provider === 'PAYSTACK' ? 'Paystack' : 'Stripe'}. Cancel-free,
-              one-time purchase per course.
+              Secure checkout via Paystack. Cancel-free, one-time purchase per course.
             </p>
           </div>
         </div>

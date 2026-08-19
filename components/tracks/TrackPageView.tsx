@@ -51,7 +51,7 @@ function SectionHeading({ n, label, note }: { n: string; label: string; note?: s
 
 export function TrackPageView({ track, hasAccess = false }: { track: Track; hasAccess?: boolean }) {
   const { data: session } = useSession()
-  const gated = hasAccess
+  const [gated, setGated] = useState(hasAccess)
   const [activeSection, setActiveSection] = useState('overview')
   const [resourceTab, setResourceTab] = useState<ResourceType | 'all'>('all')
   const [progressKey, setProgressKey] = useState(0)
@@ -101,6 +101,23 @@ export function TrackPageView({ track, hasAccess = false }: { track: Track; hasA
       })
     }
   }, [gated, track.id])
+
+  // The page is statically rendered, so per-user access is probed client-side.
+  useEffect(() => {
+    if (!session?.user?.id) return
+    let cancelled = false
+    fetch(`/api/access/${track.id}`, { cache: 'no-store' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data.hasAccess === 'boolean') {
+          setGated(data.hasAccess)
+        }
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [session?.user?.id, track.id])
 
   useEffect(() => {
     const observer = new IntersectionObserver(

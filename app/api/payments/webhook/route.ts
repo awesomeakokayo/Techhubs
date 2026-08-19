@@ -1,61 +1,57 @@
 import { NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
-import { grantTrackAccess } from '@/lib/access'
-import { PLAN_DAYS } from '@/lib/pricing'
+import { fulfillOrder } from '@/lib/payments'
+import { paymentLog, paymentLogError } from '@/lib/payment-log'
 
 export const dynamic = 'force-dynamic'
 
-/** Grant a per-course purchase from Paystack metadata (idempotent by reference). */
-async function handleChargeSuccess(data: any) {
-  const metadata = data?.metadata ?? {}
-  const reference = data.reference
-  const trackId = metadata.trackId
-
-  const userId = metadata.userId ?? null
-  if (!userId || !trackId || !reference) {
-    return { handled: false, reason: 'missing-link' }
-  }
-
-  const plan = metadata.plan === 'yearly' ? 'YEARLY' : metadata.plan === 'threeMonths' ? 'THREE_MONTHS' : 'MONTHLY' as const
-
-  const existing = await prisma.trackAccess.findUnique({ where: { providerRef: reference } })
-  if (existing) return { handled: true, reason: 'duplicate' }
-
-  const days = PLAN_DAYS[plan as keyof typeof PLAN_DAYS]
-  await grantTrackAccess({ userId, trackId, plan, provider: 'PAYSTACK', reference, days })
-  return { handled: true, reason: 'granted' }
+function timingSafeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a, 'utf8')
+  const bufB = Buffer.from(b, 'utf8')
+  if (bufA.length !== bufB.length) return false
+  return crypto.timingSafeEqual(bufA, bufB)
 }
 
 export async function POST(req: Request) {
   const body = await req.text()
   const signature = req.headers.get('x-paystack-signature')
 
-  const hash = crypto
-    .createHmac('sha512', process.env.PAYSTACK_SECRET_KEY!)
-    .update(body)
-    .digest('hex')
+  const secretKey = process.env.PAYSTACK_SECRET_KEY
+  if (!secretKey) {
+    paymentLogError('payment_webhook_received', 'PAYSTACK_SECRET_KEY not set')
+    return NextResponse.json({ error: 'Not configured' }, { status: 500 })
+  }
 
-  if (hash !== signature) {
+  const hash = crypto.createHmac('sha512', secretKey).update(body, 'utf8').digest('hex')
+  if (!signature || !timingSafeEqual(hash, signature)) {
+    paymentLogError('payment_webhook_received', 'invalid signature')
     return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
   }
 
   let event: any
-  try { event = JSON.parse(body) }
-  catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
+  try {
+    event = JSON.parse(body)
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
+
+  paymentLog('payment_webhook_received', { event: event.event })
 
   switch (event.event) {
     case 'charge.success': {
       const data = event.data
       const metadata = data?.metadata ?? {}
+      const reference = data?.reference
 
-      // Per-course purchase path
-      if (metadata.trackId) {
-        await handleChargeSuccess(data)
+      // Per-course purchase: reference-based fulfillment, idempotent and replay-safe.
+      // Unknown/legacy references resolve to no order and are safely rejected.
+      if (reference && metadata?.track_id) {
+        await fulfillOrder(reference)
         break
       }
 
-      // Legacy site-wide subscription path (grandfathered flows)
+      // Legacy site-wide subscription path (grandfathered flows).
       const { customer, plan } = data
       let userId = metadata?.userId
 

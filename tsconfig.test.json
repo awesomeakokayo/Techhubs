@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2020",
+    "outDir": ".test-dist",
+    "rootDir": "lib",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "moduleResolution": "node",
+    "types": ["node"]
+  },
+  "include": ["lib/pricing.ts", "lib/risk.ts", "lib/payments.ts", "lib/payment-log.ts"]
+}

@@ -1,10 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getTrackBySlug } from '@/lib/tracks'
+import { getTrackBySlug, TRACKS } from '@/lib/tracks'
 import { TrackPageView } from '@/components/tracks/TrackPageView'
 import type { Metadata } from 'next'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
-import { auth } from '@/auth'
-import { hasTrackAccess } from '@/lib/access'
 
 interface Props {
   params: { slug: string }
@@ -19,21 +17,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export const dynamic = 'force-dynamic'
+export function generateStaticParams(): { slug: string }[] {
+  return TRACKS.map((t) => ({ slug: t.slug }))
+}
 
 export default async function TrackPage({ params }: Props) {
   const track = getTrackBySlug(params.slug)
   if (!track) notFound()
 
-  const session = await auth()
-  const hasAccess = session?.user?.id
-    ? await hasTrackAccess(session.user.id, track.id)
-    : false
-
   return (
     <>
       <PageViewTracker path={`/tracks/${track.slug}`} eventName="track_page_open" />
-      <TrackPageView track={track} hasAccess={hasAccess} />
+      <TrackPageView track={track} />
     </>
   )
 }

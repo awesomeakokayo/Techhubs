@@ -1,6 +1,8 @@
 export type PlanKey = 'monthly' | 'threeMonths' | 'yearly'
-export type RegionKey = 'ng' | 'intl'
-export type ProviderKey = 'PAYSTACK' | 'STRIPE'
+export type RegionKey = 'NG' | 'INTERNATIONAL'
+export type Currency = 'NGN' | 'USD'
+export type CountrySource = 'ip' | 'profile' | 'verified-card' | 'fallback'
+export type PricingConfidence = 'high' | 'medium' | 'low'
 
 export interface PriceTier {
   key: PlanKey
@@ -18,27 +20,31 @@ export interface PriceTier {
 
 export interface PricingRegion {
   key: RegionKey
-  currency: 'NGN' | 'USD'
-  provider: ProviderKey
+  currency: Currency
   label: string
   tiers: PriceTier[]
 }
 
-export const REGION_COOKIE = 'tsh-region'
+/** The single provider for this checkout flow. Stripe is not used. */
+export const PAYMENT_PROVIDER = 'PAYSTACK'
 
-/** Countries that use Paystack + NGN. Nigeria only (confirmed). */
-export const PAYSTACK_COUNTRY_CODES = new Set(['NG'])
+/**
+ * Pricing version stamped on every internal order. Bump when prices change so
+ * older transactions stay traceable to the price set that existed at checkout.
+ */
+export const PRICING_VERSION = 'TSH-PRO-2026-08'
 
 /**
  * Pricing is applied per course. The NGN base monthly price (₦2,450) defines
  * the tier multipliers: 3-month = 2.1×, yearly = 6×.
  * USD base monthly is $4.99; 3-month rounded to $9.99; yearly rounded to $29.99.
+ *
+ * Paystack is the ONLY provider; Nigeria pays NGN, everyone else pays USD.
  */
 export const PRICING: Record<RegionKey, PricingRegion> = {
-  ng: {
-    key: 'ng',
+  NG: {
+    key: 'NG',
     currency: 'NGN',
-    provider: 'PAYSTACK',
     label: 'Nigeria — Naira',
     tiers: [
       { key: 'monthly', label: 'Monthly', price: 245000, priceLabel: '₦2,450' },
@@ -64,10 +70,9 @@ export const PRICING: Record<RegionKey, PricingRegion> = {
       },
     ],
   },
-  intl: {
-    key: 'intl',
+  INTERNATIONAL: {
+    key: 'INTERNATIONAL',
     currency: 'USD',
-    provider: 'STRIPE',
     label: 'International — US Dollar',
     tiers: [
       {
@@ -119,46 +124,78 @@ export const PLAN_LABEL: Record<PlanKey, string> = {
   yearly: 'Yearly',
 }
 
-export function isPaystackCountry(countryCode?: string | null): boolean {
-  return !!countryCode && PAYSTACK_COUNTRY_CODES.has(countryCode.trim().toUpperCase())
-}
-
 export function getRegionForCountry(countryCode?: string | null): RegionKey {
-  if (isPaystackCountry(countryCode)) return 'ng'
-  return 'intl'
-}
-
-export function readRegionCookie(cookieHeader?: string | null): RegionKey | null {
-  if (!cookieHeader) return null
-  const match = cookieHeader.match(
-    new RegExp(`(?:^|;\\s*)${REGION_COOKIE}=(ng|intl)`)
-  )
-  return match ? (match[1] as RegionKey) : null
-}
-
-/** Client-side region read (cookie only). Falls back to the default. */
-export function detectRegionClient(): RegionKey {
-  if (typeof document === 'undefined') return 'ng'
-  return readRegionCookie(document.cookie) ?? 'ng'
+  return countryCode?.trim().toUpperCase() === 'NG' ? 'NG' : 'INTERNATIONAL'
 }
 
 /**
- * Region for a server request: manual override cookie wins, then the
- * Vercel-provided country header, then a default of NGN/Paystack (home market).
+ * Resolve the pricing context for a server request. The country comes only
+ * from trusted proxy headers (Vercel provides x-vercel-ip-country) — never
+ * from cookies, query params or the browser.
+ *
+ * Fallback policy is conservative: when the location is unknown we default to
+ * INTERNATIONAL (USD) so a lookup failure can never grant the cheaper NGN price.
  */
-export function detectRegion(
-  headers: Headers | Record<string, string | null | undefined>
-): RegionKey {
-  const get = (name: string) =>
-    typeof headers.get === 'function' ? headers.get(name) : headers[name as never] ?? null
+export function resolvePricingContext(input: {
+  ipCountry?: string | null
+  profileCountry?: string | null
+}): {
+  region: RegionKey
+  regionLabel: string
+  currency: Currency
+  countrySource: CountrySource
+  confidence: PricingConfidence
+} {
+  const ip = input.ipCountry?.trim().toUpperCase()
+  const ipRegion = ip ? getRegionForCountry(ip) : null
 
-  const cookie = readRegionCookie(get('cookie'))
-  if (cookie) return cookie
+  if (ipRegion === 'NG') {
+    return {
+      region: 'NG',
+      regionLabel: PRICING.NG.label,
+      currency: 'NGN',
+      countrySource: 'ip',
+      confidence: input.profileCountry === 'NG' ? 'high' : 'medium',
+    }
+  }
 
-  const country = get('x-vercel-ip-country')
-  if (country) return getRegionForCountry(country)
+  if (ipRegion === 'INTERNATIONAL') {
+    return {
+      region: 'INTERNATIONAL',
+      regionLabel: PRICING.INTERNATIONAL.label,
+      currency: 'USD',
+      countrySource: 'ip',
+      confidence: 'medium',
+    }
+  }
 
-  return 'ng'
+  return {
+    region: 'INTERNATIONAL',
+    regionLabel: PRICING.INTERNATIONAL.label,
+    currency: 'USD',
+    countrySource: 'fallback',
+    confidence: 'low',
+  }
+}
+
+/** Full server-side price for a plan + region, in the authoritative subunits. */
+export function resolveCheckoutPricing(input: {
+  ipCountry?: string | null
+  profileCountry?: string | null
+  plan: PlanKey
+}): {
+  region: RegionKey
+  regionLabel: string
+  currency: Currency
+  countrySource: CountrySource
+  confidence: PricingConfidence
+  amount: number
+  amountMajor: number
+  priceLabel: string
+} {
+  const ctx = resolvePricingContext(input)
+  const tier = getTier(ctx.region, input.plan)
+  return { ...ctx, amount: tier.price, amountMajor: tier.price / 100, priceLabel: tier.priceLabel }
 }
 
 export function getTier(region: RegionKey, tier: PlanKey): PriceTier {

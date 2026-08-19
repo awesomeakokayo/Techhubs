@@ -1,1610 +1,2317 @@
-# TECH SKILLS HUB — PREMIUM LANDING PAGE REBUILD
+# TECH SKILLS HUB — PAYSTACK NGN/USD PRICING, GEO-DETECTION & PAYMENT SECURITY
 
 ## ROLE
 
-You are acting as a **senior product designer, UX strategist, brand designer, conversion-focused product architect, and senior frontend engineer**.
+You are a senior backend engineer, payments engineer, security engineer, and Next.js/Node.js developer working inside the existing Tech Skills Hub codebase.
 
-You are working on an existing production Next.js application for **Tech Skill Hub**.
+You must modify the existing Pro / Guided Path payment system to support **automatic NGN vs USD pricing through Paystack**, while keeping the existing Paystack integration and eliminating the previous Stripe dependency for this flow.
 
-Your task is to redesign and rebuild the **public landing page / homepage** into a premium, distinctive, editorial-quality experience.
+The product is a Nigeria-based business using Paystack.
 
-This is NOT a request to simply improve the existing Tailwind components.
+Paystack is already configured for international payments.
 
-This is a **landing-page experience redesign**.
+The system must support:
 
-The redesign must preserve the current product functionality and visual identity we have already established while fundamentally improving:
+* Nigerian customers paying in NGN
+* non-Nigerian customers paying in USD
+* Paystack handling the actual payment
+* automatic currency selection
+* server-authoritative amount selection
+* fraud/bypass resistance
+* transaction verification
+* webhook verification
+* duplicate-payment protection
+* subscription/pro entitlement protection
+* auditability
 
-* information hierarchy
-* visual storytelling
-* page composition
-* typography
-* section transitions
-* user progression
-* visual identity
-* persuasion
-* conversion
-* brand recognition
-* perceived trust
-* clarity
-* restraint
+Do NOT build a frontend-only currency switch.
 
-The homepage must feel like a serious startup product rather than a generic AI-generated SaaS website.
+Do NOT allow the customer to freely choose NGN or USD.
 
----
+Do NOT trust a client-supplied country or currency.
 
-# 1. CORE PRODUCT IDEA
-
-Tech Skill Hub is:
-
-> **Your guide for independent learning.**
-
-The product exists to help people learn technology and software-related skills independently.
-
-The user should not feel that Tech Skill Hub is simply another:
-
-* course marketplace
-* coding tutorial website
-* collection of links
-* AI learning tool
-* content directory
-* generic bootcamp
-
-The product should feel like a **learning guide and navigation system**.
-
-The core problem being solved is:
-
-> There is an overwhelming amount of information online, but not enough direction.
-
-Tech Skill Hub organizes the journey.
-
-It helps the user understand:
-
-* where to start
-* what to learn
-* what to learn next
-* what to build
-* where a path can lead
-* when to progress
-* how to develop professionally
-
-The homepage should communicate this without explaining every feature.
+Do NOT reintroduce Stripe.
 
 ---
 
-# 2. PRIMARY UX PRINCIPLE
+# 1. PRIMARY BUSINESS REQUIREMENT
 
-## GUIDE WITHOUT FEELING LIKE YOU ARE BEING GUIDED
+Tech Skills Hub has a Pro / Guided Path paid plan.
 
-This is one of the most important requirements.
+There are two prices:
 
-The user should feel like they are making the decisions themselves.
+### Nigerian pricing
 
-However, the actual experience should be carefully designed so that the product naturally leads users through a sequence.
+Displayed and charged in:
 
-Think of it like:
+**NGN**
 
-> **holding someone's hand without them realizing they are being led.**
+### International pricing
 
-Not manipulative.
+Displayed and charged in:
 
-Not aggressive.
+**USD**
 
-Not “BUY NOW.”
+The user must not be given a manual selector such as:
 
-Instead:
+> Nigeria / International
 
-### User perception
+or:
 
-“I discovered this.”
+> Pay ₦X / Pay $Y
 
-“I chose this.”
+where they can simply choose whichever is cheaper.
 
-“I think this is what I need.”
-
-“I want to see the roadmap.”
-
-“I want to start learning.”
-
-“I want more structure.”
-
-“I think Guided Path might be useful.”
-
-### Actual product architecture
-
-The page is intentionally leading them through:
-
-**Curiosity → Recognition → Direction → Exploration → Commitment → Action → Optional upgrade**
-
-The product should orchestrate these steps naturally.
+The system must automatically determine the appropriate pricing context.
 
 ---
 
-# 3. USER JOURNEY
+# 2. IMPORTANT SECURITY PRINCIPLE
 
-The homepage should function as a carefully constructed narrative.
+The frontend is NEVER the source of truth for:
 
-The desired conceptual journey is:
+* currency
+* amount
+* country
+* plan price
+* payment entitlement
+* subscription status
+
+The client may request:
+
+> “I want to buy the Pro plan.”
+
+The backend must determine:
 
 ```text
-I arrive
-   ↓
-I immediately understand what this is
-   ↓
-I recognize a problem I have
-   ↓
-I understand Tech Skill Hub's philosophy
-   ↓
-I see that there is a clear path
-   ↓
-I begin thinking about my own direction
-   ↓
-I explore possible directions
-   ↓
-I see how the system works
-   ↓
-I become interested in starting
-   ↓
-I choose my next step
-   ↓
-I discover optional deeper guidance
-   ↓
-I independently choose whether to upgrade
+customer identity
++
+country context
++
+pricing region
++
+currency
++
+server-defined amount
 ```
 
-The page should never feel like:
+and then create the Paystack transaction.
+
+Never accept:
+
+```json
+{
+  "currency": "NGN",
+  "amount": 100000
+}
+```
+
+from the browser and trust it.
+
+The browser can only send the intended product/plan identifier.
+
+Example:
+
+```json
+{
+  "plan": "pro"
+}
+```
+
+The backend decides:
 
 ```text
-WELCOME
-↓
-FEATURES
-↓
-FEATURES
-↓
-FEATURES
-↓
-PRICING
-↓
-BUY
+NG user → NGN price
+non-NG user → USD price
 ```
 
-That is not the desired experience.
+---
 
-The homepage is a narrative.
+# 3. DO NOT USE STRIPE
+
+There is an existing or historical Stripe implementation.
+
+Do NOT depend on Stripe for this payment flow.
+
+Do not add Stripe back.
+
+Do not create a parallel Paystack + Stripe architecture.
+
+Paystack is the single payment provider for this feature.
+
+If old Stripe code exists:
+
+* identify it
+* determine whether it is still used elsewhere
+* do not break unrelated functionality
+* remove only what is obsolete for this specific Pro payment flow if it can safely be removed
+* document any remaining Stripe code that is unrelated
 
 ---
 
-# 4. HERO VISUAL CONCEPT
+# 4. PAYSTACK REQUIREMENTS
 
-The hero must NOT use a traditional SaaS split-screen layout.
+Use Paystack's server-side transaction initialization flow.
 
-Avoid:
-
-```text
-LEFT: heading
-RIGHT: dashboard screenshot
-```
-
-Do not use the standard:
-
-* text on left
-* image on right
-* cards floating around
-* gradient blob behind everything
-
-That pattern is too common.
-
-Instead, create a **full-composition hero**.
-
-The typography should be the dominant foreground element while the background quietly communicates the brand.
-
----
-
-# 5. HERO BACKGROUND — TYPEWRITER
-
-Create a custom visual treatment based around a **typewriter**.
-
-The typewriter is not an ordinary photo.
-
-It should feel like a brand illustration.
-
-### Desired appearance
-
-A large vintage/classic typewriter represented as:
-
-* thin line art
-* SVG
-* single-line illustration style
-* precise contours
-* minimal visual detail
-* no realistic shading
-* no photorealism
-* no heavy textures
-* no cartoon appearance
-
-The illustration should essentially look as though somebody drew the outline of a typewriter using one carefully controlled pen/pencil stroke.
-
-Do NOT use:
-
-* detailed pencil shading
-* realistic charcoal
-* photorealistic rendering
-* 3D renders
-* cartoon vectors
-* generic stock illustrations
-
-The typewriter should be:
-
-> **minimal line-art with a premium editorial feel.**
-
----
-
-# 6. TYPEWRITER COLOR
-
-Use the established Tech Skill Hub brand green.
-
-Do not invent another unrelated green.
-
-The exact brand green should come from the current design tokens/theme.
-
-The SVG should use:
-
-* the primary brand green
-* optionally a lower-opacity variation
-* possibly an extremely subtle darker/lighter version
-
-The typewriter should NOT compete with the main heading.
-
-It is a visual anchor.
-
-The typewriter should feel almost embedded into the background.
-
----
-
-# 7. TYPEWRITER COMPOSITION
-
-Do not simply place the typewriter in the middle behind the text.
-
-Create an intentionally composed visual.
-
-Possible layout:
-
-* very large typewriter extending beyond the viewport
-* partially cropped by the page
-* slightly offset from center
-* low-opacity linework
-* typography sitting over or slightly in front of it
-* selected parts of the linework becoming more visible near the edges
-* subtle animation if useful
-
-The typewriter should feel like part of the environment rather than an image pasted into the hero.
-
-The composition should survive:
-
-* desktop
-* laptop
-* tablet
-* mobile
-
-On mobile, the SVG can be cropped aggressively while maintaining the silhouette.
-
----
-
-# 8. HERO COPY
-
-The hero must contain very little text.
-
-The purpose of the hero is:
-
-> **instant understanding + emotional recognition + direction**
-
-Do NOT put every feature into the hero.
-
-Do NOT say:
-
-* 22 tracks
-* 300+ resources
-* AI guide
-* projects
-* career
-* premium
-* free
-* community
-* progress tracking
-
-All of that is unnecessary in the first screen.
-
-Use one strong idea.
-
-Preferred messaging direction:
-
-# YOU DON'T NEED ANOTHER COURSE.
-
-## YOU NEED A PATH.
-
-Alternative copy can be considered, but preserve the philosophy.
-
-The supporting text should be approximately one short paragraph.
-
-Something in the range of:
-
-> Tech Skill Hub gives you a clear path to learn valuable technology skills independently — from choosing a direction to building the skills that matter.
-
-Keep it concise.
-
-Primary CTA:
-
-**Find Your Path**
-
-Secondary CTA:
-
-**Explore Tech Skill Hub**
-
-Do not create five competing CTAs.
-
----
-
-# 9. HERO CTA STRATEGY
-
-The primary CTA should represent the user's first decision.
-
-The natural question after seeing the hero should be:
-
-> “Okay, where should I start?”
+Paystack supports NGN and USD for Nigeria-based businesses, and the transaction initialization API accepts an explicit currency and amount. Amounts must be supplied in the relevant currency's smallest unit.
 
 Therefore:
 
-**Find Your Path**
+### Example
 
-should lead to the path-discovery experience or quiz.
-
-The secondary action should be less prominent.
-
-Do not use:
-
-* Start free trial
-* Upgrade now
-* Buy now
-* Get started for $X
-
-in the hero.
-
-The hero is about discovering direction.
-
----
-
-# 10. HERO MICRO-INTERACTION
-
-If animation is used, it should reinforce the idea of movement.
-
-Potential interaction:
-
-* a subtle path line drawing itself
-* typewriter line art slowly appearing
-* one highlighted point moving through the route
-* tiny cursor movement
-* letters appearing subtly
-* gentle parallax
-
-Do not overanimate.
-
-The user should be able to ignore the animation and still understand the page.
-
-Animation must respect:
-
-`prefers-reduced-motion`.
-
----
-
-# 11. SECTION TRANSITIONS
-
-This is extremely important.
-
-The page must NOT look like:
+If Nigerian Pro price is:
 
 ```text
-SECTION A
-████████████████
-hard boundary
-████████████████
-SECTION B
+₦15,000
 ```
 
-Each section should visually lead into the next.
+the backend initializes:
 
-Use:
+```text
+amount = 1500000
+currency = NGN
+```
 
-* gradients
-* overlapping shapes
-* background transitions
-* color interpolation
-* large typography crossing boundaries
-* subtle SVG motifs
-* line continuations
-* curved separators only when intentional
-* transparent layers
+If international Pro price is:
 
-The user should feel that the page is one continuous visual environment.
+```text
+$15
+```
+
+the backend initializes:
+
+```text
+amount = 1500
+currency = USD
+```
+
+Never perform currency conversion dynamically at checkout.
+
+The two plan prices should be explicit configuration values.
 
 ---
 
-# 12. COLOR TRANSITION PHILOSOPHY
+# 5. CENTRALIZE PRICING
 
-The brand green remains the anchor.
+Create a single server-side pricing configuration.
 
-Do NOT introduce unrelated colors simply because a section needs differentiation.
+Example conceptual structure:
 
-If the following section uses another color, transition into it gradually.
+```ts
+const PRO_PRICING = {
+  NG: {
+    currency: "NGN",
+    amountMajor: 15000,
+  },
+  INTERNATIONAL: {
+    currency: "USD",
+    amountMajor: 15,
+  },
+};
+```
+
+Adapt this to the project's existing pricing model.
+
+Do not duplicate prices across:
+
+* React components
+* API routes
+* checkout pages
+* database queries
+* environment variables
+* payment handlers
+
+There must be ONE authoritative pricing source.
+
+Prefer a server-side configuration or database-backed plan record.
+
+The frontend should receive the calculated presentation values from the backend.
+
+---
+
+# 6. COUNTRY DETECTION STRATEGY
+
+We need automatic detection, but country detection must not be treated as a perfect identity signal.
+
+Use a layered approach.
+
+## LEVEL 1 — AUTHENTICATED ACCOUNT CONTEXT
+
+If a user is authenticated and has a verified profile country, use that as one strong signal.
+
+Example:
+
+```text
+user.profile.country = NG
+```
+
+However, do not blindly trust an editable country field by itself.
+
+A user should not be able to change:
+
+```text
+country = NG
+```
+
+and thereby permanently unlock Nigerian pricing.
+
+---
+
+# 7. SERVER-SIDE IP COUNTRY DETECTION
+
+Use the request's actual public IP on the server and resolve its country using a reliable IP geolocation mechanism already available to the deployment environment, or introduce a reputable server-side geolocation service if the current infrastructure has none.
+
+Do NOT determine the country from:
+
+```js
+navigator.language
+```
+
+or:
+
+```js
+Intl.DateTimeFormat().resolvedOptions().timeZone
+```
+
+or frontend locale alone.
+
+Those are UI hints, not payment-security controls.
+
+The server must obtain the connection's IP as reliably as the hosting platform permits.
+
+For example, on a hosted environment, inspect the trusted proxy headers supported by the deployment platform.
+
+Do not trust arbitrary client-provided headers.
+
+---
+
+# 8. IMPORTANT LIMITATION
+
+IP geolocation is not perfect.
+
+A customer can use:
+
+* VPN
+* proxy
+* corporate network
+* roaming
+* privacy relay
+
+Therefore:
+
+**IP country cannot be the only anti-fraud signal.**
+
+Use it to determine the initial pricing experience, but retain additional verification.
+
+---
+
+# 9. PRICING DECISION MODEL
+
+Create a centralized backend function such as:
+
+```ts
+resolvePaymentRegion(context)
+```
+
+or:
+
+```ts
+resolveCheckoutPricing(context)
+```
+
+The function should return something like:
+
+```ts
+{
+  region: "NG" | "INTERNATIONAL",
+  currency: "NGN" | "USD",
+  amount: number,
+  amountMajor: number,
+  countrySource: "ip" | "profile" | "verified-card" | "fallback",
+  confidence: "high" | "medium" | "low"
+}
+```
+
+The exact shape may differ according to project conventions.
+
+---
+
+# 10. BASE REGION RULE
+
+For the default pricing decision:
+
+```text
+country === NG
+    → NGN
+else
+    → USD
+```
+
+Do not implement a manual “currency” selector.
+
+Do not offer the customer a dropdown.
+
+Do not include a hidden form field that lets the client choose:
+
+```text
+NGN
+USD
+```
+
+without server validation.
+
+---
+
+# 11. CONFLICT HANDLING
+
+If signals disagree, do NOT silently choose the cheapest option.
+
+Example:
+
+```text
+IP country = Nigeria
+profile country = United Kingdom
+```
+
+or:
+
+```text
+IP country = United States
+profile country = Nigeria
+```
+
+The system should apply a defined policy.
 
 For example:
 
-```text
-GREEN
-   ↓
-GREEN + WARM NEUTRAL
-   ↓
-WARM NEUTRAL
-```
+### Case A
 
-rather than:
+IP = NG
 
-```text
-GREEN
-██████████
+Profile country = NG
 
-BLUE
-██████████
+→ NGN
 
-PURPLE
-██████████
-```
+### Case B
 
-The latter will make the site feel fragmented.
+IP = US
 
-Every section should belong to the same visual world.
+Profile country = US
 
----
+→ USD
 
-# 13. OVERALL LANDING PAGE PHILOSOPHY
+### Case C
 
-The homepage should be:
+IP = NG
 
-**minimal in information**
+Profile country = US
 
-but:
+→ treat as high-risk mismatch
 
-**rich in visual composition.**
-
-This distinction is critical.
-
-Do NOT interpret minimalism as:
-
-* empty white screen
-* one button
-* no visual identity
-* no movement
-* no personality
+Do not simply allow NGN because one signal says NG.
 
 Instead:
 
-### Minimal communication
+* use the stronger rule defined by the product
+* optionally require additional verification
+* or default to international pricing when ambiguity exists
 
-Very few words.
+The security principle is:
 
-### Rich art direction
-
-Strong typography, line art, colour, composition, whitespace, motion, product visuals and transitions.
-
----
-
-# 14. HOMEPAGE CONTENT RULE
-
-Every section should communicate ONE primary idea.
-
-If a section is trying to communicate:
-
-* what Tech Skill Hub is
-* all the tracks
-* how the AI works
-* pricing
-* career guidance
-
-then split the ideas.
-
-No homepage section should feel like documentation.
-
-The landing page is an introduction.
+> **When there is meaningful uncertainty, never default to the cheaper price.**
 
 ---
 
-# 15. SECTION 01 — HERO
+# 12. PAYMENT SESSION INITIALIZATION
 
-Purpose:
+Create a backend endpoint for checkout initialization.
 
-**Immediate recognition**
+Conceptually:
 
-Message:
+```http
+POST /api/payments/paystack/initialize
+```
 
-> You don't need another course. You need a path.
+Body:
 
-Visual:
+```json
+{
+  "plan": "pro"
+}
+```
 
-Large green line-art typewriter.
+The endpoint must:
 
-CTA:
+1. authenticate the user
+2. validate that the plan exists
+3. fetch the server-side plan price
+4. resolve region/currency
+5. calculate exact charge amount
+6. create a unique internal payment record
+7. initialize Paystack
+8. store the Paystack reference
+9. return only the required checkout information
 
-**Find Your Path**
-
-Secondary:
-
-**Explore**
-
-No statistics.
-
-No track cards.
-
-No large feature grid.
-
-No pricing.
-
-No “22 tracks” in the hero.
-
----
-
-# 16. SECTION 02 — THE PROBLEM
-
-After the hero, do not immediately list product features.
-
-Instead create an editorial statement.
-
-Possible direction:
-
-# THE INTERNET HAS ENOUGH INFORMATION.
-
-## IT DOESN'T HAVE ENOUGH DIRECTION.
-
-Then a short explanation.
-
-The user should recognize themselves.
-
-Someone should think:
-
-> “Exactly.”
-
-This creates emotional resonance before explaining the product.
+Do not allow the browser to supply the final amount.
 
 ---
 
-# 17. SECTION 03 — THE PRODUCT PHILOSOPHY
+# 13. INTERNAL PAYMENT RECORD
 
-Now introduce Tech Skill Hub.
+Before calling Paystack, create or reserve an internal payment/order record.
 
-Keep it extremely concise.
+Store at least:
 
-Example:
+```text
+userId
+planId
+internalOrderId
+paystackReference
+currency
+amount
+region
+pricingVersion
+status
+createdAt
+expiresAt
+countryAtInitialization
+ipCountryAtInitialization
+```
 
-> Tech Skill Hub organizes the chaos of independent learning into clear paths, practical projects and the next thing you actually need to learn.
+Also store enough metadata to determine exactly what the customer was supposed to purchase.
 
-Then show one strong visual.
-
-Not eight cards.
+This is important for dispute handling and audits.
 
 ---
 
-# 18. SECTION 04 — SHOW THE PATH
+# 14. PRICING VERSION
 
-This should be one of the most visually important sections.
-
-Show an actual learning path visually.
+Store a pricing version or equivalent identifier.
 
 Example:
 
 ```text
-01
-FOUNDATIONS
-
-↓
-
-02
-CORE SKILLS
-
-↓
-
-03
-TOOLS
-
-↓
-
-04
-BUILD
-
-↓
-
-05
-PORTFOLIO
-
-↓
-
-06
-CAREER
+PRO-2026-08
 ```
 
-This should be elegant.
+If prices change later, older transactions should remain traceable to the price version that existed when they were initialized.
 
-Do NOT turn each stage into a giant rounded card.
-
-Use:
-
-* lines
-* numbers
-* typography
-* whitespace
-* subtle background visuals
-* the Tech Skill Hub green
-
-The user should immediately understand:
-
-> “This platform tells me what comes next.”
+Do not reconstruct old prices from today's configuration.
 
 ---
 
-# 19. SECTION 05 — USER CHOICE
+# 15. PAYSTACK REFERENCE
 
-Now introduce the idea that there is no single correct path.
+Every checkout must have a unique internal/paystack reference.
 
-Headline direction:
+Do not let the client choose the reference.
 
-# WHERE DO YOU WANT TO GO?
+Generate it server-side.
 
-Then four choices:
+Example conceptual format:
 
-### BUILD
+```text
+TSH_PRO_<uuid>
+```
 
-Create software and digital products.
+or use the project's established transaction-reference convention.
 
-### DESIGN
+Ensure it is unique.
 
-Create digital experiences.
+---
 
-### ANALYZE
+# 16. PAYSTACK METADATA
 
-Work with data and systems.
-
-### GROW
-
-Develop business and professional skills.
-
-Keep this section visually calm.
-
-The user should feel:
-
-> “I choose.”
-
-This section should reinforce autonomy.
-
-Each option should lead to a dedicated subpage.
+Attach useful metadata to the Paystack transaction.
 
 For example:
 
-`/paths/build`
+```json
+{
+  "plan": "pro",
+  "internal_order_id": "...",
+  "user_id": "...",
+  "pricing_region": "NG",
+  "pricing_currency": "NGN",
+  "pricing_version": "PRO-2026-08"
+}
+```
 
-`/paths/design`
+Never put:
 
-`/paths/analyze`
+* passwords
+* secrets
+* sensitive authentication credentials
+* raw card numbers
 
-`/paths/grow`
+into metadata.
 
-Do not expose every track on the homepage.
-
----
-
-# 20. SECTION 06 — SHOW, DON'T EXPLAIN
-
-Rather than listing:
-
-* resources
-* projects
-* roadmaps
-* career
-* AI
-
-show one or two strong product visuals.
-
-For example:
-
-A beautifully designed screenshot of a roadmap.
-
-Or a cropped track experience.
-
-Or a project milestone.
-
-Accompany it with very little copy.
-
-Possible structure:
-
-### YOU ALWAYS KNOW WHAT COMES NEXT.
-
-Short supporting sentence.
-
-Then a large interface visual.
-
-This communicates the product without explaining every capability.
+Paystack supports metadata for custom transaction information.
 
 ---
 
-# 21. SECTION 07 — INDEPENDENT LEARNING
+# 17. FRONTEND CHECKOUT DISPLAY
 
-This is where the philosophy should become more emotional.
+The frontend should ask the backend:
 
-Possible copy:
+```text
+GET /api/payments/pro/pricing
+```
 
-# LEARN AT YOUR OWN PACE.
+or equivalent.
 
-Supporting line:
+The backend returns:
 
-> No classroom schedule. No waiting for the next lesson. Build the skill when you're ready to move.
+```json
+{
+  "plan": "pro",
+  "currency": "NGN",
+  "amountMajor": 15000,
+  "displayPrice": "₦15,000"
+}
+```
 
-Do not write a paragraph.
+or:
 
-Let the typography do the work.
+```json
+{
+  "plan": "pro",
+  "currency": "USD",
+  "amountMajor": 15,
+  "displayPrice": "$15"
+}
+```
+
+The frontend renders exactly what the backend returned.
+
+Do not calculate:
+
+```text
+USD → NGN
+```
+
+in the frontend.
+
+Do not determine region from the browser.
 
 ---
 
-# 22. SECTION 08 — SOCIAL / PRODUCT PROOF
+# 18. DO NOT PROVIDE A MANUAL CURRENCY SWITCH
 
-Use real information only.
+There should be no:
 
-Do not fabricate:
+```text
+[ ₦ NGN ] [ $ USD ]
+```
 
-* testimonials
-* users
-* company logos
-* statistics
-* reviews
+toggle.
 
-When real data is strong enough, display a restrained proof section.
+There should be no:
+
+```text
+Pay in Nigeria
+Pay internationally
+```
+
+selection.
+
+There should be no hidden fallback button that allows users to force NGN.
+
+There should be no query parameter such as:
+
+```text
+?currency=NGN
+```
+
+that can override the server.
+
+If legacy UI has such controls, remove them.
+
+---
+
+# 19. QUERY PARAMETER SECURITY
+
+If an attacker attempts:
+
+```text
+/api/payments/initialize?currency=NGN
+```
+
+the server must ignore the currency.
+
+If an attacker sends:
+
+```json
+{
+  "currency": "NGN",
+  "amount": 1000
+}
+```
+
+the server must ignore client-defined pricing.
+
+Only the product/plan identifier may be accepted from the user, plus legitimate checkout data required by the application.
+
+---
+
+# 20. PAYSTACK VERIFICATION
+
+Never grant Pro access merely because:
+
+* the user reached the success page
+* the browser says success
+* a callback URL exists
+* the client sends “payment successful”
+
+The backend must verify the Paystack transaction.
+
+Paystack provides a Verify Transaction endpoint, and its documentation recommends webhooks as the preferred confirmation mechanism for successful transactions.
+
+---
+
+# 21. WEBHOOK IMPLEMENTATION
+
+Implement or audit the Paystack webhook endpoint.
 
 Example:
 
-> LEARNERS ARE ALREADY EXPLORING THEIR PATHS.
-
-Then show a few meaningful verified numbers.
-
-Avoid a giant stats dashboard.
-
----
-
-# 23. SECTION 09 — GUIDED PATH / PREMIUM
-
-This section must NOT feel like:
-
-> Now buy something.
-
-Instead:
-
-> You have chosen a direction.
-> You have seen the system.
-> You understand how the platform works.
-> Now there is an optional deeper level of structure.
-
-Possible headline:
-
-# WANT A MORE STRUCTURED PATH?
-
-Supporting message:
-
-> Guided Path gives you a more deliberate learning experience when you want help staying on course.
-
-Then explain only the essential benefit.
-
-Do not dump every premium feature.
-
-CTA:
-
-**Explore Guided Path**
-
-Not:
-
-**BUY NOW**
-
-The user should perceive this as an option, not pressure.
-
----
-
-# 24. THE PSYCHOLOGY OF THE PREMIUM SECTION
-
-The user should reach the premium section thinking:
-
-> “This could help me.”
-
-Not:
-
-> “They are trying to sell me something.”
-
-The difference is huge.
-
-The page should first provide enough understanding and value that the user recognizes the need for additional structure.
-
-We are not hiding the paid product.
-
-We are **contextualizing it**.
-
----
-
-# 25. FINAL CTA
-
-The final CTA should return to the original philosophy.
-
-Possible direction:
-
-# YOU DON'T NEED TO LEARN EVERYTHING.
-
-## YOU NEED TO KNOW WHAT TO LEARN NEXT.
-
-CTA:
-
-**Find Your Path**
-
-This creates a complete narrative loop.
-
-The first message and last message should feel connected.
-
----
-
-# 26. INFORMATION THAT MUST LEAVE THE HOMEPAGE
-
-Do NOT place the following information in detail on the homepage:
-
-* every learning track
-* every skill
-* full resource list
-* detailed roadmap content
-* every project
-* detailed AI functionality
-* full career database
-* detailed pricing comparison
-* complete feature matrix
-* long FAQ
-* detailed testimonials
-* full learning statistics
-
-Move these to dedicated pages.
-
----
-
-# 27. PROPOSED INFORMATION ARCHITECTURE
-
-The homepage should point to a clean product structure.
-
-### `/`
-
-Brand introduction and discovery.
-
-### `/paths`
-
-All major directions.
-
-### `/paths/build`
-
-Build-related learning directions.
-
-### `/paths/design`
-
-Design-related learning directions.
-
-### `/paths/analyze`
-
-Analytical learning directions.
-
-### `/paths/grow`
-
-Professional/business directions.
-
-### `/tracks/[slug]`
-
-Detailed learning track.
-
-### `/resources`
-
-Curated learning library.
-
-### `/projects`
-
-Project-based learning.
-
-### `/career`
-
-Career guidance.
-
-### `/find-your-path`
-
-Quiz / path recommendation experience.
-
-### `/guided-path`
-
-Paid structured learning experience.
-
-This creates progressive disclosure.
-
----
-
-# 28. NAVIGATION
-
-Keep navigation simple.
-
-Potential structure:
-
-**Tech Skill Hub**
-
-Paths
-Resources
-Career
-
-Primary CTA:
-
-**Find Your Path**
-
-Then:
-
-Sign In
-
-Keep the header visually quiet.
-
-Do not expose every feature in the navigation.
-
-The navigation itself should reinforce the idea:
-
-> “Start with a direction.”
-
----
-
-# 29. SECTION TRANSITIONS
-
-Each section should feel connected.
-
-Use a combination of:
-
-* shared background colours
-* gradients
-* SVG line continuation
-* blurred colour diffusion
-* overlapping typography
-* subtle shape transitions
-* common visual motifs
-
-The path illustration can continue subtly through multiple sections.
-
-For example:
-
-Hero path:
-
-`START`
-
-↓
-
-Problem section:
-
-path barely visible
-
-↓
-
-Learning section:
-
-path becomes more visible
-
-↓
-
-Choice section:
-
-path branches into four directions
-
-This is extremely important.
-
-The **visual motif itself can tell the story**.
-
----
-
-# 30. BRANCHING PATH VISUAL
-
-Use the concept of a path branching at the “Where do you want to go?” section.
-
-For example:
-
-```text
-                    BUILD
-                   /
-START ────────────
-                   \
-                    DESIGN
-
-                   ANALYZE
-
-                   GROW
+```http
+POST /api/payments/paystack/webhook
 ```
 
-Do not literally make it look like a technical diagram if it becomes ugly.
+Verify the Paystack signature before processing.
 
-The idea should remain elegant.
+Paystack webhook events contain an `x-paystack-signature` HMAC SHA512 signature generated using the secret key.
 
-The user's decision becomes part of the visual narrative.
+Implement:
 
----
+```text
+raw request body
+↓
+HMAC SHA512 with PAYSTACK_SECRET_KEY
+↓
+compare with x-paystack-signature
+↓
+reject if invalid
+↓
+process if valid
+```
 
-# 31. BRAND VISUAL LANGUAGE
+Do not process webhook data before signature validation.
 
-The brand's visual language should consist of:
-
-### Typewriter
-
-Represents learning, writing, creation and craft.
-
-### Path
-
-Represents progression.
-
-### Lines
-
-Represent connection.
-
-### Numbers
-
-Represent stages.
-
-### Green
-
-Represents the recognizable brand identity.
-
-### Editorial typography
-
-Represents confidence and thoughtfulness.
-
-Together these should form a recognizable design system.
+Use constant-time comparison where appropriate.
 
 ---
 
-# 32. TYPEWRITER AS A REUSABLE BRAND ASSET
+# 22. WEBHOOK IDEMPOTENCY
 
-Do not treat the typewriter as a one-off hero decoration.
+Webhook handlers must be idempotent.
 
-Create the illustration as a reusable SVG asset.
+The same webhook may be delivered more than once.
 
-Potential uses:
+Never grant:
 
-* homepage hero
-* empty states
-* onboarding
-* about page
-* social graphics
-* promotional materials
-* loading screens
-* marketing pages
+```text
+2 months
+```
 
-The hero should establish a visual asset that can become part of the brand.
+because the same success event was processed twice.
 
----
+Before fulfilling:
 
-# 33. TYPEWRITER ANIMATION
+```text
+already fulfilled?
+```
 
-Optionally animate the line-art.
+If yes:
 
-Potential subtle effects:
-
-* stroke reveal
-* gentle cursor movement
-* faint paper line
-* typing indicator
-* blinking cursor
-* very slow parallax
-
-But do not make the typewriter “type” aggressively.
-
-Avoid gimmicks.
-
-The illustration should feel sophisticated.
+```text
+acknowledge and stop
+```
 
 ---
 
-# 34. DO NOT MAKE THE TYPEWRITER TOO LITERAL
+# 23. TRANSACTION VERIFICATION
 
-It should not dominate the typography.
+When a transaction is verified, compare the Paystack response against the internal order.
 
-The user should first notice:
+Do not merely check:
 
-**the message**
+```text
+status === success
+```
 
-and then notice:
+Also validate:
 
-**the visual world behind the message.**
+```text
+reference
+currency
+amount
+plan/order
+customer
+```
 
-The visual exists to reinforce the brand.
+The paid transaction must match the exact expected amount and currency that the backend initialized.
 
-It is not the product itself.
+Paystack's verify response includes transaction status, requested amount, currency, authorization details and customer information.
 
 ---
 
-# 35. MICROCOPY
+# 24. AMOUNT VERIFICATION
 
-Use short copy everywhere.
+This is mandatory.
 
-Examples:
+Suppose the backend expected:
 
-Instead of:
+```text
+NGN 15,000
+```
 
-> Explore our comprehensive collection of learning tracks designed to provide a structured learning experience across multiple areas of technology.
+but Paystack says:
+
+```text
+NGN 1,500
+```
+
+Do NOT grant the subscription.
+
+Suppose the backend expected:
+
+```text
+USD 15
+```
+
+but Paystack says:
+
+```text
+USD 5
+```
+
+Do NOT grant the subscription.
+
+Compare using the smallest currency units.
+
+Example:
+
+```text
+expectedAmountSubunit
+=== verifiedTransaction.amount
+```
+
+not floating-point comparisons.
+
+---
+
+# 25. CURRENCY VERIFICATION
+
+This is equally mandatory.
+
+Suppose the backend created:
+
+```text
+currency = USD
+```
+
+If the verified transaction is:
+
+```text
+currency = NGN
+```
+
+then treat it as an invalid/mismatched payment.
+
+Do not grant Pro.
+
+This prevents someone from initializing one pricing context and attempting to fulfill another.
+
+---
+
+# 26. CARD COUNTRY VERIFICATION
+
+Paystack transaction authorization data contains:
+
+```text
+authorization.country_code
+```
+
+which represents the country where the customer's card was issued.
+
+After a card transaction is successfully processed, capture this signal.
+
+Example:
+
+```text
+authorization.country_code = NG
+```
+
+or:
+
+```text
+authorization.country_code = US
+```
+
+This is a **post-payment risk signal**, not a frontend pricing toggle.
+
+---
+
+# 27. IMPORTANT: CARD COUNTRY IS NOT THE SAME AS USER LOCATION
+
+Do NOT assume:
+
+```text
+card country === person's current physical location
+```
+
+A Nigerian customer can possess a foreign card.
+
+A foreign customer can possess a Nigerian-issued card.
+
+Therefore, card country should be used as a risk/consistency signal alongside other signals.
+
+Do not create a brittle rule that automatically blocks every mismatch.
+
+---
+
+# 28. FRAUD / MISMATCH POLICY
+
+Create a configurable risk evaluation function.
+
+Conceptually:
+
+```ts
+evaluatePaymentRisk({
+  ipCountry,
+  profileCountry,
+  pricingRegion,
+  transactionCurrency,
+  cardCountry,
+  paystackRiskAction,
+  amount,
+  userId
+})
+```
+
+Possible outcome:
+
+```text
+ALLOW
+REVIEW
+DENY
+```
+
+---
+
+# 29. EXAMPLE RISK RULES
+
+### LOW RISK
+
+```text
+IP = NG
+Profile = NG
+Currency = NGN
+Card country = NG
+```
+
+→ ALLOW
+
+### LOW RISK INTERNATIONAL
+
+```text
+IP = US
+Profile = US
+Currency = USD
+Card country = US
+```
+
+→ ALLOW
+
+### INTERNATIONAL TRAVEL CASE
+
+```text
+IP = US
+Profile = NG
+Currency = USD
+Card country = NG
+```
+
+This should NOT automatically mean fraud.
+
+It may simply be a Nigerian user currently abroad.
+
+Use the configured risk policy.
+
+### SUSPICIOUS CASE
+
+```text
+IP = NG
+Profile = NG
+Currency = NGN
+Card country = US
+```
+
+Potential mismatch.
+
+Do not automatically grant or automatically reject unless the application's risk policy says so.
+
+At minimum:
+
+```text
+record mismatch
+```
+
+and make the logic auditable.
+
+---
+
+# 30. AVS
+
+Because this is a Nigeria-based Paystack business with international payments enabled, evaluate whether Paystack AVS is available and enabled for this integration.
+
+Paystack states that AVS is available to Nigeria-based businesses with international payments enabled, subject to their eligibility, and it helps verify billing-address consistency for eligible US, UK and Canadian cards.
+
+Do not assume AVS is universally available for every card/country.
+
+If the Paystack response exposes useful AVS/risk information, incorporate it into the risk evaluation.
+
+Do not invent AVS fields that Paystack does not actually return.
+
+---
+
+# 31. PAYSTACK RISK SIGNALS
+
+Paystack transaction/customer data can contain risk-related information.
+
+Inspect the current Paystack response shape and use only fields that are actually available in this integration.
+
+Do not hardcode undocumented fields.
+
+If Paystack returns:
+
+```text
+customer.risk_action
+```
+
+or equivalent risk information, treat it as an additional provider signal.
+
+Paystack's API documents customer risk actions such as `default`, `allow`, and `deny`.
+
+---
+
+# 32. DO NOT TRY TO BUILD YOUR OWN CARD FRAUD ENGINE
+
+Do not implement homemade card-number scoring.
+
+Do not collect raw card details.
+
+Do not store:
+
+* PAN
+* CVV
+* unmasked card numbers
+
+in the Tech Skills Hub backend.
+
+Let Paystack handle payment credentials and provider-side card risk.
+
+Our responsibility is to make the application-side pricing and fulfillment secure.
+
+---
+
+# 33. PAYMENT FULFILLMENT
+
+Only grant Pro access after all of the following are satisfied:
+
+```text
+Paystack payment is successful
+AND
+transaction reference matches
+AND
+currency matches expected
+AND
+amount matches expected
+AND
+product/plan matches expected order
+AND
+transaction has not already been fulfilled
+AND
+risk policy allows fulfillment
+```
+
+If any required condition fails:
+
+```text
+do not grant entitlement
+```
+
+---
+
+# 34. SUBSCRIPTION / ENTITLEMENT MODEL
+
+Do not make the user “Pro” simply because they opened the checkout.
+
+Track:
+
+```text
+pending
+paid
+active
+expired
+cancelled
+failed
+refunded
+reversed
+```
+
+Adapt to the existing application.
+
+If the product uses recurring Paystack authorization, preserve that architecture.
+
+Paystack's recurring-charge system provides reusable authorization information, and the authorization response includes the card's country code.
+
+---
+
+# 35. DOUBLE-FULFILLMENT PROTECTION
+
+If both:
+
+```text
+webhook
+```
+
+and:
+
+```text
+verify callback
+```
+
+process the same payment:
+
+Only the first successful fulfillment may grant the entitlement.
+
+Use a transaction/database lock or atomic update where appropriate.
+
+Example:
+
+```text
+if order.status !== "paid"
+    mark as paid + grant entitlement
+
+else
+    no-op
+```
+
+Use database-level protection where practical.
+
+---
+
+# 36. PAYMENT FAILURE HANDLING
+
+The UI must clearly distinguish:
+
+### Success
+
+Payment confirmed.
+
+### Failed
+
+Paystack returned a failed payment.
+
+### Abandoned
+
+User started but did not finish.
+
+### Pending
+
+Payment is still being processed.
+
+### Mismatch
+
+Payment exists but does not match the expected order.
+
+### Verification failure
+
+The server could not safely confirm the payment.
+
+Do not show:
+
+> “Payment successful”
+
+unless the backend has actually confirmed it.
+
+Paystack documents statuses including `abandoned`, `failed`, `pending`, `processing`, `reversed`, and `success`.
+
+---
+
+# 37. REDIRECT/CALLBACK SECURITY
+
+If the payment flow returns the customer to:
+
+```text
+/payment/success
+```
+
+that page must not itself grant access.
+
+It should simply:
+
+1. read the Paystack reference
+2. ask the backend for verification status
+3. display the appropriate state
+
+The backend remains authoritative.
+
+---
+
+# 38. PRICING ENDPOINT SECURITY
+
+The pricing endpoint itself should not reveal internal fraud logic.
+
+It may return:
+
+```text
+currency
+amount
+displayPrice
+region label
+```
+
+It should not return:
+
+```text
+ip_country
+risk_score
+internal confidence
+fraud thresholds
+```
+
+unless needed for administrative tooling.
+
+---
+
+# 39. NO USER OVERRIDE
+
+The API must reject attempts such as:
+
+```json
+{
+  "plan": "pro",
+  "currency": "NGN",
+  "amount": 1000
+}
+```
+
+with arbitrary values.
+
+The backend should derive:
+
+```text
+plan → price
+region → currency
+```
+
+itself.
+
+---
+
+# 40. NO “INTERNATIONAL CHECKBOX”
+
+Do not implement:
+
+```text
+I'm outside Nigeria
+```
+
+as the mechanism.
+
+That is user-controlled.
+
+A user can lie.
+
+The system should make the normal decision automatically.
+
+---
+
+# 41. GUEST USERS
+
+If users can start checkout before creating an account, decide how the backend should associate the Paystack customer with a user/order.
+
+Preferred:
+
+```text
+user authenticated
+↓
+internal order
+↓
+Paystack transaction
+```
+
+If guests are supported:
+
+* create a secure pending order
+* collect email
+* generate a unique internal order
+* associate Paystack reference
+* only create/activate entitlement after successful verified payment
+
+Do not let someone obtain Pro merely by supplying another user's email address.
+
+---
+
+# 42. REPLAY PROTECTION
+
+Do not allow a previously successful Paystack reference to be reused to activate another account.
+
+Every payment reference must correspond to one internal order.
+
+Before fulfillment:
+
+```text
+reference belongs to this order?
+reference belongs to this user?
+reference already fulfilled?
+```
+
+All should be checked.
+
+---
+
+# 43. PLAN/PRICE TAMPERING
+
+Never allow the frontend to send:
+
+```text
+price = 0
+price = discounted price
+currency = NGN
+```
+
+as authoritative values.
+
+The client sends:
+
+```text
+planId
+```
+
+The server resolves:
+
+```text
+planId
+→ active plan configuration
+→ pricing region
+→ currency
+→ amount
+```
+
+---
+
+# 44. DISCOUNT CODES
+
+If the existing product supports coupons or discounts, integrate them into the same server-side pricing pipeline.
+
+Example:
+
+```text
+base plan
+↓
+region pricing
+↓
+coupon validation
+↓
+final amount
+↓
+Paystack initialization
+```
+
+Never calculate the final amount purely on the client.
+
+---
+
+# 45. LOGGING / AUDIT
+
+Add structured logs for critical payment transitions.
+
+Example:
+
+```text
+checkout_initialized
+payment_redirected
+payment_verified
+payment_webhook_received
+payment_fulfilled
+payment_mismatch
+payment_rejected
+payment_risk_review
+```
+
+Do not log sensitive payment credentials.
+
+Log:
+
+* internal order ID
+* Paystack reference
+* user ID
+* currency
+* amount
+* region
+* event type
+* timestamp
+
+---
+
+# 46. ADMIN VISIBILITY
+
+If the application has an admin dashboard, expose enough information to investigate disputes.
+
+An admin should be able to see:
+
+```text
+Internal order
+Paystack reference
+Plan
+Expected currency
+Expected amount
+Paid currency
+Paid amount
+Pricing region
+Initial IP country
+Profile country
+Card country
+Payment status
+Risk outcome
+Fulfillment status
+Created at
+```
+
+Do not expose sensitive card data beyond masked information Paystack provides.
+
+---
+
+# 47. GEOLOCATION CACHE
+
+Do not call an external IP geolocation provider on every React render.
+
+Resolve country on the server when needed.
+
+Cache where appropriate.
+
+Do not make checkout depend on a slow geolocation request if there is already sufficient trusted context.
+
+---
+
+# 48. GEOLOCATION FAILURE
+
+If IP geolocation fails:
+
+Do not crash the application.
+
+Apply a deterministic fallback.
+
+Example options:
+
+### Conservative fallback
+
+Use the verified profile country if available.
+
+Otherwise default to INTERNATIONAL pricing.
+
+Why?
+
+Because the system must never grant the cheaper Nigerian price simply because location lookup failed.
+
+Document the chosen policy.
+
+---
+
+# 49. GEOLOCATION PROVIDER
+
+If introducing a third-party service:
+
+* use a reputable provider
+* keep the integration server-side
+* store the API key in environment variables
+* add timeout handling
+* fail gracefully
+* do not block the entire site if the service is unavailable
+
+Do not expose the geolocation API key to the browser.
+
+---
+
+# 50. CACHE AND SECURITY
+
+Do not cache personalized pricing responses globally.
+
+A response saying:
+
+```text
+currency = NGN
+```
+
+must not accidentally be served to a user in the United States through a shared CDN cache.
+
+Use appropriate cache-control behavior.
+
+For user-specific pricing responses:
+
+```text
+private / no-store
+```
+
+where appropriate.
+
+---
+
+# 51. NEXT.JS CONSIDERATIONS
+
+Follow the application's existing Next.js conventions.
+
+If the project uses:
+
+* App Router
+* Server Actions
+* Route Handlers
+* API routes
+
+use the existing architecture rather than introducing another pattern unnecessarily.
+
+The backend remains authoritative.
+
+Do not move secret Paystack operations into client components.
+
+---
+
+# 52. NODE.JS BACKEND CONSIDERATIONS
+
+The Node.js backend must own:
+
+* Paystack secret key
+* transaction initialization
+* pricing resolution
+* order creation
+* verification
+* webhook processing
+* entitlement fulfillment
+
+The secret key must never be exposed in frontend bundles.
+
+Paystack explicitly recommends keeping secret keys out of frontend code and public repositories.
+
+---
+
+# 53. ENVIRONMENT VARIABLES
+
+Inspect the existing environment configuration.
+
+Do not create duplicate naming conventions if existing variables already exist.
+
+Likely requirements include:
+
+```text
+PAYSTACK_SECRET_KEY
+PAYSTACK_PUBLIC_KEY
+PAYSTACK_WEBHOOK_SECRET
+```
+
+Only add variables actually required by the chosen webhook/security architecture.
+
+The secret must exist only server-side.
+
+---
+
+# 54. PUBLIC KEY VS SECRET KEY
 
 Use:
 
-> Find a direction.
+### Public key
 
-Instead of:
+Only where Paystack's client-side checkout requires it.
 
-> Our carefully curated resources have been selected to help you develop relevant skills.
+### Secret key
 
-Use:
+Only on the server.
 
-> Follow the right resources in the right order.
-
-Instead of:
-
-> Access a wide range of technology disciplines.
-
-Use:
-
-> Choose your path.
-
-The page should feel **edited**.
-
-Every sentence should earn its space.
-
----
-
-# 36. USER-LED FEELING
-
-Always ask:
-
-> Does this section tell the user what to do?
-
-If yes, ask:
-
-> Can we instead show them why they would naturally want to do it?
-
-For example:
-
-Do NOT:
-
-> Click here to explore our premium guided path.
-
-Prefer:
-
-> When you want more structure, Guided Path keeps your learning moving.
-
-Then:
-
-**Explore Guided Path**
-
-The user should feel that the action is theirs.
-
----
-
-# 37. NO AGGRESSIVE CONVERSION TACTICS
-
-Do not use:
-
-* countdowns
-* fake scarcity
-* fake urgency
-* “limited time”
-* popups immediately after arrival
-* repeated pricing CTAs
-* manipulative modal interruptions
-* fake social proof
-* exaggerated claims
-
-The product should sell through:
-
-**clarity + usefulness + trust + desire.**
-
----
-
-# 38. VISUAL HIERARCHY
-
-Establish a very clear hierarchy.
-
-The viewer's eye should generally move:
+Never import:
 
 ```text
-BRAND
-↓
-MAIN IDEA
-↓
-SUPPORTING IDEA
-↓
-VISUAL
-↓
-DECISION
+PAYSTACK_SECRET_KEY
 ```
 
-Not:
+into client components.
+
+---
+
+# 55. CUSTOMER EXPERIENCE
+
+When Nigerian:
+
+Display:
 
 ```text
-TITLE
-CARD
-CARD
-STAT
-CARD
-BUTTON
-CARD
-HEADING
-STAT
-BUTTON
-IMAGE
-CARD
+₦15,000
 ```
 
----
+When international:
 
-# 39. SPACING
-
-Give the sections significantly more breathing room than the current homepage.
-
-Premium should feel spacious.
-
-Use larger vertical spacing for:
-
-* hero
-* major statements
-* product visuals
-* roadmap sections
-* CTA
-
-However, do not create empty space without purpose.
-
-Whitespace should establish hierarchy.
-
----
-
-# 40. RESPONSIVE BEHAVIOR
-
-Desktop can use the full visual composition.
-
-Mobile should simplify intelligently.
-
-On mobile:
-
-* typewriter may become smaller or partially cropped
-* path may become vertical
-* branch paths may stack
-* large typography scales down carefully
-* sections remain visually connected
-* CTAs remain easy to reach
-
-Do not simply shrink desktop layouts.
-
-Create a mobile composition.
-
----
-
-# 41. ACCESSIBILITY
-
-Preserve:
-
-* semantic HTML
-* keyboard navigation
-* visible focus
-* contrast
-* screen reader compatibility
-* reduced motion
-
-The typewriter and decorative SVG should be marked decorative where appropriate.
-
-Do not let decorative visuals interfere with accessibility.
-
----
-
-# 42. PERFORMANCE
-
-The typewriter SVG should be optimized.
-
-Avoid:
-
-* huge SVG files
-* unnecessary path complexity
-* massive image assets
-* unnecessary animation libraries
-
-Use CSS/SVG wherever appropriate.
-
-Preserve good Lighthouse performance.
-
----
-
-# 43. IMPLEMENTATION STRATEGY
-
-Do not immediately rewrite everything.
-
-First inspect the current homepage implementation and determine:
-
-* which components are reusable
-* which sections can be repurposed
-* which sections should move to subpages
-* which components should be removed from the homepage
-* which current hero path elements can be retained
-* where the new typewriter should live
-* what existing design tokens should remain
-
-Then implement the new page.
-
----
-
-# 44. COMPONENT STRATEGY
-
-Create reusable components where appropriate.
-
-Potential components:
-
-`LandingHero`
-
-`TypewriterIllustration`
-
-`EditorialStatement`
-
-`PathJourney`
-
-`PathChoice`
-
-`LearningPathPreview`
-
-`ProductVisual`
-
-`ProofSection`
-
-`GuidedPathPreview`
-
-`FinalCTA`
-
-`SectionTransition`
-
-Do not over-componentize trivial elements.
-
----
-
-# 45. PAGE LENGTH
-
-The homepage should become significantly shorter in terms of **information density**.
-
-It can still be visually long.
-
-Target roughly:
+Display:
 
 ```text
-Hero
-↓
-Problem
-↓
-Philosophy
-↓
-Path
-↓
-Choices
-↓
-Product proof
-↓
-Guided Path
-↓
-Final CTA
+$15
 ```
 
-Avoid turning the homepage into a documentation page.
+Do not display the other currency as a selectable alternative.
+
+Optionally you may mention a localized equivalent in informational text only if there is a compelling reason, but do not present it as a competing checkout option.
 
 ---
 
-# 46. CONTENT DENSITY RULE
+# 56. USER COUNTRY VISUAL FEEDBACK
 
-Apply this rule to the entire page:
+Do not make the UI say:
 
-> **If a paragraph exists only to explain something that can be shown visually, remove the paragraph.**
+> “We detected that you are Nigerian because your IP is ...”
 
-> **If a section exists only because the product has a feature, do not automatically put it on the homepage.**
+That is unnecessary and potentially confusing.
 
-> **If information is only useful after someone has selected a path, move it to that path.**
+The customer should simply see the correct price.
 
-> **If information requires explanation, give it its own page.**
+If a mismatch or verification issue occurs, provide a neutral message such as:
 
----
+> “We couldn't safely verify your payment region. Please contact support.”
 
-# 47. THE HOMEPAGE SHOULD FUNCTION AS A DOORWAY
-
-The homepage is not the entire house.
-
-It is the entrance.
-
-Its job is to make users want to walk further inside.
-
-The hierarchy should therefore be:
-
-### Homepage
-
-**Why should I care?**
-
-### Paths
-
-**What direction fits me?**
-
-### Track
-
-**How do I learn it?**
-
-### Dashboard
-
-**What do I do today?**
-
-### Guided Path
-
-**Do I want more structure?**
-
-This is the product architecture we are trying to establish.
+Do not expose fraud rules.
 
 ---
 
-# 48. CONVERSION FUNNEL
+# 57. PAYSTACK INTERNATIONAL PAYMENT SUPPORT
 
-Design the homepage around this natural sequence:
+Do not assume that all international payment channels behave identically.
 
-### Stage 1 — Recognition
+Paystack's international-payment documentation states that Nigeria-based businesses can accept international card payments and can price transactions in either NGN or USD, subject to the account's enabled features.
 
-“I have this problem.”
+Keep the checkout configuration aligned with the channels that are actually enabled on the Paystack account.
 
-### Stage 2 — Reassurance
-
-“This product understands the problem.”
-
-### Stage 3 — Curiosity
-
-“I want to see how it works.”
-
-### Stage 4 — Agency
-
-“I can choose my direction.”
-
-### Stage 5 — Commitment
-
-“I want to start learning.”
-
-### Stage 6 — Depth
-
-“I want more structure.”
-
-### Stage 7 — Upgrade
-
-“Guided Path makes sense for me.”
-
-The product should NEVER make Stage 7 feel like it appeared out of nowhere.
-
-The premium product should feel like the natural continuation of the user's existing journey.
+Do not hardcode unavailable channels.
 
 ---
 
-# 49. FINAL BRAND FEELING
+# 58. CARD COUNTRY / BIN AS A SECONDARY SIGNAL
 
-When somebody leaves the landing page, they should remember:
+Paystack exposes a card BIN resolution endpoint that can return the card's issuing country, bank, brand and card type.
 
-### The message
+Prefer using the transaction authorization data returned after payment where available.
 
-> You don't need another course. You need a path.
+Do not perform unnecessary BIN lookups for every checkout unless there is a concrete security reason.
 
-### The visual
-
-The green line-art typewriter.
-
-### The concept
-
-Independent learning.
-
-### The feeling
-
-Calm confidence.
-
-### The action
-
-Find your path.
-
-That is enough.
+The goal is to minimize unnecessary external calls.
 
 ---
 
-# 50. FINAL QUALITY CHECK
+# 59. IMPORTANT BUSINESS RULE
 
-Before finishing, review the homepage and answer:
+The system must make it difficult to exploit a cheaper regional price.
 
-### Is there too much information?
+Examples to protect against:
 
-If yes, remove it.
+### Attack 1
 
-### Does the hero communicate the product within seconds?
+International user manually submits:
 
-If no, simplify.
+```text
+currency=NGN
+```
 
-### Does the typewriter look like a real brand asset?
+Result:
 
-If no, redesign it.
+```text
+ignored
+```
 
-### Does the green feel like a coherent brand colour?
+### Attack 2
 
-If no, revisit the token system.
+User changes a browser request from:
 
-### Do sections visually blend together?
+```text
+price=15000
+```
 
-If no, redesign transitions.
+to:
 
-### Does the page feel visually rich without being verbally busy?
+```text
+price=1000
+```
 
-If no, reduce copy and improve composition.
+Result:
 
-### Does the user feel like they are choosing?
+```text
+ignored
+```
 
-If no, reduce directional language.
+### Attack 3
 
-### Does the page still guide them toward the intended next step?
+User changes URL:
 
-If no, improve hierarchy and CTA placement.
+```text
+?country=NG
+```
 
-### Does the premium offer feel like a natural next level?
+Result:
 
-If no, improve the story leading into it.
+```text
+ignored
+```
 
-### Does the homepage feel like a premium product rather than a portfolio project?
+### Attack 4
 
-If no, continue refining.
+User changes localStorage:
+
+```text
+region=NG
+```
+
+Result:
+
+```text
+ignored
+```
+
+### Attack 5
+
+User modifies JavaScript variables in DevTools.
+
+Result:
+
+```text
+ignored because backend calculates the amount
+```
+
+### Attack 6
+
+User attempts to fulfill with a different Paystack reference.
+
+Result:
+
+```text
+rejected because reference does not belong to internal order
+```
 
 ---
 
-# IMPLEMENTATION COMMAND
+# 60. DO NOT OVERBLOCK LEGITIMATE USERS
 
-Start by inspecting the current homepage implementation and existing design system.
+Security must not become a broken checkout.
 
-Do not modify backend logic.
+Do not automatically reject everyone with:
 
-Do not modify authentication.
+```text
+IP country != card country
+```
 
-Do not modify database behavior.
+because legitimate travel, expatriates, international cards, corporate networks, VPNs and other scenarios exist.
 
-Do not modify payment logic.
+Use mismatches as a signal, not as proof of fraud.
 
-Do not remove working product features.
+The payment provider remains the primary card-payment processor/risk layer.
 
-The redesign should primarily affect:
+Our application layer's responsibility is:
 
-* homepage composition
-* visual system
-* typography
-* SVG assets
-* layout
-* navigation presentation
-* section transitions
-* content hierarchy
-* CTA hierarchy
-* responsive behavior
-* visual storytelling
+```text
+correct pricing
++
+correct fulfillment
++
+anti-tampering
++
+auditability
+```
 
-Move detailed product information out of the homepage rather than deleting it from the product.
+---
 
-Create or reuse the necessary subpages.
+# 61. TEST CASE MATRIX
 
-Begin with the homepage.
+Create automated tests for at least the following scenarios.
 
-Build the new experience carefully.
+### Test 1
 
-Do not generate a generic template.
+IP = NG
 
-Do not use a standard SaaS hero.
+profile = NG
 
-Do not use a grid-based hero.
+→ NGN
 
-Do not fill empty areas with cards.
+### Test 2
 
-Do not add unnecessary sections just to make the page longer.
+IP = US
 
-The finished landing page should feel like:
+profile = US
 
-**a premium editorial learning brand with a technology backbone.**
+→ USD
 
-It should look and feel unmistakably like **Tech Skill Hub**.
+### Test 3
+
+IP = UK
+
+profile = NG
+
+→ follow documented mismatch policy
+
+### Test 4
+
+Client submits `currency=NGN` while server context is international
+
+→ server still uses USD
+
+### Test 5
+
+Client submits arbitrary amount
+
+→ server ignores amount
+
+### Test 6
+
+Paystack success with expected currency/amount
+
+→ grant access
+
+### Test 7
+
+Paystack success with wrong currency
+
+→ reject fulfillment
+
+### Test 8
+
+Paystack success with wrong amount
+
+→ reject fulfillment
+
+### Test 9
+
+Duplicate webhook
+
+→ one fulfillment only
+
+### Test 10
+
+Invalid webhook signature
+
+→ reject
+
+### Test 11
+
+Unknown Paystack reference
+
+→ reject
+
+### Test 12
+
+Already fulfilled order
+
+→ no duplicate entitlement
+
+### Test 13
+
+Geolocation provider unavailable
+
+→ deterministic safe fallback
+
+### Test 14
+
+VPN / mismatched signals
+
+→ follow configured risk policy
+
+### Test 15
+
+User retries after failed transaction
+
+→ new safe transaction/reference
+
+---
+
+# 62. TEST WITH PAYSTACK TEST MODE
+
+Before touching production:
+
+Use Paystack test mode.
+
+Verify both:
+
+```text
+NGN
+USD
+```
+
+flows.
+
+Confirm:
+
+* amount
+* currency
+* reference
+* redirect
+* webhook
+* transaction verification
+* fulfillment
+* duplicate handling
+
+Paystack uses separate test/live environments and keys.
+
+---
+
+# 63. LIVE CHECKLIST
+
+Before deploying live, verify:
+
+[ ] Paystack international payments are enabled
+
+[ ] USD transactions are enabled for the Paystack account
+
+[ ] Production Paystack secret key is configured server-side
+
+[ ] Production public key is configured where needed
+
+[ ] Webhook URL is configured in Paystack
+
+[ ] Webhook signature validation works
+
+[ ] Transaction verification works
+
+[ ] NGN checkout works
+
+[ ] USD checkout works
+
+[ ] No frontend currency override exists
+
+[ ] No client-supplied amount is trusted
+
+[ ] Duplicate webhook is safe
+
+[ ] Wrong amount is rejected
+
+[ ] Wrong currency is rejected
+
+[ ] Unknown references are rejected
+
+[ ] User cannot reuse another user's payment reference
+
+[ ] Entitlements are granted only after server confirmation
+
+[ ] Logging is enabled
+
+[ ] Sensitive secrets are not exposed in the client
+
+---
+
+# 64. IMPORTANT: DO NOT CLAIM IMPOSSIBLE FRAUD PREVENTION
+
+Do not describe this system internally or in product messaging as:
+
+> “Fraud-proof.”
+
+Nothing is completely fraud-proof.
+
+The goal is:
+
+> **Make regional price bypass difficult, prevent application-side payment tampering, validate Paystack transactions correctly, and use provider risk signals appropriately.**
+
+Paystack itself also applies payment-risk controls and fraud-related mechanisms.
+
+The application should complement those controls rather than pretending to replace them.
+
+---
+
+# 65. CODE QUALITY
+
+Use strong TypeScript types.
+
+Create types for:
+
+```ts
+Currency
+PricingRegion
+PaymentStatus
+RiskOutcome
+PaymentOrder
+PaystackTransaction
+```
+
+Do not pass arbitrary strings throughout the codebase.
+
+Validate API inputs.
+
+Handle failures explicitly.
+
+Do not swallow exceptions.
+
+Do not expose raw Paystack errors to end users.
+
+---
+
+# 66. DATABASE CONSISTENCY
+
+Inspect the existing Prisma schema or database model before creating new tables.
+
+Prefer reusing existing:
+
+* payment
+* transaction
+* subscription
+* order
+* entitlement
+
+models if they are suitable.
+
+Do not create duplicate payment tables simply because the existing naming is inconvenient.
+
+If schema changes are necessary:
+
+* create migrations
+* preserve existing records
+* add indexes
+* document relationships
+
+---
+
+# 67. RECURRING SUBSCRIPTIONS
+
+If Pro currently uses recurring billing:
+
+preserve the existing subscription architecture while applying the NGN/USD region logic.
+
+The currency chosen at subscription creation must be stored.
+
+Do not assume a user's currency can change automatically during an active subscription.
+
+A subscription should retain the currency and pricing terms under which it was created unless the application explicitly supports plan migration.
+
+---
+
+# 68. EXISTING SUBSCRIBERS
+
+Do not break users who already paid.
+
+When implementing the new system:
+
+* inspect existing subscriptions
+* preserve their currency
+* preserve their entitlement
+* do not reclassify an existing active subscription without an explicit migration strategy
+
+Existing customer records must remain valid.
+
+---
+
+# 69. LEGACY STRIPE DATA
+
+If Stripe subscriptions or transactions exist historically:
+
+Do not delete them blindly.
+
+Determine whether they are:
+
+* active
+* expired
+* historical
+* orphaned
+
+Do not break access for legitimate old subscribers.
+
+New Pro checkout should use Paystack.
+
+---
+
+# 70. USER-FACING PRICE CONSISTENCY
+
+The following must all agree:
+
+```text
+pricing API
+pricing card
+checkout page
+Paystack initialization
+payment record
+verification
+subscription record
+receipt
+```
+
+If frontend says:
+
+```text
+$15
+```
+
+but Paystack receives:
+
+```text
+NGN 15000
+```
+
+that is a critical bug.
+
+The system must use the same authoritative pricing object.
+
+---
+
+# 71. RECEIPTS / EMAILS
+
+If the application sends payment confirmation emails, the receipt must show the actual charged currency and amount.
+
+Do not display:
+
+```text
+₦15,000
+```
+
+for a USD transaction.
+
+Use the verified Paystack transaction values or the internal confirmed order values.
+
+---
+
+# 72. ANALYTICS
+
+Track useful events:
+
+```text
+pro_pricing_viewed
+checkout_started
+checkout_currency_ngn
+checkout_currency_usd
+payment_initialized
+payment_success
+payment_failed
+payment_abandoned
+payment_rejected
+payment_risk_review
+subscription_activated
+```
+
+Do not send sensitive card information to analytics systems.
+
+---
+
+# 73. USER EXPERIENCE FOR REGION DETECTION
+
+The detection should happen fast enough that the user does not see:
+
+```text
+₦15,000
+```
+
+for two seconds and then suddenly see:
+
+```text
+$15
+```
+
+Prefer server-rendered or server-fetched pricing where the architecture allows it.
+
+Otherwise use a controlled loading state:
+
+```text
+Loading plan...
+```
+
+then display the final server-resolved price.
+
+Avoid visible price flickering.
+
+---
+
+# 74. EDGE / CACHE SAFETY
+
+If the app uses:
+
+* Vercel caching
+* CDN
+* ISR
+* static rendering
+
+make sure region-sensitive pricing is not statically cached as one universal response.
+
+Personalized pricing must be handled dynamically or privately.
+
+---
+
+# 75. ACCEPTANCE CRITERIA
+
+The work is complete only when all of the following are true:
+
+### Nigerian user
+
+Automatically sees:
+
+```text
+NGN
+```
+
+and Paystack initializes an NGN transaction using the server-defined Nigerian price.
+
+### International user
+
+Automatically sees:
+
+```text
+USD
+```
+
+and Paystack initializes a USD transaction using the server-defined international price.
+
+### User cannot manually switch
+
+No frontend control can force a different currency.
+
+### User cannot manipulate amount
+
+The backend ignores arbitrary client amounts.
+
+### Payment must match
+
+Currency + amount + reference + order must match before fulfillment.
+
+### Webhook is secure
+
+Invalid signatures are rejected.
+
+### Duplicate fulfillment is prevented
+
+Same payment can never grant multiple entitlements.
+
+### Verification is server-side
+
+Success page alone cannot grant access.
+
+### Risk signals are recorded
+
+IP/profile/card-country discrepancies can be audited.
+
+### Legitimate travelers are not automatically blocked
+
+Mismatch does not equal fraud.
+
+### Stripe is not used
+
+Paystack is the single provider for this flow.
+
+---
+
+# 76. IMPLEMENTATION PROCESS
+
+Do this in stages.
+
+## STAGE 1 — AUDIT
+
+Inspect the existing:
+
+* Paystack integration
+* Stripe integration
+* pricing components
+* payment APIs
+* Prisma payment models
+* subscription models
+* webhook handlers
+* checkout components
+* Pro/Guided Path entitlement logic
+
+Do not make major changes yet.
+
+Report exactly what exists.
+
+---
+
+## STAGE 2 — DESIGN THE PAYMENT FLOW
+
+Create a clear architecture:
+
+```text
+User
+ ↓
+Frontend requests Pro pricing
+ ↓
+Backend resolves region
+ ↓
+Backend resolves server price
+ ↓
+Frontend displays price
+ ↓
+User clicks Continue
+ ↓
+Backend creates internal order
+ ↓
+Backend initializes Paystack
+ ↓
+User pays
+ ↓
+Paystack webhook
+ ↓
+Signature verification
+ ↓
+Transaction verification
+ ↓
+Amount/currency/reference checks
+ ↓
+Risk evaluation
+ ↓
+Fulfill Pro entitlement
+```
+
+---
+
+## STAGE 3 — IMPLEMENT
+
+Implement the architecture using the existing codebase conventions.
+
+Do not introduce unnecessary frameworks.
+
+Do not duplicate logic.
+
+---
+
+## STAGE 4 — TEST
+
+Run:
+
+* unit tests
+* integration tests
+* payment-flow tests
+* webhook tests
+* tampering tests
+* duplicate tests
+
+---
+
+## STAGE 5 — REVIEW
+
+Perform a security review specifically for:
+
+* price manipulation
+* currency manipulation
+* reference manipulation
+* entitlement manipulation
+* webhook spoofing
+* replay
+* duplicate fulfillment
+* cache leakage
+* secret exposure
+
+---
+
+# 77. FINAL ENGINEERING PRINCIPLE
+
+The most important rule is:
+
+> **The customer can request a plan. They cannot decide the price, currency, or entitlement.**
+
+The backend decides.
+
+Paystack processes the payment.
+
+The backend verifies what Paystack reports.
+
+Only then does Tech Skills Hub grant Pro access.
+
+Build the system so that even if a user opens DevTools, modifies JavaScript, alters localStorage, changes query parameters, sends custom API requests, or attempts to replay payment callbacks, they cannot obtain the cheaper regional price or Pro entitlement without a valid Paystack transaction that matches the server-created order.
+
+Start by auditing the existing implementation before modifying it.
