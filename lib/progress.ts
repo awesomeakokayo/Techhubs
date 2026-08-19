@@ -26,12 +26,18 @@ export interface TrackProgress {
   lastVisited?: string
 }
 
+export interface QuizResult {
+  completed: boolean
+  recommendations: string[]
+  level?: 'beginner' | 'intermediate' | 'advanced'
+  time?: string
+  weeklyHours?: number
+  updatedAt?: string
+}
+
 export interface ProgressData {
   tracks: Record<string, TrackProgress>
-  quizResult?: {
-    completed: boolean
-    recommendations: string[]
-  }
+  quizResult?: QuizResult
   bookmarks?: string[]
 }
 
@@ -110,9 +116,12 @@ export function getInProgressTracks(): string[] {
     .map(([id]) => id)
 }
 
-export function saveQuizResult(recommendations: string[]): void {
+export function saveQuizResult(
+  recommendations: string[],
+  extras?: Pick<QuizResult, 'level' | 'time' | 'weeklyHours'>
+): void {
   const data = getProgress()
-  data.quizResult = { completed: true, recommendations }
+  data.quizResult = { completed: true, recommendations, ...extras, updatedAt: new Date().toISOString() }
   saveProgress(data)
 }
 

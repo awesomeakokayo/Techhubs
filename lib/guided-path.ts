@@ -269,3 +269,32 @@ export function getFirstUnlockedStep(
   }
   return steps.length - 1
 }
+
+/**
+ * What's-next engine: turns local progress (completed stages + projects)
+ * into the title of the precise next guided-path step for a track.
+ *
+ * A step counts as complete when its stage is finished (concepts, resources
+ * and checkpoints follow stage completion) or its project is marked done.
+ */
+export function getNextStep(
+  trackId: string,
+  completedStages: number[],
+  completedProjects: string[]
+): { title: string; index: number } | null {
+  const steps = buildGuidedPath(trackId)
+  if (steps.length === 0) return null
+
+  const isDone = (s: GuidedStep): boolean => {
+    if (s.type === 'project') return completedProjects.includes(s.projectId ?? '')
+    return completedStages.includes(s.stageId)
+  }
+
+  const completedIndices = steps
+    .map((s, i) => ({ s, i }))
+    .filter(({ s }) => isDone(s))
+    .map(({ i }) => i)
+
+  const nextIndex = getFirstUnlockedStep(steps, completedIndices)
+  return { title: steps[nextIndex].title, index: nextIndex }
+}

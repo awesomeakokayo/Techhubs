@@ -11,6 +11,7 @@ export type AnalyticsEvent = {
   search_category?: string
   outbound_url?: string
   quiz_result?: string[]
+  quiz_level?: string
   query_length?: number
   result_count?: number
   timestamp?: string

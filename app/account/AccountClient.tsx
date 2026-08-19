@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import type { Track } from '@/lib/tracks'
 import { getProgress, saveProgress, getTrackPercent, loadAllServerProgress, getStoredUserId, setStoredUserId, clearProgress } from '@/lib/progress'
+import { getNextStep } from '@/lib/guided-path'
 import { getTrackIcon } from '@/lib/icons'
 import { useToast } from '@/components/ui/toast'
 import { RegionPicker } from '@/components/purchase/RegionPicker'
@@ -50,6 +51,7 @@ export function AccountClient({
   owned: initialOwned,
   grandfathered: initialGrandfathered,
   grandfatheredUntil,
+  completedTrackIds,
 }: {
   subscription: Subscription | null
   user: User
@@ -57,6 +59,7 @@ export function AccountClient({
   owned: OwnedCourse[]
   grandfathered: boolean
   grandfatheredUntil: string | null
+  completedTrackIds: string[]
 }) {
   const router = useRouter()
   const { data: session, update: updateSession } = useSession()
@@ -87,16 +90,6 @@ export function AccountClient({
     setStoredUserId(user.id)
     setUserCheckVersion((v) => v + 1)
   }, [user.id])
-
-  useEffect(() => {
-    if (!hasAnyAccess) return
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('purchased') === 'true') {
-      setShowOnboarding(true)
-      window.history.replaceState({}, '', '/account')
-      updateSession()
-    }
-  }, [hasAnyAccess, updateSession])
 
   useEffect(() => {
     if (!hasAnyAccess) return
@@ -132,7 +125,7 @@ export function AccountClient({
     : statusConfig[subscription?.status || 'NONE']
   const StatusIcon = config.icon
 
-  const applyVerifyResult = (data: any) => {
+  const applyVerifyResult = useCallback((data: any) => {
     const sub = data.subscription ?? null
     setSubscription((prev) =>
       sub
@@ -146,9 +139,9 @@ export function AccountClient({
     )
     if (Array.isArray(data.entitlements)) setOwned(data.entitlements)
     if (typeof data.grandfathered === 'boolean') setGrandfathered(data.grandfathered)
-  }
+  }, [])
 
-  const refreshSubscription = async () => {
+  const refreshSubscription = useCallback(async () => {
     setRefreshing(true)
     try {
       const res = await fetch('/api/payments/verify', { method: 'POST' })
@@ -165,7 +158,52 @@ export function AccountClient({
     } finally {
       setRefreshing(false)
     }
-  }
+  }, [applyVerifyResult, toast, updateSession])
+
+  // Runs once after a payment redirect: confirms the payment (Paystack
+  // reference or Stripe session id), refreshes entitlements, and shows onboarding.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('purchased') !== 'true') return
+    window.history.replaceState({}, '', '/account')
+
+    let cancelled = false
+
+    ;(async () => {
+      const reference = params.get('reference')
+      const sessionId = params.get('session_id')
+      try {
+        if (reference || sessionId) {
+          const res = await fetch('/api/payments/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reference ? { reference } : { sessionId }),
+          })
+          const data = await res.json()
+          if (!cancelled) {
+            if (data.ok) {
+              toast('Payment received! Your course is unlocked.', 'success')
+            } else {
+              toast(data.error || 'We could not confirm your payment yet.', 'error')
+            }
+          }
+        } else if (!cancelled) {
+          toast('Payment received! Your course is unlocked.', 'success')
+        }
+      } catch {
+        if (!cancelled) {
+          toast('We could not confirm your payment. Please refresh your status.', 'error')
+        }
+      } finally {
+        if (!cancelled) {
+          await refreshSubscription()
+          setShowOnboarding(true)
+        }
+      }
+    })()
+
+    return () => { cancelled = true }
+  }, [refreshSubscription, toast])
 
   const cancelSubscription = async () => {
     const confirmed = window.confirm(
@@ -278,7 +316,7 @@ export function AccountClient({
             )}
           </div>
           <div className="space-y-4" key={syncKey}>
-            {inProgress.map(({ id, track, percent }) => {
+            {inProgress.map(({ id, track, tp, percent }) => {
               const Icon = track ? getTrackIcon(track.icon) : CheckCircle2
               return (
                 <a
@@ -315,6 +353,11 @@ export function AccountClient({
                         {percent}%
                       </span>
                     </div>
+                    {track && (
+                      <p className="mt-1.5 truncate text-xs text-text-muted">
+                        <span className="text-teal">Next:</span> {getNextStep(track.id, tp.completedStages, tp.completedProjects)?.title}
+                      </p>
+                    )}
                   </div>
                 </a>
               )
@@ -404,6 +447,14 @@ export function AccountClient({
                   >
                     Open <ArrowRight size={12} />
                   </a>
+                  {completedTrackIds.includes(course.trackId) && (
+                    <a
+                      href={`/certificate/${course.trackId}`}
+                      className="text-xs text-teal shrink-0 no-underline hover:text-teal-bright"
+                    >
+                      Certificate
+                    </a>
+                  )}
                 </div>
               )
             })}

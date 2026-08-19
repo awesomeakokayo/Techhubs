@@ -123,6 +123,12 @@ export default function GuidedPathPage() {
     )
   }
 
+  const finished = currentIndex >= steps.length
+
+  if (finished) {
+    return <CompletionScreen trackId={trackId} />
+  }
+
   const currentStep = steps[currentIndex]
   const progress = Math.round((currentIndex / steps.length) * 100)
   const isLastStep = currentIndex >= steps.length - 1
@@ -131,7 +137,6 @@ export default function GuidedPathPage() {
     return (
       <CelebrationScreen
         steps={steps}
-        currentIndex={currentIndex}
         completedIndices={completedIndices}
         onContinue={() => setShowCelebration(false)}
       />
@@ -531,12 +536,10 @@ function StepCard({
 
 function CelebrationScreen({
   steps,
-  currentIndex,
   completedIndices,
   onContinue,
 }: {
   steps: GuidedStep[]
-  currentIndex: number
   completedIndices: number[]
   onContinue: () => void
 }) {
@@ -570,6 +573,54 @@ function CelebrationScreen({
       <button onClick={onContinue} className="btn btn-primary">
         Continue to Next Step <ArrowRight size={16} />
       </button>
+    </div>
+  )
+}
+
+function CompletionScreen({ trackId }: { trackId: string }) {
+  const track = TRACKS.find((t) => t.id === trackId)
+
+  return (
+    <div className="max-w-2xl mx-auto py-16 px-6 text-center">
+      <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-md border border-[var(--color-success)]" style={{ background: 'rgba(22,163,74,0.1)' }}>
+        <GraduationCap size={30} style={{ color: 'var(--color-success)' }} aria-hidden />
+      </div>
+      <h1 className="font-editorial text-4xl text-[var(--text-primary)] mb-3">
+        Course complete!
+      </h1>
+      <p className="text-[var(--text-secondary)] mb-8 max-w-md mx-auto">
+        You just finished every step of {track?.name || 'the guided path'} — the resources, quizzes,
+        projects, and checkpoints. That&apos;s a real milestone worth celebrating.
+      </p>
+
+      <div className="card mb-8 text-left">
+        <p className="text-sm font-medium text-[var(--text-muted)] mb-2">What you earned</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-sm">
+            <CheckCircle2 size={14} className="text-[var(--color-success)] shrink-0" />
+            <span className="text-[var(--text-secondary)]">Certificate of completion for {track?.name}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <CheckCircle2 size={14} className="text-[var(--color-success)] shrink-0" />
+            <span className="text-[var(--text-secondary)]">Saved to your Tech Skill Hub account</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <Link
+          href={`/certificate/${trackId}`}
+          className="btn btn-primary inline-flex items-center gap-2"
+        >
+          <Trophy size={16} /> Get Your Certificate <ArrowRight size={16} />
+        </Link>
+        <Link
+          href={track ? `/tracks/${track.slug}` : '/tracks'}
+          className="btn btn-secondary inline-flex items-center gap-2"
+        >
+          Back to {track?.name || 'Tracks'}
+        </Link>
+      </div>
     </div>
   )
 }

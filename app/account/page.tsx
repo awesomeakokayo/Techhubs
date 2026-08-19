@@ -16,9 +16,13 @@ export default async function AccountPage() {
   const session = await auth()
   if (!session?.user?.id) redirect('/login')
 
-  const [subscription, entitlements] = await Promise.all([
+  const [subscription, entitlements, completions] = await Promise.all([
     prisma.subscription.findUnique({ where: { userId: session.user.id } }),
     getTrackEntitlements(session.user.id),
+    prisma.courseCompletion.findMany({
+      where: { userId: session.user.id },
+      select: { trackId: true },
+    }),
   ])
 
   const serialized = subscription
@@ -47,6 +51,7 @@ export default async function AccountPage() {
       owned={owned}
       grandfathered={entitlements.grandfathered}
       grandfatheredUntil={entitlements.grandfatheredUntil?.toISOString() ?? null}
+      completedTrackIds={completions.map((c) => c.trackId)}
     />
   )
 }
