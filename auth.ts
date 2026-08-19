@@ -38,7 +38,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const sub = await prisma.subscription.findUnique({
             where: { userId: token.sub },
           })
-          token.isSubscribed = sub?.status === 'ACTIVE'
+          token.isSubscribed =
+            sub?.status === 'ACTIVE' &&
+            !!sub.currentPeriodEnd &&
+            sub.currentPeriodEnd > new Date()
         } catch (e) {
           console.error('auth: failed to fetch subscription for', token.sub, e)
           token.isSubscribed = false

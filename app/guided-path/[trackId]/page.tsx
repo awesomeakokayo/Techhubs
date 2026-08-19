@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck, GraduationCap, RotateCcw, ChevronLeft } from 'lucide-react'
+import { CheckCircle2, Lock, ExternalLink, ArrowRight, Sparkles, BookOpen, Code2, Trophy, Youtube, FileText, Wrench, Users, BookOpenCheck, GraduationCap, RotateCcw, ChevronLeft, AlertTriangle, Lightbulb } from 'lucide-react'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { TRACKS } from '@/lib/tracks'
 import type { GuidedStep } from '@/lib/guided-path'
@@ -40,7 +40,7 @@ export default function GuidedPathPage() {
     fetch(`/api/guided-path/${trackId}`)
       .then((res) => {
         if (res.status === 403) {
-          router.push('/upgrade')
+          router.push(`/purchase/${trackId}`)
           return null
         }
         if (!res.ok) throw new Error('Failed to load')
@@ -159,7 +159,7 @@ export default function GuidedPathPage() {
         </Link>
       </div>
       <div className="flex items-center gap-2 mb-6">
-        <span className="badge" style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#fff' }}>
+        <span className="badge inline-flex" style={{ background: 'var(--accent-secondary-bg)', color: 'var(--accent-secondary)', border: '1px solid var(--border-subtle)' }}>
           <GraduationCap size={12} className="mr-1" />
           PRO
         </span>
@@ -304,14 +304,14 @@ function StepCard({
         )}
       </div>
 
-      <h2 className="text-xl font-display font-bold text-[var(--text-primary)] mb-2">
-        {step.type === 'quiz' ? '📝 ' : ''}{step.title}
+      <h2 className="font-editorial text-2xl text-[var(--text-primary)] mb-2">
+        {step.title}
       </h2>
 
       <p className="text-[var(--text-secondary)] mb-4">{step.description}</p>
 
       {step.type === 'concept' && step.topics && step.topics.length > 0 && (
-        <div className="mb-4 p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+        <div className="mb-4 p-4 rounded-md" style={{ background: 'var(--bg-elevated)' }}>
           <p className="text-xs font-medium text-[var(--text-muted)] mb-2">WHAT YOU WILL LEARN</p>
           <ul className="space-y-1.5">
             {step.topics.map((topic, i) => (
@@ -325,7 +325,7 @@ function StepCard({
       )}
 
       {step.type === 'resource' && (
-        <div className="mb-4 p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+        <div className="mb-4 p-4 rounded-md" style={{ background: 'var(--bg-elevated)' }}>
           <p className="text-xs font-medium text-[var(--text-muted)] mb-2">YOUR LEARNING TASK</p>
           <p className="text-sm text-[var(--text-secondary)]">
             1. Open the resource below and study it thoroughly.<br />
@@ -336,7 +336,7 @@ function StepCard({
       )}
 
       {youtubeId && (
-        <div className="mb-4 rounded-lg overflow-hidden" style={{ aspectRatio: '16/9', background: '#000' }}>
+        <div className="mb-4 rounded-md overflow-hidden" style={{ aspectRatio: '16/9', background: '#000' }}>
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
             className="w-full h-full"
@@ -349,16 +349,17 @@ function StepCard({
 
       {step.type === 'quiz' && step.quizQuestions && step.quizQuestions.length > 0 && (
         <div className="mb-4 space-y-6">
-          <div className="p-3 rounded-lg" style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
-            <p className="text-xs font-medium" style={{ color: '#f59e0b' }}>
-              ⚠️ You must answer all questions correctly to pass.
+          <div className="p-3 rounded-md flex items-center gap-2" style={{ background: 'rgba(138,90,0,0.08)', border: '1px solid rgba(138,90,0,0.22)' }}>
+            <AlertTriangle size={14} className="shrink-0" style={{ color: 'var(--color-warning)' }} />
+            <p className="text-xs font-medium" style={{ color: 'var(--color-warning)' }}>
+              You must answer all questions correctly to pass.
             </p>
           </div>
           {step.quizQuestions.map((q, qi) => {
             const answerKey = `${step.index}-${qi}`
             const selected = quizAnswers[answerKey]
             return (
-              <div key={qi} className="p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+              <div key={qi} className="p-4 rounded-md" style={{ background: 'var(--bg-elevated)' }}>
                 <p className="font-medium text-sm text-[var(--text-primary)] mb-3">
                   {qi + 1}. {q.question}
                 </p>
@@ -416,9 +417,10 @@ function StepCard({
             </button>
           )}
           {quizSubmitted && allQuizCorrect && (
-            <div className="p-3 rounded-lg" style={{ background: 'rgba(22,163,74,0.08)', border: '1px solid rgba(22,163,74,0.2)' }}>
+            <div className="p-3 rounded-md flex items-center gap-2" style={{ background: 'rgba(30,124,71,0.08)', border: '1px solid rgba(30,124,71,0.22)' }}>
+              <CheckCircle2 size={14} className="shrink-0" style={{ color: 'var(--color-success)' }} />
               <p className="text-sm font-medium" style={{ color: 'var(--color-success)' }}>
-                ✅ All correct! You really learned this.
+                All correct! You really learned this.
               </p>
             </div>
           )}
@@ -436,13 +438,13 @@ function StepCard({
       )}
 
       {step.type === 'project' && step.techTags && step.techTags.length > 0 && (
-        <div className="mb-4 p-4 rounded-lg" style={{ background: 'var(--bg-elevated)' }}>
+        <div className="mb-4 p-4 rounded-md" style={{ background: 'var(--bg-elevated)' }}>
           <p className="text-xs font-medium text-[var(--text-muted)] mb-2">TECH STACK</p>
           <div className="flex flex-wrap gap-2">
             {step.techTags.map((tag) => (
               <span
                 key={tag}
-                className="text-xs px-2.5 py-1 rounded-full"
+                className="text-xs px-2.5 py-1 rounded-md"
                 style={{
                   background: 'var(--accent-primary-bg)',
                   color: 'var(--accent-primary)',
@@ -454,11 +456,12 @@ function StepCard({
             ))}
           </div>
           <div className="mt-3 space-y-1">
-            <p className="text-xs text-[var(--text-secondary)]">
-              💡 Search YouTube for &quot;{step.title.replace('Build: ', '')} tutorial&quot;
+            <p className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5">
+              <Lightbulb size={12} className="shrink-0" style={{ color: 'var(--color-warning)' }} />
+              Search YouTube for &quot;{step.title.replace('Build: ', '')} tutorial&quot;
             </p>
             <p className="text-xs text-[var(--text-secondary)]">
-              🔗 Try <a href="https://www.freecodecamp.org/news/search/" target="_blank" rel="noopener noreferrer" className="underline">freeCodeCamp</a> or <a href={`https://github.com/topics/${step.techTags[0]?.toLowerCase() || ''}`} target="_blank" rel="noopener noreferrer" className="underline">GitHub examples</a>
+              Also try <a href="https://www.freecodecamp.org/news/search/" target="_blank" rel="noopener noreferrer" className="underline">freeCodeCamp</a> or <a href={`https://github.com/topics/${step.techTags[0]?.toLowerCase() || ''}`} target="_blank" rel="noopener noreferrer" className="underline">GitHub examples</a>
             </p>
           </div>
         </div>
@@ -542,8 +545,10 @@ function CelebrationScreen({
 
   return (
     <div className="max-w-2xl mx-auto py-16 px-6 text-center">
-      <div className="text-6xl mb-6">🎉</div>
-      <h1 className="text-3xl font-display font-bold text-[var(--text-primary)] mb-3">
+      <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-md border border-[var(--accent-secondary-border)]" style={{ background: 'var(--accent-secondary-bg)' }}>
+        <Trophy size={28} style={{ color: 'var(--accent-secondary)' }} aria-hidden />
+      </div>
+      <h1 className="font-editorial text-4xl text-[var(--text-primary)] mb-3">
         Stage Complete!
       </h1>
       <p className="text-[var(--text-secondary)] mb-8 max-w-md mx-auto">

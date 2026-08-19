@@ -45,7 +45,7 @@ export function CareerTabs() {
             role="tab"
             aria-selected={tab === t}
             onClick={() => setTab(t)}
-            className={`min-h-[44px] rounded-full px-4 py-2 text-sm font-medium ${
+            className={`min-h-[44px] rounded-md px-4 py-2 text-sm font-medium ${
               tab === t ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'
             }`}
           >
@@ -85,7 +85,7 @@ export function CareerSections() {
   return (
     <>
       <section id="cv" className="scroll-mt-28">
-        <h2 className="font-display text-2xl font-bold">CV / Resume</h2>
+        <h2 className="font-editorial text-2xl">CV / Resume</h2>
         <ul className="mt-4 space-y-2 text-text-secondary">
           <li>• Keep it to 1 page for early career</li>
           <li>• Lead with projects and skills — not just education</li>
@@ -112,7 +112,7 @@ export function CareerSections() {
       </section>
 
       <section id="portfolio" className="mt-16 scroll-mt-28">
-        <h2 className="font-display text-2xl font-bold">Portfolio Building</h2>
+        <h2 className="font-editorial text-2xl">Portfolio Building</h2>
         <p className="mt-2 text-text-secondary">
           Your portfolio is proof you can build real things — not a list of tutorials completed.
         </p>
@@ -132,14 +132,14 @@ export function CareerSections() {
       </section>
 
       <section id="interview" className="mt-16 scroll-mt-28">
-        <h2 className="font-display text-2xl font-bold">Interview Prep</h2>
+        <h2 className="font-editorial text-2xl">Interview Prep</h2>
         <div className="mt-6">
           <CareerTabs />
         </div>
       </section>
 
       <section id="freelance" className="mt-16 scroll-mt-28">
-        <h2 className="font-display text-2xl font-bold">Freelancing</h2>
+        <h2 className="font-editorial text-2xl">Freelancing</h2>
         <p className="mt-2 text-text-secondary">
           Start with small local projects before competing on global platforms. Typical beginner rates: $15–40/hr depending on skill and region.
         </p>
@@ -160,7 +160,7 @@ export function CareerSections() {
       </section>
 
       <section id="linkedin" className="mt-16 scroll-mt-28">
-        <h2 className="font-display text-2xl font-bold">LinkedIn</h2>
+        <h2 className="font-editorial text-2xl">LinkedIn</h2>
         <ul className="mt-4 space-y-2 text-text-secondary">
           <li>• Professional photo, clear headline, complete About section</li>
           <li>• List every project with a link (GitHub, live demo)</li>
@@ -178,7 +178,7 @@ export function CareerSections() {
       </section>
 
       <section id="communities" className="mt-16 scroll-mt-28 pb-8">
-        <h2 className="font-display text-2xl font-bold">Communities</h2>
+        <h2 className="font-editorial text-2xl">Communities</h2>
         <h3 className="mt-8 font-display text-lg font-semibold">Global</h3>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {COMMUNITIES_ONLINE.map((c) => (

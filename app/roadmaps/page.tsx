@@ -8,7 +8,7 @@ import { TrackedLink } from '@/components/ui/tracked-link'
 
 export default function RoadmapsPage() {
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container">
         <PageViewTracker path="/roadmaps" eventName="roadmap_page_open" />
         <PageHeader
@@ -28,7 +28,7 @@ export default function RoadmapsPage() {
                   {rm.stages.map((stage, si) => (
                     <div key={stage} className="flex items-center gap-2 flex-1 min-w-0">
                       <span
-                        className="truncate rounded-full px-2 py-1 text-[0.65rem] font-mono uppercase"
+                        className="truncate rounded-md px-2 py-1 text-[0.65rem] font-mono uppercase"
                         style={{
                           backgroundColor: si === rm.stages.length - 1 ? `${rm.colorHex}25` : 'var(--bg-overlay)',
                           color: si === rm.stages.length - 1 ? rm.colorHex : 'var(--text-muted)',

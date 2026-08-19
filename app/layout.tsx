@@ -8,22 +8,23 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import '@/styles/globals.css'
 
 export const metadata: Metadata = {
-  title: 'Tech Skills Hub — Free Roadmaps & Career Guides',
+  metadataBase: new URL('https://techskillhub.cv'),
+  title: 'Tech Skill Hub — Know what to learn next',
   description:
-    'Free learning paths, roadmaps, and curated resources for Frontend, Backend, UI/UX, Data, Mobile, Cybersecurity, and more. Built for African students.',
+    'A structured path for people building real skills in technology. Tracks, roadmaps, curated resources and projects — free, for independent learners.',
   keywords:
-    'tech learning, programming roadmap, frontend development, Nigeria tech, African students, free coding resources, career in tech',
+    'tech learning, programming roadmap, frontend development, Nigeria tech, African students, free coding resources, career in tech, independent learning',
   openGraph: {
-    title: 'Tech Skills Learning Hub',
-    description: '22 tracks. 300+ resources. 100% free. Your complete guide into tech.',
+    title: 'Tech Skill Hub',
+    description: 'You do not need to learn everything. You need to know what to learn next.',
     url: 'https://techskillhub.cv',
-    siteName: 'Tech Skills Hub',
+    siteName: 'Tech Skill Hub',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tech Skills Learning Hub',
-    description: '22 tracks. 300+ resources. 100% free.',
+    title: 'Tech Skill Hub',
+    description: 'A structured path for independent learners building real skills in technology.',
   },
 }
 

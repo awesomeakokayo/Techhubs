@@ -95,14 +95,14 @@ export function TrackQuiz() {
             <p className="font-mono text-xs text-text-muted">
               Question {step + 1} of {QUESTIONS.length}
             </p>
-            <h3 className="mt-2 font-display text-xl font-bold">{QUESTIONS[step].q}</h3>
+            <h3 className="mt-2 font-editorial text-2xl">{QUESTIONS[step].q}</h3>
             <div className="mt-6 space-y-3">
               {QUESTIONS[step].options.map((opt) => (
                 <button
                   key={opt.label}
                   type="button"
                   onClick={() => pick(opt.scores)}
-                  className="flex w-full min-h-[44px] items-center rounded-lg border border-border-default px-4 py-3 text-left text-text-primary transition-colors hover:border-teal hover:bg-teal/5"
+                  className="flex w-full min-h-[44px] items-center rounded-md border border-border-default px-4 py-3 text-left text-text-primary transition-colors hover:border-teal hover:bg-teal/5"
                 >
                   {opt.label}
                 </button>
@@ -116,14 +116,14 @@ export function TrackQuiz() {
             animate={{ opacity: 1, scale: 1 }}
             className="card max-w-2xl border-teal/30"
           >
-            <h3 className="font-display text-xl font-bold">Your recommended tracks</h3>
+            <h3 className="font-editorial text-2xl">Your recommended tracks</h3>
             <p className="mt-2 text-text-secondary">Based on your answers, start with one of these paths:</p>
             <div className="mt-6 space-y-3">
               {recommendations.map((track) =>
                 track ? (
                   <div
                     key={track.id}
-                    className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border-default p-4"
+                    className="flex flex-wrap items-center justify-between gap-4 rounded-md border border-border-default p-4"
                     style={{ borderLeftColor: track.colorHex, borderLeftWidth: 3 }}
                   >
                     <div>

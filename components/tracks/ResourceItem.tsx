@@ -29,12 +29,12 @@ export function ResourceItem({ resource, trackSlug, path }: ResourceItemProps) {
       resourceTitle={resource.title}
       resourceType={resource.type}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal/10 text-teal">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-teal/30 bg-teal/10 text-teal">
         <Icon size={18} aria-hidden />
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <h4 className="font-medium text-text-primary group-hover:text-teal">{resource.title}</h4>
+          <h4 className="font-display text-[15px] font-semibold text-text-primary group-hover:text-teal">{resource.title}</h4>
           <span className={`badge shrink-0 ${resource.free ? 'badge-green' : 'badge-amber'}`}>
             {resource.free ? 'FREE' : 'PAID'}
           </span>

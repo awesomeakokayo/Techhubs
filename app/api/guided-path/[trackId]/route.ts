@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { buildGuidedPath } from '@/lib/guided-path'
+import { hasTrackAccess } from '@/lib/access'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,8 +11,13 @@ export async function GET(
   { params }: { params: { trackId: string } }
 ) {
   const session = await auth()
-  if (!session?.user?.id || !session.user.isSubscribed) {
-    return NextResponse.json({ error: 'Subscription required' }, { status: 403 })
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+  }
+
+  const allowed = await hasTrackAccess(session.user.id, params.trackId)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Course access required' }, { status: 403 })
   }
 
   const steps = buildGuidedPath(params.trackId)
@@ -37,8 +43,13 @@ export async function POST(
   { params }: { params: { trackId: string } }
 ) {
   const session = await auth()
-  if (!session?.user?.id || !session.user.isSubscribed) {
-    return NextResponse.json({ error: 'Subscription required' }, { status: 403 })
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+  }
+
+  const allowed = await hasTrackAccess(session.user.id, params.trackId)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Course access required' }, { status: 403 })
   }
 
   const body = await req.json()

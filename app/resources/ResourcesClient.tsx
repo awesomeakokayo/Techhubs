@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { TRACKS, ResourceType } from '@/lib/tracks'
+import { TRACKS, ResourceType, getProductStats } from '@/lib/tracks'
 import { FEATURED_RESOURCES } from '@/lib/site-content'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
@@ -73,16 +73,19 @@ export function ResourcesClient() {
   }, [query, filtered.length, typeFilter])
 
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container">
         <PageHeader
           title="Resource Index"
-          subtitle="300+ curated links across every track — all verified and free where noted."
+          subtitle={`${getProductStats().resourceCount}+ curated links across every track — all verified and free where noted.`}
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Resources' }]}
         />
 
-        <section className="mt-8">
-          <h2 className="font-display text-xl font-bold">Featured — Essential 10</h2>
+        <section className="mt-12">
+          <div className="flex items-baseline gap-3">
+            <h2 className="font-editorial text-3xl">Featured — Essential 10</h2>
+            <span className="section-label">core reads</span>
+          </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURED_RESOURCES.map((r) => (
               <TrackedLink
@@ -106,7 +109,7 @@ export function ResourcesClient() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search all resources..."
-            className="w-full min-h-[52px] rounded-xl border border-border-default bg-surface px-4 text-lg text-text-primary outline-none focus:border-teal"
+            className="w-full min-h-[52px] rounded-md border border-border-default bg-surface px-4 text-lg text-text-primary outline-none focus:border-teal"
             aria-label="Search resources"
           />
         </div>
@@ -120,7 +123,7 @@ export function ResourcesClient() {
                 setView('cards')
                 trackEvent({ event_name: 'resources_view_mode_change', path: '/resources', search_category: 'cards' })
               }}
-              className={`min-h-[44px] rounded-full px-4 text-xs font-mono uppercase ${view === 'cards' ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'}`}
+              className={`min-h-[44px] rounded-md px-4 text-xs font-mono uppercase ${view === 'cards' ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'}`}
             >
               Cards
             </button>
@@ -130,7 +133,7 @@ export function ResourcesClient() {
                 setView('table')
                 trackEvent({ event_name: 'resources_view_mode_change', path: '/resources', search_category: 'table' })
               }}
-              className={`min-h-[44px] rounded-full px-4 text-xs font-mono uppercase ${view === 'table' ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'}`}
+              className={`min-h-[44px] rounded-md px-4 text-xs font-mono uppercase ${view === 'table' ? 'bg-teal text-text-inverse' : 'border border-border-default text-text-secondary'}`}
             >
               Table
             </button>
@@ -141,7 +144,7 @@ export function ResourcesClient() {
         <p className="mt-4 text-sm text-text-muted">{filtered.length} resources</p>
 
         {view === 'table' ? (
-          <div className="mt-6 overflow-x-auto rounded-xl border border-border-default">
+          <div className="mt-6 overflow-x-auto rounded-md border border-border-default">
             <table className="w-full text-left text-sm">
               <thead className="border-b border-border-subtle bg-surface">
                 <tr>

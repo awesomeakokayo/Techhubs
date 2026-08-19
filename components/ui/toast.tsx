@@ -53,7 +53,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           return (
             <div
               key={t.id}
-              className="flex items-start gap-3 rounded-xl border border-border-default bg-surface p-4 shadow-raised animate-in-slide-right"
+              className="flex items-start gap-3 rounded-md border border-border-default bg-surface p-4 shadow-raised animate-in-slide-right"
               style={{ borderLeft: `3px solid ${COLORS[t.type]}` }}
             >
               <Icon size={18} style={{ color: COLORS[t.type] }} className="shrink-0 mt-0.5" />

@@ -30,7 +30,7 @@ export default function AnalyticsDashboardPage() {
   }, [refreshKey])
 
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container">
         <PageViewTracker path="/dashboard/analytics" eventName="dashboard_analytics_open" />
         <PageHeader
@@ -42,20 +42,20 @@ export default function AnalyticsDashboardPage() {
         <div className="grid gap-4 md:grid-cols-3">
           <article className="card">
             <p className="font-mono text-xs uppercase tracking-wider text-text-muted">Active learners</p>
-            <p className="mt-2 font-display text-3xl font-bold text-teal">{summary.activeTrackCount}</p>
+            <p className="mt-2 font-editorial text-4xl text-teal">{summary.activeTrackCount}</p>
           </article>
           <article className="card">
             <p className="font-mono text-xs uppercase tracking-wider text-text-muted">Completed stages</p>
-            <p className="mt-2 font-display text-3xl font-bold text-teal">{summary.completedStages}</p>
+            <p className="mt-2 font-editorial text-4xl text-teal">{summary.completedStages}</p>
           </article>
           <article className="card">
             <p className="font-mono text-xs uppercase tracking-wider text-text-muted">Completed projects</p>
-            <p className="mt-2 font-display text-3xl font-bold text-teal">{summary.completedProjects}</p>
+            <p className="mt-2 font-editorial text-4xl text-teal">{summary.completedProjects}</p>
           </article>
         </div>
 
         <section className="mt-10">
-          <h2 className="font-display text-xl font-bold">Top Tracks by Engagement</h2>
+          <h2 className="font-editorial text-2xl">Top Tracks by Engagement</h2>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {summary.topTracks.map((track) => (
               <article key={track.id} className="card flex items-center justify-between">

@@ -1,77 +1,123 @@
+import { Fragment } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { CheckpointNode, PathConnector } from '@/components/ui/path'
+import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 
-type NavLink = { href: string; label: string; external?: boolean }
+type NavLink = { href: string; label: string }
 
-const LINKS: Record<string, NavLink[]> = {
-  Learn: [
-    { href: '/tracks', label: 'Tracks' },
-    { href: '/roadmaps', label: 'Roadmaps' },
-    { href: '/resources', label: 'Resources' },
-    { href: '/career', label: 'Career' },
-  ],
-  Tools: [
-    { href: '/ai-guide', label: 'AI Guide' },
-    { href: '/start-here', label: 'Start Here' },
-    { href: '/upgrade', label: 'Guided Path' },
-  ],
-  Community: [
-    { href: 'https://discord.gg/example', label: 'Discord', external: true },
-    { href: 'https://linkedin.com/company/example', label: 'LinkedIn', external: true },
-    { href: 'https://twitter.com/example', label: 'Twitter', external: true },
-  ],
-}
+const EXPLORE: NavLink[] = [
+  { href: '/paths', label: 'Paths' },
+  { href: '/resources', label: 'Resources' },
+  { href: '/career', label: 'Career' },
+  { href: '/projects', label: 'Projects' },
+]
+
+const LEARN: NavLink[] = [
+  { href: '/find-your-path', label: 'Find Your Path' },
+  { href: '/start-here', label: 'Start Here' },
+  { href: '/roadmaps', label: 'Roadmaps' },
+  { href: '/guided-path', label: 'Guided Path' },
+]
+
+const STAGES = [
+  { index: 1, label: 'Choose a direction' },
+  { index: 2, label: 'Follow the roadmap' },
+  { index: 3, label: 'Build real projects' },
+  { index: 4, label: 'Show the work' },
+]
 
 export function Footer() {
   return (
-    <footer className=" p-3 border-t border-border-subtle bg-surface">
-      <div className="container py-12">
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="font-display text-lg font-extrabold text-text-primary no-underline">
-              TSH
+    <footer className="border-t border-border-subtle bg-void">
+      <div className="container px-4 py-16 sm:px-6 md:px-8">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+          {/* Brand + statement */}
+          <div className="relative max-w-sm">
+            <Link href="/" className="flex items-baseline gap-1.5 no-underline">
+              <span className="font-editorial text-2xl text-text-primary">Tech</span>
+              <span className="font-display text-sm font-semibold uppercase tracking-wide text-text-primary">Skill Hub</span>
             </Link>
-            <p className="mt-2 text-sm text-text-muted max-w-[200px]">
-              Learn the skills that get you hired.
+            <p className="mt-4 font-editorial text-2xl leading-snug text-text-primary">
+              Your guide for
+              <br />
+              independent learning.
             </p>
+            <p className="mt-4 text-sm leading-relaxed text-text-secondary">
+              Know where to start, what to learn next, and where the path leads.
+            </p>
+            <Link href="/find-your-path" className="btn btn-primary mt-8 inline-flex items-center gap-2">
+              Find Your Path <ArrowRight size={15} className="shrink-0" />
+            </Link>
           </div>
 
-          {/* Links */}
-          {Object.entries(LINKS).map(([group, items]) => (
-            <div key={group}>
-              <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">{group}</p>
-              <ul className="mt-3 space-y-2">
-                {items.map((item) => (
-                  <li key={item.label}>
-                    {item.external ? (
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-sm text-text-secondary transition-colors hover:text-teal no-underline"
-                      >
-                        {item.label}
-                        <ArrowUpRight size={13} className="shrink-0 opacity-60" />
-                      </a>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        className="text-sm text-text-secondary transition-colors hover:text-teal no-underline"
-                      >
-                        {item.label}
-                      </Link>
-                    )}
+          {/* Link columns */}
+          <div className="grid grid-cols-2 gap-8 md:contents">
+            <nav aria-label="Explore">
+              <p className="section-label mt-2">Explore</p>
+              <ul className="mt-4 space-y-2.5">
+                {EXPLORE.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-sm text-text-secondary transition-colors hover:text-teal no-underline"
+                    >
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
-            </div>
-          ))}
+            </nav>
+
+            <nav aria-label="Start learning">
+              <p className="section-label mt-2">Start learning</p>
+              <ul className="mt-4 space-y-2.5">
+                {LEARN.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-sm text-text-secondary transition-colors hover:text-teal no-underline"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
 
-        <div className="mt-10 border-t border-border-subtle pt-6 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-xs text-text-muted">© 2026 Tech Skills Hub. All rights reserved.</p>
-          <p className="text-xs text-text-muted">Made with focus, not fluff.</p>
+        {/* The PATH — brand motif */}
+        <div aria-hidden className="mt-14 border-t border-border-subtle pt-10">
+          <div className="flex flex-wrap items-start justify-center gap-x-6 gap-y-8 md:flex-nowrap md:items-center md:justify-between md:gap-0">
+            {STAGES.map((stage, i) => (
+              <Fragment key={stage.index}>
+                {i > 0 && (
+                  <div className="hidden min-w-6 flex-1 md:block">
+                    <PathConnector active={i <= 1} tone="var(--accent-primary)" />
+                  </div>
+                )}
+                <div className="flex w-20 flex-col items-center gap-3 text-center">
+                  <CheckpointNode step={{ index: stage.index, state: i < 2 ? 'done' : 'current' }} size="sm" />
+                  <span className="font-display text-xs font-semibold leading-snug text-text-secondary">
+                    {stage.label}
+                  </span>
+                </div>
+              </Fragment>
+            ))}
+          </div>
+          <p className="mt-10 text-center font-mono text-[0.65rem] uppercase tracking-widest text-text-muted">
+            One system. Every path.
+          </p>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-border-subtle pt-6">
+          <p className="text-xs text-text-muted">© 2026 Tech Skill Hub. All rights reserved.</p>
+          <div className="flex items-center gap-3 text-text-muted">
+            <TypewriterIllustration className="h-5 w-6 text-teal/60" />
+            <span className="text-xs">Calm confidence.</span>
+          </div>
         </div>
       </div>
     </footer>

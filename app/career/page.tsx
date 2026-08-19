@@ -3,13 +3,13 @@ import { CareerSections } from './CareerTabs'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 export const metadata = {
-  title: 'Career Preparation | Tech Skills Learning Hub',
+  title: 'Career Preparation | Tech Skill Hub',
   description: 'CV tips, portfolio building, interview prep, freelancing, and communities for tech careers.',
 }
 
 export default function CareerPage() {
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container max-w-4xl">
         <PageViewTracker path="/career" eventName="career_page_open" />
         <PageHeader

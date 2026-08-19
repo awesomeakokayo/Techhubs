@@ -23,7 +23,7 @@ export function CategoryFilter({ options, active, onChange, className = '', layo
           key={opt.id}
           type="button"
           onClick={() => onChange(opt.id)}
-          className={`relative min-h-[44px] rounded-full px-4 py-2 font-mono text-xs font-medium uppercase tracking-wider transition-colors ${
+          className={`relative min-h-[44px] rounded-md px-4 py-2 font-mono text-xs font-medium uppercase tracking-wider transition-colors ${
             active === opt.id
               ? 'text-text-inverse'
               : 'border border-border-default text-text-secondary hover:border-teal hover:text-teal'
@@ -33,7 +33,7 @@ export function CategoryFilter({ options, active, onChange, className = '', layo
           {active === opt.id && (
             <motion.span
               layoutId={layoutId}
-              className="absolute inset-0 rounded-full bg-teal"
+              className="absolute inset-0 rounded-md bg-teal"
               transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             />
           )}

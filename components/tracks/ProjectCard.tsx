@@ -49,13 +49,13 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
           {done && <Check size={16} strokeWidth={3} />}
         </button>
       </div>
-      <h4 className={`mt-2 font-display font-semibold ${done ? 'line-through text-text-secondary' : ''}`}>
+      <h4 className={`mt-2 font-display text-[15px] font-semibold ${done ? 'line-through text-text-secondary' : ''}`}>
         {project.title}
       </h4>
       <p className="mt-1 text-sm text-text-secondary">{project.description}</p>
       <div className="mt-3 flex flex-wrap gap-1.5">
         {project.techTags.map((tag) => (
-          <span key={tag} className="rounded-full bg-overlay px-2 py-0.5 font-mono text-[0.65rem] text-text-secondary">
+          <span key={tag} className="rounded-md bg-overlay px-2 py-0.5 font-mono text-[0.65rem] text-text-secondary">
             {tag}
           </span>
         ))}

@@ -945,7 +945,7 @@ Position:       sticky, top: 0, z-index: 100
 
 Left:
   Logo: "TSH" in Syne 800, gradient text (teal → purple)
-  Site name: "Tech Skills Hub" in Syne 600
+  Site name: "Tech Skill Hub" in Syne 600
 
 Center (desktop only):
   Navigation links:
@@ -1323,7 +1323,7 @@ export const metadata = {
 export async function generateMetadata({ params }) {
   const track = getTrackBySlug(params.slug);
   return {
-    title: `${track.name} Roadmap & Resources | Tech Skills Hub`,
+    title: `${track.name} Roadmap & Resources | Tech Skill Hub`,
     description: track.tagline,
   }
 }

@@ -55,11 +55,11 @@ export function RoadmapTimeline({ trackId, stages, colorHex, onProgressChange }:
           <li key={stage.id} className="relative flex gap-6 pb-8">
             {!isLast && (
               <div
-                className="absolute left-[11px] top-6 h-[calc(100%-8px)] w-0.5"
+                className="absolute left-[11px] top-6 h-[calc(100%-8px)] w-px"
                 style={{
                   background: done
                     ? colorHex
-                    : 'repeating-linear-gradient(to bottom, var(--border-default) 0, var(--border-default) 6px, transparent 6px, transparent 12px)',
+                    : 'repeating-linear-gradient(to bottom, var(--border-default) 0, var(--border-default) 5px, transparent 5px, transparent 10px)',
                 }}
                 aria-hidden
               />
@@ -90,11 +90,11 @@ export function RoadmapTimeline({ trackId, stages, colorHex, onProgressChange }:
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-mono text-xs uppercase tracking-wider text-text-muted">
-                      Stage {stage.id}
+                      Step {stage.id}
                     </span>
                     <span className="badge badge-teal">{stage.duration}</span>
                   </div>
-                  <h3 className="mt-1 font-display text-lg font-semibold">{stage.title}</h3>
+                  <h3 className="mt-1 font-editorial text-xl">{stage.title}</h3>
                 </div>
                 <button
                   type="button"

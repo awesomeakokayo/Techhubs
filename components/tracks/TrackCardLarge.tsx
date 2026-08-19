@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, Clock, Sparkles } from 'lucide-react'
+import { ArrowRight, Clock } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { getTrackIcon } from '@/lib/icons'
 import { DifficultyBadge } from '@/components/ui/DifficultyBadge'
@@ -19,10 +19,10 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
     >
       <div className="flex items-start gap-4">
         <div
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg"
-          style={{ backgroundColor: `${track.colorHex}18`, color: track.colorHex }}
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border"
+          style={{ backgroundColor: `${track.colorHex}14`, borderColor: `${track.colorHex}33`, color: track.colorHex }}
         >
-          <Icon size={24} aria-hidden />
+          <Icon size={22} aria-hidden />
         </div>
         <div className="min-w-0 flex-1">
           <p className="font-mono text-[0.65rem] font-medium uppercase tracking-widest text-text-muted">
@@ -39,17 +39,13 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
           <Clock size={11} className="text-text-muted animate-fade-in" aria-hidden />
           <span>{track.timeEstimate}</span>
         </span>
-        <span className="inline-flex items-center gap-1 rounded-full bg-purple/10 px-2 py-0.5 text-[0.65rem] font-medium text-purple">
-          <Sparkles size={10} />
-          Guided Path
-        </span>
       </div>
 
       <div className="flex flex-wrap gap-1.5">
         {track.techStack.slice(0, 5).map((tech) => (
           <span
             key={tech}
-            className="rounded-full bg-overlay px-2.5 py-0.5 font-mono text-[0.65rem] text-text-secondary"
+            className="rounded-md border border-border-subtle bg-elevated px-2.5 py-0.5 font-mono text-[0.65rem] text-text-secondary"
           >
             {tech}
           </span>

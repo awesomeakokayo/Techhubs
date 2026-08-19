@@ -5016,10 +5016,19 @@ export const getTrackById = (id: string) => TRACKS.find(t => t.id === id)
 export const getTracksByCategory = (category: TrackCategory) => TRACKS.filter(t => t.category === category)
 export const getTrackSlugs = () => TRACKS.map(t => t.slug)
 
+/** Single source of truth for product statistics — derived from the live catalogue. */
+export const getProductStats = () => ({
+  trackCount: TRACKS.length,
+  resourceCount: TRACKS.reduce((n, t) => n + t.resources.length, 0),
+  projectCount: TRACKS.reduce((n, t) => n + t.projects.length, 0),
+  stageCount: TRACKS.reduce((n, t) => n + t.roadmap.length, 0),
+  categoryCount: CATEGORIES.length,
+})
+
 export const CATEGORIES = [
-  { id: 'build' as TrackCategory, label:'BUILD', description:'Write code, create systems, ship products', color:'#00D4AA' },
-  { id: 'design' as TrackCategory, label:'DESIGN', description:'Create interfaces, experiences, and content', color:'#A78BFA' },
-  { id: 'analyze' as TrackCategory, label:'ANALYZE', description:'Extract meaning from data and systems', color:'#F0A500' },
-  { id: 'grow' as TrackCategory, label:'GROW', description:'Scale, secure, market, and automate', color:'#388BFD' },
+  { id: 'build' as TrackCategory, label:'BUILD', description:'Coding, engineering and technical systems', color:'#159A78' },
+  { id: 'design' as TrackCategory, label:'DESIGN', description:'Creative and product disciplines', color:'#C26B57' },
+  { id: 'analyze' as TrackCategory, label:'ANALYZE', description:'Data, research and analytical disciplines', color:'#6C8FC0' },
+  { id: 'grow' as TrackCategory, label:'GROW', description:'Business, communication and professional skills', color:'#C29645' },
 ]
 

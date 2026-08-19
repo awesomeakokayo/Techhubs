@@ -13,7 +13,7 @@ function LoginContent() {
   return (
     <div className="flex min-h-[80vh] items-center justify-center px-6">
       <div className="w-full max-w-sm text-center">
-        <h1 className="text-2xl font-display font-bold text-[var(--text-primary)] mb-2">
+        <h1 className="font-editorial text-3xl text-[var(--text-primary)] mb-3">
           Welcome back
         </h1>
         <p className="text-[var(--text-secondary)] mb-8">

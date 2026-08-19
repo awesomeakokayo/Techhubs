@@ -52,7 +52,7 @@ export default function ProjectsPage() {
   )
 
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container">
         <PageViewTracker path="/projects" eventName="projects_page_open" />
         <PageHeader
@@ -92,11 +92,11 @@ export default function ProjectsPage() {
               style={{ borderLeftColor: track.colorHex, borderLeftWidth: 3 }}
             >
               <span className="font-mono text-xs text-text-muted">{track.name}</span>
-              <h3 className="mt-1 font-display font-semibold">{project.title}</h3>
+              <h3 className="mt-1 font-display text-[15px] font-semibold">{project.title}</h3>
               <p className="mt-1 text-sm text-text-secondary">{project.description}</p>
               <div className="mt-3 flex flex-wrap gap-1">
                 {project.techTags.map((tag) => (
-                  <span key={tag} className="rounded-full bg-overlay px-2 py-0.5 font-mono text-[0.65rem] text-text-muted">
+                  <span key={tag} className="rounded-md bg-overlay px-2 py-0.5 font-mono text-[0.65rem] text-text-muted">
                     {tag}
                   </span>
                 ))}

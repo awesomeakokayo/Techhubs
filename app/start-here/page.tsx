@@ -10,13 +10,13 @@ import {
 } from '@/lib/site-content'
 
 export const metadata = {
-  title: 'Start Here | Tech Skills Learning Hub',
+  title: 'Start Here | Tech Skill Hub',
   description: 'Beginner onboarding guide, 7 survival steps, track quiz, and your first week plan.',
 }
 
 export default function StartHerePage() {
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container max-w-3xl">
         <PageViewTracker path="/start-here" eventName="start_here_page_open" />
         <PageHeader
@@ -34,7 +34,7 @@ export default function StartHerePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">The 7 Steps</h2>
+          <h2 className="font-editorial text-3xl">The 7 Steps</h2>
           <p className="mt-2 text-text-secondary">From the Beginner Survival Guide — read these before picking a track.</p>
           <div className="mt-8 space-y-4">
             {SURVIVAL_STEPS.map((step) => (
@@ -48,7 +48,7 @@ export default function StartHerePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">Which track is for you?</h2>
+          <h2 className="font-editorial text-3xl">Which track is for you?</h2>
           <p className="mt-2 text-text-secondary">Answer 3 quick questions and we&apos;ll recommend the best paths.</p>
           <div className="mt-8">
             <TrackQuiz />
@@ -56,7 +56,7 @@ export default function StartHerePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">Your First Week</h2>
+          <h2 className="font-editorial text-3xl">Your First Week</h2>
           <div className="mt-6 space-y-3">
             {FIRST_WEEK_PLAN.map((day) => (
               <div key={day.day} className="flex gap-4 rounded-lg border border-border-default p-4">
@@ -68,7 +68,7 @@ export default function StartHerePage() {
         </section>
 
         <section className="mt-16 pb-8">
-          <h2 className="font-display text-2xl font-bold">Join a Community</h2>
+          <h2 className="font-editorial text-3xl">Join a Community</h2>
           <h3 className="mt-8 font-display text-lg font-semibold">Online</h3>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {COMMUNITIES_ONLINE.map((c) => (

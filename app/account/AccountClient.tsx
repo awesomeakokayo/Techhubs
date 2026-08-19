@@ -5,20 +5,30 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import {
   CheckCircle2, XCircle, AlertTriangle, RefreshCw, ExternalLink,
-  GraduationCap, ArrowRight, Sparkles, Trash2, Loader2,
+  GraduationCap, ArrowRight, Sparkles, Trash2, Loader2, Globe, Clock,
 } from 'lucide-react'
 import type { Track } from '@/lib/tracks'
 import { getProgress, saveProgress, getTrackPercent, loadAllServerProgress, getStoredUserId, setStoredUserId, clearProgress } from '@/lib/progress'
 import { getTrackIcon } from '@/lib/icons'
 import { useToast } from '@/components/ui/toast'
+import { RegionPicker } from '@/components/purchase/RegionPicker'
+import type { RegionKey } from '@/lib/pricing'
+import { detectRegionClient } from '@/lib/pricing'
 
 interface Subscription {
   status: string
   plan: string | null
   currentPeriodEnd: string | null
   paystackSubscriptionCode: string | null
-  createdAt?: string
-  updatedAt?: string
+}
+
+interface OwnedCourse {
+  trackId: string
+  status: string
+  expiresAt: string | null
+  source: string
+  provider: string
+  plan: string
 }
 
 interface User {
@@ -29,28 +39,43 @@ interface User {
   isSubscribed?: boolean
 }
 
+function isActive(o: OwnedCourse): boolean {
+  return o.status === 'ACTIVE' && (!o.expiresAt || new Date(o.expiresAt) > new Date())
+}
+
 export function AccountClient({
   subscription: initialSubscription,
   user: serverUser,
   tracks,
+  owned: initialOwned,
+  grandfathered: initialGrandfathered,
+  grandfatheredUntil,
 }: {
   subscription: Subscription | null
   user: User
   tracks: Track[]
+  owned: OwnedCourse[]
+  grandfathered: boolean
+  grandfatheredUntil: string | null
 }) {
   const router = useRouter()
   const { data: session, update: updateSession } = useSession()
   const { toast } = useToast()
   const user = session?.user ?? serverUser
   const [subscription, setSubscription] = useState<Subscription | null>(initialSubscription)
+  const [owned, setOwned] = useState<OwnedCourse[]>(initialOwned)
+  const [grandfathered, setGrandfathered] = useState(initialGrandfathered)
   const [refreshing, setRefreshing] = useState(false)
   const [cancelling, setCancelling] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const isSubscribed = user.isSubscribed ?? false
+  const [region, setRegion] = useState<RegionKey>(() => detectRegionClient())
   const [syncKey, setSyncKey] = useState(0)
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [userCheckVersion, setUserCheckVersion] = useState(0)
   const refreshProgress = useCallback(() => setSyncKey((k) => k + 1), [])
+
+  const hasAnyAccess = grandfathered || owned.some(isActive)
 
   // Clear local progress when user changes — and force a re-render so the UI re-reads from localStorage
   useEffect(() => {
@@ -64,17 +89,17 @@ export function AccountClient({
   }, [user.id])
 
   useEffect(() => {
-    if (!isSubscribed) return
+    if (!hasAnyAccess) return
     const params = new URLSearchParams(window.location.search)
-    if (params.get('subscribed') === 'true') {
+    if (params.get('purchased') === 'true') {
       setShowOnboarding(true)
       window.history.replaceState({}, '', '/account')
       updateSession()
     }
-  }, [isSubscribed, updateSession])
+  }, [hasAnyAccess, updateSession])
 
   useEffect(() => {
-    if (!isSubscribed) return
+    if (!hasAnyAccess) return
     let cancelled = false
     setSyncing(true)
     loadAllServerProgress().then((serverData) => {
@@ -89,7 +114,10 @@ export function AccountClient({
       refreshProgress()
     })
     return () => { cancelled = true }
-  }, [isSubscribed, refreshProgress])
+  }, [hasAnyAccess, refreshProgress])
+
+  const activeOwned = useMemo(() => owned.filter(isActive), [owned])
+  const expiredOwned = useMemo(() => owned.filter((o) => !isActive(o)), [owned])
 
   const statusConfig: Record<string, { icon: typeof CheckCircle2; label: string; color: string }> = {
     ACTIVE: { icon: CheckCircle2, label: 'Active', color: 'var(--color-success)' },
@@ -99,22 +127,35 @@ export function AccountClient({
     NONE: { icon: XCircle, label: 'No active plan', color: 'var(--text-muted)' },
   }
 
-  const config = statusConfig[subscription?.status || 'NONE']
+  const config = grandfathered
+    ? statusConfig.ACTIVE
+    : statusConfig[subscription?.status || 'NONE']
   const StatusIcon = config.icon
+
+  const applyVerifyResult = (data: any) => {
+    const sub = data.subscription ?? null
+    setSubscription((prev) =>
+      sub
+        ? {
+            status: sub.status,
+            plan: sub.plan,
+            currentPeriodEnd: sub.currentPeriodEnd,
+            paystackSubscriptionCode: sub.paystackSubscriptionCode ?? prev?.paystackSubscriptionCode ?? null,
+          }
+        : prev
+    )
+    if (Array.isArray(data.entitlements)) setOwned(data.entitlements)
+    if (typeof data.grandfathered === 'boolean') setGrandfathered(data.grandfathered)
+  }
 
   const refreshSubscription = async () => {
     setRefreshing(true)
     try {
       const res = await fetch('/api/payments/verify', { method: 'POST' })
       const data = await res.json()
-      setSubscription((prev) => ({
-        status: data.status,
-        plan: data.plan,
-        currentPeriodEnd: data.currentPeriodEnd,
-        paystackSubscriptionCode: data.paystackSubscriptionCode ?? prev?.paystackSubscriptionCode ?? null,
-      }))
-      if (data.status === 'ACTIVE') {
-        toast('Subscription verified! Your guided path is ready.', 'success')
+      applyVerifyResult(data)
+      if (data.grandfathered === true) {
+        toast('Subscription verified! Your courses are ready.', 'success')
       } else if (data.error) {
         toast(data.error, 'error')
       }
@@ -137,7 +178,8 @@ export function AccountClient({
       const data = await res.json()
       if (data.status === 'CANCELLED') {
         setSubscription((prev) => prev ? { ...prev, status: 'CANCELLED' } : prev)
-        toast('Subscription cancelled. You can still access guided paths until the period ends.', 'info')
+        setGrandfathered(false)
+        toast('Subscription cancelled. You can still use your courses until the period ends.', 'info')
         await updateSession()
       } else {
         toast(data.error || 'Failed to cancel. Please try again.', 'error')
@@ -167,22 +209,20 @@ export function AccountClient({
       .sort((a, b) => b.percent - a.percent)
   }, [tracks, user.id, userCheckVersion, syncKey])
 
-  const hasTracks = tracks.length > 0
+  const trackFor = (id: string) => tracks.find((t) => t.id === id)
 
   return (
     <div className="max-w-2xl mx-auto py-16 px-6">
-      {/* Onboarding banner for new subscribers */}
       {showOnboarding && (
-        <div className="card mb-8 border-l-[3px] border-l-teal bg-gradient-to-br from-teal/[0.03] to-transparent relative overflow-hidden">
-          <div className="absolute top-0 right-0 text-6xl opacity-5 select-none" aria-hidden>🎉</div>
+        <div className="card mb-8 border-l-[3px] border-l-teal">
           <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal/10 text-teal">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-teal/10 text-teal">
               <GraduationCap size={20} />
             </div>
             <div className="flex-1">
-              <h2 className="font-display text-lg font-bold text-text-primary">Welcome to Pro!</h2>
+              <h2 className="font-display text-lg font-bold text-text-primary">Course unlocked!</h2>
               <p className="mt-1 text-sm text-text-secondary">
-                Your guided path is ready. Pick a track and start your step-by-step learning journey.
+                Your guided path is ready. Open the course and start your step-by-step learning journey.
               </p>
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
@@ -191,7 +231,7 @@ export function AccountClient({
                   className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
                 >
                   <Sparkles size={14} />
-                  Start a Guided Path <ArrowRight size={14} />
+                  Open a Course <ArrowRight size={14} />
                 </button>
                 <button
                   type="button"
@@ -206,7 +246,7 @@ export function AccountClient({
         </div>
       )}
 
-      <h1 className="text-2xl font-display font-bold text-text-primary mb-8">
+      <h1 className="font-editorial text-3xl text-text-primary mb-8">
         Account
       </h1>
 
@@ -214,18 +254,24 @@ export function AccountClient({
         <h2 className="text-sm font-medium text-text-muted mb-1">Profile</h2>
         <p className="text-text-primary font-medium">{user.name || 'User'}</p>
         <p className="text-sm text-text-secondary">{user.email}</p>
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <span className="text-xs text-text-muted inline-flex items-center gap-1">
+            <Globe size={13} /> Billing region
+          </span>
+          <RegionPicker value={region} onChange={setRegion} />
+        </div>
       </div>
 
       {inProgress.length > 0 && (
         <div className="card mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-medium text-text-muted">Your Progress</h2>
-            {isSubscribed && syncing && (
+            {hasAnyAccess && syncing && (
               <span className="text-xs text-teal inline-flex items-center gap-1">
                 <Loader2 size={12} className="animate-spin" /> Syncing...
               </span>
             )}
-            {isSubscribed && !syncing && (
+            {hasAnyAccess && !syncing && (
               <span className="text-xs text-text-muted inline-flex items-center gap-1">
                 <CheckCircle2 size={12} className="text-teal" /> Synced
               </span>
@@ -277,7 +323,7 @@ export function AccountClient({
         </div>
       )}
 
-      {!inProgress.length && hasTracks && (
+      {!inProgress.length && (
         <div className="card mb-6">
           <h2 className="text-sm font-medium text-text-muted mb-3">Your Progress</h2>
           <p className="text-sm text-text-secondary">No tracks started yet.</p>
@@ -292,11 +338,108 @@ export function AccountClient({
       )}
 
       <div className="card mb-6">
-        <h2 className="text-sm font-medium text-text-muted mb-3">Subscription</h2>
+        <h2 className="text-sm font-medium text-text-muted mb-3">My Courses</h2>
+
+        {grandfathered && (
+          <div className="rounded-md border border-border-default bg-elevated p-3 mb-3">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-teal" />
+              <span className="text-sm font-medium text-text-primary">All courses unlocked</span>
+            </div>
+            <p className="text-xs text-text-secondary mt-1">
+              Your active site-wide plan covers every course.
+              {grandfatheredUntil && (
+                <> Valid until {new Date(grandfatheredUntil).toLocaleDateString()}.</>
+              )}
+            </p>
+          </div>
+        )}
+
+        {activeOwned.length === 0 && !grandfathered && (
+          <div>
+            <p className="text-sm text-text-secondary">
+              You haven&apos;t purchased a course yet. Unlock the guided path for any track, per course.
+            </p>
+            <button
+              type="button"
+              onClick={() => router.push('/tracks')}
+              className="btn btn-primary mt-4 inline-flex items-center gap-1.5 text-sm"
+            >
+              <Sparkles size={14} /> Browse Courses <ArrowRight size={14} />
+            </button>
+          </div>
+        )}
+
+        {activeOwned.length > 0 && (
+          <div className="space-y-3">
+            {activeOwned.map((course) => {
+              const track = trackFor(course.trackId)
+              const Icon = track ? getTrackIcon(track.icon) : GraduationCap
+              return (
+                <div
+                  key={course.trackId}
+                  className="flex items-center gap-3 rounded-lg border border-border-default p-3"
+                >
+                  {track && (
+                    <div
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+                      style={{ backgroundColor: `${track.colorHex}20`, color: track.colorHex }}
+                    >
+                      <Icon size={20} aria-hidden />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-text-primary truncate">
+                      {track?.name ?? course.trackId}
+                    </p>
+                    <p className="text-xs text-text-muted flex items-center gap-1 mt-0.5">
+                      <Clock size={11} /> Access {course.expiresAt && course.status === 'ACTIVE'
+                        ? `until ${new Date(course.expiresAt).toLocaleDateString()}`
+                        : 'ended'}
+                    </p>
+                  </div>
+                  <a
+                    href={`/guided-path/${course.trackId}`}
+                    className="btn btn-secondary text-xs inline-flex items-center gap-1"
+                  >
+                    Open <ArrowRight size={12} />
+                  </a>
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {expiredOwned.length > 0 && (
+          <div className="mt-3">
+            <p className="text-xs font-mono uppercase tracking-wider text-text-muted mb-2">
+              Expired
+            </p>
+            <div className="space-y-2">
+              {expiredOwned.map((course) => {
+                const track = trackFor(course.trackId)
+                return (
+                  <div key={course.trackId} className="flex items-center justify-between gap-3 rounded-lg border border-border-subtle p-3 opacity-70">
+                    <p className="text-sm text-text-secondary truncate">
+                      {track?.name ?? course.trackId}
+                    </p>
+                    <a href={`/purchase/${course.trackId}`} className="text-xs text-teal shrink-0">
+                      Renew
+                    </a>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="card mb-6">
+        <h2 className="text-sm font-medium text-text-muted mb-3">Site-wide plan</h2>
         <div className="flex items-center gap-2">
           <StatusIcon size={18} style={{ color: config.color }} />
           <span style={{ color: config.color }} className="font-medium">
-            {config.label}
+            {grandfathered ? 'Active (grandfathered)' : config.label}
           </span>
         </div>
         {subscription?.plan && (
@@ -304,29 +447,18 @@ export function AccountClient({
             {subscription.plan === 'YEARLY' ? 'Yearly' : subscription.plan === 'THREE_MONTHS' ? '3 Months' : 'Monthly'} plan
           </p>
         )}
-        {subscription?.currentPeriodEnd && (
+        {subscription?.currentPeriodEnd && subscription.status === 'ACTIVE' && (
           <p className="text-sm text-text-secondary mt-1">
             Current period ends: {new Date(subscription.currentPeriodEnd).toLocaleDateString()}
           </p>
         )}
-        {subscription?.status === 'NONE' && (
-          <button
-            type="button"
-            onClick={() => router.push('/upgrade')}
-            className="btn btn-primary mt-4 inline-flex items-center gap-1.5"
-          >
-            <Sparkles size={14} /> Upgrade now
-          </button>
+        {!grandfathered && subscription?.status === 'NONE' && (
+          <p className="text-sm text-text-secondary mt-2">
+            Course purchases are managed per course in <strong>My Courses</strong>. No site-wide plan.
+          </p>
         )}
-        {subscription?.status === 'ACTIVE' && (
+        {grandfathered && (
           <div className="mt-4 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => router.push('/tracks')}
-              className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
-            >
-              <GraduationCap size={14} /> Continue Learning
-            </button>
             <button
               type="button"
               onClick={refreshSubscription}
@@ -351,7 +483,7 @@ export function AccountClient({
             </button>
           </div>
         )}
-        {(subscription?.status && subscription.status !== 'NONE' && subscription.status !== 'ACTIVE') && (
+        {(subscription?.status && subscription.status !== 'NONE' && subscription.status !== 'ACTIVE' && !grandfathered) && (
           <button
             type="button"
             onClick={refreshSubscription}

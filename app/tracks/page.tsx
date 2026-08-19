@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { TRACKS, TrackCategory } from '@/lib/tracks'
+import { TRACKS, TrackCategory, getProductStats } from '@/lib/tracks'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
 import { TrackCardLarge } from '@/components/tracks/TrackCardLarge'
@@ -44,12 +44,12 @@ export default function TracksPage() {
   }, [category, difficulty])
 
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container">
         <PageViewTracker path="/tracks" eventName="tracks_page_open" />
         <PageHeader
-          title="All Learning Tracks"
-          subtitle="22 paths from beginner to professional."
+          title="All learning tracks"
+          subtitle={`${getProductStats().trackCount} paths from beginner to professional, in four directions.`}
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Tracks' }]}
         />
 

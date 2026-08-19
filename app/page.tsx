@@ -1,23 +1,29 @@
-import { Hero } from '@/components/home/Hero'
-import { ContinueLearningBanner } from '@/components/home/ContinueLearningBanner'
-import { HowItWorks } from '@/components/home/HowItWorks'
-import { TrackCategories } from '@/components/home/TrackCategories'
-import { WhyThisHub } from '@/components/home/WhyThisHub'
-import { QuizTeaser } from '@/components/home/QuizTeaser'
-import { UpgradeTeaser } from '@/components/home/UpgradeTeaser'
+import { LandingHero } from '@/components/home/LandingHero'
+import { EditorialStatement } from '@/components/home/EditorialStatement'
+import { PhilosophySection } from '@/components/home/PhilosophySection'
+import { PathJourney } from '@/components/home/PathJourney'
+import { PathChoice } from '@/components/home/PathChoice'
+import { ProductVisual } from '@/components/home/ProductVisual'
+import { IndependentLearning } from '@/components/home/IndependentLearning'
+import { ProofSection } from '@/components/home/ProofSection'
+import { GuidedPathPreview } from '@/components/home/GuidedPathPreview'
+import { FinalCTA } from '@/components/home/FinalCTA'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
 export default function HomePage() {
   return (
     <>
       <PageViewTracker path="/" eventName="page_view" />
-      <Hero />
-      <ContinueLearningBanner />
-      <HowItWorks />
-      <QuizTeaser />
-      <TrackCategories />
-      <WhyThisHub />
-      <UpgradeTeaser />
+      <LandingHero />
+      <EditorialStatement />
+      <PhilosophySection />
+      <PathJourney />
+      <PathChoice />
+      <ProductVisual />
+      <IndependentLearning />
+      <ProofSection />
+      <GuidedPathPreview />
+      <FinalCTA />
     </>
   )
 }

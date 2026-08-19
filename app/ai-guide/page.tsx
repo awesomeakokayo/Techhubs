@@ -17,7 +17,7 @@ export default function AIGuidePage() {
   const [openTrack, setOpenTrack] = useState<string | null>(null)
 
   return (
-    <div className="section pt-28">
+    <div className="section pt-16">
       <div className="container">
         <PageViewTracker path="/ai-guide" eventName="ai_guide_page_open" />
         <PageHeader
@@ -26,11 +26,11 @@ export default function AIGuidePage() {
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'AI Guide' }]}
         />
 
-        <div className="rounded-2xl border border-border-default bg-surface p-8 md:p-12 text-center">
+        <div className="rounded-md border border-border-default bg-surface p-6 md:p-10 text-center max-w-3xl mx-auto">
           <div className="mx-auto flex max-w-md items-center justify-center gap-4">
-            <span className="rounded-full border border-teal px-4 py-2 font-display font-semibold text-teal">You</span>
+            <span className="rounded-md border border-teal px-4 py-2 font-display font-semibold text-teal">You</span>
             <ArrowLeftRight size={20} className="text-text-muted shrink-0" aria-hidden />
-            <span className="rounded-full border border-violet px-4 py-2 font-display font-semibold text-violet">AI</span>
+            <span className="rounded-md border border-violet px-4 py-2 font-display font-semibold text-violet">AI</span>
           </div>
           <p className="mt-6 text-text-secondary">
             Think → Prompt → Verify → Ship. AI accelerates work you understand — it does not replace learning.
@@ -38,7 +38,7 @@ export default function AIGuidePage() {
         </div>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">Core Philosophy</h2>
+          <h2 className="font-editorial text-3xl">Core Philosophy</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {AI_PHILOSOPHY.map((p) => (
               <blockquote
@@ -53,7 +53,7 @@ export default function AIGuidePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">Prompt Engineering Basics</h2>
+          <h2 className="font-editorial text-3xl">Prompt Engineering Basics</h2>
           <div className="mt-6 space-y-4">
             {PROMPT_TIPS.map((tip, i) => (
               <div key={i} className="card grid gap-4 md:grid-cols-2">
@@ -71,10 +71,10 @@ export default function AIGuidePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">AI by Track</h2>
+          <h2 className="font-editorial text-3xl">AI by Track</h2>
           <div className="mt-6 space-y-2">
             {TRACKS.map((track) => (
-              <div key={track.id} className="rounded-lg border border-border-default overflow-hidden">
+              <div key={track.id} className="rounded-md border border-border-default overflow-hidden">
                 <button
                   type="button"
                   onClick={() => setOpenTrack(openTrack === track.id ? null : track.id)}
@@ -112,7 +112,7 @@ export default function AIGuidePage() {
         </section>
 
         <section className="mt-16">
-          <h2 className="font-display text-2xl font-bold">Tools Directory</h2>
+          <h2 className="font-editorial text-3xl">Tools Directory</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {AI_TOOLS_GLOBAL.map((tool) => (
               <TrackedLink
@@ -132,7 +132,7 @@ export default function AIGuidePage() {
 
         <section className="mt-16">
           <div className="card border-amber/30 bg-amber/5">
-            <h2 className="font-display text-xl font-bold">Ethics & Verification</h2>
+            <h2 className="font-editorial text-2xl">Ethics & Verification</h2>
             <ul className="mt-4 space-y-2 text-text-secondary">
               <li>• AI hallucinates — always verify facts, code, and citations</li>
               <li>• Never submit AI output you have not read and understood</li>

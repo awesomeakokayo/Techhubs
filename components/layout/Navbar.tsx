@@ -7,12 +7,9 @@ import { Menu, Search, X, ArrowRight, User } from 'lucide-react'
 import { SearchModal } from '@/components/search/SearchModal'
 
 const NAV_LINKS = [
-  { href: '/tracks', label: 'Tracks' },
-  { href: '/roadmaps', label: 'Roadmaps' },
+  { href: '/paths', label: 'Paths' },
   { href: '/resources', label: 'Resources' },
-  { href: '/ai-guide', label: 'AI Guide' },
   { href: '/career', label: 'Career' },
-  { href: '/start-here', label: 'Start Here' },
 ]
 
 export function Navbar() {
@@ -45,80 +42,100 @@ export function Navbar() {
         className="sticky top-0 z-[100] h-16 border-b border-border-subtle bg-surface/85 backdrop-blur-md"
       >
         <div className="container flex h-full items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2.5 no-underline">
-            <span className="font-display text-xl font-extrabold text-text-primary">TSH</span>
-            <span className="hidden font-display text-sm font-semibold text-text-primary sm:inline">
-              Tech Skills Hub
-            </span>
+          {/* Logo */}
+          <Link href="/" className="flex items-baseline gap-1 no-underline">
+            <span className="font-editorial text-xl text-text-primary">Tech</span>
+            <span className="font-display text-sm font-semibold text-text-primary">Skill Hub</span>
           </Link>
 
+          {/* Desktop nav */}
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-md px-4 py-3 text-sm font-medium text-text-secondary transition-colors hover:text-teal"
+                className="rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:text-teal"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          {/* Right side */}
+          <div className="flex items-center gap-1">
+            <div className="hidden lg:block">
+              <Link
+                href="/find-your-path"
+                className="btn btn-primary items-center gap-1.5 px-3.5 py-2 text-sm"
+              >
+                Find Your Path <ArrowRight size={14} className="shrink-0" />
+              </Link>
+            </div>
             {session ? (
               <Link
                 href="/account"
-                className="flex h-11 w-11 items-center justify-center rounded-md text-text-secondary hover:text-teal"
+                className="flex h-10 w-10 items-center justify-center rounded-md text-text-secondary transition-colors hover:text-teal"
                 aria-label="Account"
               >
-                <User size={20} />
+                <User size={18} />
               </Link>
             ) : (
               <Link
                 href="/login"
-                className="hidden rounded-md px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:text-teal lg:inline-flex"
+                className="hidden rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition-colors hover:text-teal lg:inline-flex"
               >
                 Sign In
               </Link>
             )}
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-md text-text-secondary hover:text-teal"
+              className="flex h-10 w-10 items-center justify-center rounded-md text-text-secondary transition-colors hover:text-teal"
               aria-label="Open search"
               onClick={() => setSearchOpen(true)}
             >
-              <Search size={20} />
+              <Search size={18} />
             </button>
+            <span className="hidden items-center gap-0.5 rounded-md border border-border-default px-1.5 py-0.5 font-mono text-[0.6rem] text-text-muted lg:inline-flex">
+              <span className="text-[0.7rem]">⌘</span>K
+            </span>
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-md text-text-primary lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-md text-text-primary transition-colors lg:hidden"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
             >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </header>
 
+      {/* Mobile menu */}
       {menuOpen && (
         <div
-          className="fixed inset-0 z-[99] bg-void lg:hidden"
+          className="fixed inset-0 z-[99] lg:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
         >
-          <div className="flex h-full flex-col px-6 pt-24 pb-8">
-            <nav className="flex flex-col gap-2" aria-label="Mobile navigation">
-              {NAV_LINKS.map((link) => (
+          <button
+            type="button"
+            className="absolute inset-0 bg-void"
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+          />
+          <div className="relative flex h-full flex-col px-6 pt-24 pb-8">
+            <nav className="flex flex-col gap-1" aria-label="Mobile navigation">
+              {NAV_LINKS.map((link, i) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="font-display text-3xl font-bold text-text-primary no-underline hover:text-teal"
+                  className="group flex items-center gap-3 text-text-primary no-underline"
                   onClick={() => setMenuOpen(false)}
                 >
-                  {link.label}
+                  <span className="font-mono text-[0.6rem] text-text-muted">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="font-editorial text-3xl">{link.label}</span>
                 </Link>
               ))}
             </nav>
@@ -132,17 +149,11 @@ export function Navbar() {
                   Sign In
                 </Link>
               )}
-              <Link href="/start-here" className="btn btn-primary w-full justify-center inline-flex items-center gap-1.5" onClick={() => setMenuOpen(false)}>
-                Start Learning <ArrowRight size={16} className="shrink-0" />
+              <Link href="/find-your-path" className="btn btn-primary w-full justify-center inline-flex items-center gap-1.5" onClick={() => setMenuOpen(false)}>
+                Find Your Path <ArrowRight size={16} className="shrink-0" />
               </Link>
             </div>
           </div>
-          <button
-            type="button"
-            className="absolute inset-0 -z-10"
-            aria-label="Close menu"
-            onClick={() => setMenuOpen(false)}
-          />
         </div>
       )}
 

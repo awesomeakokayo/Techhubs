@@ -121,7 +121,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
   return (
     <div className="fixed inset-0 z-[200] flex items-start justify-center bg-black/70 p-4 pt-[10vh]" role="dialog" aria-modal="true" aria-label="Search">
       <button type="button" className="absolute inset-0" aria-label="Close search" onClick={onClose} />
-      <div className="relative w-full max-w-2xl rounded-xl border border-border-default bg-elevated shadow-modal">
+      <div className="relative w-full max-w-2xl rounded-md border border-border-default bg-elevated shadow-modal">
         <div className="flex items-center gap-3 border-b border-border-subtle px-4">
           <Search size={20} className="text-text-muted shrink-0" />
           <input

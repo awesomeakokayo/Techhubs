@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import {
-  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Sparkles, GraduationCap, CheckCircle2, Loader2, RefreshCw,
+  LayoutList, Map, BookOpen, Hammer, Bot, Briefcase, Clock, ArrowRight, Route, GraduationCap, CheckCircle2, Loader2, RefreshCw,
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { Track } from '@/lib/tracks'
@@ -37,9 +37,21 @@ const RESOURCE_TABS: { id: ResourceType | 'all'; label: string }[] = [
   { id: 'tool', label: 'Tools' },
 ]
 
-export function TrackPageView({ track }: { track: Track }) {
+function SectionHeading({ n, label, note }: { n: string; label: string; note?: string }) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <span className="font-mono text-xs text-text-muted" aria-hidden>
+        {n}
+      </span>
+      <h2 className="font-editorial text-3xl">{label}</h2>
+      {note && <p className="text-sm text-text-secondary">{note}</p>}
+    </div>
+  )
+}
+
+export function TrackPageView({ track, hasAccess = false }: { track: Track; hasAccess?: boolean }) {
   const { data: session } = useSession()
-  const isSubscribed = session?.user?.isSubscribed ?? false
+  const gated = hasAccess
   const [activeSection, setActiveSection] = useState('overview')
   const [resourceTab, setResourceTab] = useState<ResourceType | 'all'>('all')
   const [progressKey, setProgressKey] = useState(0)
@@ -51,11 +63,11 @@ export function TrackPageView({ track }: { track: Track }) {
 
   const refresh = useCallback(() => {
     setProgressKey((k) => k + 1)
-    if (isSubscribed) {
+    if (gated) {
       setSyncing(true)
       syncTrackProgressToServer(track.id).finally(() => setSyncing(false))
     }
-  }, [isSubscribed, track.id])
+  }, [gated, track.id])
   const percent = useMemo(() => {
     const storedUserId = getStoredUserId()
     if (storedUserId && session?.user?.id && storedUserId !== session.user.id) {
@@ -82,13 +94,13 @@ export function TrackPageView({ track }: { track: Track }) {
   }, [track.id, track.slug, session?.user?.id])
 
   useEffect(() => {
-    if (isSubscribed && !syncedRef.current) {
+    if (gated && !syncedRef.current) {
       syncedRef.current = true
       loadTrackProgressFromServer(track.id).then(() => {
         setProgressKey((k) => k + 1)
       })
     }
-  }, [isSubscribed, track.id])
+  }, [gated, track.id])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -132,14 +144,14 @@ export function TrackPageView({ track }: { track: Track }) {
           />
           <div className="flex flex-col gap-6 md:flex-row md:items-start">
             <div
-              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl"
-              style={{ backgroundColor: `${track.colorHex}20`, color: track.colorHex }}
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border"
+              style={{ backgroundColor: `${track.colorHex}14`, borderColor: `${track.colorHex}33`, color: track.colorHex }}
             >
-              <Icon size={32} aria-hidden />
+              <Icon size={28} aria-hidden />
             </div>
             <div className="flex-1">
-              <h1 className="font-display text-3xl font-extrabold md:text-4xl">{track.name}</h1>
-              <p className="mt-2 text-lg text-text-secondary">{track.tagline}</p>
+              <h1 className="font-editorial text-display-lg">{track.name}</h1>
+              <p className="mt-2 max-w-2xl text-lg text-text-secondary">{track.tagline}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="badge badge-teal">{track.difficultyLabel}</span>
                 <span className="badge badge-purple inline-flex items-center gap-1">
@@ -151,12 +163,12 @@ export function TrackPageView({ track }: { track: Track }) {
               <div className="mt-6 max-w-md" key={progressKey}>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-text-muted font-mono">Progress</span>
-                  {isSubscribed && syncing && (
+                  {gated && syncing && (
                     <span className="text-xs text-teal inline-flex items-center gap-1">
                       <Loader2 size={11} className="animate-spin" /> syncing
                     </span>
                   )}
-                  {isSubscribed && !syncing && (
+                  {gated && !syncing && (
                     <span className="text-xs text-text-muted inline-flex items-center gap-1">
                       <RefreshCw size={11} /> synced
                     </span>
@@ -165,7 +177,7 @@ export function TrackPageView({ track }: { track: Track }) {
                 <ProgressBar percent={percent} label="Your Progress" />
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
-                {isSubscribed ? (
+                {gated ? (
                   <a
                     href={`/guided-path/${track.id}`}
                     className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
@@ -180,11 +192,11 @@ export function TrackPageView({ track }: { track: Track }) {
                       onClick={() => setPremiumOpen(true)}
                       className="btn btn-primary inline-flex items-center gap-1.5 text-sm"
                     >
-                      <Sparkles size={16} />
+                      <Route size={16} />
                       Start Guided Path
                     </button>
-                    <a href="/upgrade" className="btn btn-ghost text-sm">
-                      Unlock Premium
+                    <a href={`/purchase/${track.id}`} className="btn btn-ghost text-sm">
+                      Unlock This Course
                     </a>
                   </>
                 )}
@@ -239,10 +251,10 @@ export function TrackPageView({ track }: { track: Track }) {
         {/* Main content */}
         <div className="min-w-0 flex-1 space-y-20">
           <section id="overview" className="scroll-mt-28">
-            <h2 className="font-display text-2xl font-bold">Overview</h2>
+            <SectionHeading n="01" label="Overview" />
             <p className="mt-4 max-w-none text-text-secondary">{track.overview.description}</p>
 
-            <h3 className="mt-8 font-display text-lg font-semibold">Who is this for?</h3>
+            <h3 className="mt-8 font-display text-base font-semibold">Who is this for?</h3>
             <ul className="mt-3 space-y-2">
               {whoFor.map((item) => (
                 <li key={item} className="flex gap-2 text-text-secondary">
@@ -251,14 +263,14 @@ export function TrackPageView({ track }: { track: Track }) {
               ))}
             </ul>
 
-            <h3 className="mt-8 font-display text-lg font-semibold">What can you build?</h3>
+            <h3 className="mt-8 font-display text-base font-semibold">What can you build?</h3>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {track.overview.whatYouCanBuild.map((item) => (
                 <li key={item} className="card text-sm text-text-secondary py-3">{item}</li>
               ))}
             </ul>
 
-            <h3 className="mt-8 font-display text-lg font-semibold">Jobs you can get</h3>
+            <h3 className="mt-8 font-display text-base font-semibold">Jobs you can get</h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {track.overview.jobTitles.map((job) => (
                 <span key={job} className="badge badge-teal">{job}</span>
@@ -270,8 +282,7 @@ export function TrackPageView({ track }: { track: Track }) {
           </section>
 
           <section id="roadmap" className="scroll-mt-28">
-            <h2 className="font-display text-2xl font-bold">Roadmap</h2>
-            <p className="mt-2 text-text-secondary">Follow each stage in order. Mark stages complete as you finish them.</p>
+            <SectionHeading n="02" label="Roadmap" note="Follow each stage in order. Mark stages complete as you finish them." />
             <div className="mt-8">
               <RoadmapTimeline
                 trackId={track.id}
@@ -283,7 +294,7 @@ export function TrackPageView({ track }: { track: Track }) {
           </section>
 
           <section id="resources" className="scroll-mt-28">
-            <h2 className="font-display text-2xl font-bold">Resources</h2>
+            <SectionHeading n="03" label="Resources" />
             <div className="mt-4 flex flex-wrap gap-2">
               {RESOURCE_TABS.map((tab) => (
                 <button
@@ -320,7 +331,7 @@ export function TrackPageView({ track }: { track: Track }) {
           </section>
 
           <section id="projects" className="scroll-mt-28">
-            <h2 className="font-display text-2xl font-bold">Projects</h2>
+            <SectionHeading n="04" label="Projects" />
             {(['beginner', 'intermediate', 'advanced'] as const).map((level) => {
               const items = track.projects.filter((p) => p.level === level)
               if (!items.length) return null
@@ -345,25 +356,29 @@ export function TrackPageView({ track }: { track: Track }) {
           </section>
 
           <section id="ai-guide" className="scroll-mt-28">
-            <div className="rounded-2xl border border-border-default bg-elevated p-6 md:p-8 bg-dot">
-              <h2 className="font-display text-2xl font-bold">AI Guide</h2>
+            <div className="rounded-lg border border-border-default border-l-[3px] border-l-teal bg-elevated p-6 md:p-8">
+              <SectionHeading n="05" label="AI Guide" />
               <div className="mt-8 grid gap-8 md:grid-cols-2">
                 <div>
-                  <h3 className="font-display font-semibold text-green-500">What AI helps with</h3>
+                  <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-teal">
+                    What AI helps with
+                  </h3>
                   <ul className="mt-3 space-y-2">
                     {track.aiGuide.goodFor.map((item) => (
                       <li key={item} className="flex gap-2 text-sm text-text-secondary">
-                        <span className="text-green-500">✓</span> {item}
+                        <span className="text-teal">✓</span> {item}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-red-400">What AI cannot replace</h3>
+                  <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--color-error)]">
+                    What AI cannot replace
+                  </h3>
                   <ul className="mt-3 space-y-2">
                     {track.aiGuide.notFor.map((item) => (
                       <li key={item} className="flex gap-2 text-sm text-text-secondary">
-                        <span className="text-red-400">✗</span> {item}
+                        <span className="text-[var(--color-error)]">✗</span> {item}
                       </li>
                     ))}
                   </ul>
@@ -403,7 +418,7 @@ export function TrackPageView({ track }: { track: Track }) {
           </section>
 
           <section id="career" className="scroll-mt-28">
-            <h2 className="font-display text-2xl font-bold">Career Path</h2>
+            <SectionHeading n="06" label="Career Path" />
             <div className="mt-4 flex flex-wrap gap-2">
               {track.overview.jobTitles.map((job) => (
                 <span key={job} className="rounded-full border border-border-default px-4 py-2 font-display text-sm font-semibold">
@@ -426,6 +441,7 @@ export function TrackPageView({ track }: { track: Track }) {
       <PremiumModal
         open={premiumOpen}
         onClose={() => setPremiumOpen(false)}
+        trackId={track.id}
         trackName={track.name}
       />
     </div>

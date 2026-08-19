@@ -1,0 +1,21 @@
+
+> tech-skills-hub@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 7.2s
+ ○ Compiling /tracks/[slug] ...
+ ✓ Compiled /tracks/[slug] in 9.3s (917 modules)
+ ✓ Compiled in 1314ms (353 modules)
+ GET /tracks/frontend-development 200 in 12480ms
+ ○ Compiling /upgrade ...
+ ✓ Compiled /upgrade in 797ms (907 modules)
+ GET /upgrade 307 in 1158ms
+ ○ Compiling /purchase/[trackId] ...
+ ✓ Compiled /purchase/[trackId] in 1332ms (923 modules)
+ GET /purchase/frontend-development 307 in 2872ms
+^C^C
