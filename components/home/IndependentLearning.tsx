@@ -29,7 +29,7 @@ export function IndependentLearning() {
         />
       </div>
 
-      <div className="container relative py-28 md:py-40">
+      <div className="container relative py-36 md:py-40">
         <div className="mx-auto max-w-4xl text-center">
           <p className="section-label justify-center">In your own time</p>
           <h2 className="font-editorial text-display-xl text-text-primary">

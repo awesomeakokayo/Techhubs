@@ -17,7 +17,7 @@ export function ProofSection() {
 
   return (
     <section>
-      <div className="container py-28 md:py-36">
+      <div className="container py-36 md:py-40">
         <div className="mx-auto max-w-3xl text-center">
           <p className="section-label justify-center">The catalogue</p>
           <h2 className="font-editorial text-display-lg text-text-primary">

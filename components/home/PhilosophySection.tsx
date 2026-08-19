@@ -9,7 +9,7 @@ import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 export function PhilosophySection() {
   return (
     <section className="relative overflow-hidden bg-deep">
-      <div className="container py-28 md:py-40">
+      <div className="container py-36 md:py-40">
         <div className="mx-auto max-w-3xl">
           <p className="section-label">The philosophy</p>
           <h2 className="font-editorial text-display-lg text-text-primary">

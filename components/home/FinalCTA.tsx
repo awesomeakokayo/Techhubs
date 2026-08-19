@@ -10,7 +10,7 @@ import { ArrowRight } from 'lucide-react'
 export function FinalCTA() {
   return (
     <section className="bg-void">
-      <div className="container py-32 md:py-44">
+      <div className="container py-36 md:py-40">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-editorial text-display-xl text-text-primary">
             You don&apos;t need to learn everything.

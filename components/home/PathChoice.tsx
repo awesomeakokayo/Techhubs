@@ -11,7 +11,7 @@ import { CATEGORIES } from '@/lib/tracks'
 export function PathChoice() {
   return (
     <section>
-      <div className="container py-28 md:py-40">
+      <div className="container py-36 md:py-40">
         <div className="text-center">
           <p className="section-label justify-center">Your choice</p>
           <h2 className="font-editorial text-display-lg text-text-primary">

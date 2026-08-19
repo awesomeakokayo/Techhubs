@@ -15,7 +15,7 @@ export function ProductVisual() {
 
   return (
     <section className="border-t border-border-subtle bg-deep">
-      <div className="container py-28 md:py-40">
+      <div className="container py-36 md:py-40">
         <div className="mx-auto max-w-3xl text-center">
           <p className="section-label justify-center">How it works</p>
           <h2 className="font-editorial text-display-lg text-text-primary">

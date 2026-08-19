@@ -12,7 +12,7 @@ export function EditorialStatement() {
         backgroundImage: 'radial-gradient(60% 50% at 50% 100%, var(--accent-primary-glow) 0%, transparent 55%)',
       }}
     >
-      <div className="container py-28 md:py-40">
+      <div className="container py-36 md:py-40">
         <div className="mx-auto max-w-4xl text-center">
           <p className="section-label justify-center">The problem</p>
           <h2 className="font-editorial text-display-xl text-text-primary">

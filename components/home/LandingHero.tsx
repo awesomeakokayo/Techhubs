@@ -37,7 +37,7 @@ export function LandingHero() {
       </div>
 
       {/* ── Editorial copy ── */}
-      <div className="container relative flex min-h-[65vh] flex-col items-center justify-center py-16 text-center md:py-24">
+      <div className="container relative flex min-h-[85vh] flex-col items-center justify-center py-24 text-center md:min-h-screen md:py-32">
         <p className="section-label justify-center whitespace-nowrap text-teal">
           <span aria-hidden className="hidden h-px w-5 bg-teal sm:inline-block" />
           Guide for independent learning
