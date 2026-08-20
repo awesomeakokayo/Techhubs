@@ -6,6 +6,7 @@ import { PROJECT_LEVELS, getProjectsByLevel } from '@/lib/seo/projects'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { ContentViewTracker } from '@/components/seo/ContentViewTracker'
 
 interface Props {
   params: { level: string }
@@ -37,6 +38,7 @@ export default function ProjectLevelPage({ params }: Props) {
     <div className="section pt-16">
       <div className="container">
         <PageViewTracker path={`/projects/${level.slug}`} eventName="project_level_page_open" />
+        <ContentViewTracker path={`/projects/${level.slug}`} contentType="projects" />
         <Breadcrumbs
           items={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: level.label }]}
         />

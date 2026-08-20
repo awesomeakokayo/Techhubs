@@ -1,6 +1,185 @@
 import { SeoPage } from './content-types'
 
 export const GUIDE_CONTENT: Record<string, SeoPage> = {
+  'how-to-get-into-tech': {
+    slug: 'how-to-get-into-tech',
+    title: 'How to Get Into Tech: A Realistic Path for Beginners & Career Switchers',
+    seoTitle: 'How to Get Into Tech: No-Degree Path, Step by Step',
+    description:
+      'A practical, honest path to getting into tech without a computer science degree — which roles to target, what to learn, projects to build and how to land the first role.',
+    openingAnswer:
+      "You can get into tech without a degree. Pick one entry role you can reach within months — frontend development is the most accessible — learn its fundamentals with free resources, build 3 to 5 real projects into a public portfolio, and apply with that proof instead of credentials. The most common mistake is trying to learn everything: choose one path and go deep.",
+    intro:
+      'Every year thousands of people move into tech from unrelated careers, graduated with non-CS degrees, or never finished any degree at all. Tech companies hire for demonstrated ability: portfolios, projects and problem-solving. This guide turns that reality into a concrete plan you can follow without guessing.',
+    audiences: ['Career switchers', 'Graduates', 'Students', 'Self-taught learners'],
+    sections: [
+      {
+        heading: 'What does "getting into tech" actually mean?',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'Tech is not one job. It includes software development, data analysis, quality assurance, cybersecurity, product design, digital marketing and more. Some of these roles require months of preparation; others require weeks. The strongest entry point for most beginners is software development because free high-quality learning resources are abundant and portfolios carry real weight.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Frontend development — HTML, CSS, JavaScript, React. The most beginner-accessible technical role.',
+              'Backend development — APIs, databases, server logic. Needs a bit more programming comfort.',
+              'Quality assurance — testing software. A shorter on-ramp that often leads into development.',
+              'Data analysis — SQL, spreadsheets, dashboards. Reachable with focused months of practice.',
+              'Cybersecurity — network fundamentals, security testing. Distinct learning path.',
+              'Product design / UX — research, wireframes, Figma. A non-code entry into tech.',
+            ],
+          },
+          {
+            kind: 'callout',
+            text: 'Duplication warning: do not try to learn all of these. Pick ONE and go deep. Depth is what gets you hired.',
+          },
+        ],
+      },
+      {
+        heading: 'Do you need a degree?',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'No. The skills employers actually evaluate — Git, frameworks, testing, deployment, communication — are learned by doing, not by graduating. A degree is one path into tech, but a portfolio of shipped projects is a powerful equalizer. Most junior developers you meet will have learned a meaningful share of their skills independently.',
+          },
+          {
+            kind: 'paragraph',
+            text: 'What employers DO evaluate at entry level: a solid grasp of fundamentals, real projects you can explain, basic version control, clean code, and the willingness to learn. Every one of those is acquirable for free.',
+          },
+        ],
+      },
+      {
+        heading: 'The job titles with the shortest on-ramps',
+        blocks: [
+          {
+            kind: 'list',
+            items: [
+              'Junior frontend developer — 8–12 months of consistent learning is realistic.',
+              'QA / manual tester — often months, useful even if you later move to development.',
+              'Support engineer / DevOps junior — varies, often favors system knowledge.',
+              'Data analyst — SQL-driven, 6–12 months with a good portfolio.',
+              'Technical writer / content builder — writing-focused entry into the ecosystem.',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: 'If your goal is "get a technical job as fast as possible", frontend development is usually the best starting bet. If your goal is "build AI products", the Python and AI roadmaps are the entry.',
+          },
+        ],
+      },
+      {
+        heading: 'A step-by-step path into tech',
+        blocks: [
+          {
+            kind: 'steps',
+            items: [
+              {
+                title: 'Choose one entry role and write down why',
+                text: 'Write one sentence: "I want to become X because Y." This anchors every decision that follows. Revisit it monthly.',
+              },
+              {
+                title: 'Learn the fundamentals with one structured path',
+                text: 'Pick the roadmap for your role — for web developers, the TechSkillHub Frontend Roadmap sequences HTML, CSS, JavaScript, React and deployment with free resources at every step. Follow one path to the end.',
+              },
+              {
+                title: 'Build 3–5 real projects while you learn',
+                text: 'Do not wait until you "feel ready". A landing page on week two, a to-do app mid-path, an API-powered app later. Real projects teach more than tutorials and become your portfolio.',
+              },
+              {
+                title: 'Publish everything publicly',
+                text: 'Put every project on GitHub with a README, and deploy each one so there is a live link. Deployed proof beats certificates.',
+              },
+              {
+                title: 'Make your portfolio and a one-page profile',
+                text: 'A clean personal site that links the projects, says what problem each solves, and shows your code. This is your primary credential.',
+              },
+              {
+                title: 'Apply with evidence, not wishes',
+                text: 'Target entry-level roles and roles that explicitly hire juniors. In your cover letter, reference specific projects and what you learned building them. Expect many applications — treat volume as part of the process.',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'How long does it take?',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'With consistent daily practice, most independent learners reach junior-level readiness in 8 to 12 months. Career switchers studying evenings and weekends typically land at the later end; full-time learners at the earlier end. The variable is consistent hours, not talent or luck.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Learning fundamentals: 3–6 months.',
+              'Building a real portfolio: another 3–4 months while continuing to learn.',
+              'Job search: 1–3 months of active applications for most people.',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'Common mistakes that stall career switchers',
+        blocks: [
+          {
+            kind: 'list',
+            items: [
+              'Trying to learn three languages and five frameworks before building anything.',
+              'Hiding projects because they feel too simple.',
+              'Investing in expensive bootcamps before trying free structured learning.',
+              'Waiting until "the right time" to apply.',
+              'Not publishing work publicly where it can be seen.',
+              'Using AI tools to complete projects without being able to explain the code.',
+            ],
+          },
+        ],
+      },
+      {
+        heading: 'How TechSkillHub fits in',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'TechSkillHub connects the confused beginning to a structured finish. Start with the quiz to pick a direction, follow a roadmap with curated free resources, build the paired projects into a portfolio, then move through the career guides to the job search itself.',
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Can I really get into tech without a degree?',
+        answer: 'Yes. Hiring for technical roles leans heavily on demonstrated skill: portfolios, projects, and how you solve problems. A degree helps, but a portfolio of shipped projects regularly outranks it at entry level.',
+      },
+      {
+        question: 'How long does it take to get into tech?',
+        answer: 'Most consistent learners reach junior-level readiness in 8 to 12 months of focused practice. The biggest variable is regular, sustained hours — a daily habit beats weekend binges.',
+      },
+      {
+        question: 'What is the easiest tech job to get into?',
+        answer: "Frontend development has the shortest on-ramp because the learning resources are free, the results are visible, and junior hiring is project-based. QA and data analysis are also strong short paths.",
+      },
+      {
+        question: 'Do I need to know math to get into tech?',
+        answer: 'No. Everyday development needs logic, not advanced math. Math only becomes relevant in specialized fields like machine learning or graphics.',
+      },
+      {
+        question: 'What pays the most in tech?',
+        answer: 'Salaries vary strongly by role, company and region, and change over time. Software engineering, data and AI roles generally pay at the higher end, but entry point matters more than headline salaries — choose a path you can finish.',
+      },
+    ],
+    cta: { label: 'Find your path', href: '/start' },
+    related: [
+      { title: 'How to Become a Frontend Developer', href: '/careers/frontend-developer', description: 'The most accessible entry role, explained end to end.' },
+      { title: 'How to Get Your First Tech Job', href: '/guides/how-to-get-your-first-tech-job', description: 'From portfolio to interview to offer.' },
+      { title: 'How to Build a Developer Portfolio', href: '/guides/how-to-build-a-developer-portfolio', description: 'Turn projects into the proof that gets you interviewed.' },
+      { title: 'Frontend Developer Roadmap', href: '/roadmaps/frontend-development', description: 'The exact sequence of skills for your first role.' },
+      { title: 'Which Programming Language Should I Learn First?', href: '/guides/what-programming-language-should-i-learn', description: 'Pick the language before you start the journey.' },
+    ],
+    publishedTime: '2026-08-19T00:00:00.000Z',
+    modifiedTime: '2026-08-19T00:00:00.000Z',
+  },
+
   'how-to-learn-coding': {
     slug: 'how-to-learn-coding',
     title: 'How to Learn Coding From Scratch: A Beginner Roadmap',

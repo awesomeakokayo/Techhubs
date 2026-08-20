@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { ArrowRight, Clock, Layers, Users, FolderKanban, Briefcase } from 'lucide-react'
 import { Track } from '@/lib/tracks'
 import { CustomRoadmap } from '@/lib/seo/roadmaps'
@@ -6,6 +5,10 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { StructuredData } from './StructuredData'
 import { RelatedContent } from './RelatedContent'
 import { ContentFeedback } from './ContentFeedback'
+import { LearningFunnel } from './LearningFunnel'
+import { CtaLink } from './CtaLink'
+import { ContentViewTracker } from './ContentViewTracker'
+import { getJourneyForSlug } from '@/lib/seo/journeys'
 import { breadcrumbJsonLd, courseJsonLd, faqJsonLd } from '@/lib/seo/utils'
 import type { BreadcrumbItem } from '@/lib/seo/utils'
 
@@ -26,6 +29,8 @@ interface RoadmapLayoutProps {
   courseName: string
   courseDescription: string
   audience?: string[]
+  /** Slug used to resolve this roadmap into its learning journey. */
+  journeySlug?: string
 }
 
 export function RoadmapLayout({
@@ -45,10 +50,13 @@ export function RoadmapLayout({
   courseName,
   courseDescription,
   audience,
+  journeySlug,
 }: RoadmapLayoutProps) {
+  const journey = journeySlug ? getJourneyForSlug(journeySlug) : null
   return (
     <article className="section pt-16">
       <div className="container">
+        <ContentViewTracker path={path} contentType="roadmap" />
         <StructuredData
           blocks={[
             courseJsonLd({ name: courseName, description: courseDescription, path }),
@@ -167,10 +175,16 @@ export function RoadmapLayout({
               <p className="font-display text-xl text-text-primary">
                 Follow this roadmap inside TechSkillHub with progress tracking and curated resources.
               </p>
-              <Link href={ctaHref} className="btn btn-primary mt-4 inline-flex items-center gap-2">
-                Start this roadmap <ArrowRight size={16} className="shrink-0" />
-              </Link>
+              <CtaLink
+                href={ctaHref}
+                label="Start this roadmap"
+                trackingPath={path}
+                isRoadmapCta
+                className="btn btn-primary mt-4 inline-flex items-center gap-2"
+              />
             </div>
+
+            {journey && <LearningFunnel journey={journey} currentHref={path} trackingPath={path} />}
 
             <div className="border-t border-border-subtle pt-8 text-sm text-text-muted">
               <p>Last reviewed: 2026-08-19</p>

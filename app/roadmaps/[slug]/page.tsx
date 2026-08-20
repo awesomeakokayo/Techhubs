@@ -74,6 +74,7 @@ export default function RoadmapPage({ params }: Props) {
       <PageViewTracker path={`/roadmaps/${params.slug}`} eventName="roadmap_page_open" />
       <RoadmapLayout
         {...shared}
+        journeySlug={slug}
         {...(track ? trackToRoadmap(track) : customRoadmapToLayout(custom!))}
       />
     </>

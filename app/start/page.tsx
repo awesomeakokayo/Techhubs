@@ -51,6 +51,11 @@ const GOALS = [
     description: 'Turn learning into proof of skill.',
   },
   {
+    title: 'I want to get into tech',
+    href: '/guides/how-to-get-into-tech',
+    description: 'A realistic path from zero to first role.',
+  },
+  {
     title: 'I want to start a tech career',
     href: '/careers',
     description: 'Explore roles and the path to each one.',

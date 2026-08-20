@@ -1,10 +1,13 @@
-import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { SeoPage, ContentBlock } from '@/lib/seo/content-types'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { StructuredData } from './StructuredData'
 import { RelatedContent } from './RelatedContent'
 import { ContentFeedback } from './ContentFeedback'
+import { LearningFunnel } from './LearningFunnel'
+import { CtaLink } from './CtaLink'
+import { ContentViewTracker } from './ContentViewTracker'
+import { getJourneyForSlug } from '@/lib/seo/journeys'
 import {
   articleJsonLd,
   breadcrumbJsonLd,
@@ -76,9 +79,11 @@ export function ArticleLayout({
   extraJsonLd = [],
   afterCta,
 }: ArticleLayoutProps) {
+  const journey = getJourneyForSlug(page.slug)
   return (
     <article className="section pt-16">
       <div className="container">
+        <ContentViewTracker path={path} contentType={kind === 'Guide' ? 'guide' : kind === 'Career Path' ? 'career' : 'resource'} />
         <StructuredData
           blocks={[
             articleJsonLd({
@@ -155,13 +160,18 @@ export function ArticleLayout({
                 <p className="font-display text-xl text-text-primary">
                   Ready to start? Follow the TechSkillHub roadmap.
                 </p>
-                <Link href={page.cta.href} className="btn btn-primary mt-4 inline-flex items-center gap-2">
-                  {page.cta.label} <ArrowRight size={16} className="shrink-0" />
-                </Link>
+                <CtaLink
+                  href={page.cta.href}
+                  label={page.cta.label}
+                  trackingPath={path}
+                  className="btn btn-primary mt-4 inline-flex items-center gap-2"
+                />
               </div>
             )}
 
             {afterCta}
+
+            {journey && <LearningFunnel journey={journey} currentHref={path} trackingPath={path} />}
 
             <div className="border-t border-border-subtle pt-8 text-sm text-text-muted">
               <p>Last reviewed: {page.modifiedTime.slice(0, 10)}</p>
@@ -171,8 +181,8 @@ export function ArticleLayout({
             <ContentFeedback path={path} contentType={kind.toLowerCase()} />
           </div>
 
-          <aside className="hidden lg:block">
-            <RelatedContent title="Related" links={page.related} />
+          <aside className="hidden lg:block overflow-hidden">
+            <RelatedContent title="Related" links={page.related} sidebar />
           </aside>
         </div>
 
