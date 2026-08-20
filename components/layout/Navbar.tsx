@@ -7,6 +7,8 @@ import { Menu, Search, X, ArrowRight, User } from 'lucide-react'
 import { SearchModal } from '@/components/search/SearchModal'
 
 const NAV_LINKS = [
+  { href: '/roadmaps', label: 'Roadmaps' },
+  { href: '/guides', label: 'Guides' },
   { href: '/paths', label: 'Paths' },
   { href: '/resources', label: 'Resources' },
   { href: '/career', label: 'Career' },

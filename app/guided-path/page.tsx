@@ -1,13 +1,18 @@
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo/utils'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
-export const metadata = {
-  title: 'Guided Path | Tech Skill Hub',
-  description: 'A more deliberate, structured learning experience when you want help staying on course.',
-}
+export const metadata: Metadata = getPageMetadata({
+  title: 'Guided Path: Step-by-Step Tech Courses',
+  description:
+    'A more deliberate, structured learning experience — sequenced lessons, quizzes, guided projects and progress synced across devices.',
+  path: '/guided-path',
+  keywords: ['guided learning', 'structured tech course', 'step-by-step tech learning'],
+})
 
 const BENEFITS = [
   'A sequenced, step-by-step course per track',

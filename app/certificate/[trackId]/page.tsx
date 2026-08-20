@@ -9,7 +9,8 @@ import { hasTrackAccess } from '@/lib/access'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Certificate | Tech Skill Hub',
+  title: 'Certificate | TechSkillHub',
+  robots: { index: false, follow: false },
 }
 
 export default async function CertificatePage({ params }: { params: { trackId: string } }) {

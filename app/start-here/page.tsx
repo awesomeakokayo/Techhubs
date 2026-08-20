@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo/utils'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TrackQuiz } from '@/components/quiz/TrackQuiz'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
@@ -9,10 +11,13 @@ import {
   COMMUNITIES_AFRICA,
 } from '@/lib/site-content'
 
-export const metadata = {
-  title: 'Start Here | Tech Skill Hub',
-  description: 'Beginner onboarding guide, 7 survival steps, track quiz, and your first week plan.',
-}
+export const metadata: Metadata = getPageMetadata({
+  title: 'Start Here: Your First Week Learning Tech',
+  description:
+    'Beginner onboarding guide with seven survival steps, a first-week plan, a track quiz and communities that help independent learners.',
+  path: '/start-here',
+  keywords: ['start learning tech', 'first week coding plan', 'tech survival steps'],
+})
 
 export default function StartHerePage() {
   return (

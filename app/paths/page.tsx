@@ -1,9 +1,19 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import type { Metadata } from 'next'
 import { CATEGORIES, getTracksByCategory, getProductStats } from '@/lib/tracks'
+import { getPageMetadata } from '@/lib/seo/utils'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+
+export const metadata: Metadata = getPageMetadata({
+  title: 'Learning Paths: Explore Tech Directions',
+  description:
+    'Explore four families of technology work — build, design, analyze and grow — and find the learning path that fits your goal.',
+  path: '/paths',
+  keywords: ['learning paths', 'tech directions', 'technology categories'],
+})
 
 export default function PathsPage() {
   return (

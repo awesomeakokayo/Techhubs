@@ -1,11 +1,16 @@
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo/utils'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CareerSections } from './CareerTabs'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
-export const metadata = {
-  title: 'Career Preparation | Tech Skill Hub',
-  description: 'CV tips, portfolio building, interview prep, freelancing, and communities for tech careers.',
-}
+export const metadata: Metadata = getPageMetadata({
+  title: 'Career Preparation: CV, Portfolio & Interviews',
+  description:
+    'CV tips, portfolio building, interview preparation, freelancing and communities for technology careers.',
+  path: '/career',
+  keywords: ['tech career preparation', 'developer interview prep', 'tech CV'],
+})
 
 export default function CareerPage() {
   return (

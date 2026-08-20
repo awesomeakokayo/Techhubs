@@ -7,17 +7,25 @@ import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 type NavLink = { href: string; label: string }
 
 const EXPLORE: NavLink[] = [
-  { href: '/paths', label: 'Paths' },
-  { href: '/resources', label: 'Resources' },
-  { href: '/career', label: 'Career' },
+  { href: '/roadmaps', label: 'Roadmaps' },
+  { href: '/guides', label: 'Guides' },
+  { href: '/careers', label: 'Careers' },
   { href: '/projects', label: 'Projects' },
+  { href: '/resources', label: 'Resources' },
 ]
 
 const LEARN: NavLink[] = [
+  { href: '/start', label: 'Start Learning' },
   { href: '/find-your-path', label: 'Find Your Path' },
-  { href: '/start-here', label: 'Start Here' },
-  { href: '/roadmaps', label: 'Roadmaps' },
+  { href: '/paths', label: 'Paths' },
   { href: '/guided-path', label: 'Guided Path' },
+  { href: '/career', label: 'Career Prep' },
+]
+
+const COMPANY: NavLink[] = [
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/ai-guide', label: 'AI Guide' },
 ]
 
 const STAGES = [
@@ -73,6 +81,22 @@ export function Footer() {
               <p className="section-label mt-2">Start learning</p>
               <ul className="mt-4 space-y-2.5">
                 {LEARN.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="text-sm text-text-secondary transition-colors hover:text-teal no-underline"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav aria-label="TechSkillHub">
+              <p className="section-label mt-2">TechSkillHub</p>
+              <ul className="mt-4 space-y-2.5">
+                {COMPANY.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}

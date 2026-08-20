@@ -14,6 +14,13 @@ export type AnalyticsEvent = {
   quiz_level?: string
   query_length?: number
   result_count?: number
+  cta_label?: string
+  cta_href?: string
+  content_type?: string
+  feedback_helpful?: boolean
+  feedback_reason?: string
+  feedback_text?: string
+  share_network?: string
   timestamp?: string
 }
 
@@ -95,5 +102,52 @@ export function trackRoadmapCompletion(data: {
   trackEvent({
     event_name: 'roadmap_stage_complete',
     ...data,
+  })
+}
+
+export function trackStartRoadmap(data: {
+  path?: string
+  track_slug?: string
+  cta_label?: string
+  purpose?: string
+}) {
+  trackEvent({
+    event_name: 'roadmap_start',
+    ...data,
+  })
+}
+
+export function trackContentFeedback(data: {
+  path: string
+  content_type?: string
+  helpful: boolean
+  reason?: string
+  detail?: string
+}) {
+  trackEvent({
+    event_name: 'feedback_submitted',
+    path: data.path,
+    content_type: data.content_type,
+    feedback_helpful: data.helpful,
+    feedback_reason: data.reason,
+    feedback_text: data.detail,
+  })
+}
+
+export function trackShare(data: { path: string; content_type?: string; network: string }) {
+  trackEvent({
+    event_name: 'share_used',
+    path: data.path,
+    content_type: data.content_type,
+    share_network: data.network,
+  })
+}
+
+export function trackCtaClick(data: { path: string; cta_label: string; cta_href?: string }) {
+  trackEvent({
+    event_name: 'cta_click',
+    path: data.path,
+    cta_label: data.cta_label,
+    cta_href: data.cta_href,
   })
 }

@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
+import type { Metadata } from 'next'
 import { CATEGORIES, getTracksByCategory } from '@/lib/tracks'
+import { getPageMetadata } from '@/lib/seo/utils'
 import { TrackCard } from '@/components/tracks/TrackCard'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
@@ -13,11 +15,16 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params
   const cat = CATEGORIES.find((c) => c.id === category)
-  if (!cat) return { title: 'Not found | Tech Skill Hub' }
-  return {
-    title: `${cat.label} Paths | Tech Skill Hub`,
-    description: cat.description,
-  }
+  if (!cat) return { title: 'Not found | TechSkillHub' }
+  return getPageMetadata({
+    title: `${cat.label} Learning Paths: Technology Tracks for ${cat.label} Careers`,
+    description: `${cat.description}. Explore the ${cat.label} learning paths — ${getTracksByCategory(cat.id)
+      .map((t) => t.name)
+      .slice(0, 5)
+      .join(', ')} and more.`,
+    path: `/paths/${cat.id}`,
+    keywords: [`${cat.label.toLowerCase()} paths`, `${cat.label.toLowerCase()} careers`],
+  })
 }
 
 export default async function PathCategoryPage({ params }: { params: Promise<{ category: string }> }) {

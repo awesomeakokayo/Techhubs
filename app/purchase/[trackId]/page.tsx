@@ -1,5 +1,6 @@
 import { headers } from 'next/headers'
 import { redirect, notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { auth } from '@/auth'
 import { getTrackById } from '@/lib/tracks'
 import { PRICING, resolvePricingContext } from '@/lib/pricing'
@@ -9,6 +10,11 @@ import { getIpCountryFromHeaders } from '@/lib/payments'
 import { PurchaseClient } from './PurchaseClient'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Purchase | TechSkillHub',
+  robots: { index: false, follow: false },
+}
 
 export default async function PurchasePage({ params }: { params: { trackId: string } }) {
   const session = await auth()

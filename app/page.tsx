@@ -7,6 +7,7 @@ import { ProductVisual } from '@/components/home/ProductVisual'
 import { IndependentLearning } from '@/components/home/IndependentLearning'
 import { ProofSection } from '@/components/home/ProofSection'
 import { GuidedPathPreview } from '@/components/home/GuidedPathPreview'
+import { SeoContentSection } from '@/components/home/SeoContentSection'
 import { FinalCTA } from '@/components/home/FinalCTA'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
@@ -23,6 +24,7 @@ export default function HomePage() {
       <IndependentLearning />
       <ProofSection />
       <GuidedPathPreview />
+      <SeoContentSection />
       <FinalCTA />
     </>
   )

@@ -8,8 +8,9 @@ import { AccountClient } from './AccountClient'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Account | Tech Skill Hub',
+  title: 'Account | TechSkillHub',
   description: 'Manage your profile, courses, and learning progress.',
+  robots: { index: false, follow: false },
 }
 
 export default async function AccountPage() {

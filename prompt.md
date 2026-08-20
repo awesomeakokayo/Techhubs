@@ -1,2317 +1,3196 @@
-# TECH SKILLS HUB — PAYSTACK NGN/USD PRICING, GEO-DETECTION & PAYMENT SECURITY
+# ROLE
 
-## ROLE
+You are acting as the lead engineer responsible for transforming the existing TechSkillHub application into a highly discoverable, search-optimized, AI-citable, user-retaining technology learning platform.
 
-You are a senior backend engineer, payments engineer, security engineer, and Next.js/Node.js developer working inside the existing Tech Skills Hub codebase.
+You must combine the responsibilities of:
 
-You must modify the existing Pro / Guided Path payment system to support **automatic NGN vs USD pricing through Paystack**, while keeping the existing Paystack integration and eliminating the previous Stripe dependency for this flow.
+1. Senior Technical SEO Engineer
+2. Search Engine Optimization Strategist
+3. Information Architect
+4. Content Strategy Architect
+5. Search Intent Researcher
+6. Generative AI / Answer Engine Optimization Specialist
+7. Next.js/Full-Stack Engineer
+8. UX/Product Conversion Specialist
+9. Analytics Engineer
+10. Technical Content Editor
 
-The product is a Nigeria-based business using Paystack.
+Your task is NOT to create superficial SEO metadata.
 
-Paystack is already configured for international payments.
+Your task is to improve the actual product architecture so that TechSkillHub can:
 
-The system must support:
+* Be discovered through non-branded searches.
+* Be indexed properly by search engines.
+* Be understood correctly by search engines and AI systems.
+* Appear as a relevant resource for educational and career-related questions.
+* Bring users from search engines into useful TechSkillHub pages.
+* Give those users an immediate answer to their original question.
+* Move those users naturally into TechSkillHub roadmaps, learning resources, projects and other useful parts of the platform.
+* Encourage genuine engagement, learning, return visits and useful feedback.
+* Build long-term topical authority around self-paced technology education.
+* Establish TechSkillHub as a recognizable educational entity rather than merely a website.
+* Make the site suitable for Google Search, Google AI Overviews/AI Mode, Bing/Copilot and ChatGPT Search.
 
-* Nigerian customers paying in NGN
-* non-Nigerian customers paying in USD
-* Paystack handling the actual payment
-* automatic currency selection
-* server-authoritative amount selection
-* fraud/bypass resistance
-* transaction verification
-* webhook verification
-* duplicate-payment protection
-* subscription/pro entitlement protection
-* auditability
+Do not attempt to manipulate search engines, fabricate authority, generate spam, create doorway pages, keyword-stuff content, or generate hundreds of low-value pages.
 
-Do NOT build a frontend-only currency switch.
+The objective is:
 
-Do NOT allow the customer to freely choose NGN or USD.
-
-Do NOT trust a client-supplied country or currency.
-
-Do NOT reintroduce Stripe.
-
----
-
-# 1. PRIMARY BUSINESS REQUIREMENT
-
-Tech Skills Hub has a Pro / Guided Path paid plan.
-
-There are two prices:
-
-### Nigerian pricing
-
-Displayed and charged in:
-
-**NGN**
-
-### International pricing
-
-Displayed and charged in:
-
-**USD**
-
-The user must not be given a manual selector such as:
-
-> Nigeria / International
-
-or:
-
-> Pay ₦X / Pay $Y
-
-where they can simply choose whichever is cheaper.
-
-The system must automatically determine the appropriate pricing context.
+DISCOVERABILITY → RELEVANCE → TRUST → LEARNING → ENGAGEMENT → RETURN VISIT → ADVOCACY
 
 ---
 
-# 2. IMPORTANT SECURITY PRINCIPLE
+# IMPORTANT PRODUCT CONTEXT
 
-The frontend is NEVER the source of truth for:
+The product is:
 
-* currency
-* amount
-* country
-* plan price
-* payment entitlement
-* subscription status
+TechSkillHub
+https://techskillhub.cv
 
-The client may request:
+Positioning:
 
-> “I want to buy the Pro plan.”
+TechSkillHub is a self-paced technology learning platform designed to help people learn practical technology skills through structured learning roadmaps, resources, projects and career-oriented guidance.
 
-The backend must determine:
+The platform is especially relevant to African learners, students, beginners, career switchers and people who want to learn technology independently.
 
-```text
-customer identity
-+
-country context
-+
-pricing region
-+
-currency
-+
-server-defined amount
-```
+However:
 
-and then create the Paystack transaction.
+DO NOT overuse the phrase "for Africans" on every page.
 
-Never accept:
+The platform should remain globally useful while developing a strong and authentic African identity where appropriate.
 
-```json
-{
-  "currency": "NGN",
-  "amount": 100000
-}
-```
+Do not make unsupported claims such as:
 
-from the browser and trust it.
+* "the best tech platform"
+* "number one"
+* "the world's largest"
+* "the most trusted"
+* "used by millions"
+* "the fastest growing"
 
-The browser can only send the intended product/plan identifier.
+unless the existing application contains verifiable evidence supporting such claims.
+
+The product should communicate value through the quality of its resources rather than exaggerated marketing.
+
+---
+
+# PHASE 0 — DO NOT MODIFY ANYTHING YET
+
+Before writing or changing code, inspect the entire existing codebase.
+
+You must first understand:
+
+* Framework
+* App Router or Pages Router
+* Existing route structure
+* Existing components
+* Existing database schema
+* Authentication
+* Existing SEO configuration
+* Existing metadata
+* Existing sitemap
+* Existing robots.txt
+* Existing canonical URLs
+* Existing structured data
+* Existing navigation
+* Existing roadmap architecture
+* Existing content models
+* Existing blog/resource architecture
+* Existing analytics
+* Existing performance characteristics
+* Existing image handling
+* Existing public/private routes
+* Existing server/client component boundaries
+* Existing API architecture
+* Existing deployment configuration
+* Existing environment variables
+* Existing middleware
+* Existing rate limiting/security configuration
+* Existing dynamic routes
+* Existing indexing behavior
+* Existing error pages
+* Existing redirects
+
+Do NOT rewrite the project architecture simply because a different architecture would be cleaner.
+
+Preserve working functionality.
+
+Do not remove existing product functionality.
+
+Do not change authentication or payment behavior unless a modification is required for public discoverability.
+
+Do not expose private user data.
+
+Do not make authenticated pages public merely for SEO.
+
+Do not index dashboards, account pages, private progress pages, payment pages, internal admin interfaces or user-specific content.
+
+Create a technical audit first.
+
+Then produce a concise internal implementation report containing:
+
+* Current architecture
+* Current SEO state
+* Current indexing risks
+* Current content gaps
+* Current navigation weaknesses
+* Current conversion weaknesses
+* Current AI-discovery weaknesses
+* Existing strengths
+* Recommended changes
+* Files that will be modified
+* Files that will be created
+
+Only after completing this audit should implementation begin.
+
+---
+
+# PHASE 1 — DEFINE THE SEARCH-FIRST INFORMATION ARCHITECTURE
+
+The website must evolve from a product-only structure into a searchable learning knowledge system.
+
+The primary public information architecture should resemble:
+
+/
+
+/roadmaps
+
+/roadmaps/frontend-development
+
+/roadmaps/backend-development
+
+/roadmaps/full-stack-development
+
+/roadmaps/python
+
+/roadmaps/javascript
+
+/roadmaps/react
+
+/roadmaps/artificial-intelligence
+
+/roadmaps/data-science
+
+/roadmaps/cybersecurity
+
+/guides
+
+/guides/how-to-learn-coding
+
+/guides/how-to-learn-python
+
+/guides/how-to-learn-javascript
+
+/guides/how-to-learn-web-development
+
+/guides/how-to-become-a-frontend-developer
+
+/guides/how-to-become-a-backend-developer
+
+/guides/how-to-build-a-developer-portfolio
+
+/guides/how-to-get-your-first-tech-job
+
+/guides/how-to-learn-ai
+
+/projects
+
+/projects/beginner
+
+/projects/intermediate
+
+/projects/advanced
+
+/careers
+
+/careers/frontend-developer
+
+/careers/backend-developer
+
+/careers/full-stack-developer
+
+/careers/ai-engineer
+
+/resources
+
+/resources/free-coding-resources
+
+/resources/free-tech-resources
+
+/resources/african-tech-resources
+
+/resources/developer-tools
+
+/blog
+
+/about
+
+/contact
+
+Only create routes that have legitimate useful content.
+
+Do not create empty routes simply to capture keywords.
+
+If the current product uses a different but better structure, preserve its useful structure and adapt this architecture intelligently.
+
+---
+
+# PHASE 2 — SEARCH INTENT STRATEGY
+
+Do not approach SEO by choosing random keywords.
+
+Build around user problems.
+
+The central principle is:
+
+USERS DO NOT SEARCH FOR TECHSKILLHUB.
+THEY SEARCH FOR WHAT THEY NEED.
+
+Examples of target intent:
+
+"how can I learn coding"
+
+"how do I start programming"
+
+"best way to learn coding from scratch"
+
+"free coding resources"
+
+"best free coding websites"
+
+"free programming courses"
+
+"web development roadmap"
+
+"frontend developer roadmap"
+
+"backend developer roadmap"
+
+"full stack developer roadmap"
+
+"python roadmap for beginners"
+
+"javascript roadmap for beginners"
+
+"how to learn JavaScript"
+
+"how to learn Python"
+
+"how to learn React"
+
+"how to become a frontend developer"
+
+"how to become a backend developer"
+
+"how to become a software engineer"
+
+"how to learn technology on my own"
+
+"how to learn tech without a degree"
+
+"free tech education"
+
+"free tech courses"
+
+"free programming resources"
+
+"coding projects for beginners"
+
+"projects to build as a beginner programmer"
+
+"how to build a developer portfolio"
+
+"how to get started in tech"
+
+"what programming language should I learn"
+
+"which programming language is best for beginners"
+
+"what should I learn after HTML and CSS"
+
+"what should I learn after JavaScript"
+
+"how long does it take to learn coding"
+
+"how to transition into tech"
+
+"how to become a developer"
+
+"tech skills to learn"
+
+"best tech skills to learn"
+
+"AI roadmap for beginners"
+
+"machine learning roadmap"
+
+"data science roadmap"
+
+"cybersecurity roadmap"
+
+These are examples of intent patterns, NOT instructions to keyword-stuff them into pages.
+
+Use them to identify what problems the platform should solve.
+
+---
+
+# PHASE 3 — SEARCH INTENT CLUSTERS
+
+Create a structured internal content model around these intent clusters.
+
+## Cluster A — "I want to start coding"
+
+Pages should answer:
+
+* What is coding?
+* Where should beginners start?
+* What programming language should I learn?
+* How do I learn programming from zero?
+* What should I learn first?
+* How long does it take?
+* What should I build?
+
+Main destination:
+
+/guides/how-to-learn-coding
+
+Supporting destination:
+
+/roadmaps
+
+Primary conversion:
+
+Start a Roadmap
+
+---
+
+## Cluster B — Web Development
+
+Target questions:
+
+* How do I learn web development?
+* What is the frontend roadmap?
+* What is the backend roadmap?
+* What is full-stack development?
+* What should I learn after HTML?
+* What should I learn after CSS?
+* What should I learn after JavaScript?
+* What projects should I build?
+
+Main destinations:
+
+/roadmaps/frontend-development
+
+/roadmaps/backend-development
+
+/roadmaps/full-stack-development
+
+---
+
+## Cluster C — Programming Languages
+
+Build comprehensive learning hubs for:
+
+Python
+JavaScript
+HTML
+CSS
+TypeScript
+Java
+C
+C++
+PHP
+SQL
+
+Only publish languages for which TechSkillHub can provide genuinely useful content.
+
+Each language hub should have:
+
+* What it is
+* What it is used for
+* Who should learn it
+* Prerequisites
+* Beginner roadmap
+* Intermediate roadmap
+* Project ideas
+* Common mistakes
+* Recommended practice
+* Next steps
+* Career paths
+* FAQs
+* Internal links to related roadmaps
 
 Example:
 
-```json
-{
-  "plan": "pro"
-}
-```
+/roadmaps/python
 
-The backend decides:
+Title:
 
-```text
-NG user → NGN price
-non-NG user → USD price
-```
+Python Roadmap for Beginners: Learn Python Step by Step
 
 ---
 
-# 3. DO NOT USE STRIPE
+# PHASE 4 — EVERY SEARCH LANDING PAGE MUST ACTUALLY ANSWER THE QUESTION
 
-There is an existing or historical Stripe implementation.
+Do NOT make a search landing page that exists only to rank.
 
-Do NOT depend on Stripe for this payment flow.
+Every page must satisfy this pattern:
 
-Do not add Stripe back.
-
-Do not create a parallel Paystack + Stripe architecture.
-
-Paystack is the single payment provider for this feature.
-
-If old Stripe code exists:
-
-* identify it
-* determine whether it is still used elsewhere
-* do not break unrelated functionality
-* remove only what is obsolete for this specific Pro payment flow if it can safely be removed
-* document any remaining Stripe code that is unrelated
-
----
-
-# 4. PAYSTACK REQUIREMENTS
-
-Use Paystack's server-side transaction initialization flow.
-
-Paystack supports NGN and USD for Nigeria-based businesses, and the transaction initialization API accepts an explicit currency and amount. Amounts must be supplied in the relevant currency's smallest unit.
-
-Therefore:
-
-### Example
-
-If Nigerian Pro price is:
-
-```text
-₦15,000
-```
-
-the backend initializes:
-
-```text
-amount = 1500000
-currency = NGN
-```
-
-If international Pro price is:
-
-```text
-$15
-```
-
-the backend initializes:
-
-```text
-amount = 1500
-currency = USD
-```
-
-Never perform currency conversion dynamically at checkout.
-
-The two plan prices should be explicit configuration values.
-
----
-
-# 5. CENTRALIZE PRICING
-
-Create a single server-side pricing configuration.
-
-Example conceptual structure:
-
-```ts
-const PRO_PRICING = {
-  NG: {
-    currency: "NGN",
-    amountMajor: 15000,
-  },
-  INTERNATIONAL: {
-    currency: "USD",
-    amountMajor: 15,
-  },
-};
-```
-
-Adapt this to the project's existing pricing model.
-
-Do not duplicate prices across:
-
-* React components
-* API routes
-* checkout pages
-* database queries
-* environment variables
-* payment handlers
-
-There must be ONE authoritative pricing source.
-
-Prefer a server-side configuration or database-backed plan record.
-
-The frontend should receive the calculated presentation values from the backend.
-
----
-
-# 6. COUNTRY DETECTION STRATEGY
-
-We need automatic detection, but country detection must not be treated as a perfect identity signal.
-
-Use a layered approach.
-
-## LEVEL 1 — AUTHENTICATED ACCOUNT CONTEXT
-
-If a user is authenticated and has a verified profile country, use that as one strong signal.
+1. Search intent
+2. Immediate answer
+3. Explanation
+4. Structured pathway
+5. Practical action
+6. TechSkillHub resource
+7. Next step
+8. Internal link
 
 Example:
 
-```text
-user.profile.country = NG
-```
+USER SEARCH:
 
-However, do not blindly trust an editable country field by itself.
+"How do I learn frontend development?"
 
-A user should not be able to change:
+PAGE:
 
-```text
-country = NG
-```
+# How to Learn Frontend Development From Scratch
 
-and thereby permanently unlock Nigerian pricing.
+Immediately below the heading:
 
----
+"To learn frontend development, start with HTML and CSS, move into JavaScript, learn Git and browser tools, then learn a modern framework such as React. Build projects throughout the process rather than waiting until the end."
 
-# 7. SERVER-SIDE IP COUNTRY DETECTION
+Then:
 
-Use the request's actual public IP on the server and resolve its country using a reliable IP geolocation mechanism already available to the deployment environment, or introduce a reputable server-side geolocation service if the current infrastructure has none.
+"Use the TechSkillHub Frontend Roadmap"
 
-Do NOT determine the country from:
+Then:
 
-```js
-navigator.language
-```
+HTML
+CSS
+JavaScript
+Git
+React
+APIs
+Testing
+Deployment
 
-or:
+Then projects.
 
-```js
-Intl.DateTimeFormat().resolvedOptions().timeZone
-```
+Then career guidance.
 
-or frontend locale alone.
+Then FAQs.
 
-Those are UI hints, not payment-security controls.
+Then related resources.
 
-The server must obtain the connection's IP as reliably as the hosting platform permits.
-
-For example, on a hosted environment, inspect the trusted proxy headers supported by the deployment platform.
-
-Do not trust arbitrary client-provided headers.
+This gives users an answer before asking them to do anything.
 
 ---
 
-# 8. IMPORTANT LIMITATION
+# PHASE 5 — CREATE A STANDARD PAGE CONTENT MODEL
 
-IP geolocation is not perfect.
+For all major educational landing pages, implement a reusable content structure.
 
-A customer can use:
+Each page should support:
 
-* VPN
-* proxy
-* corporate network
-* roaming
-* privacy relay
+* SEO title
+* Meta description
+* Canonical URL
+* H1
+* Short answer
+* Introduction
+* Target audience
+* Prerequisites
+* Learning objectives
+* Step-by-step roadmap
+* Concepts
+* Resources
+* Projects
+* Practice
+* Career applications
+* Common mistakes
+* FAQs
+* Related content
+* Next action
+* Feedback
+* Last updated information where appropriate
+* Author/reviewer information where appropriate
 
-Therefore:
+The CMS/database/content model must support these fields.
 
-**IP country cannot be the only anti-fraud signal.**
+Do not force all content into one giant string.
 
-Use it to determine the initial pricing experience, but retain additional verification.
-
----
-
-# 9. PRICING DECISION MODEL
-
-Create a centralized backend function such as:
-
-```ts
-resolvePaymentRegion(context)
-```
-
-or:
-
-```ts
-resolveCheckoutPricing(context)
-```
-
-The function should return something like:
-
-```ts
-{
-  region: "NG" | "INTERNATIONAL",
-  currency: "NGN" | "USD",
-  amount: number,
-  amountMajor: number,
-  countrySource: "ip" | "profile" | "verified-card" | "fallback",
-  confidence: "high" | "medium" | "low"
-}
-```
-
-The exact shape may differ according to project conventions.
+Use structured content where appropriate so the frontend can render it consistently.
 
 ---
 
-# 10. BASE REGION RULE
+# PHASE 6 — BUILD TOPICAL AUTHORITY
 
-For the default pricing decision:
+TechSkillHub must demonstrate depth around a small number of core subjects first.
 
-```text
-country === NG
-    → NGN
-else
-    → USD
-```
+Do NOT attempt to publish 500 random articles.
 
-Do not implement a manual “currency” selector.
+Start with strong topical clusters.
 
-Do not offer the customer a dropdown.
+Priority:
 
-Do not include a hidden form field that lets the client choose:
+1. Web development
+2. Programming fundamentals
+3. Python
+4. JavaScript
+5. Frontend development
+6. Backend development
+7. Full-stack development
+8. AI
+9. Data
+10. Cybersecurity
 
-```text
-NGN
-USD
-```
+For each cluster:
 
-without server validation.
-
----
-
-# 11. CONFLICT HANDLING
-
-If signals disagree, do NOT silently choose the cheapest option.
+PILLAR PAGE
+↓
+SUPPORTING GUIDES
+↓
+PROJECTS
+↓
+RELATED SKILLS
+↓
+CAREER PATH
+↓
+NEXT ROADMAP
 
 Example:
 
-```text
-IP country = Nigeria
-profile country = United Kingdom
-```
+Frontend Development
 
-or:
+/roadmaps/frontend-development
 
-```text
-IP country = United States
-profile country = Nigeria
-```
+Supporting pages:
 
-The system should apply a defined policy.
+/guides/how-to-learn-html
+/guides/how-to-learn-css
+/guides/how-to-learn-javascript
+/guides/what-is-responsive-design
+/guides/how-to-learn-react
+/guides/how-to-build-a-frontend-project
 
-For example:
+Projects:
 
-### Case A
+/projects/portfolio-website
+/projects/landing-page
+/projects/weather-app
 
-IP = NG
+Career:
 
-Profile country = NG
+/careers/frontend-developer
 
-→ NGN
-
-### Case B
-
-IP = US
-
-Profile country = US
-
-→ USD
-
-### Case C
-
-IP = NG
-
-Profile country = US
-
-→ treat as high-risk mismatch
-
-Do not simply allow NGN because one signal says NG.
-
-Instead:
-
-* use the stronger rule defined by the product
-* optionally require additional verification
-* or default to international pricing when ambiguity exists
-
-The security principle is:
-
-> **When there is meaningful uncertainty, never default to the cheaper price.**
+All of these should link naturally to each other.
 
 ---
 
-# 12. PAYMENT SESSION INITIALIZATION
+# PHASE 7 — INTERNAL LINKING SYSTEM
 
-Create a backend endpoint for checkout initialization.
+Every public educational page needs intentional internal links.
 
-Conceptually:
+Use semantic anchor text.
 
-```http
-POST /api/payments/paystack/initialize
-```
+GOOD:
 
-Body:
+"Follow the Frontend Developer Roadmap"
 
-```json
-{
-  "plan": "pro"
-}
-```
+"Learn JavaScript from the beginning"
 
-The endpoint must:
+"Explore beginner web development projects"
 
-1. authenticate the user
-2. validate that the plan exists
-3. fetch the server-side plan price
-4. resolve region/currency
-5. calculate exact charge amount
-6. create a unique internal payment record
-7. initialize Paystack
-8. store the Paystack reference
-9. return only the required checkout information
+BAD:
 
-Do not allow the browser to supply the final amount.
+"Click here"
+
+"Learn more"
+
+"Read this"
+
+Where possible, use real HTML anchor elements:
+
+<a href="/roadmaps/frontend-development">
+    Frontend Developer Roadmap
+</a>
+
+Do not depend exclusively on client-side click handlers for navigation.
+
+Every important public page should be reachable through ordinary crawlable links.
+
+Build a logical internal-linking graph.
+
+Important pages must not become orphan pages.
+
+Implement breadcrumbs for deep pages.
+
+Example:
+
+Home
+→ Roadmaps
+→ Web Development
+→ Frontend Development
 
 ---
 
-# 13. INTERNAL PAYMENT RECORD
+# PHASE 8 — TECHNICAL SEO
 
-Before calling Paystack, create or reserve an internal payment/order record.
+Implement or improve all of the following.
 
-Store at least:
+## Metadata
 
-```text
-userId
-planId
-internalOrderId
-paystackReference
-currency
-amount
-region
-pricingVersion
+Every public indexable page must have:
+
+* Unique title
+* Unique description
+* Canonical URL
+* Correct robots directives
+* Open Graph metadata
+* Twitter/X metadata where appropriate
+* Correct language metadata
+* Correct URL
+
+Do not generate identical metadata for hundreds of pages.
+
+Create reusable metadata functions but allow page-specific customization.
+
+---
+
+# TITLE RULES
+
+Titles should communicate:
+
+TOPIC + BENEFIT + CONTEXT
+
+Examples:
+
+Frontend Developer Roadmap: Learn Web Development Step by Step
+
+Python Roadmap for Beginners: Learn Python From Scratch
+
+How to Learn JavaScript From Scratch: Beginner Roadmap
+
+Free Coding Resources for Beginners
+
+How to Become a Frontend Developer
+
+Do not write titles like:
+
+"TechSkillHub | TechSkillHub | TechSkillHub"
+
+Do not keyword stuff.
+
+---
+
+# META DESCRIPTION RULES
+
+Descriptions should answer:
+
+What is this page?
+
+Why should I click?
+
+Example:
+
+"Learn frontend development step by step with a practical roadmap covering HTML, CSS, JavaScript, React, projects, practice and deployment."
+
+Descriptions must be unique where practical.
+
+Do not promise something the page does not provide.
+
+---
+
+# PHASE 9 — ROBOTS.TXT
+
+Inspect the current robots.txt before modifying it.
+
+Ensure legitimate search engines can crawl public educational content.
+
+Make sure TechSkillHub does not accidentally block:
+
+Googlebot
+Bingbot
+OAI-SearchBot
+
+Do not blindly allow everything.
+
+Keep private/admin/user-specific areas protected.
+
+For example, authenticated routes should generally not be indexable.
+
+Ensure the sitemap URL is declared.
+
+Example concept:
+
+Sitemap: https://techskillhub.cv/sitemap.xml
+
+For OpenAI:
+
+User-agent: OAI-SearchBot
+Allow: /
+
+Do not add unnecessary bot-specific restrictions.
+
+---
+
+# PHASE 10 — SITEMAP
+
+Create a robust dynamic XML sitemap.
+
+Include only:
+
+* Canonical public pages
+* Indexable resources
+* Published roadmaps
+* Published guides
+* Public projects
+* Public career pages
+* Other legitimate public educational resources
+
+Exclude:
+
+* Admin pages
+* Dashboard
+* Auth pages
+* Payment pages
+* User profile pages unless intentionally public
+* Duplicate URLs
+* Search result pages
+* Filter permutations
+* Tracking parameters
+* Internal application states
+
+Use appropriate last modification dates based on actual content changes.
+
+Do not fake freshness.
+
+---
+
+# PHASE 11 — CANONICALIZATION
+
+Every public page must have one canonical URL.
+
+Avoid indexable duplicates such as:
+
+?page=...
+?category=...
+?sort=...
+?ref=...
+?utm_source=...
+
+Do not allow parameter combinations to create thousands of indexable URLs.
+
+Use canonical tags and appropriate robots controls.
+
+Use clean slugs.
+
+Prefer:
+
+/roadmaps/frontend-development
+
+over:
+
+/roadmap?id=123
+
+---
+
+# PHASE 12 — URL DESIGN
+
+Use human-readable URLs.
+
+GOOD:
+
+/roadmaps/python
+
+/guides/how-to-learn-javascript
+
+/projects/weather-app
+
+/careers/frontend-developer
+
+BAD:
+
+/page?id=982
+
+/learn?course=27
+
+/content/3829
+
+URLs should be stable.
+
+Do not change URLs casually after publishing.
+
+If an old URL must change:
+
+Create a permanent redirect.
+
+Do not leave broken links.
+
+---
+
+# PHASE 13 — STRUCTURED DATA
+
+Implement valid JSON-LD where appropriate.
+
+Do not add schema merely because it exists.
+
+Use schema types that accurately describe the page.
+
+Potential implementations:
+
+Organization
+WebSite
+BreadcrumbList
+Article
+Course where the content genuinely represents a course
+SoftwareApplication if genuinely describing the application
+ProfilePage for valid public author/profile pages where appropriate
+
+Do not fabricate ratings.
+
+Do not fabricate reviews.
+
+Do not fabricate course instructors.
+
+Do not fabricate dates.
+
+Do not mark up content that isn't visible on the page.
+
+Use complete and accurate properties.
+
+Validate the generated structured data.
+
+---
+
+# ORGANIZATION ENTITY
+
+The homepage should identify:
+
+TechSkillHub
+
+Website:
+
+https://techskillhub.cv
+
+Logo:
+
+Use the actual TechSkillHub logo asset from the project.
+
+Description:
+
+"TechSkillHub is a self-paced technology learning platform helping learners build practical tech skills through structured roadmaps, resources, projects and career guidance."
+
+Do not invent organization identifiers.
+
+Where appropriate, add legitimate social profiles through sameAs.
+
+Use only real profiles belonging to TechSkillHub.
+
+---
+
+# PHASE 14 — AI DISCOVERY
+
+The system must be designed so AI answer engines can understand TechSkillHub naturally.
+
+Important:
+
+DO NOT attempt to "hack ChatGPT."
+
+DO NOT create fake AI-specific pages.
+
+DO NOT create hidden text for AI crawlers.
+
+DO NOT produce invisible keyword blocks.
+
+DO NOT create special content that differs dishonestly between crawlers and users.
+
+The objective is to make the same high-quality public content available to both people and crawlers.
+
+Ensure OAI-SearchBot is not blocked.
+
+Ensure major public educational pages can be crawled without authentication.
+
+Ensure important information exists as real HTML/text rather than being available only after a client-side interaction.
+
+Important definitions, roadmaps, learning objectives and explanations should be visible in rendered page content.
+
+---
+
+# PHASE 15 — ANSWER-ENGINE CONTENT FORMAT
+
+Major educational pages should follow an answer-friendly structure.
+
+Example:
+
+## What is Python?
+
+[2–4 sentence answer]
+
+## How do I learn Python?
+
+[Direct answer]
+
+## Python learning roadmap
+
+[Steps]
+
+## What should I build?
+
+[Projects]
+
+## How long does it take?
+
+[Realistic range with assumptions]
+
+## What can I do with Python?
+
+[Career/application paths]
+
+## Frequently asked questions
+
+[Questions + concise answers]
+
+This makes pages useful for both humans and retrieval systems.
+
+Do not make every answer artificially short.
+
+The page should still provide comprehensive useful material.
+
+---
+
+# PHASE 16 — FAQ CONTENT
+
+For each major page, research and identify legitimate questions users commonly ask about the topic.
+
+Examples:
+
+"What should I learn first?"
+
+"Is coding difficult?"
+
+"Can I learn without a degree?"
+
+"How long does it take?"
+
+"Do I need mathematics?"
+
+"Can I learn this for free?"
+
+"What should I build?"
+
+"What should I learn next?"
+
+Only include FAQs where TechSkillHub actually answers them.
+
+Do not generate FAQ spam.
+
+Do not use structured data for unsupported FAQ claims.
+
+---
+
+# PHASE 17 — SEARCH CONTENT GENERATION SYSTEM
+
+Do not build an uncontrolled AI article generator.
+
+Instead, create a controlled content model.
+
+Each content page should include:
+
+topic
+searchIntent
+primaryQuestion
+secondaryQuestions
+audience
+difficulty
+category
+skills
+prerequisites
+learningObjectives
+roadmapSteps
+projects
+resources
+faq
+relatedPages
+author
+reviewer
+lastReviewed
+lastUpdated
 status
-createdAt
-expiresAt
-countryAtInitialization
-ipCountryAtInitialization
-```
+seoTitle
+seoDescription
+canonicalUrl
 
-Also store enough metadata to determine exactly what the customer was supposed to purchase.
+If a database is already being used, extend the existing schema rather than creating duplicate systems.
 
-This is important for dispute handling and audits.
+If a CMS already exists, integrate into it.
 
 ---
 
-# 14. PRICING VERSION
+# PHASE 18 — CONTENT QUALITY RULES
 
-Store a pricing version or equivalent identifier.
+Every article must be:
+
+* Original
+* Useful
+* Specific
+* Practical
+* Easy to understand
+* Factually responsible
+* Properly structured
+* Written for humans
+* Better than a generic AI summary
+
+Avoid:
+
+* Generic filler
+* Repeated introductions
+* Keyword stuffing
+* Fake statistics
+* Fake testimonials
+* Fake reviews
+* Fake authors
+* AI-generated fluff
+* Rewritten competitor articles
+* 2,000 words of content that could have been said in 500 words
+* Repetitive explanations
+* Unsupported claims
+
+The objective is NOT word count.
+
+The objective is:
+
+"After reading this page, can the learner actually do something?"
+
+---
+
+# PHASE 19 — MAKE TECHSKILLHUB DIFFERENT
+
+Do not build another generic programming blog.
+
+TechSkillHub's strongest advantage should be ACTION.
+
+The learner should be able to go:
+
+SEARCH QUESTION
+
+↓
+
+ANSWER
+
+↓
+
+ROADMAP
+
+↓
+
+LEARN
+
+↓
+
+PRACTICE
+
+↓
+
+BUILD
+
+↓
+
+TRACK PROGRESS
+
+↓
+
+RETURN
+
+This should become the core product funnel.
+
+---
+
+# PHASE 20 — SEARCH-TO-LEARNING FUNNEL
+
+Every SEO page needs a useful next action.
 
 Example:
 
-```text
-PRO-2026-08
-```
+User enters through:
 
-If prices change later, older transactions should remain traceable to the price version that existed when they were initialized.
+"How to become a frontend developer"
 
-Do not reconstruct old prices from today's configuration.
+They land on:
 
----
+/guides/how-to-become-a-frontend-developer
 
-# 15. PAYSTACK REFERENCE
+They read the answer.
 
-Every checkout must have a unique internal/paystack reference.
+Then see:
 
-Do not let the client choose the reference.
+"Ready to start? Follow the TechSkillHub Frontend Developer Roadmap."
 
-Generate it server-side.
+CTA:
 
-Example conceptual format:
+Start Frontend Roadmap
 
-```text
-TSH_PRO_<uuid>
-```
+Then:
 
-or use the project's established transaction-reference convention.
+Roadmap → lesson/resource → project → progress → completion → next skill
 
-Ensure it is unique.
+Do NOT use aggressive popups.
 
----
+Do NOT immediately ask users to create an account before giving useful information.
 
-# 16. PAYSTACK METADATA
+Give value first.
 
-Attach useful metadata to the Paystack transaction.
-
-For example:
-
-```json
-{
-  "plan": "pro",
-  "internal_order_id": "...",
-  "user_id": "...",
-  "pricing_region": "NG",
-  "pricing_currency": "NGN",
-  "pricing_version": "PRO-2026-08"
-}
-```
-
-Never put:
-
-* passwords
-* secrets
-* sensitive authentication credentials
-* raw card numbers
-
-into metadata.
-
-Paystack supports metadata for custom transaction information.
+Then ask for the next action.
 
 ---
 
-# 17. FRONTEND CHECKOUT DISPLAY
+# PHASE 21 — CREATE A "START HERE" SYSTEM
 
-The frontend should ask the backend:
+Create a powerful /start or equivalent entry point.
 
-```text
-GET /api/payments/pro/pricing
-```
+The page should ask:
 
-or equivalent.
+"What do you want to learn?"
 
-The backend returns:
+Possible choices:
 
-```json
-{
-  "plan": "pro",
-  "currency": "NGN",
-  "amountMajor": 15000,
-  "displayPrice": "₦15,000"
-}
-```
+Web Development
+Programming
+AI
+Data
+Cybersecurity
+Mobile Development
+UI/UX
+Cloud / DevOps
 
-or:
+Then:
 
-```json
-{
-  "plan": "pro",
-  "currency": "USD",
-  "amountMajor": 15,
-  "displayPrice": "$15"
-}
-```
+"What is your current level?"
 
-The frontend renders exactly what the backend returned.
+Complete beginner
+Some experience
+Intermediate
 
-Do not calculate:
+Then:
 
-```text
-USD → NGN
-```
+"What is your goal?"
 
-in the frontend.
+Get a job
+Build projects
+Learn for school
+Switch careers
+Start freelancing
+Explore technology
 
-Do not determine region from the browser.
+Then recommend a roadmap.
+
+This creates a personalized funnel from SEO traffic into the actual product.
 
 ---
 
-# 18. DO NOT PROVIDE A MANUAL CURRENCY SWITCH
+# PHASE 22 — CONTEXTUAL RECOMMENDATIONS
 
-There should be no:
+Every roadmap and guide should recommend the next relevant page.
 
-```text
-[ ₦ NGN ] [ $ USD ]
-```
+Examples:
 
-toggle.
+Reading about Python?
 
-There should be no:
+Show:
 
-```text
-Pay in Nigeria
-Pay internationally
-```
+Python Roadmap
+Python Projects
+Python Career Paths
+Learn Git
+Learn SQL
+AI Roadmap
 
-selection.
+Reading about frontend?
 
-There should be no hidden fallback button that allows users to force NGN.
+Show:
 
-There should be no query parameter such as:
+Frontend Roadmap
+JavaScript Roadmap
+React Roadmap
+Frontend Projects
+Frontend Career Path
 
-```text
-?currency=NGN
-```
+Recommendations must be context-aware.
 
-that can override the server.
-
-If legacy UI has such controls, remove them.
-
----
-
-# 19. QUERY PARAMETER SECURITY
-
-If an attacker attempts:
-
-```text
-/api/payments/initialize?currency=NGN
-```
-
-the server must ignore the currency.
-
-If an attacker sends:
-
-```json
-{
-  "currency": "NGN",
-  "amount": 1000
-}
-```
-
-the server must ignore client-defined pricing.
-
-Only the product/plan identifier may be accepted from the user, plus legitimate checkout data required by the application.
+Do not simply show "Latest Posts."
 
 ---
 
-# 20. PAYSTACK VERIFICATION
+# PHASE 23 — SESSION DEPTH
 
-Never grant Pro access merely because:
+Improve session depth without manipulating users.
 
-* the user reached the success page
-* the browser says success
-* a callback URL exists
-* the client sends “payment successful”
+After a user reads a page, show:
 
-The backend must verify the Paystack transaction.
+"Continue learning"
 
-Paystack provides a Verify Transaction endpoint, and its documentation recommends webhooks as the preferred confirmation mechanism for successful transactions.
+"Related roadmap"
 
----
+"Practice this skill"
 
-# 21. WEBHOOK IMPLEMENTATION
+"Build a project"
 
-Implement or audit the Paystack webhook endpoint.
+"Learn the next concept"
 
-Example:
+"Explore related careers"
 
-```http
-POST /api/payments/paystack/webhook
-```
+The purpose is to help users continue learning.
 
-Verify the Paystack signature before processing.
+Do not force artificial page loads.
 
-Paystack webhook events contain an `x-paystack-signature` HMAC SHA512 signature generated using the secret key.
-
-Implement:
-
-```text
-raw request body
-↓
-HMAC SHA512 with PAYSTACK_SECRET_KEY
-↓
-compare with x-paystack-signature
-↓
-reject if invalid
-↓
-process if valid
-```
-
-Do not process webhook data before signature validation.
-
-Use constant-time comparison where appropriate.
+Do not hide content behind unnecessary clicks.
 
 ---
 
-# 22. WEBHOOK IDEMPOTENCY
+# PHASE 24 — PROJECT-BASED LEARNING
 
-Webhook handlers must be idempotent.
+Create a project library.
 
-The same webhook may be delivered more than once.
+Projects should contain:
 
-Never grant:
+Project title
+Description
+Difficulty
+Skills practiced
+Prerequisites
+Expected outcome
+Features to build
+Stretch goals
+Estimated difficulty
+Related roadmap
+Related lessons
+Submission/progress state where the existing app supports it
 
-```text
-2 months
-```
+Examples:
 
-because the same success event was processed twice.
+Portfolio Website
+Landing Page
+To-Do Application
+Weather Application
+Expense Tracker
+Blog
+Authentication System
+REST API
+Full-Stack Application
+AI-powered Application
 
-Before fulfilling:
+Connect each project to a roadmap.
 
-```text
-already fulfilled?
-```
+This creates another organic search surface:
 
-If yes:
+"JavaScript projects for beginners"
 
-```text
-acknowledge and stop
-```
+"React projects"
 
----
+"Python projects"
 
-# 23. TRANSACTION VERIFICATION
+"web development projects for beginners"
 
-When a transaction is verified, compare the Paystack response against the internal order.
-
-Do not merely check:
-
-```text
-status === success
-```
-
-Also validate:
-
-```text
-reference
-currency
-amount
-plan/order
-customer
-```
-
-The paid transaction must match the exact expected amount and currency that the backend initialized.
-
-Paystack's verify response includes transaction status, requested amount, currency, authorization details and customer information.
+etc.
 
 ---
 
-# 24. AMOUNT VERIFICATION
+# PHASE 25 — CAREER PAGES
 
-This is mandatory.
+Create useful career guides.
 
-Suppose the backend expected:
+Examples:
 
-```text
-NGN 15,000
-```
+/careers/frontend-developer
 
-but Paystack says:
+/careers/backend-developer
 
-```text
-NGN 1,500
-```
+/careers/full-stack-developer
 
-Do NOT grant the subscription.
+/careers/software-engineer
 
-Suppose the backend expected:
+/careers/ai-engineer
 
-```text
-USD 15
-```
+Each page should explain:
 
-but Paystack says:
+What the role does
+Skills required
+What to learn
+Projects to build
+Tools commonly used
+Portfolio expectations
+Entry-level considerations
+How to practice
+How the TechSkillHub roadmap fits into the journey
 
-```text
-USD 5
-```
+Do not promise employment.
 
-Do NOT grant the subscription.
-
-Compare using the smallest currency units.
-
-Example:
-
-```text
-expectedAmountSubunit
-=== verifiedTransaction.amount
-```
-
-not floating-point comparisons.
+Do not promise salaries unless verified and properly sourced.
 
 ---
 
-# 25. CURRENCY VERIFICATION
+# PHASE 26 — AFRICAN DISCOVERY STRATEGY
 
-This is equally mandatory.
+Create a genuine African learning category.
 
-Suppose the backend created:
+Examples:
 
-```text
-currency = USD
-```
+"Free Tech Resources for African Students"
 
-If the verified transaction is:
+"How African Students Can Learn Coding for Free"
 
-```text
-currency = NGN
-```
+"Technology Skills to Learn in Africa"
 
-then treat it as an invalid/mismatched payment.
+"How to Start a Tech Career from Nigeria"
 
-Do not grant Pro.
+"Free Technology Learning Resources for Nigerian Students"
 
-This prevents someone from initializing one pricing context and attempting to fulfill another.
+Only publish these where TechSkillHub can provide genuinely useful local context.
 
----
+Do not stereotype African learners.
 
-# 26. CARD COUNTRY VERIFICATION
+Do not invent statistics.
 
-Paystack transaction authorization data contains:
+Where local claims are made, use credible sources.
 
-```text
-authorization.country_code
-```
-
-which represents the country where the customer's card was issued.
-
-After a card transaction is successfully processed, capture this signal.
-
-Example:
-
-```text
-authorization.country_code = NG
-```
-
-or:
-
-```text
-authorization.country_code = US
-```
-
-This is a **post-payment risk signal**, not a frontend pricing toggle.
+This category should become a differentiating strength rather than a keyword-stuffing strategy.
 
 ---
 
-# 27. IMPORTANT: CARD COUNTRY IS NOT THE SAME AS USER LOCATION
+# PHASE 27 — LOCAL/REGIONAL CONTENT
 
-Do NOT assume:
+Where relevant, support country-specific educational context.
 
-```text
-card country === person's current physical location
-```
+Potential future categories:
 
-A Nigerian customer can possess a foreign card.
+Nigeria
+Ghana
+Kenya
+South Africa
+Other African markets
 
-A foreign customer can possess a Nigerian-issued card.
+But do not create thousands of thin country pages.
 
-Therefore, card country should be used as a risk/consistency signal alongside other signals.
-
-Do not create a brittle rule that automatically blocks every mismatch.
-
----
-
-# 28. FRAUD / MISMATCH POLICY
-
-Create a configurable risk evaluation function.
-
-Conceptually:
-
-```ts
-evaluatePaymentRisk({
-  ipCountry,
-  profileCountry,
-  pricingRegion,
-  transactionCurrency,
-  cardCountry,
-  paystackRiskAction,
-  amount,
-  userId
-})
-```
-
-Possible outcome:
-
-```text
-ALLOW
-REVIEW
-DENY
-```
+Only create a regional page when there is enough useful information to justify it.
 
 ---
 
-# 29. EXAMPLE RISK RULES
+# PHASE 28 — SOCIAL AND EXTERNAL DISTRIBUTION
 
-### LOW RISK
+The website should make useful content easy to share.
 
-```text
-IP = NG
-Profile = NG
-Currency = NGN
-Card country = NG
-```
+Each guide should support:
 
-→ ALLOW
+Share
+Copy link
+LinkedIn
+X
+WhatsApp
 
-### LOW RISK INTERNATIONAL
+Where appropriate.
 
-```text
-IP = US
-Profile = US
-Currency = USD
-Card country = US
-```
+Create Open Graph images for important pages.
 
-→ ALLOW
+Each major page should produce a strong social preview.
 
-### INTERNATIONAL TRAVEL CASE
+External mentions should be earned through useful content, community participation and partnerships.
 
-```text
-IP = US
-Profile = NG
-Currency = USD
-Card country = NG
-```
+Do NOT build spammy backlink schemes.
 
-This should NOT automatically mean fraud.
+Potential legitimate distribution channels:
 
-It may simply be a Nigerian user currently abroad.
+GitHub
+Dev.to
+Hashnode
+LinkedIn
+X
+YouTube
+African developer communities
+University tech communities
+Student organizations
+Developer communities
+Tech newsletters
+Relevant educational directories
 
-Use the configured risk policy.
-
-### SUSPICIOUS CASE
-
-```text
-IP = NG
-Profile = NG
-Currency = NGN
-Card country = US
-```
-
-Potential mismatch.
-
-Do not automatically grant or automatically reject unless the application's risk policy says so.
-
-At minimum:
-
-```text
-record mismatch
-```
-
-and make the logic auditable.
+The goal is to create real references and mentions, not artificial backlinks.
 
 ---
 
-# 30. AVS
+# PHASE 29 — FEEDBACK SYSTEM
 
-Because this is a Nigeria-based Paystack business with international payments enabled, evaluate whether Paystack AVS is available and enabled for this integration.
+Build a lightweight feedback mechanism.
 
-Paystack states that AVS is available to Nigeria-based businesses with international payments enabled, subject to their eligibility, and it helps verify billing-address consistency for eligible US, UK and Canadian cards.
+At the bottom of major learning pages:
 
-Do not assume AVS is universally available for every card/country.
+"Was this helpful?"
 
-If the Paystack response exposes useful AVS/risk information, incorporate it into the risk evaluation.
+YES
+NO
 
-Do not invent AVS fields that Paystack does not actually return.
+If YES:
 
----
+"Glad it helped. Would you recommend this resource?"
 
-# 31. PAYSTACK RISK SIGNALS
+Optional share.
 
-Paystack transaction/customer data can contain risk-related information.
+If NO:
 
-Inspect the current Paystack response shape and use only fields that are actually available in this integration.
+"What was missing?"
 
-Do not hardcode undocumented fields.
+Options:
 
-If Paystack returns:
+Too basic
+Too advanced
+Missing information
+Unclear explanation
+Outdated
+Broken resource
+Other
 
-```text
-customer.risk_action
-```
+Optional text field.
 
-or equivalent risk information, treat it as an additional provider signal.
+Store feedback in the existing backend/database appropriately.
 
-Paystack's API documents customer risk actions such as `default`, `allow`, and `deny`.
+Do not make the feedback system disruptive.
 
----
+Do not manipulate the user into selecting YES.
 
-# 32. DO NOT TRY TO BUILD YOUR OWN CARD FRAUD ENGINE
+Do not create fake positive reviews.
 
-Do not implement homemade card-number scoring.
-
-Do not collect raw card details.
-
-Do not store:
-
-* PAN
-* CVV
-* unmasked card numbers
-
-in the Tech Skills Hub backend.
-
-Let Paystack handle payment credentials and provider-side card risk.
-
-Our responsibility is to make the application-side pricing and fulfillment secure.
+The objective is genuinely improving content.
 
 ---
 
-# 33. PAYMENT FULFILLMENT
+# PHASE 30 — LEARNER FEEDBACK LOOP
 
-Only grant Pro access after all of the following are satisfied:
+When users complete useful content:
 
-```text
-Paystack payment is successful
-AND
-transaction reference matches
-AND
-currency matches expected
-AND
-amount matches expected
-AND
-product/plan matches expected order
-AND
-transaction has not already been fulfilled
-AND
-risk policy allows fulfillment
-```
+Ask:
 
-If any required condition fails:
+"What did you learn?"
 
-```text
-do not grant entitlement
-```
+"What would you like us to add?"
+
+"What roadmap should we build next?"
+
+Use aggregated feedback to prioritize future content.
+
+The product should become progressively better based on real learner needs.
 
 ---
 
-# 34. SUBSCRIPTION / ENTITLEMENT MODEL
+# PHASE 31 — ANALYTICS
 
-Do not make the user “Pro” simply because they opened the checkout.
+Use analytics to understand the organic funnel.
 
 Track:
 
-```text
-pending
-paid
-active
-expired
-cancelled
-failed
-refunded
-reversed
-```
+Organic landing page
+Search landing page
+Scroll depth where practical
+Roadmap click
+Start roadmap
+Account creation
+Lesson/resource interaction
+Project interaction
+Feedback submission
+Share
+Return visit
 
-Adapt to the existing application.
+Create a funnel:
 
-If the product uses recurring Paystack authorization, preserve that architecture.
+Organic Search
 
-Paystack's recurring-charge system provides reusable authorization information, and the authorization response includes the card's country code.
+→ Landing Page
+
+→ Read
+
+→ Roadmap Click
+
+→ Start Learning
+
+→ Account Creation (if needed)
+
+→ Learning Activity
+
+→ Project
+
+→ Completion
+
+→ Return
+
+Do not track sensitive information unnecessarily.
+
+Respect applicable privacy requirements.
 
 ---
 
-# 35. DOUBLE-FULFILLMENT PROTECTION
+# PHASE 32 — SEARCH CONSOLE/BING READINESS
 
-If both:
+Prepare TechSkillHub for:
 
-```text
-webhook
-```
+Google Search Console
+Bing Webmaster Tools
 
-and:
+Ensure:
 
-```text
-verify callback
-```
+sitemap exists
+robots.txt works
+canonical URLs are correct
+pages are indexable
+important pages return HTTP 200
+redirects are correct
+404 pages work
+structured data validates
+mobile rendering works
 
-process the same payment:
+The system should make it easy to inspect URLs individually.
 
-Only the first successful fulfillment may grant the entitlement.
+---
 
-Use a transaction/database lock or atomic update where appropriate.
+# PHASE 33 — INDEXATION SAFETY
+
+Create a clear indexability policy.
+
+INDEX:
+
+Public roadmaps
+Public guides
+Public learning resources
+Public projects
+Public career guides
+Public categories
+
+DO NOT INDEX:
+
+Admin
+Dashboard
+Account
+Login
+Signup
+Payment
+Private progress
+Internal search results
+Internal filters
+User-specific pages
+Temporary pages
+Duplicate routes
+
+Do not use `noindex` accidentally on important educational pages.
+
+---
+
+# PHASE 34 — PERFORMANCE
+
+SEO is not enough.
+
+Keep the website fast.
+
+Review:
+
+Largest Contentful Paint
+Cumulative Layout Shift
+Interaction to Next Paint
+Image optimization
+JavaScript payload
+Server response time
+Font loading
+Client-side hydration
+Third-party scripts
+
+Do not introduce large client-side libraries merely to render SEO content.
+
+Where possible:
+
+Use server rendering/static generation for public educational pages.
+
+Keep interactive learning features where necessary.
+
+---
+
+# PHASE 35 — SERVER-RENDERED CONTENT
+
+Important educational content must be accessible in the initial rendered HTML.
+
+Avoid architectures where the page sends only:
+
+"Loading..."
+
+and the actual content appears after multiple client-side requests.
+
+Public SEO pages should render meaningful content server-side wherever technically appropriate.
+
+---
+
+# PHASE 36 — IMAGE SEO
+
+For educational images:
+
+Use meaningful filenames.
 
 Example:
 
-```text
-if order.status !== "paid"
-    mark as paid + grant entitlement
+frontend-development-roadmap.png
 
-else
-    no-op
-```
+Not:
 
-Use database-level protection where practical.
+IMG_9238.png
 
----
+Provide useful alt text.
 
-# 36. PAYMENT FAILURE HANDLING
-
-The UI must clearly distinguish:
-
-### Success
-
-Payment confirmed.
-
-### Failed
-
-Paystack returned a failed payment.
-
-### Abandoned
-
-User started but did not finish.
-
-### Pending
-
-Payment is still being processed.
-
-### Mismatch
-
-Payment exists but does not match the expected order.
-
-### Verification failure
-
-The server could not safely confirm the payment.
-
-Do not show:
-
-> “Payment successful”
-
-unless the backend has actually confirmed it.
-
-Paystack documents statuses including `abandoned`, `failed`, `pending`, `processing`, `reversed`, and `success`.
-
----
-
-# 37. REDIRECT/CALLBACK SECURITY
-
-If the payment flow returns the customer to:
-
-```text
-/payment/success
-```
-
-that page must not itself grant access.
-
-It should simply:
-
-1. read the Paystack reference
-2. ask the backend for verification status
-3. display the appropriate state
-
-The backend remains authoritative.
-
----
-
-# 38. PRICING ENDPOINT SECURITY
-
-The pricing endpoint itself should not reveal internal fraud logic.
-
-It may return:
-
-```text
-currency
-amount
-displayPrice
-region label
-```
-
-It should not return:
-
-```text
-ip_country
-risk_score
-internal confidence
-fraud thresholds
-```
-
-unless needed for administrative tooling.
-
----
-
-# 39. NO USER OVERRIDE
-
-The API must reject attempts such as:
-
-```json
-{
-  "plan": "pro",
-  "currency": "NGN",
-  "amount": 1000
-}
-```
-
-with arbitrary values.
-
-The backend should derive:
-
-```text
-plan → price
-region → currency
-```
-
-itself.
-
----
-
-# 40. NO “INTERNATIONAL CHECKBOX”
-
-Do not implement:
-
-```text
-I'm outside Nigeria
-```
-
-as the mechanism.
-
-That is user-controlled.
-
-A user can lie.
-
-The system should make the normal decision automatically.
-
----
-
-# 41. GUEST USERS
-
-If users can start checkout before creating an account, decide how the backend should associate the Paystack customer with a user/order.
-
-Preferred:
-
-```text
-user authenticated
-↓
-internal order
-↓
-Paystack transaction
-```
-
-If guests are supported:
-
-* create a secure pending order
-* collect email
-* generate a unique internal order
-* associate Paystack reference
-* only create/activate entitlement after successful verified payment
-
-Do not let someone obtain Pro merely by supplying another user's email address.
-
----
-
-# 42. REPLAY PROTECTION
-
-Do not allow a previously successful Paystack reference to be reused to activate another account.
-
-Every payment reference must correspond to one internal order.
-
-Before fulfillment:
-
-```text
-reference belongs to this order?
-reference belongs to this user?
-reference already fulfilled?
-```
-
-All should be checked.
-
----
-
-# 43. PLAN/PRICE TAMPERING
-
-Never allow the frontend to send:
-
-```text
-price = 0
-price = discounted price
-currency = NGN
-```
-
-as authoritative values.
-
-The client sends:
-
-```text
-planId
-```
-
-The server resolves:
-
-```text
-planId
-→ active plan configuration
-→ pricing region
-→ currency
-→ amount
-```
-
----
-
-# 44. DISCOUNT CODES
-
-If the existing product supports coupons or discounts, integrate them into the same server-side pricing pipeline.
+Do not stuff keywords into alt text.
 
 Example:
 
-```text
-base plan
-↓
-region pricing
-↓
-coupon validation
-↓
-final amount
-↓
-Paystack initialization
-```
+"Frontend development learning roadmap showing HTML, CSS, JavaScript, React and deployment."
 
-Never calculate the final amount purely on the client.
+Use compressed modern image formats where appropriate.
 
 ---
 
-# 45. LOGGING / AUDIT
+# PHASE 37 — CONTENT BREADCRUMBS
 
-Add structured logs for critical payment transitions.
+Implement breadcrumbs on deep pages.
 
 Example:
 
-```text
-checkout_initialized
-payment_redirected
-payment_verified
-payment_webhook_received
-payment_fulfilled
-payment_mismatch
-payment_rejected
-payment_risk_review
-```
+Home
+→ Guides
+→ Web Development
+→ How to Learn Frontend Development
 
-Do not log sensitive payment credentials.
-
-Log:
-
-* internal order ID
-* Paystack reference
-* user ID
-* currency
-* amount
-* region
-* event type
-* timestamp
+Ensure the visible breadcrumb matches the structured representation.
 
 ---
 
-# 46. ADMIN VISIBILITY
+# PHASE 38 — RELATED CONTENT ENGINE
 
-If the application has an admin dashboard, expose enough information to investigate disputes.
+Build a reusable related-content component.
 
-An admin should be able to see:
+It should select related pages based on:
 
-```text
-Internal order
-Paystack reference
-Plan
-Expected currency
-Expected amount
-Paid currency
-Paid amount
-Pricing region
-Initial IP country
-Profile country
-Card country
-Payment status
-Risk outcome
-Fulfillment status
-Created at
-```
+* Topic
+* Skills
+* Category
+* Roadmap
+* Difficulty
+* User's current learning stage
 
-Do not expose sensitive card data beyond masked information Paystack provides.
+Example:
 
----
+Current page:
 
-# 47. GEOLOCATION CACHE
+"How to Learn JavaScript"
 
-Do not call an external IP geolocation provider on every React render.
+Related:
 
-Resolve country on the server when needed.
+JavaScript Roadmap
+React Roadmap
+JavaScript Projects
+Frontend Developer Roadmap
+How to Learn Git
 
-Cache where appropriate.
-
-Do not make checkout depend on a slow geolocation request if there is already sufficient trusted context.
+Do not randomize unrelated articles just to increase page views.
 
 ---
 
-# 48. GEOLOCATION FAILURE
+# PHASE 39 — HOMEPAGE RESTRUCTURE
 
-If IP geolocation fails:
+The homepage should immediately communicate:
 
-Do not crash the application.
+WHAT TECHSKILLHUB IS
 
-Apply a deterministic fallback.
+WHO IT HELPS
 
-Example options:
+WHAT USERS CAN DO
 
-### Conservative fallback
+HOW THEY START
 
-Use the verified profile country if available.
+Potential structure:
 
-Otherwise default to INTERNATIONAL pricing.
+Hero:
 
-Why?
+"Learn Tech. Build Skills. Move Forward."
 
-Because the system must never grant the cheaper Nigerian price simply because location lookup failed.
+Supporting statement:
 
-Document the chosen policy.
+"Follow practical, self-paced technology roadmaps, learn the right skills in the right order, and build projects along the way."
 
----
+Primary CTA:
 
-# 49. GEOLOCATION PROVIDER
+Explore Roadmaps
 
-If introducing a third-party service:
+Secondary CTA:
 
-* use a reputable provider
-* keep the integration server-side
-* store the API key in environment variables
-* add timeout handling
-* fail gracefully
-* do not block the entire site if the service is unavailable
+Start Learning
 
-Do not expose the geolocation API key to the browser.
+Then:
 
----
+"What do you want to learn?"
 
-# 50. CACHE AND SECURITY
+Roadmap categories.
 
-Do not cache personalized pricing responses globally.
+Then:
 
-A response saying:
+"Why TechSkillHub?"
 
-```text
-currency = NGN
-```
+Structured learning
+Practical projects
+Self-paced learning
+Beginner-friendly pathways
 
-must not accidentally be served to a user in the United States through a shared CDN cache.
+Then:
 
-Use appropriate cache-control behavior.
+"Popular Roadmaps"
 
-For user-specific pricing responses:
+Then:
 
-```text
-private / no-store
-```
+"Learn by goal"
 
-where appropriate.
+Then:
 
----
+"Build projects"
 
-# 51. NEXT.JS CONSIDERATIONS
+Then:
 
-Follow the application's existing Next.js conventions.
+"For students and career switchers"
 
-If the project uses:
+Then:
 
-* App Router
-* Server Actions
-* Route Handlers
-* API routes
+FAQ
 
-use the existing architecture rather than introducing another pattern unnecessarily.
+Then:
 
-The backend remains authoritative.
+Footer navigation.
 
-Do not move secret Paystack operations into client components.
+Do not overwhelm users with SEO text.
+
+The homepage should function as a product, not a blog.
 
 ---
 
-# 52. NODE.JS BACKEND CONSIDERATIONS
+# PHASE 40 — "LEARN BY GOAL"
 
-The Node.js backend must own:
+Create a goal-based discovery section.
 
-* Paystack secret key
-* transaction initialization
-* pricing resolution
-* order creation
-* verification
-* webhook processing
-* entitlement fulfillment
+Examples:
 
-The secret key must never be exposed in frontend bundles.
+I want to learn coding
 
-Paystack explicitly recommends keeping secret keys out of frontend code and public repositories.
+I want to become a frontend developer
 
----
+I want to become a backend developer
 
-# 53. ENVIRONMENT VARIABLES
+I want to build websites
 
-Inspect the existing environment configuration.
+I want to learn AI
 
-Do not create duplicate naming conventions if existing variables already exist.
+I want to learn Python
 
-Likely requirements include:
+I want to build real projects
 
-```text
-PAYSTACK_SECRET_KEY
-PAYSTACK_PUBLIC_KEY
-PAYSTACK_WEBHOOK_SECRET
-```
+I want to start a tech career
 
-Only add variables actually required by the chosen webhook/security architecture.
+Each goal should lead directly to the correct TechSkillHub journey.
 
-The secret must exist only server-side.
+This is both a UX feature and an acquisition funnel.
 
 ---
 
-# 54. PUBLIC KEY VS SECRET KEY
+# PHASE 41 — SEARCH ENGINE QUERY → PAGE MAPPING
+
+Create an internal query map.
+
+For every target intent:
+
+Query/Question
+→ Search Intent
+→ Landing Page
+→ Primary CTA
+→ Supporting Pages
+→ Conversion Event
+
+Example:
+
+"how to learn frontend development"
+
+→ Informational
+→ /guides/how-to-learn-frontend-development
+→ Start Frontend Roadmap
+→ JavaScript, React, Projects
+→ roadmap_start
+
+Another:
+
+"python roadmap for beginners"
+
+→ Informational/Learning
+→ /roadmaps/python
+→ Start Python Roadmap
+→ Python Projects, AI, Data
+→ roadmap_start
+
+Another:
+
+"free coding resources"
+
+→ Resource discovery
+→ /resources/free-coding-resources
+→ Explore Roadmaps
+→ Guides + Projects
+→ roadmap_start
+
+Build this mapping in a maintainable data structure if useful.
+
+---
+
+# PHASE 42 — DO NOT CREATE DOORWAY PAGES
+
+This is critical.
+
+Do not create:
+
+/best-coding-site-for-x
+
+/best-coding-site-for-y
+
+/best-coding-site-for-z
+
+with the same content rewritten.
+
+Instead, create pages only where the user intent differs enough to require different useful information.
+
+Each page must have its own purpose.
+
+---
+
+# PHASE 43 — AVOID AI CONTENT SPAM
+
+You may use AI internally as an engineering/content assistance tool.
+
+However, do not automatically generate hundreds of pages and publish them without review.
+
+The content should have:
+
+* human-oriented structure
+* meaningful information
+* first-hand or platform-specific insight
+* useful examples
+* practical exercises
+* legitimate references
+* real TechSkillHub resources
+
+AI should accelerate the process, not replace editorial judgment.
+
+---
+
+# PHASE 44 — RESOURCE QUALITY
+
+Where external resources are referenced:
+
+Verify that the URL works.
+
+Verify that the resource is relevant.
+
+Avoid recommending dead resources.
+
+Avoid linking to suspicious sites.
+
+If a resource becomes unavailable, flag it for review.
+
+Consider storing:
+
+resourceTitle
+resourceUrl
+provider
+topic
+type
+freeOrPaid
+verifiedAt
+
+so resource maintenance becomes manageable.
+
+---
+
+# PHASE 45 — "LAST REVIEWED"
+
+Educational technology changes.
+
+Where content contains version-sensitive material:
+
+Show:
+
+"Last reviewed: [real date]"
+
+Only update this date when the content was actually reviewed.
+
+Never automatically change it every deployment.
+
+---
+
+# PHASE 46 — VERSION-SENSITIVE TECHNOLOGY CONTENT
+
+For things such as:
+
+React
+Next.js
+Node.js
+Python
+JavaScript
+AI tools
+frameworks
+cloud platforms
+
+Do not make unsupported claims like:
+
+"this is the best framework."
+
+Prefer:
+
+"For beginners, this roadmap currently uses X because..."
+
+Explain reasoning.
+
+When technology changes, the content should be reviewable without rebuilding the application.
+
+---
+
+# PHASE 47 — SEARCH TITLE GENERATION
+
+Create reusable metadata utilities.
+
+For example:
+
+getPageMetadata({
+title,
+description,
+canonical,
+image
+})
+
+Do not duplicate metadata code throughout the application.
+
+Avoid accidental title truncation.
+
+Keep brand naming consistent.
 
 Use:
 
-### Public key
+"Page Topic | TechSkillHub"
 
-Only where Paystack's client-side checkout requires it.
+only where appropriate.
 
-### Secret key
+For highly query-focused educational pages:
 
-Only on the server.
+"Python Roadmap for Beginners | TechSkillHub"
 
-Never import:
+is preferable to:
 
-```text
-PAYSTACK_SECRET_KEY
-```
-
-into client components.
+"TechSkillHub | Python | Learn | Roadmap | Coding"
 
 ---
 
-# 55. CUSTOMER EXPERIENCE
+# PHASE 48 — OPEN GRAPH
 
-When Nigerian:
+Generate dynamic Open Graph metadata for major public pages.
+
+The image should clearly communicate:
+
+TechSkillHub
+Page Topic
+
+Use the existing brand identity.
+
+Do not generate a generic identical image for every article if dynamic topic-specific previews can be generated efficiently.
+
+---
+
+# PHASE 49 — SEARCH PAGE EXPERIENCE
+
+If TechSkillHub has an internal search feature:
+
+Improve it so users can search:
+
+Roadmaps
+Guides
+Projects
+Careers
+Resources
+
+Search results should display:
+
+title
+summary
+category
+difficulty
+related skills
+
+Internal search results should generally not become indexable URLs.
+
+---
+
+# PHASE 50 — 404 EXPERIENCE
+
+Create a useful 404 page.
+
+Example:
+
+"Looks like this learning path doesn't exist."
+
+Then show:
+
+Explore Roadmaps
+Find Projects
+Start Here
+
+A 404 should lead users back into the product.
+
+---
+
+# PHASE 51 — SEARCH INTENT RESEARCH ENGINE
+
+Create a maintainable process for discovering future content opportunities.
+
+Inputs:
+
+Google Search Console queries
+Bing Webmaster queries
+Bing AI grounding queries
+Internal search queries
+User feedback
+Roadmap completion behavior
+Questions submitted by users
+Support requests
+Social comments
+Community discussions
+
+Output:
+
+New content opportunities ranked by:
+
+User demand
+Product relevance
+Competition
+Existing coverage
+Business/product value
+Content effort
+
+Do not rely permanently on manually guessing keywords.
+
+Once Search Console and Bing have real data, the platform's actual audience should determine the next content priorities.
+
+---
+
+# PHASE 52 — AI VISIBILITY MONITORING
+
+Prepare the project for measuring AI visibility.
+
+Track publicly observable referrals where available.
+
+Track:
+
+ChatGPT referral traffic
+Organic search traffic
+Bing traffic
+Landing page
+Conversion from organic traffic
+
+Do not claim that TechSkillHub has been cited by an AI system unless actual evidence exists.
+
+Do not build fake AI citation counters.
+
+---
+
+# PHASE 53 — BING AI PERFORMANCE
+
+The implementation and documentation should acknowledge that Bing Webmaster Tools can expose:
+
+* AI citations
+* cited pages
+* grounding queries
+* citation trends
+
+The product should be structured so that these reports can later identify:
+
+"What questions are causing AI systems to cite TechSkillHub?"
+
+Use that evidence to improve content.
+
+---
+
+# PHASE 54 — CONTENT CLUSTERS TO IMPLEMENT FIRST
+
+Prioritize these pages.
+
+## Tier 1
+
+Homepage
+
+/start
+
+/roadmaps
+
+/roadmaps/frontend-development
+
+/roadmaps/backend-development
+
+/roadmaps/full-stack-development
+
+/roadmaps/python
+
+/roadmaps/javascript
+
+/guides/how-to-learn-coding
+
+/guides/how-to-learn-web-development
+
+/guides/how-to-become-a-frontend-developer
+
+/resources/free-coding-resources
+
+/projects
+
+/careers
+
+---
+
+## Tier 2
+
+/guides/how-to-learn-python
+
+/guides/how-to-learn-javascript
+
+/guides/how-to-learn-react
+
+/guides/how-to-build-a-developer-portfolio
+
+/guides/what-programming-language-should-i-learn
+
+/guides/how-to-start-a-tech-career
+
+/projects/portfolio-website
+
+/projects/to-do-app
+
+/projects/weather-app
+
+/careers/frontend-developer
+
+/careers/backend-developer
+
+/careers/full-stack-developer
+
+---
+
+## Tier 3
+
+Expand based on real search and user data.
+
+---
+
+# PHASE 55 — CONTENT TEMPLATE: ROADMAP
+
+Every roadmap should follow roughly:
+
+H1:
+[Skill] Roadmap for Beginners
+
+Opening answer:
+
+"To learn [skill], start with [foundation], then move through [major stages]. Build projects as you progress and use this roadmap to understand what to learn next."
+
+CTA:
+
+Start this roadmap
+
+Section:
+
+Who is this roadmap for?
+
+Section:
+
+Prerequisites
+
+Section:
+
+What will you learn?
+
+Section:
+
+Step 1
+
+Section:
+
+Step 2
+
+Section:
+
+Step 3
+
+Section:
+
+Projects
+
+Section:
+
+Practice
+
+Section:
+
+Common mistakes
+
+Section:
+
+Career paths
+
+Section:
+
+How TechSkillHub helps
+
+Section:
+
+FAQ
+
+Section:
+
+Related roadmaps
+
+Section:
+
+Feedback
+
+---
+
+# PHASE 56 — CONTENT TEMPLATE: GUIDE
+
+H1:
+
+[Question]?
+
+Opening direct answer.
+
+Then:
+
+Why this matters
+
+Step-by-step explanation
+
+Practical example
+
+Recommended path
+
+Common mistakes
+
+Tools/resources
+
+TechSkillHub roadmap
+
+Next step
+
+FAQ
+
+Feedback
+
+---
+
+# PHASE 57 — CONTENT TEMPLATE: PROJECT
+
+H1:
+
+[Project] for [Skill Level]
+
+Opening description.
+
+Then:
+
+What you will build
+
+What you will learn
+
+Prerequisites
+
+Features
+
+Step-by-step plan
+
+Stretch goals
+
+Skills practiced
+
+Related roadmap
+
+How to continue
+
+Feedback
+
+---
+
+# PHASE 58 — CONTENT TEMPLATE: CAREER
+
+H1:
+
+How to Become a [Role]
+
+Opening direct answer.
+
+What does the role do?
+
+Skills required
+
+Learning path
+
+Tools
+
+Projects
+
+Portfolio
+
+Interview preparation
+
+Entry-level considerations
+
+Common mistakes
+
+Related TechSkillHub roadmaps
+
+FAQ
+
+Next step
+
+---
+
+# PHASE 59 — SEARCH RESULT SNIPPET QUALITY
+
+Every important page should be understandable from:
+
+Title
+Description
+H1
+First paragraph
+URL
+Breadcrumb
+Structured data
+
+These should agree semantically.
+
+Avoid situations where:
+
+Title = Python roadmap
+
+H1 = Become a data scientist
+
+Description = React tutorial
+
+This creates confusion.
+
+---
+
+# PHASE 60 — ENTITY CONSISTENCY
+
+Use TechSkillHub consistently.
+
+Brand:
+
+TechSkillHub
+
+Domain:
+
+techskillhub.cv
+
+Use the same logo.
+
+Use the same organization description.
+
+Use the same official social profiles where applicable.
+
+Do not create multiple contradictory descriptions.
+
+---
+
+# PHASE 61 — AUTHORSHIP AND TRUST
+
+For educational content, where appropriate, implement author/reviewer metadata.
+
+Possible:
+
+Written by TechSkillHub
+
+Reviewed by [actual qualified contributor]
+
+Do not invent names.
+
+Do not invent credentials.
+
+Create an About page that explains:
+
+What TechSkillHub is
+Why it exists
+Who it serves
+How learning paths are created
+How content is reviewed
+How users can provide feedback
+
+This increases trust.
+
+---
+
+# PHASE 62 — EXTERNAL CITATIONS
+
+Where factual claims need authority:
+
+cite credible sources.
+
+Potential sources:
+
+Official programming documentation
+MDN
+Python documentation
+React documentation
+Government education resources
+Recognized industry surveys
+Official technology organizations
+
+Do not cite competitors merely to imitate them.
+
+Do not scrape competitor content.
+
+---
+
+# PHASE 63 — CONTENT DIFFERENTIATION
+
+Every article should contain something that makes it specifically valuable on TechSkillHub.
+
+Examples:
+
+A recommended learning sequence
+
+Project progression
+
+Beginner mistakes
+
+Local accessibility considerations
+
+Practice suggestions
+
+Roadmap integration
+
+Skill dependency graph
+
+Actual TechSkillHub roadmap
+
+The goal is to answer:
+
+"Why should this page exist instead of another generic article on the internet?"
+
+If the answer is unclear, do not publish the page yet.
+
+---
+
+# PHASE 64 — ACCESSIBILITY
+
+All public content must be accessible.
+
+Use:
+
+Semantic headings
+Proper buttons
+Keyboard navigation
+Accessible labels
+Useful alt text
+Readable typography
+Sufficient contrast
+Mobile responsiveness
+
+SEO should never compromise accessibility.
+
+---
+
+# PHASE 65 — MOBILE-FIRST EXPERIENCE
+
+Assume a large portion of the audience will use mobile devices.
+
+All SEO landing pages must be:
+
+* Responsive
+* Fast
+* Easy to scan
+* Easy to navigate
+* Easy to read
+* Easy to start learning from
+
+Primary action should be obvious without being aggressive.
+
+---
+
+# PHASE 66 — CTA STRATEGY
+
+Use contextual CTAs.
+
+Avoid:
+
+"BUY NOW"
+
+when the user is trying to learn.
+
+Prefer:
+
+"Start the roadmap"
+
+"Begin learning"
+
+"Explore projects"
+
+"Continue to the next step"
+
+"Build this project"
+
+The CTA must match search intent.
+
+---
+
+# PHASE 67 — ACCOUNT WALL
+
+Do not force account registration before giving useful educational information.
+
+Allow users to:
+
+Read
+Explore
+Understand
+Start
+
+Then require an account only when the product feature genuinely needs one.
+
+For example:
+
+Track progress
+Save roadmap
+Submit project
+Earn certificate
+Sync learning state
+
+This reduces search-traffic bounce.
+
+---
+
+# PHASE 68 — RETENTION LOOP
+
+Create:
+
+Search → Learn → Start Roadmap → Track Progress → Build Project → Complete → Discover Next Skill → Return
+
+This is the real growth loop.
+
+Do not optimize merely for page views.
+
+Optimize for:
+
+Learner success.
+
+---
+
+# PHASE 69 — FEEDBACK SHOULD IMPROVE THE PRODUCT
+
+Use positive feedback honestly.
+
+Do NOT artificially encourage positive reviews.
+
+Do NOT hide negative feedback.
+
+Do NOT create fake testimonials.
+
+Instead:
+
+Collect feedback.
+
+Resolve issues.
+
+Improve the page.
+
+Ask satisfied users whether they want to share the resource.
+
+This creates genuine advocacy.
+
+---
+
+# PHASE 70 — IMPLEMENTATION SAFETY
+
+Before modifying a file:
+
+Understand how it is currently used.
+
+After modifying:
+
+Run type checks.
+
+Run linting.
+
+Run tests.
+
+Run build.
+
+Check routes.
+
+Check metadata.
+
+Check generated sitemap.
+
+Check robots.txt.
+
+Check canonical URLs.
+
+Check structured data.
+
+Check broken links.
+
+Check mobile layout.
+
+Do not leave the application in a half-working state.
+
+---
+
+# PHASE 71 — TEST PUBLIC PAGES
+
+Programmatically or manually verify major public URLs.
+
+For every page check:
+
+HTTP 200
+Correct title
+Correct description
+Correct canonical
+Indexable
+No accidental auth requirement
+Rendered content
+Internal links
+Open Graph data
+Structured data
+Mobile rendering
+
+---
+
+# PHASE 72 — BUILD AN SEO VALIDATION TOOL
+
+Create a development/admin utility if appropriate that can inspect a public page and report:
+
+URL
+Status
+Title
+Title length
+Description
+Description presence
+Canonical
+Robots
+H1
+H2 count
+Word/content presence
+Structured data
+Internal links
+Images
+Missing alt text
+Open Graph
+Sitemap inclusion
+Indexability
+
+Make it easy to run against all public routes.
+
+Do not expose sensitive SEO diagnostics publicly unless intentionally designed.
+
+---
+
+# PHASE 73 — CONTENT HEALTH DASHBOARD
+
+If the existing admin system supports it, create a content health dashboard.
 
 Display:
 
-```text
-₦15,000
-```
+Published pages
+Draft pages
+Pages missing descriptions
+Pages missing canonical
+Pages missing structured data
+Pages with broken links
+Pages with outdated content
+Pages without internal links
+Orphan pages
+Pages with low engagement
+Pages receiving organic traffic
+Pages receiving AI-related referrals where observable
 
-When international:
-
-Display:
-
-```text
-$15
-```
-
-Do not display the other currency as a selectable alternative.
-
-Optionally you may mention a localized equivalent in informational text only if there is a compelling reason, but do not present it as a competing checkout option.
-
----
-
-# 56. USER COUNTRY VISUAL FEEDBACK
-
-Do not make the UI say:
-
-> “We detected that you are Nigerian because your IP is ...”
-
-That is unnecessary and potentially confusing.
-
-The customer should simply see the correct price.
-
-If a mismatch or verification issue occurs, provide a neutral message such as:
-
-> “We couldn't safely verify your payment region. Please contact support.”
-
-Do not expose fraud rules.
+This turns SEO into an ongoing product system.
 
 ---
 
-# 57. PAYSTACK INTERNATIONAL PAYMENT SUPPORT
+# PHASE 74 — AUTOMATED CONTENT QUALITY CHECK
 
-Do not assume that all international payment channels behave identically.
+Before publishing an article, check:
 
-Paystack's international-payment documentation states that Nigeria-based businesses can accept international card payments and can price transactions in either NGN or USD, subject to the account's enabled features.
+Does it answer a real user question?
+Is the answer visible immediately?
+Is the content unique?
+Does it connect to TechSkillHub's actual product?
+Does it provide a next action?
+Does it have internal links?
+Does it have metadata?
+Does it have canonical?
+Is the URL clean?
+Is the content factually responsible?
+Are external links valid?
+Is the article genuinely useful without needing another search?
 
-Keep the checkout configuration aligned with the channels that are actually enabled on the Paystack account.
-
-Do not hardcode unavailable channels.
-
----
-
-# 58. CARD COUNTRY / BIN AS A SECONDARY SIGNAL
-
-Paystack exposes a card BIN resolution endpoint that can return the card's issuing country, bank, brand and card type.
-
-Prefer using the transaction authorization data returned after payment where available.
-
-Do not perform unnecessary BIN lookups for every checkout unless there is a concrete security reason.
-
-The goal is to minimize unnecessary external calls.
+If several answers are "no", block publication.
 
 ---
 
-# 59. IMPORTANT BUSINESS RULE
+# PHASE 75 — DO NOT AUTOMATE FRESHNESS
 
-The system must make it difficult to exploit a cheaper regional price.
+Do not update timestamps simply because a build occurred.
 
-Examples to protect against:
+Do not change "last updated" automatically.
 
-### Attack 1
-
-International user manually submits:
-
-```text
-currency=NGN
-```
-
-Result:
-
-```text
-ignored
-```
-
-### Attack 2
-
-User changes a browser request from:
-
-```text
-price=15000
-```
-
-to:
-
-```text
-price=1000
-```
-
-Result:
-
-```text
-ignored
-```
-
-### Attack 3
-
-User changes URL:
-
-```text
-?country=NG
-```
-
-Result:
-
-```text
-ignored
-```
-
-### Attack 4
-
-User changes localStorage:
-
-```text
-region=NG
-```
-
-Result:
-
-```text
-ignored
-```
-
-### Attack 5
-
-User modifies JavaScript variables in DevTools.
-
-Result:
-
-```text
-ignored because backend calculates the amount
-```
-
-### Attack 6
-
-User attempts to fulfill with a different Paystack reference.
-
-Result:
-
-```text
-rejected because reference does not belong to internal order
-```
+Only change it when editorial content actually changes.
 
 ---
 
-# 60. DO NOT OVERBLOCK LEGITIMATE USERS
+# PHASE 76 — CONTENT DECISION ENGINE
 
-Security must not become a broken checkout.
+Before generating a new page, evaluate:
 
-Do not automatically reject everyone with:
+1. Is there a real user need?
+2. Does TechSkillHub have something useful to offer?
+3. Is the search intent sufficiently distinct?
+4. Is there already a page covering this?
+5. Can this page be better than existing search results?
+6. Is there a useful internal learning path?
+7. Can the page remain accurate?
 
-```text
-IP country != card country
-```
-
-because legitimate travel, expatriates, international cards, corporate networks, VPNs and other scenarios exist.
-
-Use mismatches as a signal, not as proof of fraud.
-
-The payment provider remains the primary card-payment processor/risk layer.
-
-Our application layer's responsibility is:
-
-```text
-correct pricing
-+
-correct fulfillment
-+
-anti-tampering
-+
-auditability
-```
+If not, merge it with an existing page instead of creating another page.
 
 ---
 
-# 61. TEST CASE MATRIX
+# PHASE 77 — SEARCH CANNIBALIZATION PREVENTION
 
-Create automated tests for at least the following scenarios.
+Do not create multiple pages targeting the same intent.
 
-### Test 1
+For example:
 
-IP = NG
+Do not create:
 
-profile = NG
+/how-to-learn-python
 
-→ NGN
+/python-learning-guide
 
-### Test 2
+/python-for-beginners
 
-IP = US
+/learn-python-from-scratch
 
-profile = US
+all covering essentially the same thing.
 
-→ USD
+Instead:
 
-### Test 3
+Create one excellent primary page.
 
-IP = UK
-
-profile = NG
-
-→ follow documented mismatch policy
-
-### Test 4
-
-Client submits `currency=NGN` while server context is international
-
-→ server still uses USD
-
-### Test 5
-
-Client submits arbitrary amount
-
-→ server ignores amount
-
-### Test 6
-
-Paystack success with expected currency/amount
-
-→ grant access
-
-### Test 7
-
-Paystack success with wrong currency
-
-→ reject fulfillment
-
-### Test 8
-
-Paystack success with wrong amount
-
-→ reject fulfillment
-
-### Test 9
-
-Duplicate webhook
-
-→ one fulfillment only
-
-### Test 10
-
-Invalid webhook signature
-
-→ reject
-
-### Test 11
-
-Unknown Paystack reference
-
-→ reject
-
-### Test 12
-
-Already fulfilled order
-
-→ no duplicate entitlement
-
-### Test 13
-
-Geolocation provider unavailable
-
-→ deterministic safe fallback
-
-### Test 14
-
-VPN / mismatched signals
-
-→ follow configured risk policy
-
-### Test 15
-
-User retries after failed transaction
-
-→ new safe transaction/reference
+Use supporting pages only when the intent is meaningfully different.
 
 ---
 
-# 62. TEST WITH PAYSTACK TEST MODE
+# PHASE 78 — CONTENT GRAPH
 
-Before touching production:
+Build relationships among content.
 
-Use Paystack test mode.
+Example:
 
-Verify both:
+Python Roadmap
+→ Python Guide
+→ Python Projects
+→ Data Science Roadmap
+→ AI Roadmap
+→ Backend Roadmap
 
-```text
-NGN
-USD
-```
+The platform should understand these relationships semantically.
 
-flows.
+If a user completes Python fundamentals:
 
-Confirm:
+Recommend:
 
-* amount
-* currency
-* reference
-* redirect
-* webhook
-* transaction verification
-* fulfillment
-* duplicate handling
-
-Paystack uses separate test/live environments and keys.
+Python projects
+Backend
+Automation
+Data Science
+AI
 
 ---
 
-# 63. LIVE CHECKLIST
+# PHASE 79 — FUTURE AI SEARCH OPTIMIZATION
 
-Before deploying live, verify:
+Do not create an "AI page."
 
-[ ] Paystack international payments are enabled
+Instead ensure the whole knowledge base can answer:
 
-[ ] USD transactions are enabled for the Paystack account
+Who?
+What?
+Why?
+How?
+When?
+Where next?
 
-[ ] Production Paystack secret key is configured server-side
+AI systems should be able to retrieve:
 
-[ ] Production public key is configured where needed
+definitions
+steps
+comparisons
+roadmaps
+projects
+career information
+resource lists
 
-[ ] Webhook URL is configured in Paystack
-
-[ ] Webhook signature validation works
-
-[ ] Transaction verification works
-
-[ ] NGN checkout works
-
-[ ] USD checkout works
-
-[ ] No frontend currency override exists
-
-[ ] No client-supplied amount is trusted
-
-[ ] Duplicate webhook is safe
-
-[ ] Wrong amount is rejected
-
-[ ] Wrong currency is rejected
-
-[ ] Unknown references are rejected
-
-[ ] User cannot reuse another user's payment reference
-
-[ ] Entitlements are granted only after server confirmation
-
-[ ] Logging is enabled
-
-[ ] Sensitive secrets are not exposed in the client
+from ordinary public pages.
 
 ---
 
-# 64. IMPORTANT: DO NOT CLAIM IMPOSSIBLE FRAUD PREVENTION
+# PHASE 80 — FINAL PRODUCT EXPERIENCE
 
-Do not describe this system internally or in product messaging as:
+A user should be able to arrive from Google/Bing/ChatGPT with a specific question and within seconds understand:
 
-> “Fraud-proof.”
+"This website has exactly what I need."
 
-Nothing is completely fraud-proof.
+Example:
+
+Search:
+
+"How do I learn web development from scratch?"
+
+User lands at:
+
+/guides/how-to-learn-web-development
+
+They immediately see:
+
+1. What web development is.
+2. Where to start.
+3. What to learn in order.
+4. What projects to build.
+5. The TechSkillHub roadmap.
+6. A button to start.
+7. Related resources.
+8. A next learning step.
+
+The user should never feel:
+
+"I came here from Google, but this page is just advertising the website."
+
+It must actually solve the user's problem.
+
+---
+
+# PHASE 81 — FINAL VALIDATION CHECKLIST
+
+Before declaring the implementation complete, verify:
+
+## Technical SEO
+
+* robots.txt
+* sitemap.xml
+* canonical URLs
+* metadata
+* Open Graph
+* structured data
+* clean URLs
+* redirects
+* 404
+* indexability
+* crawlability
+* internal links
+
+## Search strategy
+
+* Search intent clusters
+* Topic clusters
+* Roadmaps
+* Guides
+* Projects
+* Career pages
+* Resource pages
+
+## AI discovery
+
+* OAI-SearchBot not blocked
+* Important content crawlable
+* Content available as rendered text
+* Strong semantic structure
+* Useful answer sections
+* No hidden AI content
+* No AI spam
+
+## UX
+
+* Fast
+* Mobile friendly
+* Accessible
+* Clear CTAs
+* Start learning flow
+* Related content
+* Search
+* Feedback
+
+## Product funnel
+
+Search
+→ Answer
+→ Roadmap
+→ Learn
+→ Practice
+→ Project
+→ Progress
+→ Return
+
+## Analytics
+
+Track:
+
+organic landing
+roadmap clicks
+starts
+signups where relevant
+learning activity
+projects
+feedback
+shares
+return visits
+
+---
+
+# PHASE 82 — DEPLOYMENT VERIFICATION
+
+After implementation:
+
+Run the production build.
+
+Do not deploy if the build fails.
+
+After deployment, inspect:
+
+https://techskillhub.cv
+
+https://techskillhub.cv/robots.txt
+
+https://techskillhub.cv/sitemap.xml
+
+At least 10 important public pages.
+
+Verify:
+
+HTTP status
+HTML rendering
+metadata
+canonical
+structured data
+robots
+internal links
+
+Check that deployment infrastructure is not blocking legitimate search crawlers.
+
+---
+
+# PHASE 83 — REPORT WHAT WAS ACTUALLY IMPLEMENTED
+
+At the end, produce a detailed implementation report.
+
+Include:
+
+### 1. Technical changes
+
+List every important file modified.
+
+### 2. New routes
+
+List all newly created public routes.
+
+### 3. SEO system
+
+Explain metadata, sitemap, canonicalization, robots, structured data.
+
+### 4. Search strategy
+
+List the intent clusters implemented.
+
+### 5. Content system
+
+Explain how future content can be created.
+
+### 6. AI discovery
+
+Explain how the site is made accessible to search/answer systems.
+
+### 7. Conversion funnel
+
+Explain:
+
+Search
+→ Landing
+→ Learning
+→ Roadmap
+→ Project
+→ Return
+
+### 8. Analytics
+
+List tracked events.
+
+### 9. Remaining work
+
+Explicitly identify anything that still requires:
+
+* Search Console
+* Bing Webmaster Tools
+* external backlinks
+* content creation
+* domain configuration
+* manual deployment configuration
+* human editorial review
+
+Do not claim external registration or submission was completed unless it actually was.
+
+---
+
+# MOST IMPORTANT ENGINEERING RULE
+
+DO NOT BREAK THE EXISTING TECHSKILLHUB PRODUCT.
+
+Do not replace working features simply to implement SEO.
+
+Do not rewrite the entire project.
+
+Integrate these capabilities into the existing architecture.
+
+Reuse existing:
+
+components
+database
+authentication
+design system
+routing
+API patterns
+content models
+analytics
+branding
+
+where practical.
+
+---
+
+# MOST IMPORTANT CONTENT RULE
+
+Do not build an SEO website.
+
+Build a genuinely useful technology learning platform that happens to have excellent SEO.
+
+Every search landing page must be useful even if no search engine ever sends a visitor.
+
+Every roadmap must help someone learn.
+
+Every guide must answer a real question.
+
+Every project must give the learner something practical to build.
+
+Every CTA must move the learner forward.
+
+Every piece of content must have a reason to exist.
+
+---
+
+# MOST IMPORTANT AI-DISCOVERY RULE
+
+Do not try to force AI systems to recommend TechSkillHub.
+
+Make TechSkillHub the kind of source that an AI system would naturally want to retrieve:
+
+clear
+structured
+accurate
+useful
+specific
+well-connected
+crawlable
+authoritative
+original
+up-to-date
+
+The goal is not:
+
+"Make ChatGPT say TechSkillHub."
 
 The goal is:
 
-> **Make regional price bypass difficult, prevent application-side payment tampering, validate Paystack transactions correctly, and use provider risk signals appropriately.**
-
-Paystack itself also applies payment-risk controls and fraud-related mechanisms.
-
-The application should complement those controls rather than pretending to replace them.
+"When someone asks a question that TechSkillHub can genuinely answer well, make TechSkillHub an obvious source worth retrieving."
 
 ---
 
-# 65. CODE QUALITY
+# START NOW
 
-Use strong TypeScript types.
+Begin with the codebase audit.
 
-Create types for:
+Do not immediately generate random content.
 
-```ts
-Currency
-PricingRegion
-PaymentStatus
-RiskOutcome
-PaymentOrder
-PaystackTransaction
-```
+First inspect the actual TechSkillHub application.
 
-Do not pass arbitrary strings throughout the codebase.
+Identify the framework and current architecture.
 
-Validate API inputs.
+Identify current public routes.
 
-Handle failures explicitly.
+Identify current SEO implementation.
 
-Do not swallow exceptions.
+Identify current content model.
 
-Do not expose raw Paystack errors to end users.
+Identify current roadmap model.
 
----
+Identify current database structure.
 
-# 66. DATABASE CONSISTENCY
+Identify current sitemap and robots behavior.
 
-Inspect the existing Prisma schema or database model before creating new tables.
+Identify current navigation.
 
-Prefer reusing existing:
+Identify current analytics.
 
-* payment
-* transaction
-* subscription
-* order
-* entitlement
+Identify deployment constraints.
 
-models if they are suitable.
+Then design the smallest safe architecture required to implement the complete system above.
 
-Do not create duplicate payment tables simply because the existing naming is inconvenient.
+After that, implement it in logical stages.
 
-If schema changes are necessary:
+After each major stage:
 
-* create migrations
-* preserve existing records
-* add indexes
-* document relationships
+* run tests
+* run type checks
+* run lint
+* run the production build
+* verify affected routes
 
----
+Do not proceed blindly when the existing project structure conflicts with this specification.
 
-# 67. RECURRING SUBSCRIPTIONS
+Adapt the implementation intelligently while preserving the intent of this document.
 
-If Pro currently uses recurring billing:
+The final result should turn TechSkillHub from a website people only find by searching its brand name into a platform that can be discovered through thousands of legitimate questions around learning technology, building skills, choosing careers, following roadmaps and finding practical projects.
 
-preserve the existing subscription architecture while applying the NGN/USD region logic.
+The long-term growth loop must become:
 
-The currency chosen at subscription creation must be stored.
+SEARCH QUERY
+↓
+TECHSKILLHUB ANSWER
+↓
+RELEVANT ROADMAP
+↓
+LEARNING ACTIVITY
+↓
+PROJECT
+↓
+PROGRESS
+↓
+FEEDBACK
+↓
+BETTER CONTENT
+↓
+MORE SEARCH VISIBILITY
+↓
+MORE LEARNERS
 
-Do not assume a user's currency can change automatically during an active subscription.
-
-A subscription should retain the currency and pricing terms under which it was created unless the application explicitly supports plan migration.
-
----
-
-# 68. EXISTING SUBSCRIBERS
-
-Do not break users who already paid.
-
-When implementing the new system:
-
-* inspect existing subscriptions
-* preserve their currency
-* preserve their entitlement
-* do not reclassify an existing active subscription without an explicit migration strategy
-
-Existing customer records must remain valid.
-
----
-
-# 69. LEGACY STRIPE DATA
-
-If Stripe subscriptions or transactions exist historically:
-
-Do not delete them blindly.
-
-Determine whether they are:
-
-* active
-* expired
-* historical
-* orphaned
-
-Do not break access for legitimate old subscribers.
-
-New Pro checkout should use Paystack.
-
----
-
-# 70. USER-FACING PRICE CONSISTENCY
-
-The following must all agree:
-
-```text
-pricing API
-pricing card
-checkout page
-Paystack initialization
-payment record
-verification
-subscription record
-receipt
-```
-
-If frontend says:
-
-```text
-$15
-```
-
-but Paystack receives:
-
-```text
-NGN 15000
-```
-
-that is a critical bug.
-
-The system must use the same authoritative pricing object.
-
----
-
-# 71. RECEIPTS / EMAILS
-
-If the application sends payment confirmation emails, the receipt must show the actual charged currency and amount.
-
-Do not display:
-
-```text
-₦15,000
-```
-
-for a USD transaction.
-
-Use the verified Paystack transaction values or the internal confirmed order values.
-
----
-
-# 72. ANALYTICS
-
-Track useful events:
-
-```text
-pro_pricing_viewed
-checkout_started
-checkout_currency_ngn
-checkout_currency_usd
-payment_initialized
-payment_success
-payment_failed
-payment_abandoned
-payment_rejected
-payment_risk_review
-subscription_activated
-```
-
-Do not send sensitive card information to analytics systems.
-
----
-
-# 73. USER EXPERIENCE FOR REGION DETECTION
-
-The detection should happen fast enough that the user does not see:
-
-```text
-₦15,000
-```
-
-for two seconds and then suddenly see:
-
-```text
-$15
-```
-
-Prefer server-rendered or server-fetched pricing where the architecture allows it.
-
-Otherwise use a controlled loading state:
-
-```text
-Loading plan...
-```
-
-then display the final server-resolved price.
-
-Avoid visible price flickering.
-
----
-
-# 74. EDGE / CACHE SAFETY
-
-If the app uses:
-
-* Vercel caching
-* CDN
-* ISR
-* static rendering
-
-make sure region-sensitive pricing is not statically cached as one universal response.
-
-Personalized pricing must be handled dynamically or privately.
-
----
-
-# 75. ACCEPTANCE CRITERIA
-
-The work is complete only when all of the following are true:
-
-### Nigerian user
-
-Automatically sees:
-
-```text
-NGN
-```
-
-and Paystack initializes an NGN transaction using the server-defined Nigerian price.
-
-### International user
-
-Automatically sees:
-
-```text
-USD
-```
-
-and Paystack initializes a USD transaction using the server-defined international price.
-
-### User cannot manually switch
-
-No frontend control can force a different currency.
-
-### User cannot manipulate amount
-
-The backend ignores arbitrary client amounts.
-
-### Payment must match
-
-Currency + amount + reference + order must match before fulfillment.
-
-### Webhook is secure
-
-Invalid signatures are rejected.
-
-### Duplicate fulfillment is prevented
-
-Same payment can never grant multiple entitlements.
-
-### Verification is server-side
-
-Success page alone cannot grant access.
-
-### Risk signals are recorded
-
-IP/profile/card-country discrepancies can be audited.
-
-### Legitimate travelers are not automatically blocked
-
-Mismatch does not equal fraud.
-
-### Stripe is not used
-
-Paystack is the single provider for this flow.
-
----
-
-# 76. IMPLEMENTATION PROCESS
-
-Do this in stages.
-
-## STAGE 1 — AUDIT
-
-Inspect the existing:
-
-* Paystack integration
-* Stripe integration
-* pricing components
-* payment APIs
-* Prisma payment models
-* subscription models
-* webhook handlers
-* checkout components
-* Pro/Guided Path entitlement logic
-
-Do not make major changes yet.
-
-Report exactly what exists.
-
----
-
-## STAGE 2 — DESIGN THE PAYMENT FLOW
-
-Create a clear architecture:
-
-```text
-User
- ↓
-Frontend requests Pro pricing
- ↓
-Backend resolves region
- ↓
-Backend resolves server price
- ↓
-Frontend displays price
- ↓
-User clicks Continue
- ↓
-Backend creates internal order
- ↓
-Backend initializes Paystack
- ↓
-User pays
- ↓
-Paystack webhook
- ↓
-Signature verification
- ↓
-Transaction verification
- ↓
-Amount/currency/reference checks
- ↓
-Risk evaluation
- ↓
-Fulfill Pro entitlement
-```
-
----
-
-## STAGE 3 — IMPLEMENT
-
-Implement the architecture using the existing codebase conventions.
-
-Do not introduce unnecessary frameworks.
-
-Do not duplicate logic.
-
----
-
-## STAGE 4 — TEST
-
-Run:
-
-* unit tests
-* integration tests
-* payment-flow tests
-* webhook tests
-* tampering tests
-* duplicate tests
-
----
-
-## STAGE 5 — REVIEW
-
-Perform a security review specifically for:
-
-* price manipulation
-* currency manipulation
-* reference manipulation
-* entitlement manipulation
-* webhook spoofing
-* replay
-* duplicate fulfillment
-* cache leakage
-* secret exposure
-
----
-
-# 77. FINAL ENGINEERING PRINCIPLE
-
-The most important rule is:
-
-> **The customer can request a plan. They cannot decide the price, currency, or entitlement.**
-
-The backend decides.
-
-Paystack processes the payment.
-
-The backend verifies what Paystack reports.
-
-Only then does Tech Skills Hub grant Pro access.
-
-Build the system so that even if a user opens DevTools, modifies JavaScript, alters localStorage, changes query parameters, sends custom API requests, or attempts to replay payment callbacks, they cannot obtain the cheaper regional price or Pro entitlement without a valid Paystack transaction that matches the server-created order.
-
-Start by auditing the existing implementation before modifying it.
+Build that system.

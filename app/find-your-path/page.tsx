@@ -1,14 +1,19 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo/utils'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TrackQuiz } from '@/components/quiz/TrackQuiz'
 import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 
-export const metadata = {
-  title: 'Find Your Path | Tech Skill Hub',
-  description: 'Answer a few quick questions and Tech Skill Hub will recommend the direction that fits you.',
-}
+export const metadata: Metadata = getPageMetadata({
+  title: 'Find Your Path: Get a Personalized Tech Recommendation',
+  description:
+    'Answer a few quick questions and TechSkillHub recommends the technology direction that fits your interests, experience and goals.',
+  path: '/find-your-path',
+  keywords: ['find your tech path', 'tech recommendation quiz', 'what should I learn in tech'],
+})
 
 export default function FindYourPathPage() {
   return (
