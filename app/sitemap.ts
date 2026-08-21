@@ -27,6 +27,7 @@ const STATIC: SitemapEntry[] = [
   { url: '/tracks', changeFrequency: 'monthly', priority: 0.7 },
   { url: '/about', changeFrequency: 'monthly', priority: 0.5 },
   { url: '/contact', changeFrequency: 'monthly', priority: 0.5 },
+  { url: '/pitch-deck', changeFrequency: 'monthly', priority: 0.3 },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

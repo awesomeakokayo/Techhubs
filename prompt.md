@@ -1,2427 +1,622 @@
-# TECHSKILLHUB — SECOND-STAGE SEARCH INTELLIGENCE, ORGANIC GROWTH & LEARNING FUNNEL UPGRADE
+Build a polished, professional, investor-ready pitch deck page for TechSkillHub at:
 
-## ROLE
+https://techskillhub.cv/pitch-deck
 
-You are now working on the existing TechSkillHub repository.
+The goal is to create a permanent, publicly accessible URL that I can send to investors, partners, accelerators, organizations, universities, employers, and other stakeholders.
 
-You are NOT starting a new SEO implementation.
+IMPORTANT:
 
-You are upgrading an existing production-oriented Next.js application that already contains a substantial SEO foundation.
+* Do not create a generic landing page.
+* This should feel like an actual startup/investor pitch deck presented as a web page.
+* Maintain TechSkillHub's existing branding, typography, spacing, colors, components, navigation, and overall design language.
+* Inspect the existing TechSkillHub codebase and website before making changes so the new page feels native to the existing product.
+* Do not break any existing functionality.
+* Make the page fully responsive, especially for mobile.
+* The URL must work directly at `/pitch-deck`.
+* Ensure the page is publicly accessible without requiring authentication.
+* Do not expose private application data, API keys, internal information, or user data.
 
-Act simultaneously as:
+## CORE OBJECTIVE
 
-* Senior Technical SEO Engineer
-* Search Intent Strategist
-* Information Architect
-* Organic Growth Engineer
-* Generative Search / Answer Engine Optimization Specialist
-* Content Systems Engineer
-* UX Conversion Strategist
-* Learning-Product Architect
-* Analytics Engineer
-* Senior Next.js Engineer
+Create a concise but compelling pitch deck that explains:
 
-Your objective is to transform the existing SEO implementation into a **search intelligence and learner acquisition system**.
+1. What TechSkillHub is
+2. The problem it solves
+3. Why the problem matters
+4. Who it serves
+5. How TechSkillHub solves the problem
+6. What makes the approach different
+7. The product
+8. The market opportunity
+9. Business/revenue model
+10. Current traction/progress
+11. Competitive positioning
+12. Go-to-market strategy
+13. Vision
+14. Team/founder
+15. Partnership/investment opportunity
+16. Clear contact/CTA
 
-The final system must connect:
+The deck should tell a coherent story rather than simply displaying disconnected information.
 
-SEARCH QUERY
-→ RELEVANT TECHSKILLHUB PAGE
-→ DIRECT ANSWER
-→ LEARNING RESOURCE
-→ ROADMAP
-→ LEARNING ACTIVITY
-→ PROJECT
-→ PROGRESS
-→ FEEDBACK
-→ NEXT LEARNING STEP
-→ RETURN VISIT
+## POSITIONING
 
-Do NOT replace the existing SEO architecture.
+Position TechSkillHub as:
 
-Do NOT rebuild functionality that already exists correctly.
+"A structured, practical technology learning platform helping African learners move from learning tech skills to building demonstrable competence and becoming career-ready."
 
-Do NOT rewrite the application unnecessarily.
+Do NOT position TechSkillHub as simply:
 
-Do NOT create hundreds of low-value SEO pages.
+* another online course platform
+* another YouTube tutorial directory
+* another AI chatbot
+* another coding bootcamp
 
-Do NOT create fake statistics, testimonials, reviews, backlinks, citations, authors or search claims.
+The strongest positioning should communicate:
 
-Do NOT attempt to manipulate Google, Bing, ChatGPT, Gemini, Claude or other AI systems.
+Learning → Roadmap → Practice → Projects → Portfolio → Career Readiness → Opportunity
 
-Build a system that is genuinely useful to users and consequently understandable and discoverable by search engines and answer engines.
+Emphasize that TechSkillHub addresses the gap between:
+"I want to learn technology"
 
----
+and
 
-# 1. KNOWN EXISTING FOUNDATION
+"I actually know what to learn, can build something meaningful, can demonstrate my skills, and know how to pursue opportunities."
 
-Before touching the project, recognize that the repository already contains a significant SEO system.
+## PITCH DECK STRUCTURE
 
-The existing codebase already includes, among other things:
+Create the following sections/slides.
 
-* Next.js App Router structure
-* SEO utility layer
-* Global metadata
-* Page-level metadata generation
-* Canonicals
-* Robots configuration
-* OAI-SearchBot allowance
-* Googlebot/Bingbot accessibility
-* Dynamic sitemap
-* Breadcrumbs
-* Structured data
-* Guides
+### 01 — COVER
+
+TechSkillHub
+
+"Learn. Build. Become."
+
+Subtitle:
+"Structured, practical technology education built for Africa."
+
+Include:
+
+* TechSkillHub logo
+* Strong visual hierarchy
+* Minimal text
+* Professional startup aesthetic
+* CTA: "Explore TechSkillHub"
+
+### 02 — THE PROBLEM
+
+Explain the problem clearly.
+
+Many aspiring African developers and technology professionals want to enter tech but face:
+
+* Information overload
+* No clear learning path
+* Too many disconnected tutorials and courses
+* Difficulty knowing what skills actually matter
+* Lack of practical project experience
+* Weak portfolios
+* Limited mentorship
+* Difficulty translating learning into employment opportunities
+* Cost barriers to quality learning resources
+
+Do not make unsupported statistics.
+
+If statistics are already present in the TechSkillHub codebase or existing content, use them only if they are verifiable.
+
+### 03 — THE INSIGHT
+
+Explain the fundamental insight:
+
+"The problem isn't a lack of information. It's a lack of direction, structure, practice, and connection to real-world outcomes."
+
+Use a strong visual diagram:
+
+Confusion
+↓
+Structured Roadmap
+↓
+Learning
+↓
+Practice
+↓
+Projects
+↓
+Portfolio
+↓
+Career Readiness
+↓
+Opportunity
+
+### 04 — THE SOLUTION
+
+Introduce TechSkillHub.
+
+Explain that TechSkillHub provides structured technology learning paths that guide users from beginner-level uncertainty toward practical, demonstrable skills.
+
+Highlight:
+
+* Structured roadmaps
+* Curated learning resources
+* Practical projects
+* Skill progression
+* Portfolio development
+* Career preparation
+* AI-assisted learning where appropriate
+* Community/opportunity discovery
+
+### 05 — HOW IT WORKS
+
+Show the user journey visually:
+
+1. Discover a career/technology path
+2. Take the relevant assessment or onboarding flow
+3. Follow a structured roadmap
+4. Learn through curated resources
+5. Practice
+6. Build real projects
+7. Document the work
+8. Prepare for opportunities
+9. Continue improving
+
+Make this highly visual rather than text-heavy.
+
+### 06 — THE PRODUCT
+
+Showcase the actual TechSkillHub platform.
+
+Include polished screenshots or UI previews of relevant existing pages/features.
+
+Do not invent product features that do not currently exist.
+
+Show:
+
+* Homepage
+* Learning tracks
 * Roadmaps
-* Careers
 * Projects
-* Resources
-* Dynamic content routes
-* Start / discovery flows
-* Related content concepts
-* Feedback concepts
-* Analytics
-* Prisma/database infrastructure
+* Dashboard
+* Career tools
+* AI features
+* Other relevant existing features
 
-Existing SEO-related areas include the current `lib/seo` system and the existing content/page architecture.
+If screenshots/assets already exist in the project, reuse them.
 
-The current project should be treated as the source of truth.
+### 07 — WHY TECHSKILLHUB IS DIFFERENT
 
-Do not assume the repository is missing features simply because this prompt lists them.
+Focus on differentiation.
 
-AUDIT FIRST.
+Key points:
 
----
+* Structured instead of fragmented
+* Practical instead of purely theoretical
+* Career-oriented instead of course-oriented
+* Built with African learners in mind
+* Accessible and affordable
+* Project-driven
+* AI-assisted without replacing actual learning
+* Designed around demonstrable competence
 
-# 2. ABSOLUTE PRESERVATION RULE
+Do not claim that TechSkillHub is "the first" or "the only" platform unless this can be verified.
 
-The most important rule in this task:
+### 08 — TARGET USERS
 
-## PRESERVE EVERYTHING THAT IS ALREADY CORRECT.
-
-Before changing any existing SEO system, determine:
-
-* What it does
-* Why it exists
-* What depends on it
-* Whether it works
-* Whether it has edge cases
-* Whether it should be improved rather than replaced
-
-Do not:
-
-* replace the metadata architecture unnecessarily
-* rewrite the sitemap unnecessarily
-* replace robots configuration unnecessarily
-* create a second SEO utility system
-* create duplicate content models
-* create duplicate structured-data systems
-* create duplicate sitemap systems
-* create duplicate analytics systems
-* replace working route architecture
-
-When something is already correct, leave it alone.
-
-When something is partially correct, improve it incrementally.
-
-When something is fundamentally flawed, document the reason before replacing it.
-
----
-
-# 3. FIRST ACTION: FULL AUDIT
-
-Before writing code, audit the repository.
-
-Inspect:
-
-* package.json
-* app/
-* components/
-* lib/
-* prisma/
-* public/
-* middleware
-* analytics
-* existing content files
-* SEO utilities
-* metadata generation
-* sitemap
-* robots
-* structured data
-* navigation
-* search
-* roadmap pages
-* guide pages
-* resource pages
-* project pages
-* career pages
-* start/discovery flows
-* database schema
-* content relationships
-* existing feedback mechanisms
-
-Also inspect any existing documentation or implementation notes.
-
-Do not trust documentation over code.
-
-The codebase is the source of truth.
-
----
-
-# 4. PRODUCE AN INTERNAL AUDIT BEFORE IMPLEMENTATION
-
-Create an implementation audit with these sections:
-
-## A. Existing strengths
-
-What already works well.
-
-## B. Existing SEO architecture
-
-What already exists.
-
-## C. Search-discovery gaps
-
-Where users can currently enter the site from search and where they cannot.
-
-## D. Search-intent gaps
-
-Which user questions are not mapped to appropriate pages.
-
-## E. Content architecture gaps
-
-Where page types overlap or lack depth.
-
-## F. Funnel gaps
-
-Where users enter but have no clear next learning step.
-
-## G. Retention gaps
-
-Where the current experience fails to move users toward another useful resource.
-
-## H. Data gaps
-
-What cannot currently be measured.
-
-## I. Implementation risks
-
-What should not be touched.
-
-## J. Recommended changes
-
-Prioritized by:
-
-P0 = critical
-P1 = important
-P2 = useful
-P3 = future
-
-Do not start with P3 work.
-
----
-
-# 5. DEFINE THE NEW SYSTEM
-
-The new system should be understood as:
-
-## EXISTING SEO FOUNDATION
-
-*
-
-## SEARCH INTELLIGENCE LAYER
-
-*
-
-## LEARNING FUNNEL LAYER
-
-*
-
-## FEEDBACK/ANALYTICS LOOP
-
-The goal is not merely higher impressions.
-
-The goal is:
-
-HIGH-INTENT SEARCH TRAFFIC
-+
-HIGH CONTENT RELEVANCE
-+
-HIGH LEARNER SUCCESS
-
----
-
-# 6. CORE SEARCH INTELLIGENCE MODEL
-
-Create a maintainable search-intent data model.
-
-The exact implementation can be TypeScript, JSON, database-backed, or another approach appropriate to the current architecture.
-
-Do not introduce a database table if a static data model is sufficient at the current scale.
-
-Each search-intent record should conceptually support:
-
-* id
-* query
-* intent
-* cluster
-* subcluster
-* targetPage
-* supportingPages
-* primaryTopic
-* secondaryTopics
-* audience
-* difficulty
-* productGoal
-* primaryCTA
-* roadmap
-* project
-* priority
-* status
-* notes
-
-Example:
-
-```text
-query:
-"how to learn frontend development"
-
-intent:
-informational + educational
-
-cluster:
-frontend-development
-
-targetPage:
-"/guides/how-to-learn-frontend-development"
-
-primaryCTA:
-"Start the Frontend Roadmap"
-
-roadmap:
-"/roadmaps/frontend-development"
-
-supportingPages:
-[
-  "/guides/how-to-learn-javascript",
-  "/guides/how-to-learn-react",
-  "/projects/beginner"
-]
-
-priority:
-P0
-```
-
-This data does not need to be visible to users.
-
-It is an internal content strategy layer.
-
----
-
-# 7. BUILD SEARCH INTENT CLUSTERS
-
-Start with major recurring learner problems.
-
-Do not use these as a keyword stuffing list.
-
-Use them as intent categories.
-
-## Cluster: Starting coding
-
-Examples:
-
-* how to learn coding
-* how to start programming
-* coding for beginners
-* how to learn programming from scratch
-* best way to learn coding
-* learn coding without experience
-
-Primary destination:
-
-`/guides/how-to-learn-coding`
-
-Supporting destinations:
-
-`/roadmaps`
-
-`/start`
-
-`/roadmaps/python`
-
-`/roadmaps/javascript`
-
-`/roadmaps/frontend-development`
-
----
-
-## Cluster: Web development
-
-Examples:
-
-* how to learn web development
-* web development roadmap
-* frontend roadmap
-* backend roadmap
-* full stack roadmap
-* what should I learn for web development
-* web development for beginners
-
-Primary destinations:
-
-`/guides/how-to-learn-web-development`
-
-`/roadmaps/frontend-development`
-
-`/roadmaps/backend-development`
-
-`/roadmaps/full-stack-development`
-
----
-
-## Cluster: Programming languages
-
-Python
-JavaScript
-TypeScript
-HTML
-CSS
-SQL
-Java
-C
-C++
-PHP
-
-Only create a destination where TechSkillHub actually contains substantial useful content.
-
----
-
-## Cluster: Projects
-
-Examples:
-
-* coding projects for beginners
-* JavaScript projects
-* Python projects
-* React projects
-* frontend projects
-* projects to build for a portfolio
-* beginner programming projects
-
-Destination:
-
-`/projects`
-
-plus level/topic-specific project pages.
-
----
-
-## Cluster: Career transition
-
-Examples:
-
-* how to become a software developer
-* how to become a frontend developer
-* how to become a backend developer
-* how to get into tech
-* tech career roadmap
-* coding career for beginners
-* how to become a developer without a degree
-
-Destination:
-
-`/careers`
-
-and relevant guides.
-
----
-
-## Cluster: AI/data/cybersecurity
-
-Examples:
-
-* AI roadmap
-* machine learning roadmap
-* data science roadmap
-* cybersecurity roadmap
-* how to learn AI
-* AI engineer roadmap
-
-Only target subjects where TechSkillHub has credible supporting content.
-
----
-
-## Cluster: African learners
-
-Examples:
-
-* free tech resources in Africa
-* how to learn coding for free in Nigeria
-* free tech education for African students
-* how to start a tech career in Africa
-* coding resources for African students
-
-Use this as a differentiated content cluster.
-
-Do not create artificial country pages.
-
----
-
-# 8. SEARCH INTENT SHOULD MAP TO ONE PRIMARY PAGE
-
-For every meaningful intent:
-
-ONE primary page.
-
-Supporting pages may exist.
-
-Do not create multiple pages competing for exactly the same intent.
-
-Example:
-
-BAD:
-
-`/guides/how-to-learn-python`
-
-`/guides/learn-python`
-
-`/guides/python-for-beginners`
-
-`/guides/python-from-scratch`
-
-all targeting the same user problem with near-identical content.
-
-GOOD:
+Identify the major user segments:
 
 Primary:
 
-`/guides/how-to-learn-python`
+* Students
+* Beginners entering technology
+* Self-taught developers
+* Career switchers
+* Early-career technology professionals
 
-Supporting:
+Secondary:
 
-`/roadmaps/python`
+* Universities
+* Student communities
+* Employers
+* Technology companies
+* NGOs and digital-skills organizations
 
-`/projects/python`
+Use clear personas rather than large paragraphs.
 
-`/careers/python-developer` only if genuinely useful
+### 09 — MARKET OPPORTUNITY
 
-This reduces content cannibalization.
+Present the market opportunity carefully.
 
----
+Focus on:
 
-# 9. CREATE A CONTENT GAP AUDIT
+* Africa's growing digital economy
+* Large young population
+* Increasing demand for digital skills
+* Growth of software and technology careers
+* Remote work opportunities
+* Need for practical digital-skills development
 
-Analyze the current content library.
+Use credible, verifiable sources for external statistics.
 
-For each major subject, determine:
+Clearly distinguish:
+TAM
+SAM
+SOM
 
-* Is there a guide?
-* Is there a roadmap?
-* Is there a project path?
-* Is there a career path?
-* Are there FAQs?
-* Is there a direct-answer page?
-* Are there internal links?
-* Is there a clear CTA?
-* Is there a next learning step?
-* Does the page have a distinctive purpose?
+Do not fabricate numbers.
 
-Produce a gap matrix.
+If reliable market data is unavailable, state assumptions clearly rather than inventing statistics.
 
-Conceptually:
+### 10 — BUSINESS MODEL
 
-```text
-Topic | Guide | Roadmap | Projects | Career | FAQ | CTA | Internal Links | Status
-```
+Explain how TechSkillHub can generate revenue while keeping the core learning mission accessible.
 
-Do not generate content merely because a cell is empty.
+Potential model:
 
-A gap is only valuable when user intent supports it.
+FREE
 
----
+* Core roadmaps
+* Learning resources
+* Basic learning experience
 
-# 10. CONTENT OVERLAP DETECTION
+PRO
 
-Audit existing pages for semantic overlap.
+* Advanced features
+* AI tools
+* Deeper career preparation
+* Premium project/assessment features
+* Other genuinely existing premium functionality
 
-Identify pages that answer nearly identical questions.
+B2B / INSTITUTIONAL
 
-Do not automatically delete them.
+* Universities
+* Organizations
+* Employers
+* Workforce development programs
 
-Classify them:
+Only present features that actually exist or are clearly labeled as planned.
 
-KEEP
-MERGE
-REDIRECT
-REPOSITION
-EXPAND
-DEPRECATE
+Show the model visually.
 
-For example:
+### 11 — TRACTION / CURRENT PROGRESS
 
-If a guide and roadmap intentionally serve different intents:
+Use ONLY real TechSkillHub metrics.
 
-KEEP.
+Possible metrics include:
 
-If they duplicate one another:
+* Number of users
+* Number of learning tracks
+* Number of roadmaps
+* Number of projects
+* Website traffic
+* Registered users
+* Paying users
+* Revenue
+* Retention
+* Engagement
 
-MERGE or reposition.
+Do not invent traction.
 
-Before changing routes, preserve existing traffic paths with redirects where necessary.
+If a metric is unavailable, omit it.
 
----
+Instead, highlight verified product milestones such as:
 
-# 11. CREATE A SEARCH-TO-PAGE MATRIX
+* Product launched
+* Number of available roadmaps
+* Product development milestones
+* Existing payment infrastructure
+* Existing AI capabilities
+* Existing technology stack
 
-Build an internal matrix:
+### 12 — COMPETITIVE LANDSCAPE
 
-```text
-Query
-→ Intent
-→ Target Page
-→ Why This Page
-→ Main CTA
-→ Supporting Page
-→ Roadmap
-→ Project
-→ Conversion Event
-```
+Compare TechSkillHub against relevant alternatives.
 
-This must become the strategic backbone of the organic growth system.
+Potential categories:
 
----
+YouTube
+Traditional online course platforms
+Coding bootcamps
+Documentation/tutorial sites
+University education
+TechSkillHub
 
-# 12. SEARCH LANDING PAGE DESIGN
+Compare based on:
 
-Every major search-entry page must answer the searcher's question immediately.
+* Structure
+* Practical projects
+* Career orientation
+* Accessibility
+* African relevance
+* Personalization
+* Cost
 
-Do not hide the answer behind:
+Avoid attacking competitors.
 
-* a hero animation
-* a signup form
-* a popup
-* a long marketing section
-* a roadmap interaction
-* a paywall
+The purpose is to demonstrate positioning.
 
-The page should begin with a clear answer.
+### 13 — GO-TO-MARKET
+
+Explain how TechSkillHub can acquire users.
+
+Potential channels:
+
+* University communities
+* Student developer communities
+* TikTok
+* Instagram
+* YouTube
+* X
+* Developer communities
+* SEO
+* Referral programs
+* Partnerships with universities
+* Partnerships with tech companies
+* Ambassadors
+
+Prioritize the channels that are realistic for an early-stage company.
+
+### 14 — PARTNERSHIP ECOSYSTEM
+
+Show the stakeholders TechSkillHub can work with:
+
+Learners
+↓
+Universities
+↓
+Tech communities
+↓
+Mentors
+↓
+Technology companies
+↓
+Employers
+↓
+NGOs / foundations
+↓
+Government / education organizations
+
+Explain the value exchanged between TechSkillHub and each stakeholder.
+
+Do not imply existing partnerships unless they actually exist.
+
+Clearly distinguish:
+
+"Current technology providers"
+
+from
+
+"Potential strategic partners."
+
+### 15 — ROADMAP
+
+Show the product's evolution.
 
 Example:
 
-H1:
+Phase 1
+Structured learning infrastructure
 
-How to Learn Frontend Development From Scratch
+Phase 2
+Projects + portfolios
 
-Opening:
+Phase 3
+AI-assisted personalization
 
-"Start with HTML and CSS, then learn JavaScript, Git, a modern framework such as React, APIs, testing and deployment. Build small projects throughout the process instead of waiting until the end."
+Phase 4
+Skills assessment
 
-Then:
+Phase 5
+Employer connections
 
-"Follow the TechSkillHub Frontend Roadmap"
+Phase 6
+Institutional partnerships
 
-Then:
+Phase 7
+Pan-African expansion
 
-learning stages.
+Only include phases that align with the actual product strategy.
 
----
+### 16 — LONG-TERM VISION
 
-# 13. AUDIT EXISTING OPENING ANSWERS
+Create a powerful but credible vision.
 
-The existing content system already supports opening answers.
+TechSkillHub should aim to become infrastructure for technology skills development in Africa.
 
-Audit them.
+The long-term journey:
 
-For every major guide:
+Learn
+→ Build
+→ Prove
+→ Connect
+→ Work
+→ Grow
 
-Check:
+The vision should be bigger than "an online learning website."
 
-* Does it directly answer the page's primary question?
-* Is the answer visible immediately?
-* Is it accurate?
-* Is it concise?
-* Does it lead into the rest of the page?
-* Does it avoid marketing language?
-* Does it avoid unsupported claims?
+### 17 — THE FOUNDER
 
-Improve only where necessary.
+Introduce Awesome Akokayo professionally.
 
----
+Include only verified information from the existing TechSkillHub/project information.
 
-# 14. CREATE SEARCH-INTENT-SPECIFIC CTAs
+Focus on:
 
-Do not use the same CTA everywhere.
+* Computer Science background
+* Software engineering experience
+* Building technology products
+* TechSkillHub's motivation
+* Relevant technical/product skills
 
-Examples:
+Do not exaggerate achievements.
 
-Informational search:
+### 18 — THE ASK
 
-"Explore the roadmap"
+Create a clear closing section.
 
-Learning search:
+Instead of vaguely saying "We are looking for investment", allow the page to communicate multiple opportunities:
 
-"Start learning"
+* Strategic partnerships
+* University partnerships
+* Employer partnerships
+* Mentors
+* Investors
+* Organizations seeking digital-skills solutions
 
-Roadmap search:
-
-"Start this roadmap"
-
-Project search:
-
-"Build this project"
-
-Career search:
-
-"Explore the career path"
-
-Resource search:
-
-"Explore free resources"
-
-CTA text should match the user's current intent.
-
----
-
-# 15. BUILD THE SEARCH → LEARN FUNNEL
-
-Every important public search page needs a primary next step.
-
-Example:
-
-USER SEARCH:
-
-"How do I learn JavaScript?"
-
-↓
-
-PAGE:
-
-`/guides/how-to-learn-javascript`
-
-↓
-
-CTA:
-
-"Start the JavaScript Roadmap"
-
-↓
-
-`/roadmaps/javascript`
-
-↓
-
-Learning steps
-
-↓
-
-Project
-
-↓
-
-"Build your first JavaScript project"
-
-↓
-
-Project page
-
-↓
-
-"Continue to frontend development"
-
-↓
-
-Next roadmap
-
-This is the target experience.
-
----
-
-# 16. CONTEXTUAL RELATED CONTENT
-
-Upgrade the existing related-content system.
-
-Do not simply display:
-
-"Latest articles"
-
-or random content.
-
-Related content should be contextually relevant.
+If an actual fundraising amount has not been determined, DO NOT invent one.
 
 Use:
 
-* topic
-* skills
-* category
-* roadmap
-* difficulty
-* learner stage
+"We're looking for strategic partners who share our vision of making practical technology education more accessible across Africa."
 
-Example:
+### 19 — FINAL CTA
 
-Current:
+TechSkillHub
 
-"How to Learn JavaScript"
+"Learn. Build. Become."
 
-Related:
+Buttons:
 
-* JavaScript Roadmap
-* JavaScript Projects
-* React Roadmap
-* Frontend Roadmap
-* Git for Beginners
+"Explore TechSkillHub"
+"Contact Us"
 
-Not:
+Include:
+https://techskillhub.cv
 
-* Cybersecurity article
-* unrelated AI article
-* random career article
+And the appropriate contact/social links that already exist in the project.
 
----
+## DESIGN REQUIREMENTS
 
-# 17. CONTEXTUAL NEXT STEP SYSTEM
+Make the deck feel like a serious technology startup presentation.
 
-Each major page should specify:
+Design principles:
 
-`nextStep`
+* Clean
+* Minimal
+* Modern
+* High contrast
+* Strong typography
+* Generous whitespace
+* Clear visual hierarchy
+* Subtle animations
+* Professional cards
+* Consistent spacing
+* Mobile-first responsiveness
+* No unnecessary gradients
+* No excessive rounded cards
+* No visual clutter
 
-For example:
+Use TechSkillHub's existing brand identity instead of introducing a completely unrelated visual system.
 
-Guide:
+The design should be suitable for:
 
-How to Learn Python
-→ Python Roadmap
+* Investors
+* Accelerators
+* Universities
+* Corporate partners
+* NGOs
+* Employers
 
-Roadmap:
+## INTERACTION
 
-Python Roadmap
-→ Python Beginner Projects
+Include:
 
-Project:
+* Smooth scrolling/navigation
+* Section indicator
+* Keyboard navigation where appropriate
+* Responsive mobile navigation
+* Print-friendly layout
+* PDF-friendly styling if possible
+* Share button
+* Copy URL button
+* "Download Pitch Deck" button if a PDF version exists
 
-Python Expense Tracker
-→ Backend Roadmap
+The page should load quickly.
 
-Career:
+Avoid unnecessary JavaScript.
 
-Frontend Developer
-→ Frontend Roadmap
+## SEO
 
-This should be represented structurally rather than manually repeated everywhere.
-
----
-
-# 18. BUILD A LEARNING JOURNEY OBJECT
-
-Where appropriate, add a structured relationship like:
-
-```text
-entryPage
-→ learningPage
-→ roadmap
-→ project
-→ career
-→ nextSkill
-```
-
-For example:
-
-```text
-entryPage:
-"/guides/how-to-learn-web-development"
-
-learningPage:
-"/roadmaps/frontend-development"
-
-roadmap:
-"/roadmaps/frontend-development"
-
-project:
-"/projects/portfolio-website"
-
-career:
-"/careers/frontend-developer"
-
-nextSkill:
-"/roadmaps/backend-development"
-```
-
-This becomes the internal journey graph.
-
----
-
-# 19. START PAGE AS THE FUNNEL HUB
-
-Inspect the existing `/start` and `/start-here` implementation.
-
-Do not create another start page if one already exists.
-
-Instead, determine which one should become the canonical discovery experience.
-
-The experience should help a visitor answer:
-
-What do I want to learn?
-
-What is my level?
-
-What is my goal?
-
-Then recommend:
-
-* roadmap
-* guide
-* project
-* career path
-
-Do this with the simplest architecture that fits the existing app.
-
----
-
-# 20. PERSONALIZATION WITHOUT BLOCKING SEO
-
-Personalization must not prevent search engines from seeing the underlying useful public content.
-
-The public page should still render normally.
-
-Personalization can then improve:
-
-* recommendations
-* next steps
-* saved progress
-* roadmap selection
-
-Do not make the page content invisible until JavaScript executes.
-
----
-
-# 21. ADD A "LEARN BY GOAL" MODEL
-
-Create structured goal categories such as:
-
-* Learn coding
-* Become a developer
-* Build websites
-* Learn Python
-* Learn JavaScript
-* Learn AI
-* Build projects
-* Prepare for a tech career
-* Learn for school
-* Explore technology
-
-Map each goal to a meaningful journey.
-
-Do not create separate SEO pages for every goal unless the content is genuinely unique.
-
----
-
-# 22. INTERNAL SEARCH DATA
-
-Inspect the existing search implementation.
-
-If TechSkillHub has internal search:
-
-Record anonymized query patterns where technically and legally appropriate.
-
-Identify:
-
-* searches returning nothing
-* searches with weak results
-* common queries
-* emerging skills
-* common questions
-
-These are future content opportunities.
-
-Do not collect unnecessary personal information.
-
----
-
-# 23. SEARCH CONSOLE / BING DATA READINESS
-
-Do not claim external APIs have been integrated unless they actually can be securely integrated.
-
-Prepare an architecture that can ingest:
-
-Google Search Console query data
-Bing Webmaster query data
-Bing AI performance/grounding data
-Internal search queries
-Organic landing pages
-
-Potential normalized fields:
-
-* query
-* impressions
-* clicks
-* ctr
-* position
-* landingPage
-* date
-* source
-* intent
-* cluster
-
-The system should eventually answer:
-
-"What are people already searching that TechSkillHub almost ranks for?"
-
----
-
-# 24. ORGANIC OPPORTUNITY SCORING
-
-Create a reusable scoring model.
-
-Possible factors:
-
-* Search impressions
-* Search clicks
-* Average position
-* CTR gap
-* Relevance to TechSkillHub
-* Existing content quality
-* Competition
-* Product relevance
-* Funnel value
-
-Do not pretend this is a perfect SEO formula.
-
-It is an internal prioritization tool.
-
-Example:
-
-```text
-Opportunity Score =
-Search Demand
-× Product Relevance
-× Content Gap
-× Conversion Potential
-```
-
-Use normalized values if implemented numerically.
-
----
-
-# 25. POSITION-BASED CONTENT STRATEGY
-
-Prioritize pages approximately like:
-
-Positions 4–20:
-→ optimize existing pages first.
-
-Impressions high, CTR low:
-→ improve title/description and search alignment.
-
-Impressions low, page strong:
-→ consider authority/internal-link/content expansion.
-
-Strong traffic, poor learner engagement:
-→ improve funnel UX.
-
-Strong page, no search visibility:
-→ investigate indexing, internal links, authority and content positioning.
-
-Do not blindly rewrite pages that are already performing.
-
----
-
-# 26. QUERY-TO-PAGE DIAGNOSTICS
-
-Create an internal diagnostic view if appropriate.
-
-Example:
-
-```text
-Query:
-"frontend developer roadmap"
-
-Current page:
-"/roadmaps/frontend-development"
-
-Impressions:
-X
-
-Clicks:
-Y
-
-CTR:
-Z
-
-Average position:
-N
-
-CTA:
-Start Roadmap
-
-Related content:
-5 pages
-
-Funnel:
-Configured
-```
-
-This lets TechSkillHub become data-driven.
-
----
-
-# 27. CONTENT QUALITY AUDIT
-
-Audit all existing major pages for:
-
-* direct answer
-* useful introduction
-* clear H1
-* sensible H2 hierarchy
-* practical examples
-* internal links
-* related content
-* CTA
-* FAQ
-* accuracy
-* citations where necessary
-* project recommendation
-* roadmap connection
-* next step
-
-Score pages.
-
-Example:
-
-0 = missing
-1 = weak
-2 = acceptable
-3 = strong
-
-Do not use the score for public ranking.
-
-Use it as an editorial quality tool.
-
----
-
-# 28. CLAIM AUDIT
-
-This is important.
-
-Review content for broad claims such as:
-
-* "most developers"
-* "best framework"
-* "dominates the industry"
-* "everyone uses"
-* "guaranteed"
-* "fastest growing"
-* "highest paying"
-* "most popular"
-
-Require evidence or soften wording.
-
-Do not let unsupported statements become part of the public knowledge base.
-
-AI systems are more useful when the underlying source is careful and evidence-aware.
-
----
-
-# 29. TECHNOLOGY FRESHNESS AUDIT
-
-Review claims involving:
-
-* React
-* Next.js
-* Node.js
-* Python
-* AI platforms
-* cloud platforms
-* frameworks
-* libraries
-
-Do not simply update dates.
-
-Check the actual content.
-
-Only modify "Last reviewed" after genuine review.
-
-Never fake freshness.
-
----
-
-# 30. CONTENT DIFFERENTIATION TEST
-
-For every major page ask:
-
-"Why should this page exist?"
-
-The answer should be one of:
-
-* It answers a unique question.
-* It provides a unique roadmap.
-* It solves a distinct learning problem.
-* It connects a learning concept to practical projects.
-* It provides useful career context.
-* It provides genuinely relevant African/local context.
-* It offers a stronger learning path than the existing page.
-
-If the answer is unclear, merge/reposition rather than multiplying pages.
-
----
-
-# 31. PROJECT FUNNEL
-
-Projects should not exist as isolated pages.
-
-Every project should know:
-
-* skill
-* roadmap
-* difficulty
-* prerequisites
-* next project
-* related career
-* relevant guide
-
-Example:
-
-JavaScript project
-
-→ JavaScript Roadmap
-
-→ Frontend Roadmap
-
-→ Frontend Developer Career
-
-This creates a learning graph.
-
----
-
-# 32. CAREER FUNNEL
-
-Careers should connect backward to learning.
-
-Example:
-
-Frontend Developer
-
-→ required skills
-
-→ Frontend Roadmap
-
-→ JavaScript
-
-→ React
-
-→ Projects
-
-→ Portfolio
-
-→ Interview preparation
-
-Do not make career pages dead ends.
-
----
-
-# 33. RESOURCE FUNNEL
-
-Resource pages should connect resources to learning goals.
-
-Example:
-
-Free Coding Resources
-
-→ Beginner resources
-
-→ Start coding guide
-
-→ Beginner roadmap
-
-→ Projects
-
-Do not create giant link dumps.
-
-Add context explaining why each resource is useful.
-
----
-
-# 34. GUIDE FUNNEL
-
-Guides should connect to a product outcome.
-
-Example:
-
-"How to Learn Python"
-
-→ Python Roadmap
-
-→ Python Projects
-
-→ Data / AI / Backend next steps
-
-The guide is the entrance.
-
-The roadmap is the journey.
-
-The project is the proof of learning.
-
----
-
-# 35. LEARNING COMPLETION LOOP
-
-Inspect the existing progress/completion system.
-
-Where product functionality allows:
-
-When a learner finishes a roadmap stage:
-
-Recommend the next useful activity.
-
-Examples:
-
-Complete JavaScript fundamentals
-→ build a project
-
-Complete frontend basics
-→ learn React
-
-Complete Python basics
-→ build automation project
-
-Do not force unrelated recommendations.
-
----
-
-# 36. USER FEEDBACK LOOP
-
-Inspect existing feedback.
-
-If there is already a feedback system:
-
-Improve it.
-
-If it is incomplete:
-
-Add a lightweight contextual feedback mechanism.
-
-Questions:
-
-"Was this helpful?"
-
-"Was anything missing?"
-
-"Was anything confusing?"
-
-"Would you recommend this resource?"
-
-Do not manipulate responses.
-
-Do not hide negative feedback.
-
-Do not fabricate positive feedback.
-
----
-
-# 37. FEEDBACK AS CONTENT INTELLIGENCE
-
-Aggregate feedback into content improvement signals.
-
-Examples:
-
-If many users say:
-
-"Too advanced"
-
-→ improve beginner explanation.
-
-If many say:
-
-"Missing project"
-
-→ add project.
-
-If many say:
-
-"Outdated"
-
-→ trigger editorial review.
-
-If many ask:
-
-"What should I learn next?"
-
-→ strengthen next-step recommendations.
-
----
-
-# 38. ORGANIC TRAFFIC SHOULD NOT BE TREATED AS THE FINAL GOAL
-
-A user who lands and immediately leaves without finding an answer is not a successful organic acquisition.
-
-Measure the funnel:
-
-Organic Landing
-
-→ Meaningful Read
-
-→ Relevant CTA
-
-→ Roadmap Start
-
-→ Learning Activity
-
-→ Project
-
-→ Feedback
-
-→ Return
-
-The exact events can use the existing analytics infrastructure.
-
-Do not create duplicate analytics libraries.
-
----
-
-# 39. DEFINE PRODUCT EVENTS
-
-Where the existing analytics system supports them, standardize events such as:
-
-`organic_landing`
-
-`content_view`
-
-`roadmap_view`
-
-`roadmap_start`
-
-`guide_to_roadmap`
-
-`project_view`
-
-`project_start`
-
-`career_view`
-
-`next_step_click`
-
-`feedback_positive`
-
-`feedback_negative`
-
-`feedback_submitted`
-
-`share_clicked`
-
-`return_visit`
-
-Only implement events that are genuinely useful.
-
-Do not spam analytics.
-
----
-
-# 40. DO NOT INVENT ANALYTICS RESULTS
-
-Never put claims in the application such as:
-
-"25% more engagement"
-
-unless that number has actually been measured.
-
-Internal forecasts can exist in documentation, but they must be explicitly labeled estimates.
-
-Production reports must use real data.
-
----
-
-# 41. SEO PAGE HEALTH DASHBOARD
-
-If the existing admin system makes this appropriate, add an internal content health view.
-
-Potential checks:
-
-* Missing title
-* Missing description
-* Missing canonical
-* Missing H1
-* No internal links
-* No related content
-* No CTA
-* No FAQ where appropriate
-* No next step
-* Missing structured data
-* Orphan page
-* Duplicate intent
-* Outdated review date
-* Unsupported claim flags
-
-Do not make this public.
-
----
-
-# 42. ORPHAN PAGE DETECTION
-
-Identify public pages that:
-
-* appear in sitemap
-* are indexable
-* but have no internal path from important navigation/content
-
-Such pages may technically be crawlable through the sitemap, but the information architecture should connect them naturally.
-
-Build a report.
-
-Do not automatically delete anything.
-
----
-
-# 43. INTERNAL LINK PRIORITY
-
-Important pages should receive links from relevant strong pages.
-
-For example:
-
-Frontend Roadmap should be linked from:
-
-* Web Development Guide
-* Frontend Career page
-* JavaScript Guide
-* React Guide
-* relevant projects
-* start/discovery page
-
-This is more valuable than random cross-linking.
-
----
-
-# 44. BREADCRUMB/DEPTH AUDIT
-
-Maintain a clear hierarchy:
-
-Home
-→ Category
-→ Topic
-→ Specific resource
-
-Avoid unnecessarily deep URL structures.
-
-Do not redesign stable URLs without reason.
-
----
-
-# 45. SEARCH RESULT CONSISTENCY AUDIT
-
-For each important page, check that:
-
-Title
-Description
-H1
-Opening answer
-Canonical
-Breadcrumb
-
-all describe the same subject.
-
-Example:
+Add:
 
 Title:
-Python Roadmap for Beginners
+"TechSkillHub — Pitch Deck"
 
-H1:
-How to Become a Frontend Developer
+Meta description:
+"Discover TechSkillHub's mission to make structured, practical technology education more accessible across Africa."
 
-Description:
-Learn React step by step
+Open Graph:
 
-This is unacceptable.
+* Title
+* Description
+* TechSkillHub logo/image
+* Proper URL: https://techskillhub.cv/pitch-deck
 
-Make the page semantically consistent.
+Canonical URL:
 
----
+https://techskillhub.cv/pitch-deck
 
-# 46. AI/CITATION READINESS AUDIT
+Ensure the page is indexable unless the existing project's SEO strategy specifically requires otherwise.
 
-Do not build special pages for AI systems.
+## TECHNICAL REQUIREMENTS
 
-Instead audit whether public pages contain:
+Before implementing:
 
-* clear definitions
-* direct answers
-* structured lists
-* factual explanations
-* clear step sequences
-* explicit terminology
-* relevant relationships
-* source links where needed
+1. Inspect the existing project structure.
+2. Identify the framework and routing system.
+3. Reuse existing components wherever appropriate.
+4. Reuse the existing TechSkillHub logo and brand assets.
+5. Reuse the existing design tokens.
+6. Follow the project's existing coding conventions.
+7. Do not duplicate components unnecessarily.
+8. Do not break existing routes.
+9. Run lint/type checks/build after implementation.
+10. Fix all errors before finishing.
 
-AI systems should be able to understand the page from its actual visible content.
+The final result must be production-ready.
 
-Do not add hidden text.
+## IMPORTANT CONTENT RULE
 
-Do not add AI-only text.
+Do not fabricate:
 
-Do not make crawler-specific content that users cannot see.
-
----
-
-# 47. EXTERNAL AUTHORITY IS NOT AN APP FEATURE
-
-Do not invent code that claims to generate backlinks.
-
-Do not build:
-
-* backlink farms
-* automated guest-post spam
-* directory spam
-* fake accounts
-* fake mentions
-* fake citations
-
-The application can prepare content for distribution.
-
-Real authority must be earned through:
-
-* useful content
-* community participation
+* users
+* revenue
 * partnerships
-* developer communities
-* legitimate educational communities
-* social distribution
-* real references
-
----
-
-# 48. SEARCH QUERY PAGE DESIGN
-
-Do not index internal site-search result pages unless there is an intentional editorial reason.
-
-If a user searches the website:
-
-`/search?q=python`
-
-the result page should normally be for users, not search-engine indexation.
-
-Do not create thousands of indexable query permutations.
-
----
-
-# 49. URL PARAMETER SAFETY
-
-Prevent indexable duplicates caused by:
-
-* utm parameters
-* sorting
-* filtering
-* pagination combinations
-* tracking parameters
-
-Preserve canonical URLs.
-
-Do not change existing canonical behavior unless the current behavior is wrong.
-
----
-
-# 50. SITEMAP QUALITY AUDIT
-
-Audit the existing sitemap.
-
-For each URL:
-
-* Does the page exist?
-* Is it public?
-* Is it indexable?
-* Does it have useful content?
-* Is it canonical?
-* Is it intentionally discoverable?
-* Does it deserve search visibility?
-
-Do not automatically include every route in the sitemap.
-
-Only strong public URLs should be included.
-
----
-
-# 51. CONTENT PUBLICATION GATE
-
-Before publishing new public SEO content, validate:
-
-* unique intent
-* unique value
-* direct answer
-* correct category
-* canonical
-* metadata
-* internal links
-* related content
-* CTA
-* next step
-* valid external references
-* no unsupported claims
-
-If the content does not pass the quality gate, do not publish it.
-
----
-
-# 52. DO NOT CREATE HUNDREDS OF PAGES IMMEDIATELY
-
-The first objective is quality.
-
-Initially prioritize:
-
-* strongest queries
-* strongest existing topics
-* gaps directly connected to the product
-* pages with clear learning funnels
-
-Do not expand content inventory simply to inflate sitemap size.
-
----
-
-# 53. SEARCH INTENT PRIORITY
-
-Prioritize queries using:
-
-1. Relevance to what TechSkillHub actually teaches
-2. Ability to provide a genuinely useful answer
-3. Ability to connect to a roadmap
-4. Ability to connect to projects
-5. Ability to lead to learner retention
-6. Search demand once real data is available
-7. Reasonable ability to compete
-
-This is more important than chasing high-volume keywords blindly.
-
----
-
-# 54. NEW CONTENT SHOULD ENTER THE PRODUCT GRAPH
-
-When adding new content, it should not be isolated.
-
-Example:
-
-New guide:
-
-"How to Learn React"
-
-Must connect to:
-
-React Roadmap
-Frontend Roadmap
-JavaScript Roadmap
-React Projects
-Frontend Career
-
-This should become a structural requirement.
-
----
-
-# 55. PRODUCT-LED SEO
-
-The goal is not:
-
-"TechSkillHub publishes articles."
-
-The goal is:
-
-"TechSkillHub uses useful public content to introduce learners into its structured learning product."
-
-Every appropriate page should lead naturally to something inside the actual platform.
-
-Do not over-market.
-
-Do not block the answer.
-
-Give value first.
-
----
-
-# 56. PRIMARY FUNNEL EXPERIENCE
-
-Implement or improve this exact pattern:
-
-## ENTRY
-
-Search query
-
-↓
-
-## LANDING
-
-A page that directly answers the user's question.
-
-↓
-
-## DISCOVERY
-
-"Here's the learning path."
-
-↓
-
-## ACTION
-
-Start roadmap.
-
-↓
-
-## LEARNING
-
-Follow structured steps.
-
-↓
-
-## PRACTICE
-
-Build a project.
-
-↓
-
-## CONTINUE
-
-Recommended next skill.
-
-↓
-
-## FEEDBACK
-
-Was this useful?
-
-↓
-
-## RETURN
-
-Continue learning.
-
-This is the main product growth loop.
-
----
-
-# 57. EXAMPLE USER JOURNEYS
-
-## Journey A — Beginner Coding Search
-
-Search:
-
-"how to start coding"
-
-Landing:
-
-`/guides/how-to-learn-coding`
-
-CTA:
-
-"Start Here"
-
-→ `/start`
-
-User selects:
-
-Beginner
-
-Goal:
-
-Learn web development
-
-→ Frontend Roadmap
-
-→ JavaScript
-
-→ Beginner project
-
-→ Portfolio
-
----
-
-## Journey B — Specific Roadmap Search
-
-Search:
-
-"frontend developer roadmap"
-
-Landing:
-
-`/roadmaps/frontend-development`
-
-CTA:
-
-"Start Frontend Roadmap"
-
-→ HTML
-
-→ CSS
-
-→ JavaScript
-
-→ React
-
-→ Project
-
-→ Career
-
----
-
-## Journey C — Project Search
-
-Search:
-
-"JavaScript projects for beginners"
-
-Landing:
-
-Relevant project/category page
-
-→ project cards
-
-→ choose project
-
-→ required skills
-
-→ related JavaScript roadmap
-
-→ build
-
-→ next project
-
----
-
-## Journey D — Career Search
-
-Search:
-
-"how to become a frontend developer"
-
-Landing:
-
-Career guide
-
-→ required skills
-
-→ roadmap
-
-→ projects
-
-→ portfolio
-
-→ next step
-
----
-
-# 58. CONTENT AUTHORING SYSTEM
-
-If the existing content model allows it, make content explicitly support:
-
-* primaryQuestion
-* openingAnswer
-* targetIntent
-* topicCluster
-* targetAudience
-* CTA
-* roadmap
-* relatedProjects
-* nextStep
-* FAQs
-* sources
-* review date
-
-Do not create a second CMS.
-
-Extend the current system if necessary.
-
----
-
-# 59. QUERY DATA SHOULD FEED CONTENT PLANNING
-
-Eventually, actual search data should answer:
-
-"What do users want that TechSkillHub does not currently serve?"
-
-Use:
-
-Google Search Console
-Bing Webmaster Tools
-Internal search
-User feedback
-Support questions
-Learning behavior
-
-The content roadmap should become increasingly data-informed.
-
----
-
-# 60. CONTENT PRIORITY DASHBOARD
-
-If feasible, create an internal table like:
-
-| Opportunity      | Search Intent | Existing Page | Gap             | Funnel Value | Priority |
-| ---------------- | ------------- | ------------- | --------------- | ------------ | -------- |
-| Learn coding     | Informational | Guide exists  | Weak CTA        | High         | P0       |
-| Frontend roadmap | Learning      | Exists        | Strong          | High         | P0       |
-| Python projects  | Project       | Partial       | Missing journey | High         | P1       |
-
-This is an internal product tool.
-
----
-
-# 61. SEARCH PERFORMANCE SHOULD CHANGE THE PRODUCT
-
-If real data shows:
-
-High traffic
-Low roadmap starts
-
-then improve the landing-page funnel.
-
-If:
-
-High impressions
-Low clicks
-
-then audit:
-
-title
-description
-intent alignment
-
-If:
-
-High clicks
-Low engagement
-
-then improve:
-
-answer quality
-page UX
-next step
-
-If:
-
-High engagement
-Low search impressions
-
-then investigate:
-
-content depth
-internal links
-search targeting
-external authority
-
-Do not solve every problem by "writing more content."
-
----
-
-# 62. QUALITY OVER QUANTITY
-
-The desired result is not:
-
-"10,000 indexed pages."
-
-The desired result is:
-
-"Users find exactly what they need and successfully continue learning."
-
-Optimize for:
-
-Relevance
-Usefulness
-Learning progress
-Trust
-Retention
-
----
-
-# 63. IMPLEMENTATION ORDER
-
-Follow this order:
-
-## P0
-
-1. Audit existing implementation
-2. Build search-intent map
-3. Audit content overlap
-4. Audit content gaps
-5. Audit search landing pages
-6. Build search-to-learning mappings
-7. Improve primary CTAs
-8. Improve next-step relationships
-9. Strengthen contextual internal linking
-
-## P1
-
-10. Add content health model
-11. Add opportunity scoring
-12. Add feedback-to-content signals
-13. Improve project/roadmap/career linking
-14. Improve start/discovery flow
-15. Improve analytics events
-
-## P2
-
-16. Search performance ingestion readiness
-17. Internal content opportunity dashboard
-18. Advanced recommendation logic
-19. Additional content expansion based on evidence
-
-Do not start P2 before P0 is stable.
-
----
-
-# 64. TESTING
-
-After every major implementation:
-
-Run:
-
-* typecheck
-* lint
-* unit tests if present
-* production build
-* route validation
-
-Then test:
-
-* homepage
-* start flow
-* one guide
-* one roadmap
-* one project
-* one career page
-* one resource page
-* robots
-* sitemap
-
-Check:
-
-* no broken routes
-* no broken links
-* no metadata regression
-* no canonical regression
-* no structured-data regression
-* no authentication regression
-* no layout regression
-
----
-
-# 65. SEO REGRESSION TESTING
-
-Create automated checks where practical.
-
-For important public routes validate:
-
-* status 200
-* title exists
-* description exists
-* canonical exists
-* H1 exists
-* page is indexable where expected
-* page is noindex where expected
-* page is in sitemap where expected
-* page has internal links
-* page has related content where appropriate
-* page has a CTA
-* page has a next step
-
----
-
-# 66. DO NOT BREAK AUTHENTICATED FEATURES
-
-The application contains user functionality.
-
-Make sure:
-
-* dashboards remain private
-* payments remain private
-* account routes remain private
-* certificate/private routes remain protected as intended
-* personalized content does not leak user information
-* SEO work does not expose sensitive data
-
----
-
-# 67. PERFORMANCE REQUIREMENT
-
-Do not make public pages slower merely to add SEO functionality.
-
-Prefer:
-
-* server rendering
-* static generation
-* cached content
-* lightweight metadata generation
-* small client-side components
-* efficient images
-
-Avoid unnecessary JavaScript for information that can be rendered on the server.
-
----
-
-# 68. ACCESSIBILITY REQUIREMENT
-
-The search funnel must also be usable.
-
-Ensure:
-
-* semantic headings
-* keyboard accessibility
-* readable content
-* proper labels
-* accessible interactive elements
-* sensible focus state
-* adequate contrast
-* mobile usability
-
-Do not create an SEO-first experience that is unpleasant for humans.
-
----
-
-# 69. FINAL PRODUCT STANDARD
-
-After this upgrade, a user should be able to arrive from a search query such as:
-
-"how to learn coding"
-
-and think:
-
-"This page answered me."
-
-Then:
-
-"There is a structured path here."
-
-Then:
-
-"I can start learning."
-
-Then:
-
-"I know what to do next."
-
-Then:
-
-"I can build something."
-
-Then:
-
-"I know what I should learn after this."
-
-That is the experience we are building.
-
----
-
-# 70. SUCCESS CRITERIA
-
-The upgrade is successful only when:
-
-### Technical
-
-The existing SEO infrastructure remains stable and correct.
-
-### Search
-
-Important user questions are mapped to intentional landing pages.
-
-### Content
-
-Existing content is less repetitive, better connected and more useful.
-
-### UX
-
-Organic visitors have a clear next learning step.
-
-### Product
-
-Search traffic can enter the actual learning experience.
-
-### Analytics
-
-We can measure where organic users progress or drop off.
-
-### AI discovery
-
-Public content remains understandable to answer engines because it is clear, structured and useful.
-
-### Retention
-
-The user has a legitimate reason to continue learning after the first page.
-
----
-
-# 71. DO NOT CLAIM SUCCESS WITHOUT DATA
-
-Do not say:
-
-"SEO improved by 30%."
-
-Do not say:
-
-"AI systems now recommend TechSkillHub."
-
-Do not say:
-
-"Google ranking increased."
-
-Do not say:
-
-"ChatGPT cites TechSkillHub."
-
-unless the repository or connected analytics actually contains evidence.
-
-Instead report:
-
-"Implemented the infrastructure required to measure X."
-
-"Created landing page Y."
-
-"Mapped query intent Z."
-
-"Improved internal-link relationship."
-
----
-
-# 72. FINAL REPORT
-
-When implementation is complete, report:
-
-## Existing systems preserved
-
-List them.
-
-## Existing systems improved
-
-List them.
-
-## New systems added
-
-List them.
-
-## New search-intent mappings
-
-List them.
-
-## Content gaps discovered
-
-List them.
-
-## Content overlap discovered
-
-List them.
-
-## Funnel changes
-
-List:
-
-Search
-→ Page
-→ CTA
-→ Roadmap
-→ Project
-→ Next step
-
-## Analytics changes
-
-List events and data structures.
-
-## SEO risks remaining
-
-List them.
-
-## External actions still required
-
-Clearly separate code work from external work such as:
-
-* Google Search Console
-* Bing Webmaster Tools
-* sitemap submission
-* indexing requests
-* external content distribution
-* backlinks/mentions
-* partnerships
-* content promotion
-
-Do not claim these were completed unless they actually were.
-
----
-
-# 73. FINAL INSTRUCTION TO THE IDE
-
-DO NOT START BY WRITING NEW ARTICLES.
-
-DO NOT START BY REWRITING THE SEO SYSTEM.
-
-DO NOT START BY CREATING 100 NEW ROUTES.
-
-DO NOT START BY CHANGING THE DESIGN.
-
-FIRST:
-
-AUDIT.
-
-SECOND:
-
-MAP.
-
-THIRD:
-
-IDENTIFY GAPS.
-
-FOURTH:
-
-IMPLEMENT THE SEARCH-INTELLIGENCE LAYER.
-
-FIFTH:
-
-CONNECT THE EXISTING CONTENT TO THE LEARNING FUNNEL.
-
-SIXTH:
-
-TEST.
-
-SEVENTH:
-
-MEASURE.
-
-The existing TechSkillHub SEO architecture is the foundation.
-
-Your job in this stage is to turn that foundation into an intelligent acquisition and learning system.
-
-The desired final architecture is:
-
-```text
-SEARCH QUERY
-      ↓
-SEARCH INTENT
-      ↓
-BEST TECHSKILLHUB LANDING PAGE
-      ↓
-DIRECT ANSWER
-      ↓
-RELEVANT NEXT STEP
-      ↓
-ROADMAP
-      ↓
-LEARNING
-      ↓
-PROJECT
-      ↓
-CAREER / NEXT SKILL
-      ↓
-FEEDBACK
-      ↓
-RETURN VISIT
-      ↓
-REAL USER DATA
-      ↓
-CONTENT IMPROVEMENT
-      ↓
-BETTER SEARCH VISIBILITY
-      ↓
-MORE LEARNERS
-```
-
-Build this carefully.
-
-Preserve what already works.
-
-Improve what is weak.
-
-Remove duplication where necessary.
-
-Do not create spam.
-
-Do not optimize for robots at the expense of humans.
-
-Do not optimize for traffic at the expense of learning.
-
-Build TechSkillHub into a genuinely useful learning destination that search engines and AI systems can understand because users actually benefit from it.
+* investors
+* market statistics
+* testimonials
+* awards
+* employees
+* customers
+* traction
+* funding
+* institutional relationships
+
+If information is missing, either:
+
+1. derive it from the existing TechSkillHub codebase/content, or
+2. use neutral wording that does not make an unsupported claim.
+
+## FINAL ACCEPTANCE CRITERIA
+
+The implementation is complete only when:
+
+* `/pitch-deck` works.
+* It works without authentication.
+* It is responsive on mobile, tablet and desktop.
+* It visually matches TechSkillHub.
+* The content tells a coherent investor/partner story.
+* No unsupported claims are presented as facts.
+* Existing pages continue working.
+* SEO metadata is correctly configured.
+* Open Graph metadata is configured.
+* The page loads efficiently.
+* The production build succeeds.
+* The final URL is:
+
+https://techskillhub.cv/pitch-deck
+
+After implementation, give me:
+
+1. The exact URL.
+2. A summary of what was implemented.
+3. Any information you could not verify and therefore intentionally left out.
+4. Any remaining deployment steps required to make the URL publicly accessible.
