@@ -19,7 +19,7 @@ export function VisionSlide() {
           <div className="mx-auto max-w-3xl text-center">
             <p className="section-label justify-center">Long-term vision</p>
             <h2 className="font-editorial text-display-xl text-text-primary">
-              Becoming infrastructure for{' '}
+              Our long-term goal is to become infrastructure for{' '}
               <span className="italic text-teal">technology skills development</span> in Africa.
             </h2>
           </div>
@@ -48,7 +48,8 @@ export function VisionSlide() {
             </p>
             <p className="lead mt-4">
               It is a structured bridge between wanting to learn technology and being able to
-              demonstrate real competence, pursue opportunities, and build a career.
+              demonstrate real competence, pursue opportunities, and build a career. Our goal is
+              to make this bridge available to every African learner who needs it.
             </p>
           </div>
         </AnimateIn>

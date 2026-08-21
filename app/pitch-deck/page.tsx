@@ -45,13 +45,13 @@ export default function PitchDeckPage() {
       <ProblemSlide />
       <InsightSlide />
       <SolutionSlide />
+      <DifferentiationSlide />
       <HowItWorksSlide />
       <ProductSlide />
-      <DifferentiationSlide />
       <TargetUsersSlide />
       <MarketSlide />
-      <BusinessModelSlide />
       <TractionSlide />
+      <BusinessModelSlide />
       <CompetitiveSlide />
       <GoToMarketSlide />
       <PartnershipSlide />

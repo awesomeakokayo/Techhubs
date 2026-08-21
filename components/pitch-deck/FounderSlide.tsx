@@ -10,7 +10,8 @@ export function FounderSlide() {
           <div className="mx-auto max-w-3xl">
             <p className="section-label">The founder</p>
             <h2 className="font-editorial text-display-lg text-text-primary">
-              Built by someone who understands the problem.
+              Built by someone who{' '}
+              <span className="italic text-teal">understands the problem firsthand.</span>
             </h2>
           </div>
         </AnimateIn>
@@ -38,6 +39,17 @@ export function FounderSlide() {
                   The platform reflects a belief that structured, practical learning paths can
                   make technology education more accessible and effective for African learners
                   and independent learners everywhere.
+                </p>
+              </div>
+
+              <div className="mt-6 rounded-[var(--radius-md)] bg-elevated p-4">
+                <p className="font-mono text-[0.65rem] uppercase tracking-widest text-text-muted">
+                  Why this founder?
+                </p>
+                <p className="mt-2 text-sm text-text-secondary">
+                  <strong className="text-text-primary">Founder-market-product fit:</strong>{' '}
+                  Awesome experienced the exact problem TechSkillHub solves — the confusion of
+                  learning technology independently — and built the solution he wished existed.
                 </p>
               </div>
             </div>

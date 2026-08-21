@@ -1,17 +1,19 @@
 'use client'
 
 import { AnimateIn } from '@/components/ui/AnimateIn'
-import { CheckpointNode, PathConnector } from '@/components/ui/path'
 
-const STAKEHOLDERS = [
-  { label: 'Learners', description: 'Access structured learning paths, projects, and career guidance.' },
-  { label: 'Universities', description: 'Supplement curricula with practical, industry-aligned learning paths.' },
-  { label: 'Tech Communities', description: 'Provide members with structured learning resources and project ideas.' },
-  { label: 'Mentors', description: 'Guide learners through structured roadmaps and provide career advice.' },
-  { label: 'Tech Companies', description: 'Find talent with demonstrable competence and support workforce development.' },
-  { label: 'Employers', description: 'Access a pipeline of career-ready technology professionals.' },
-  { label: 'NGOs', description: 'Scale digital skills programs with structured, accessible content.' },
-  { label: 'Government', description: 'Support national digital skills development initiatives.' },
+const TECH_PROVIDERS = [
+  { label: 'Paystack', description: 'Payment processing for future monetization.' },
+  { label: 'Vercel', description: 'Hosting and deployment infrastructure.' },
+  { label: 'Google OAuth', description: 'Authentication provider.' },
+]
+
+const STRATEGIC_PARTNERS = [
+  { label: 'Universities', description: 'Supplement curricula with structured, practical learning paths and provide students with career-ready skills.' },
+  { label: 'Employers', description: 'Access a pipeline of career-ready technology professionals with demonstrable competence.' },
+  { label: 'NGOs & Foundations', description: 'Scale digital skills programs with structured, accessible content for workforce development.' },
+  { label: 'Developer Communities', description: 'Provide members with structured learning resources, project ideas, and career guidance.' },
+  { label: 'Government & Education Orgs', description: 'Support national digital skills development initiatives with platform infrastructure.' },
 ]
 
 export function PartnershipSlide() {
@@ -19,45 +21,67 @@ export function PartnershipSlide() {
     <section className="bg-void">
       <div className="container py-36 md:py-40">
         <AnimateIn>
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="section-label justify-center">Partnership ecosystem</p>
+          <div className="mx-auto max-w-3xl">
+            <p className="section-label">Partnership ecosystem</p>
             <h2 className="font-editorial text-display-lg text-text-primary">
-              A platform that creates value{' '}
-              <span className="italic text-teal">across the ecosystem.</span>
+              Current technology providers{' '}
+              <span className="italic text-teal">and potential strategic partners.</span>
             </h2>
           </div>
         </AnimateIn>
 
+        {/* Current Technology Providers */}
         <AnimateIn delay={0.1}>
-          <div className="mx-auto mt-16 max-w-4xl">
-            <ol className="space-y-0">
-              {STAKEHOLDERS.map((s, i) => (
-                <li key={s.label} className="relative flex gap-5 pb-8 last:pb-0">
-                  {i < STAKEHOLDERS.length - 1 && (
-                    <span
-                      className="absolute left-[17px] top-12 h-[calc(100%-1rem)] w-px"
-                      style={{ background: 'var(--border-default)' }}
-                    />
-                  )}
-                  <span className="relative z-10">
-                    <CheckpointNode
-                      step={{ index: i + 1, state: 'current', tone: 'var(--accent-primary)' }}
-                    />
-                  </span>
-                  <div className="pt-1.5">
-                    <h3 className="text-sm font-bold text-text-primary">{s.label}</h3>
-                    <p className="mt-0.5 text-sm text-text-secondary">{s.description}</p>
-                  </div>
-                </li>
+          <div className="mx-auto mt-12 max-w-3xl">
+            <h3 className="mb-4 font-mono text-[0.65rem] uppercase tracking-widest text-text-muted">
+              Current technology providers
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {TECH_PROVIDERS.map((p) => (
+                <div
+                  key={p.label}
+                  className="rounded-[var(--radius-md)] border border-border-default bg-surface px-4 py-3"
+                >
+                  <p className="text-sm font-semibold text-text-primary">{p.label}</p>
+                  <p className="mt-0.5 text-xs text-text-secondary">{p.description}</p>
+                </div>
               ))}
-            </ol>
+            </div>
+            <p className="mt-3 font-mono text-[0.6rem] text-text-muted">
+              These are service providers, not partnerships.
+            </p>
           </div>
         </AnimateIn>
 
+        {/* Strategic Partnership Targets */}
         <AnimateIn delay={0.2}>
+          <div className="mx-auto mt-10 max-w-3xl">
+            <h3 className="mb-4 font-mono text-[0.65rem] uppercase tracking-widest text-text-muted">
+              Potential strategic partners
+            </h3>
+            <div className="space-y-3">
+              {STRATEGIC_PARTNERS.map((p) => (
+                <div
+                  key={p.label}
+                  className="flex items-start gap-4 rounded-[var(--radius-md)] border border-border-default bg-surface p-5"
+                >
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal text-[0.6rem] font-bold text-text-inverse">
+                    →
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-text-primary">{p.label}</p>
+                    <p className="mt-0.5 text-sm text-text-secondary">{p.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </AnimateIn>
+
+        <AnimateIn delay={0.3}>
           <p className="mx-auto mt-8 max-w-2xl text-center font-mono text-xs text-text-muted">
-            Current technology providers are distinguished from potential strategic partners.
-            No existing partnerships are implied unless publicly confirmed.
+            No existing partnerships are implied unless publicly confirmed. Technology
+            providers are distinguished from strategic partnership targets.
           </p>
         </AnimateIn>
       </div>

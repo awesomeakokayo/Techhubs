@@ -7,38 +7,47 @@ import { Map, BookOpen, FolderKanban, Briefcase, Compass, Rocket } from 'lucide-
 const CAPABILITIES = [
   {
     icon: Map,
-    title: 'Structured Learning Tracks',
-    description: '22 career-oriented learning paths across four categories: Build, Design, Analyze, and Grow.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Curated Resources',
-    description: '300+ vetted learning resources, with a strong preference for free materials.',
-  },
-  {
-    icon: FolderKanban,
-    title: 'Practical Projects',
-    description: '96 portfolio projects designed to build demonstrable, career-relevant competence.',
-  },
-  {
-    icon: Briefcase,
-    title: 'Career Guidance',
-    description: 'Career path guides, salary insights, and job-title mapping for each track.',
+    title: 'Learning Tracks',
+    value: '22 tracks',
+    annotation: 'Removes learning-path confusion',
   },
   {
     icon: Compass,
     title: 'Career Roadmaps',
-    description: '17 visual roadmaps showing the complete journey from beginner to career-ready.',
+    value: '17 roadmaps',
+    annotation: 'Shows the complete beginner-to-career journey',
+  },
+  {
+    icon: FolderKanban,
+    title: 'Portfolio Projects',
+    value: '96 projects',
+    annotation: 'Turns knowledge into evidence',
+  },
+  {
+    icon: BookOpen,
+    title: 'Curated Resources',
+    value: 'resources',
+    annotation: 'Quality materials with free-first approach',
+  },
+  {
+    icon: Briefcase,
+    title: 'Career Guidance',
+    value: '5 career paths',
+    annotation: 'Connects learning to employability',
   },
   {
     icon: Rocket,
     title: 'AI-Assisted Learning',
-    description: 'AI tools that help learners navigate resources and deepen understanding.',
+    value: 'AI tools',
+    annotation: 'Supports the journey without replacing the effort',
   },
 ]
 
 export function ProductSlide() {
   const stats = getProductStats()
+
+  // Update the resources value dynamically
+  CAPABILITIES[3].value = `${stats.resourceCount} resources`
 
   return (
     <section className="bg-void">
@@ -54,38 +63,24 @@ export function ProductSlide() {
         </AnimateIn>
 
         <AnimateIn delay={0.1}>
-          <dl className="mx-auto mt-14 grid max-w-3xl grid-cols-1 divide-y divide-border-subtle border-y border-border-default sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            {[
-              { value: String(stats.trackCount), label: 'learning tracks' },
-              { value: String(stats.resourceCount), label: 'curated resources' },
-              { value: String(stats.projectCount), label: 'projects' },
-            ].map((metric) => (
-              <div key={metric.label} className="px-8 py-10 text-center">
-                <dt className="order-2 mt-2 font-mono text-[0.65rem] font-medium uppercase tracking-widest text-text-muted">
-                  {metric.label}
-                </dt>
-                <dd className="order-1 font-editorial text-5xl text-text-primary">{metric.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </AnimateIn>
-
-        <AnimateIn delay={0.2}>
-          <div className="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CAPABILITIES.map((cap) => (
-              <div
-                key={cap.title}
-                className="rounded-[var(--radius-md)] border border-border-default bg-surface p-5"
-              >
-                <cap.icon size={20} className="text-teal" aria-hidden />
-                <h3 className="mt-3 text-sm font-bold text-text-primary">{cap.title}</h3>
-                <p className="mt-1.5 text-sm leading-snug text-text-secondary">{cap.description}</p>
-              </div>
-            ))}
+          <div className="mx-auto mt-12 max-w-4xl">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {CAPABILITIES.map((cap) => (
+                <div
+                  key={cap.title}
+                  className="rounded-[var(--radius-md)] border border-border-default bg-surface p-5"
+                >
+                  <cap.icon size={20} className="text-teal" aria-hidden />
+                  <h3 className="mt-3 text-sm font-bold text-text-primary">{cap.title}</h3>
+                  <p className="mt-1 font-mono text-xs text-teal">{cap.value}</p>
+                  <p className="mt-1.5 text-sm leading-snug text-text-secondary">{cap.annotation}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </AnimateIn>
 
-        <AnimateIn delay={0.3}>
+        <AnimateIn delay={0.2}>
           <p className="mx-auto mt-10 max-w-2xl text-center font-mono text-xs text-text-muted">
             Every metric is derived from the live catalogue. Nothing inflated.
           </p>
