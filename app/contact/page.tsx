@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { ContactForm } from '@/components/contact/ContactForm'
 
 export const metadata: Metadata = getPageMetadata({
   title: 'Contact TechSkillHub: Feedback, Ideas & Support',
@@ -26,37 +27,7 @@ export default function ContactPage() {
           </p>
         </header>
 
-        <form
-          className="panel max-w-2xl"
-          action="mailto:hello@techskillhub.cv"
-          method="get"
-          encType="text/plain"
-        >
-          <label className="block">
-            <span className="mb-1 block text-sm font-medium text-text-primary">Your name (optional)</span>
-            <input type="text" name="name" className="w-full rounded-md border border-border-default bg-surface px-3 py-2.5 text-text-primary" />
-          </label>
-          <label className="mt-4 block">
-            <span className="mb-1 block text-sm font-medium text-text-primary">Subject</span>
-            <select name="subject" className="w-full rounded-md border border-border-default bg-surface px-3 py-2.5 text-text-primary">
-              <option>Feedback on a page</option>
-              <option>Suggest a roadmap or guide</option>
-              <option>Report a broken resource</option>
-              <option>Partnership or collaboration</option>
-              <option>Something else</option>
-            </select>
-          </label>
-          <label className="mt-4 block">
-            <span className="mb-1 block text-sm font-medium text-text-primary">Message</span>
-            <textarea name="body" rows={6} className="w-full rounded-md border border-border-default bg-surface px-3 py-2.5 text-text-primary" />
-          </label>
-          <button type="submit" className="btn btn-primary mt-6">
-            Send message
-          </button>
-          <p className="mt-4 text-sm text-text-muted">
-            Prefer email? Reach us directly at <a href="mailto:hello@techskillhub.cv" className="text-teal">hello@techskillhub.cv</a>.
-          </p>
-        </form>
+        <ContactForm />
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 max-w-2xl">
           <Link href="/guides" className="card no-underline">
