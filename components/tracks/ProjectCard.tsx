@@ -19,7 +19,21 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
   const done = getTrackProgress(trackId).completedProjects.includes(project.id)
   const togglingRef = useRef(false)
   const [briefOpen, setBriefOpen] = useState(false)
+  const [confirmed, setConfirmed] = useState(done)
   const brief = trackId.startsWith('ai-') ? AI_PROJECT_BRIEFS[project.id] : undefined
+
+  const completeProject = () => {
+    if (togglingRef.current || !confirmed) return
+    togglingRef.current = true
+    toggleProject(trackId, project.id)
+    trackEvent({
+      event_name: 'project_mark_complete',
+      track_slug: trackSlug ?? trackId,
+      project_name: project.title,
+    })
+    onProgressChange?.()
+    setTimeout(() => { togglingRef.current = false }, 300)
+  }
 
   return (
     <article className={`card ${done ? 'bg-green-500/5 border-green-500/30' : ''}`}>
@@ -28,23 +42,24 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
         <button
           type="button"
           onClick={() => {
-            if (togglingRef.current) return
-            togglingRef.current = true
-            toggleProject(trackId, project.id)
-            trackEvent({
-              event_name: 'project_mark_complete',
-              track_slug: trackSlug ?? trackId,
-              project_name: project.title,
-            })
-            onProgressChange?.()
-            setTimeout(() => { togglingRef.current = false }, 300)
+            if (done) {
+              if (togglingRef.current) return
+              togglingRef.current = true
+              toggleProject(trackId, project.id)
+              setConfirmed(false)
+              onProgressChange?.()
+              setTimeout(() => { togglingRef.current = false }, 300)
+              return
+            }
+            completeProject()
           }}
-          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors ${
+          disabled={!done && brief ? !confirmed : false}
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
             done
               ? 'border-green-500 bg-green-500/20 text-green-500'
               : 'border-border-default text-text-muted hover:border-teal hover:text-teal'
           }`}
-          aria-label={done ? 'Mark as not built' : 'Mark as built'}
+          aria-label={done ? 'Mark as not built' : confirmed ? 'Mark as built' : 'Confirm requirements before marking as built'}
           aria-pressed={done}
         >
           {done && <Check size={16} strokeWidth={3} />}
@@ -107,6 +122,22 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
               <div className="rounded-md border border-teal/20 bg-teal/5 p-3">
                 <h5 className="font-display font-semibold text-teal">Stretch goal</h5>
                 <p className="mt-1.5 leading-6 text-text-secondary">{brief.stretchGoal}</p>
+              </div>
+
+              <label className="flex items-start gap-3 rounded-md border border-border-default bg-overlay p-3">
+                <input
+                  type="checkbox"
+                  checked={confirmed}
+                  onChange={(e) => setConfirmed(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 accent-teal"
+                />
+                <span className="text-sm text-text-secondary">
+                  I have completed the required deliverables, reviewed my work against the acceptance criteria, and saved the project evidence listed above.
+                </span>
+              </label>
+
+              <div className="text-xs text-text-muted">
+                Project completion is a learner-confirmed evidence checkpoint; it is not represented as an externally graded score.
               </div>
             </div>
           )}
