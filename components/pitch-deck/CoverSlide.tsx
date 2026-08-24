@@ -7,6 +7,7 @@ import { AnimateIn } from '@/components/ui/AnimateIn'
 export function CoverSlide() {
   return (
     <section
+      id="cover"
       className="relative overflow-hidden bg-void"
       style={{
         backgroundImage:

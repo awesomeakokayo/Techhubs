@@ -58,7 +58,7 @@ const FLYWHEEL = ['Content', 'Learners', 'Projects', 'Success Stories', 'Communi
 
 export function GoToMarketSlide() {
   return (
-    <section className="bg-void">
+    <section id="go-to-market" className="bg-void">
       <div className="container py-36 md:py-40">
         <AnimateIn>
           <div className="mx-auto max-w-3xl">

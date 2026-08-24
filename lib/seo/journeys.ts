@@ -295,6 +295,158 @@ export const LEARNING_JOURNEYS: LearningJourney[] = [
       'Use the portfolio to land interviews.'
     ),
   },
+
+  // --- AI Category Journeys ---
+  {
+    id: 'ai-foundations',
+    goal: 'Learn AI fundamentals',
+    cluster: 'ai-beginner',
+    audience: ['Complete beginners', 'Professionals', 'Students'],
+    entry: node(
+      'roadmap',
+      'AI Foundations & Fluency',
+      '/tracks/ai-foundations',
+      'Understand AI, choose the right tools, and build reliable habits.'
+    ),
+    roadmap: node('roadmap', 'AI Foundations Roadmap', '/roadmaps/ai-foundations', 'AI fundamentals in structured order.'),
+    project: BEGINNER_PROJECTS,
+    nextSkill: node('roadmap', 'AI for Work', '/tracks/ai-for-work', 'Apply AI to your professional work.'),
+  },
+  {
+    id: 'ai-for-work',
+    goal: 'Use AI at work',
+    cluster: 'ai-for-work',
+    audience: ['Professionals', 'Office workers', 'Managers'],
+    entry: node(
+      'roadmap',
+      'AI for Work & Productivity',
+      '/tracks/ai-for-work',
+      'Practical AI skills for the workplace.'
+    ),
+    roadmap: node('roadmap', 'AI for Work Roadmap', '/roadmaps/ai-for-work', 'AI productivity skills in order.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI Research', '/tracks/ai-research-verification', 'Learn to verify AI output.'),
+  },
+  {
+    id: 'ai-research-verification',
+    goal: 'Research with AI',
+    cluster: 'ai-research',
+    audience: ['Researchers', 'Students', 'Analysts'],
+    entry: node(
+      'roadmap',
+      'AI Research, Search & Verification',
+      '/tracks/ai-research-verification',
+      'Use AI for research while maintaining accuracy.'
+    ),
+    roadmap: node('roadmap', 'AI Research Roadmap', '/roadmaps/ai-research-verification', 'Research skills with verification.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI Content Creation', '/tracks/ai-content-creation', 'Create content with AI.'),
+  },
+  {
+    id: 'ai-content-creation',
+    goal: 'Create content with AI',
+    cluster: 'ai-content',
+    audience: ['Content creators', 'Marketers', 'Freelancers'],
+    entry: node(
+      'roadmap',
+      'AI Content Creation',
+      '/tracks/ai-content-creation',
+      'Create better content faster using AI.'
+    ),
+    roadmap: node('roadmap', 'AI Content Roadmap', '/roadmaps/ai-content-creation', 'Content creation with AI tools.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI YouTube', '/tracks/ai-youtube', 'Create video content with AI.'),
+  },
+  {
+    id: 'ai-youtube',
+    goal: 'Create YouTube content with AI',
+    cluster: 'ai-youtube',
+    audience: ['Content creators', 'YouTubers', 'Video producers'],
+    entry: node(
+      'roadmap',
+      'AI Video & YouTube',
+      '/tracks/ai-youtube',
+      'Create professional YouTube content using AI.'
+    ),
+    roadmap: node('roadmap', 'AI YouTube Roadmap', '/roadmaps/ai-youtube', 'YouTube production with AI.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI Software Development', '/tracks/ai-software-development', 'Build software with AI.'),
+  },
+  {
+    id: 'ai-software-development',
+    goal: 'Build software with AI',
+    cluster: 'ai-coding',
+    audience: ['Developers', 'Learners', 'Technical professionals'],
+    entry: node(
+      'roadmap',
+      'AI-Assisted Software Development',
+      '/tracks/ai-software-development',
+      'Build software faster using AI coding tools.'
+    ),
+    roadmap: node('roadmap', 'AI Software Development Roadmap', '/roadmaps/ai-software-development', 'AI-assisted development in order.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI Automation', '/tracks/ai-automation', 'Automate with AI.'),
+  },
+  {
+    id: 'ai-automation',
+    goal: 'Automate with AI',
+    cluster: 'ai-automation',
+    audience: ['Professionals', 'Developers', 'Operations'],
+    entry: node(
+      'roadmap',
+      'AI Automation',
+      '/tracks/ai-automation',
+      'Automate tasks and build intelligent workflows.'
+    ),
+    roadmap: node('roadmap', 'AI Automation Roadmap', '/roadmaps/ai-automation', 'Automation skills in order.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI Agents', '/tracks/ai-agents', 'Build AI agents.'),
+  },
+  {
+    id: 'ai-agents',
+    goal: 'Build AI agents',
+    cluster: 'ai-agents',
+    audience: ['Developers', 'Technical learners', 'AI engineers'],
+    entry: node(
+      'roadmap',
+      'AI Agents',
+      '/tracks/ai-agents',
+      'Understand, design, and build AI agents.'
+    ),
+    roadmap: node('roadmap', 'AI Agents Roadmap', '/roadmaps/ai-agents', 'Agent design and building.'),
+    project: ADVANCED_PROJECTS,
+    nextSkill: node('roadmap', 'AI Engineering', '/tracks/ai-engineering', 'Build AI-powered applications.'),
+  },
+  {
+    id: 'ai-engineering',
+    goal: 'Build AI applications',
+    cluster: 'ai-engineering',
+    audience: ['Developers', 'AI engineers', 'Backend engineers'],
+    entry: node(
+      'roadmap',
+      'AI Data, APIs & Engineering',
+      '/tracks/ai-engineering',
+      'Build AI-powered applications using APIs and RAG.'
+    ),
+    roadmap: node('roadmap', 'AI Engineering Roadmap', '/roadmaps/ai-engineering', 'AI engineering skills in order.'),
+    project: ADVANCED_PROJECTS,
+    nextSkill: node('roadmap', 'AI Design', '/tracks/ai-design', 'Design with AI.'),
+  },
+  {
+    id: 'ai-design',
+    goal: 'Design with AI',
+    cluster: 'ai-design',
+    audience: ['Designers', 'Creative professionals', 'Product designers'],
+    entry: node(
+      'roadmap',
+      'AI Design & Creative Work',
+      '/tracks/ai-design',
+      'Use AI to enhance your design process.'
+    ),
+    roadmap: node('roadmap', 'AI Design Roadmap', '/roadmaps/ai-design', 'Design skills with AI.'),
+    project: INTERMEDIATE_PROJECTS,
+    nextSkill: node('roadmap', 'AI Content Creation', '/tracks/ai-content-creation', 'Create content with AI.'),
+  },
 ]
 
 const JOURNEY_BY_ID = new Map(LEARNING_JOURNEYS.map((j) => [j.id, j]))

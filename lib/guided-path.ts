@@ -121,6 +121,37 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'ai-1': 1, 'ai-2': 2, 'ai-3': 2,
     'ai-4': 3, 'ai-5': 1, 'ai-6': 4,
   },
+  'ai-foundations': {
+    'ai-f1': 1, 'ai-f2': 3, 'ai-f3': 1,
+    'ai-f4': 1, 'ai-f5': 2, 'ai-f6': 3, 'ai-f7': 2,
+  },
+  'ai-work': {
+    'ai-w1': 1, 'ai-w2': 5, 'ai-w3': 1,
+  },
+  'ai-research': {
+    'ai-r1': 1, 'ai-r2': 1,
+  },
+  'ai-content': {
+    'ai-c1': 5, 'ai-c2': 3,
+  },
+  'ai-youtube': {
+    'ai-y1': 5, 'ai-y2': 3,
+  },
+  'ai-software-development': {
+    'ai-s1': 4, 'ai-s2': 3, 'ai-s3': 2,
+  },
+  'ai-automation': {
+    'ai-a1': 5, 'ai-a2': 2, 'ai-a3': 2,
+  },
+  'ai-agents': {
+    'ai-ag1': 1, 'ai-ag2': 3, 'ai-ag3': 10,
+  },
+  'ai-engineering': {
+    'ai-e1': 1, 'ai-e2': 6, 'ai-e3': 1, 'ai-e4': 6,
+  },
+  'ai-design': {
+    'ai-d1': 5, 'ai-d2': 2,
+  },
   nocode: {
     'nc-1': 1, 'nc-2': 2, 'nc-3': 1,
     'nc-4': 3, 'nc-5': 2,

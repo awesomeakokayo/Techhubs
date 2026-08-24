@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { PitchDeckNav } from '@/components/pitch-deck/PitchDeckNav'
 import { CoverSlide } from '@/components/pitch-deck/CoverSlide'
 import { ProblemSlide } from '@/components/pitch-deck/ProblemSlide'
 import { InsightSlide } from '@/components/pitch-deck/InsightSlide'
@@ -41,6 +42,7 @@ export default function PitchDeckPage() {
   return (
     <>
       <PageViewTracker path="/pitch-deck" eventName="pitch_deck_open" />
+      <PitchDeckNav />
       <CoverSlide />
       <ProblemSlide />
       <InsightSlide />

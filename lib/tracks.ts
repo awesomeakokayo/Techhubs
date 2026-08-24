@@ -1,4 +1,4 @@
-export type TrackCategory = 'build' | 'design' | 'analyze' | 'grow'
+export type TrackCategory = 'build' | 'design' | 'analyze' | 'grow' | 'ai'
 export type ResourceType = 'docs' | 'video' | 'practice' | 'book' | 'tool' | 'community'
 export type ProjectLevel = 'beginner' | 'intermediate' | 'advanced'
 
@@ -5008,6 +5008,1915 @@ export const TRACKS: Track[] = [
     },
     careerTip: 'Complete the HackQuest path and earn the Sonic certification — it is on-chain verifiable, which means it is permanent, unfakeable, and lives on your wallet address forever. Add it to every profile immediately.',
   },
+  // ======================================================================
+  // AI CATEGORY TRACKS
+  // ======================================================================
+  {
+    id: 'ai-foundations',
+    slug: 'ai-foundations',
+    name: 'AI Foundations & Fluency',
+    tagline: 'Understand AI, choose the right tools, and build reliable habits for working with AI.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Brain',
+    difficulty: 1,
+    difficultyLabel: 'Beginner-Friendly',
+    timeEstimate: '2 to 4 weeks',
+    techStack: ['ChatGPT', 'Claude', 'Gemini', 'Perplexity', 'Prompting'],
+    overview: {
+      description:
+        'AI can research, write, analyze, code, design, create video, automate workflows, search information, and help build software. The difficult part is knowing what to use, how to use it, and when another tool is better. This track teaches the fundamentals of working with modern AI systems — not just chatting with them.',
+      whatYouCanBuild: [
+        'Reliable AI workflows for recurring tasks',
+        'Effective prompts that produce useful output',
+        'Tool selection strategies for different problems',
+        'Verification habits for AI-generated content',
+        'Repeatable processes for research, writing, and analysis',
+      ],
+      jobTitles: [
+        'AI Literate Professional',
+        'Prompt Engineer',
+        'AI Workflow Designer',
+        'Content Strategist',
+        'Productivity Consultant',
+      ],
+      salaryRange: '$40,000 to $120,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'Understanding AI',
+        duration: '1 week',
+        topics: [
+          'What AI actually is',
+          'Machine learning vs generative AI',
+          'Models, products, and tools',
+          'What AI is good at',
+          'Where AI fails',
+        ],
+        description:
+          'AI is a broad field. Learn what modern AI tools actually do, how they differ from each other, and where they are genuinely useful versus where they are not the right tool.',
+      },
+      {
+        id: 2,
+        title: 'The Modern AI Landscape',
+        duration: '1 week',
+        topics: [
+          'General assistants (ChatGPT, Claude, Gemini)',
+          'Reasoning models',
+          'Multimodal systems',
+          'Search and research tools',
+          'Coding tools',
+          'Creative tools',
+        ],
+        description:
+          'The AI tool landscape is large and changing fast. Learn to categorize tools by what they do rather than by brand name, so you can choose the right one for any task.',
+      },
+      {
+        id: 3,
+        title: 'Communicating With AI',
+        duration: '1 week',
+        topics: [
+          'How prompts work',
+          'Context and instructions',
+          'Audience, format, and constraints',
+          'Examples and few-shot prompting',
+          'Iterating on output',
+        ],
+        description:
+          'The quality of AI output depends heavily on the quality of your input. Learn to give AI the context, structure, and constraints it needs to produce useful results.',
+      },
+      {
+        id: 4,
+        title: 'Thinking With AI',
+        duration: '1 week',
+        topics: [
+          'Using AI for brainstorming',
+          'Using AI for analysis',
+          'Using AI for planning',
+          'Combining AI with human judgment',
+          'When not to use AI',
+        ],
+        description:
+          'AI is most powerful when it supports your thinking rather than replacing it. Learn to use AI as a thinking partner for research, planning, analysis, and decision-making.',
+      },
+      {
+        id: 5,
+        title: 'AI Reliability',
+        duration: '1 week',
+        topics: [
+          'Hallucinations and confabulation',
+          'Outdated information',
+          'Verification strategies',
+          'Source checking',
+          'High-stakes decisions',
+        ],
+        description:
+          'AI output is not evidence. Learn to identify when AI is likely wrong, how to verify important claims, and when to treat AI output as a starting point rather than a final answer.',
+      },
+      {
+        id: 6,
+        title: 'Building Repeatable AI Workflows',
+        duration: '1 week',
+        topics: [
+          'Task definition',
+          'Context templates',
+          'Output formats',
+          'Review criteria',
+          'Iteration and improvement',
+        ],
+        description:
+          'Move from one-off prompts to repeatable workflows. Define tasks clearly, create reusable instruction templates, and build processes you can rely on.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-f1',
+        title: 'OpenAI Academy — AI Foundations',
+        description:
+          'Official beginner course covering AI fundamentals, how AI works, use cases, and responsible use. Use it alongside Stage 1 before taking the foundation quiz.',
+        url: 'https://openai.com/academy/ai-fundamentals/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI',
+      },
+      {
+        id: 'ai-f2',
+        title: 'OpenAI Academy — AI Foundations Course',
+        description:
+          'Hands-on introduction to AI, prompting, context, output review, and responsible use. Free and available globally with a ChatGPT account.',
+        url: 'https://academy.openai.com/public/courses/ai-foundations-juzjs?autoEnroll=true',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-f3',
+        title: 'Microsoft Learn — Introduction to Generative AI',
+        description:
+          'Beginner introduction to generative AI, LLMs, model comparison, critical thinking, and responsible use. Includes an assessment.',
+        url: 'https://learn.microsoft.com/en-us/training/modules/intro-generative-ai-explore-basics/',
+        type: 'docs',
+        free: true,
+        source: 'Microsoft Learn',
+      },
+      {
+        id: 'ai-f4',
+        title: 'Microsoft Learn — What Is Generative AI?',
+        description:
+          'Clear, concise explanation of generative AI fundamentals and responsible use. Good supplementary reading for Stage 1.',
+        url: 'https://learn.microsoft.com/en-us/training/modules/what-generative-ai/',
+        type: 'docs',
+        free: true,
+        source: 'Microsoft Learn',
+      },
+      {
+        id: 'ai-f5',
+        title: 'OpenAI Academy — Getting Started With ChatGPT',
+        description:
+          'Practical introduction to ChatGPT covering prompting, tools, files, search, image creation, projects and workflows. Use as a supplementary resource.',
+        url: 'https://openai.com/academy/getting-started/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI',
+      },
+      {
+        id: 'ai-f6',
+        title: 'Anthropic — Build With Claude',
+        description:
+          'Prompt engineering, evaluations, and building with Claude. Use alongside OpenAI resources to understand multiple AI assistants.',
+        url: 'https://www.anthropic.com/learn/build-with-claude',
+        type: 'docs',
+        free: true,
+        source: 'Anthropic',
+      },
+      {
+        id: 'ai-f7',
+        title: 'Microsoft — Generative AI for Beginners',
+        description:
+          'Comprehensive 18-lesson course covering LLM fundamentals, model comparison, and responsible AI. Excellent for structured learning.',
+        url: 'https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/',
+        type: 'video',
+        free: true,
+        source: 'Microsoft',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-f-p1',
+        title: 'AI Task Triage',
+        description:
+          'Analyze ten realistic tasks and decide whether AI, search, code, automation, traditional software, or human judgment is the right tool. Teaches tool selection based on the problem.',
+        level: 'beginner',
+        techTags: ['AI', 'Tool Selection', 'Critical Thinking'],
+      },
+      {
+        id: 'ai-f-p2',
+        title: 'Personal AI Workbench',
+        description:
+          'Select a recurring task and build a repeatable AI workflow with task definition, context, desired output, constraints, examples, review criteria, and a reusable instruction template.',
+        level: 'beginner',
+        techTags: ['AI', 'Prompting', 'Workflow Design'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Understanding what AI can and cannot do',
+        'Learning to choose the right AI tool for a task',
+        'Writing clearer, more effective prompts',
+        'Building habits for verifying AI output',
+        'Creating repeatable workflows',
+      ],
+      notFor: [
+        'Replacing your own thinking and judgment',
+        'Trusting AI output without verification',
+        'Using AI for high-stakes decisions without human review',
+      ],
+      tools: [
+        {
+          name: 'ChatGPT',
+          use: 'General-purpose AI assistant for writing, analysis, brainstorming',
+          url: 'https://chat.openai.com',
+        },
+        {
+          name: 'Claude',
+          use: 'Long-context reasoning, analysis, and careful writing',
+          url: 'https://claude.ai',
+        },
+        {
+          name: 'Gemini',
+          use: 'Multimodal tasks, search-integrated AI, Google ecosystem',
+          url: 'https://gemini.google.com',
+        },
+        {
+          name: 'Perplexity',
+          use: 'AI-powered research with source citations',
+          url: 'https://perplexity.ai',
+        },
+      ],
+      samplePrompts: [
+        'I need to write a 300-word explanation of how APIs work for a first-year computer science student who has never used one. Include one simple real-world analogy.',
+        'Compare three approaches to organizing a weekly content calendar for a small business: manual planning, AI-assisted planning, and fully automated scheduling. List pros and cons of each.',
+        'I have a 10-page document about climate policy. Summarize the key arguments, identify any claims that seem unsupported, and suggest three questions I should verify before using this in a report.',
+      ],
+    },
+    careerTip:
+      'AI fluency is becoming a baseline professional skill, not a specialty. The people who get ahead are not the ones who know the most AI tools — they are the ones who know which tool to use for which problem, and when to trust their own judgment over AI output.',
+  },
+  {
+    id: 'ai-work',
+    slug: 'ai-for-work',
+    name: 'AI for Work & Productivity',
+    tagline: 'Use AI to write, plan, research, and manage your professional work more effectively.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Briefcase',
+    difficulty: 2,
+    difficultyLabel: 'Beginner-Friendly',
+    timeEstimate: '3 to 5 weeks',
+    techStack: ['ChatGPT', 'Claude', 'Copilot', 'Google Docs', 'Notion AI'],
+    overview: {
+      description:
+      'Most professionals can immediately benefit from AI in their daily work — writing emails, summarizing documents, planning projects, analyzing data, and automating repetitive tasks. This track teaches practical AI skills for the workplace without requiring programming knowledge.',
+      whatYouCanBuild: [
+        'AI-powered communication workflows',
+        'Document analysis and summarization systems',
+        'Automated research processes',
+        'Planning and project management workflows',
+        'Professional productivity systems',
+      ],
+      jobTitles: [
+        'AI-Enhanced Professional',
+        'Project Manager',
+        'Operations Specialist',
+        'Marketing Manager',
+        'Business Analyst',
+      ],
+      salaryRange: '$40,000 to $110,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'AI for Communication',
+        duration: '1 week',
+        topics: [
+          'Drafting professional emails',
+          'Writing meeting summaries',
+          'Creating presentations',
+          'Editing and tone adjustment',
+          'Multilingual communication',
+        ],
+        description:
+          'Learn to use AI for professional communication — drafting, editing, summarizing, and adapting tone for different audiences.',
+      },
+      {
+        id: 2,
+        title: 'AI for Documents',
+        duration: '1 week',
+        topics: [
+          'Summarizing long documents',
+          'Extracting key information',
+          'Comparing documents',
+          'Creating reports from data',
+          'Working with PDFs and spreadsheets',
+        ],
+        description:
+          'AI excels at processing large amounts of text. Learn to summarize, extract, compare, and synthesize documents efficiently.',
+      },
+      {
+        id: 3,
+        title: 'AI for Learning',
+        duration: '1 week',
+        topics: [
+          'Using AI as a tutor',
+          'Creating study materials',
+          'Testing your understanding',
+          'Researching new topics',
+          'Building knowledge frameworks',
+        ],
+        description:
+          'AI can accelerate learning when used correctly. Learn to use it for explanations, practice questions, research, and building understanding.',
+      },
+      {
+        id: 4,
+        title: 'AI for Planning',
+        duration: '1 week',
+        topics: [
+          'Project planning with AI',
+          'Breaking down large tasks',
+          'Creating timelines and roadmaps',
+          'Risk identification',
+          'Stakeholder communication',
+        ],
+        description:
+          'AI can help you plan more thoroughly by identifying steps you might miss, suggesting timelines, and helping you communicate plans clearly.',
+      },
+      {
+        id: 5,
+        title: 'AI for Professional Workflows',
+        duration: '1 week',
+        topics: [
+          'Automating repetitive tasks',
+          'Data analysis and reporting',
+          'Competitive research',
+          'Content calendars',
+          'Building personal AI systems',
+        ],
+        description:
+          'Combine everything into professional workflows. Learn to identify repetitive tasks, automate them with AI, and build systems that save hours every week.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-w1',
+        title: 'OpenAI Academy — Applied AI Foundations',
+        description:
+          'Move from individual prompts to repeatable workflows. Covers breaking recurring work into steps, deciding where AI helps, and adding review points.',
+        url: 'https://academy.openai.com/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-w2',
+        title: 'Microsoft Learn — Generative AI and Agents',
+        description:
+          'Covers generative AI, LLMs, prompts, and agents with a knowledge assessment. Good for understanding AI capabilities in professional contexts.',
+        url: 'https://learn.microsoft.com/en-us/training/modules/fundamentals-generative-ai/',
+        type: 'docs',
+        free: true,
+        source: 'Microsoft Learn',
+      },
+      {
+        id: 'ai-w3',
+        title: 'OpenAI Academy — Getting Started With ChatGPT',
+        description:
+          'Practical introduction to ChatGPT covering prompting, tools, files, search, image creation, projects and workflows.',
+        url: 'https://openai.com/academy/getting-started/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-w-p1',
+        title: 'AI Communication Workflow',
+        description:
+          'Build a system for drafting, editing, and adapting professional communications using AI with consistent quality and appropriate tone.',
+        level: 'beginner',
+        techTags: ['AI', 'Communication', 'Workflow'],
+      },
+      {
+        id: 'ai-w-p2',
+        title: 'AI Document Workflow',
+        description:
+          'Create a process for analyzing, summarizing, and extracting information from long documents using AI tools.',
+        level: 'beginner',
+        techTags: ['AI', 'Documents', 'Analysis'],
+      },
+      {
+        id: 'ai-w-p3',
+        title: 'AI Workday System',
+        description:
+          'Design a complete AI-assisted daily work system covering email, documents, planning, research, and task management.',
+        level: 'intermediate',
+        techTags: ['AI', 'Productivity', 'System Design'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Drafting and editing professional communications',
+        'Summarizing long documents quickly',
+        'Planning projects and breaking down tasks',
+        'Researching new topics efficiently',
+        'Automating repetitive office tasks',
+      ],
+      notFor: [
+        'Making final decisions without human review',
+        'Handling sensitive confidential information',
+        'Replacing critical thinking in analysis',
+      ],
+      tools: [
+        {
+          name: 'ChatGPT',
+          use: 'General writing, brainstorming, document analysis',
+          url: 'https://chat.openai.com',
+        },
+        {
+          name: 'Claude',
+          use: 'Long documents, careful analysis, nuanced writing',
+          url: 'https://claude.ai',
+        },
+        {
+          name: 'Microsoft Copilot',
+          use: 'Integration with Microsoft 365 apps',
+          url: 'https://copilot.microsoft.com',
+        },
+      ],
+      samplePrompts: [
+        'I need to write a project update email to my manager. Here are the key points: [list]. Make it professional, concise, and highlight the two risks I should flag.',
+        'Summarize this 15-page report into 5 bullet points, identify any claims that seem unsupported, and suggest three follow-up questions.',
+        'I have a weekly team meeting. Help me create a reusable agenda template that covers: progress updates, blockers, decisions needed, and action items.',
+      ],
+    },
+    careerTip:
+      'The professionals who get promoted fastest are not the ones who work the most hours — they are the ones who work on the right things. AI helps you spend less time on routine work and more time on the work that actually matters.',
+  },
+  {
+    id: 'ai-research',
+    slug: 'ai-research-verification',
+    name: 'AI Research, Search & Verification',
+    tagline: 'Use AI for research while learning to verify claims and maintain accuracy.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Search',
+    difficulty: 2,
+    difficultyLabel: 'Beginner-Friendly',
+    timeEstimate: '3 to 5 weeks',
+    techStack: ['Perplexity', 'ChatGPT', 'Claude', 'Google Scholar', 'Web Search'],
+    overview: {
+      description:
+      'AI is transforming research — but AI output is not evidence. This track teaches you how to use AI for research while building the verification habits that keep your work accurate and credible.',
+      whatYouCanBuild: [
+        'Verified research briefs',
+        'Source-comparison workflows',
+        'Fact-checking processes',
+        'AI-assisted literature reviews',
+        'Reliable research systems',
+      ],
+      jobTitles: [
+        'Research Analyst',
+        'Content Researcher',
+        'Policy Analyst',
+        'Market Researcher',
+        'Journalist',
+      ],
+      salaryRange: '$40,000 to $100,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'Search vs AI',
+        duration: '3 to 5 days',
+        topics: [
+          'When to use search vs AI',
+          'Traditional search strengths',
+          'AI search strengths',
+          'Combining both approaches',
+          'Source quality assessment',
+        ],
+        description:
+          'Search engines and AI assistants solve different problems. Learn when each is appropriate and how to combine them for better research.',
+      },
+      {
+        id: 2,
+        title: 'AI-Assisted Research',
+        duration: '1 week',
+        topics: [
+          'Formulating research questions',
+          'Using AI for initial exploration',
+          'Identifying knowledge gaps',
+          'Gathering sources with AI',
+          'Organizing research findings',
+        ],
+        description:
+          'AI can accelerate the early stages of research by helping you explore topics, identify key sources, and organize findings efficiently.',
+      },
+      {
+        id: 3,
+        title: 'Sources & Evidence',
+        duration: '1 week',
+        topics: [
+          'Primary vs secondary sources',
+          'Source credibility assessment',
+          'Cross-referencing claims',
+          'Identifying bias',
+          'When sources disagree',
+        ],
+        description:
+          'Good research requires good sources. Learn to evaluate source quality, identify bias, and handle conflicting information.',
+      },
+      {
+        id: 4,
+        title: 'Verification & Fact Checking',
+        duration: '1 week',
+        topics: [
+          'Verifying AI-generated claims',
+          'Checking statistics and numbers',
+          'Confirming quotes and attributions',
+          'Using authoritative sources',
+          'Building verification habits',
+        ],
+        description:
+          'AI confidently states things that are wrong. Learn systematic verification techniques to catch errors before they become problems.',
+      },
+      {
+        id: 5,
+        title: 'Research Workflows',
+        duration: '1 week',
+        topics: [
+          'End-to-end research process',
+          'AI + human verification loop',
+          'Synthesizing findings',
+          'Writing research briefs',
+          'Presenting evidence',
+        ],
+        description:
+          'Combine everything into a reliable research workflow. From question to verified brief, build a process you can trust.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-r1',
+        title: 'OpenAI Academy — AI Foundations',
+        description:
+          'Covers AI fundamentals including limitations and responsible use. Essential background for understanding why verification matters.',
+        url: 'https://openai.com/academy/ai-fundamentals/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI',
+      },
+      {
+        id: 'ai-r2',
+        title: 'Microsoft Learn — Introduction to Generative AI',
+        description:
+          'Beginner introduction covering model comparison and critical thinking about AI output.',
+        url: 'https://learn.microsoft.com/en-us/training/modules/intro-generative-ai-explore-basics/',
+        type: 'docs',
+        free: true,
+        source: 'Microsoft Learn',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-r-p1',
+        title: 'Verified AI Research Brief',
+        description:
+          'Formulate a research question, use AI for initial exploration, gather and compare sources, identify unsupported claims, verify important statements, and produce a verified brief.',
+        level: 'intermediate',
+        techTags: ['AI', 'Research', 'Verification'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Exploring new topics quickly',
+        'Finding relevant sources',
+        'Summarizing research findings',
+        'Identifying gaps in knowledge',
+        'Drafting research briefs',
+      ],
+      notFor: [
+        'Relying on AI for factual accuracy without verification',
+        'Using AI output as the sole source of evidence',
+        'Making important decisions based on unverified AI claims',
+      ],
+      tools: [
+        {
+          name: 'Perplexity',
+          use: 'AI-powered research with source citations',
+          url: 'https://perplexity.ai',
+        },
+        {
+          name: 'ChatGPT',
+          use: 'Brainstorming research angles and drafting',
+          url: 'https://chat.openai.com',
+        },
+        {
+          name: 'Google Scholar',
+          use: 'Academic source verification',
+          url: 'https://scholar.google.com',
+        },
+      ],
+      samplePrompts: [
+        "A manager asks an AI tool for current market statistics. The answer contains exact numbers but provides no sources. What is the best next step? A) Ask the AI the same question again. B) Add 'be 100% accurate' to the prompt. C) Verify the figures using current authoritative sources. D) Assume the numbers are correct because they are specific.",
+        'I need to research the current state of AI regulation in the EU. Help me identify: what to search for, what sources to trust, and what claims I should verify independently.',
+        'Compare the strengths and weaknesses of using AI search vs traditional web search for researching a medical topic. When should I prefer one over the other?',
+      ],
+    },
+    careerTip:
+      'The ability to verify information is becoming more valuable as AI makes it easier to generate plausible-sounding but incorrect content. Professionals who can distinguish reliable information from confident-sounding noise will be in high demand.',
+  },
+  {
+    id: 'ai-content',
+    slug: 'ai-content-creation',
+    name: 'AI Content Creation',
+    tagline: 'Create better content faster using AI for research, writing, visuals, and production.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'PenTool',
+    difficulty: 2,
+    difficultyLabel: 'Beginner-Friendly',
+    timeEstimate: '4 to 6 weeks',
+    techStack: ['ChatGPT', 'Claude', 'Midjourney', 'Canva AI', 'CapCut'],
+    overview: {
+      description:
+      'AI can dramatically accelerate content creation — from research and writing to visuals and repurposing. This track teaches you to use AI as a creative partner while maintaining quality, originality, and your unique voice.',
+      whatYouCanBuild: [
+        'AI-assisted content strategies',
+        'Research-backed written content',
+        'Visual content with AI tools',
+        'Multi-platform content workflows',
+        'Content repurposing systems',
+      ],
+      jobTitles: [
+        'Content Creator',
+        'Content Strategist',
+        'Marketing Specialist',
+        'Social Media Manager',
+        'Freelance Writer',
+      ],
+      salaryRange: '$35,000 to $90,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'Content Strategy',
+        duration: '1 week',
+        topics: [
+          'Defining content objectives',
+          'Understanding your audience',
+          'Content calendar planning',
+          'Topic research with AI',
+          'Angle and hook development',
+        ],
+        description:
+          'Great content starts with strategy. Learn to use AI for research and planning while keeping human judgment at the center of creative decisions.',
+      },
+      {
+        id: 2,
+        title: 'AI-Assisted Research',
+        duration: '1 week',
+        topics: [
+          'Topic exploration',
+          'Source gathering',
+          'Competitor analysis',
+          'Audience insight research',
+          'Fact verification',
+        ],
+        description:
+          'Use AI to research topics deeply before writing. Learn to gather sources, analyze competitors, and verify facts efficiently.',
+      },
+      {
+        id: 3,
+        title: 'Writing & Scripting',
+        duration: '1 week',
+        topics: [
+          'AI-assisted drafting',
+          'Maintaining your voice',
+          'Editing with AI',
+          'Headlines and hooks',
+          'Script writing for video',
+        ],
+        description:
+          'AI can help you draft faster, but the best content still comes from human insight. Learn to use AI as a writing partner without losing your voice.',
+      },
+      {
+        id: 4,
+        title: 'AI Visual Creation',
+        duration: '1 week',
+        topics: [
+          'Image generation basics',
+          'Visual style development',
+          'AI design tools',
+          'Creating thumbnails and graphics',
+          'Brand consistency',
+        ],
+        description:
+          'AI image generation is powerful but requires taste and judgment. Learn to create visuals that support your content while maintaining quality standards.',
+      },
+      {
+        id: 5,
+        title: 'Content Production',
+        duration: '1 week',
+        topics: [
+          'Production workflows',
+          'Quality control processes',
+          'Publishing optimization',
+          'Performance tracking',
+          'Iteration based on results',
+        ],
+        description:
+          'Build reliable production workflows that consistently produce quality content. Learn to optimize, track performance, and improve over time.',
+      },
+      {
+        id: 6,
+        title: 'Repurposing',
+        duration: '1 week',
+        topics: [
+          'Adapting content for different platforms',
+          'Turning articles into videos',
+          'Creating social media posts from long content',
+          'Audio and podcast adaptation',
+          'Multi-format publishing',
+        ],
+        description:
+          'One piece of content can serve many platforms. Learn to efficiently repurpose content across formats while maintaining quality for each audience.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-c1',
+        title: 'OpenAI Academy — Applied AI Foundations',
+        description:
+          'Move from individual prompts to repeatable workflows. Covers breaking recurring work into steps and adding review points.',
+        url: 'https://academy.openai.com/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-c2',
+        title: 'Anthropic — Build With Claude',
+        description:
+          'Prompt engineering for better outputs. Useful for content creation prompts that need nuance and careful writing.',
+        url: 'https://www.anthropic.com/learn/build-with-claude',
+        type: 'docs',
+        free: true,
+        source: 'Anthropic',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-c-p1',
+        title: 'AI Content Strategy',
+        description:
+          'Develop a complete content strategy for a specific topic or brand using AI for research, planning, and ideation.',
+        level: 'beginner',
+        techTags: ['AI', 'Content Strategy', 'Research'],
+      },
+      {
+        id: 'ai-c-p2',
+        title: 'AI Script + Content Package',
+        description:
+          'Create a complete content package: research, outline, draft, edited final version, and a repurposed version for a different platform.',
+        level: 'intermediate',
+        techTags: ['AI', 'Writing', 'Content Production'],
+      },
+      {
+        id: 'ai-c-p3',
+        title: 'Multi-Platform Content Workflow',
+        description:
+          'Build a workflow that takes one piece of core content and efficiently repurposes it across blog, social media, video script, and newsletter formats.',
+        level: 'intermediate',
+        techTags: ['AI', 'Repurposing', 'Workflow'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Brainstorming content ideas',
+        'Researching topics quickly',
+        'Drafting first versions',
+        'Editing and improving writing',
+        'Creating visual content',
+      ],
+      notFor: [
+        'Publishing AI output without editing',
+        'Replacing your unique voice and perspective',
+        'Creating content about topics you do not understand',
+      ],
+      tools: [
+        {
+          name: 'ChatGPT',
+          use: 'Brainstorming, drafting, editing',
+          url: 'https://chat.openai.com',
+        },
+        {
+          name: 'Claude',
+          use: 'Long-form writing, nuanced content',
+          url: 'https://claude.ai',
+        },
+        {
+          name: 'Canva AI',
+          use: 'Visual content creation and design',
+          url: 'https://canva.com',
+        },
+      ],
+      samplePrompts: [
+        'I want to write a blog post about why learning to code matters in 2026. Help me: identify my target audience, brainstorm 5 unique angles, and create an outline that does not sound like every other coding blog post.',
+        'Here is my 2000-word article about AI in education. Rewrite the introduction to be more engaging, suggest 3 stronger headlines, and identify any paragraphs that could be tightened.',
+        'I have a blog post about productivity tips. Help me repurpose it into: a Twitter thread (8-10 tweets), a LinkedIn post, a short video script, and an email newsletter version.',
+      ],
+    },
+    careerTip:
+      'AI makes content creation faster, but it does not make it easier to stand out. The creators who win are the ones who combine AI efficiency with genuine expertise, original thinking, and consistent quality. Use AI for the process, not the perspective.',
+  },
+  {
+    id: 'ai-youtube',
+    slug: 'ai-youtube',
+    name: 'AI Video & YouTube',
+    tagline: 'Create professional YouTube content using AI for research, scripting, production, and growth.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Youtube',
+    difficulty: 3,
+    difficultyLabel: 'Medium',
+    timeEstimate: '6 to 10 weeks',
+    techStack: ['ChatGPT', 'Claude', 'CapCut', 'DaVinci Resolve', 'Canva'],
+    overview: {
+      description:
+      'AI can help with nearly every stage of YouTube content creation — from topic research and scripting to editing and thumbnails. This track teaches sustainable, quality-focused YouTube production using AI tools.',
+      whatYouCanBuild: [
+        'AI-assisted YouTube videos',
+        'Content research workflows',
+        'Scripting and narration systems',
+        'Thumbnail and packaging strategies',
+        'YouTube content production pipelines',
+      ],
+      jobTitles: [
+        'YouTuber',
+        'Video Content Creator',
+        'Educational Content Producer',
+        'Video Marketing Specialist',
+        'Social Media Video Creator',
+      ],
+      salaryRange: '$0 to $100,000+/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'YouTube Fundamentals',
+        duration: '1 week',
+        topics: ['How YouTube works', 'Content types', 'Audience building', 'Channel strategy', 'Content pillars'],
+        description: 'Understand how YouTube works as a platform before using AI to optimize your workflow.',
+      },
+      {
+        id: 2,
+        title: 'Topic Research',
+        duration: '1 week',
+        topics: ['AI-assisted topic discovery', 'Search volume analysis', 'Competition assessment', 'Audience demand signals', 'Content gap identification'],
+        description: 'Use AI to find topics people actually search for and that you can create uniquely good content about.',
+      },
+      {
+        id: 3,
+        title: 'AI-Assisted Scripting',
+        duration: '1 week',
+        topics: ['Script structures', 'Hook writing', 'AI for outlines', 'AI for drafts', 'Editing your script'],
+        description: 'AI can help you write scripts faster, but the best scripts come from understanding your audience and topic deeply.',
+      },
+      {
+        id: 4,
+        title: 'AI Voice & Audio',
+        duration: '1 week',
+        topics: ['Voice recording basics', 'AI audio tools', 'Narration techniques', 'Sound design', 'Audio quality'],
+        description: 'Learn about AI voice tools and when to use them versus recording your own narration.',
+      },
+      {
+        id: 5,
+        title: 'AI Visual Production',
+        duration: '1 week',
+        topics: ['B-roll sourcing', 'AI image generation for video', 'Screen recording', 'Visual storytelling', 'Stock footage'],
+        description: 'Use AI to source and create visual elements that make your videos more engaging.',
+      },
+      {
+        id: 6,
+        title: 'Editing',
+        duration: '1 week',
+        topics: ['Editing workflow', 'AI-assisted editing', 'Pacing and rhythm', 'Transitions', 'Color and audio'],
+        description: 'Learn efficient editing workflows that combine AI tools with human creative judgment.',
+      },
+      {
+        id: 7,
+        title: 'Thumbnails & Packaging',
+        duration: '1 week',
+        topics: ['Thumbnail design principles', 'AI for thumbnail concepts', 'Title optimization', 'A/B testing', 'Click-through optimization'],
+        description: 'Thumbnails and titles determine whether anyone watches. Learn to create packaging that earns clicks honestly.',
+      },
+      {
+        id: 8,
+        title: 'Publishing',
+        duration: '3 to 5 days',
+        topics: ['Upload optimization', 'Descriptions and tags', 'Scheduling', 'Cross-platform promotion', 'Community engagement'],
+        description: 'Optimize your publishing workflow to maximize reach without spamming.',
+      },
+      {
+        id: 9,
+        title: 'Analytics',
+        duration: '1 week',
+        topics: ['YouTube Analytics basics', 'Understanding retention', 'AI for data analysis', 'Content performance patterns', 'Data-driven iteration'],
+        description: 'Use AI to analyze your YouTube data and identify patterns that inform better content decisions.',
+      },
+      {
+        id: 10,
+        title: 'Responsible Automation',
+        duration: '3 to 5 days',
+        topics: ['Automation boundaries', 'Quality vs quantity', 'Audience trust', 'Sustainable production', 'Long-term thinking'],
+        description: 'Teach the limits of automation. Sustainable YouTube success comes from quality and audience trust, not volume.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-y1',
+        title: 'OpenAI Academy — Applied AI Foundations',
+        description:
+          'Move from individual prompts to repeatable workflows. Useful for building content production systems.',
+        url: 'https://academy.openai.com/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-y2',
+        title: 'Anthropic — Build With Claude',
+        description:
+          'Prompt engineering for better outputs. Useful for scripting and content prompts.',
+        url: 'https://www.anthropic.com/learn/build-with-claude',
+        type: 'docs',
+        free: true,
+        source: 'Anthropic',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-y-p1',
+        title: 'AI-Assisted YouTube Video',
+        description:
+          'Produce a complete YouTube video using AI for research, scripting, and production. Deliver: audience definition, topic, research, hook, outline, script, visual plan, final video, thumbnail, title, and description.',
+        level: 'intermediate',
+        techTags: ['AI', 'YouTube', 'Video Production'],
+      },
+      {
+        id: 'ai-y-p2',
+        title: 'YouTube Content System',
+        description:
+          'Design a repeatable YouTube content production system: topic research workflow, scripting template, production pipeline, and publishing checklist.',
+        level: 'intermediate',
+        techTags: ['AI', 'YouTube', 'System Design'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Researching video topics',
+        'Writing scripts and outlines',
+        'Creating thumbnails',
+        'Analyzing video performance',
+        'Repurposing content across platforms',
+      ],
+      notFor: [
+        'Spam automation or mass content farming',
+        'Promising monetization or income',
+        'Replacing genuine expertise with AI-generated content',
+      ],
+      tools: [
+        {
+          name: 'ChatGPT',
+          use: 'Scripting, brainstorming, research',
+          url: 'https://chat.openai.com',
+        },
+        {
+          name: 'Claude',
+          use: 'Long scripts, nuanced content',
+          url: 'https://claude.ai',
+        },
+        {
+          name: 'CapCut',
+          use: 'Free video editing with AI features',
+          url: 'https://capcut.com',
+        },
+      ],
+      samplePrompts: [
+        'I want to make a YouTube video about why most people quit learning to code. Help me: identify the target audience, brainstorm 5 unique angles that have not been overdone, and write a hook for the first 10 seconds.',
+        'Here is my video script about [topic]. Review it for: pacing issues, unclear sections, weak transitions, and suggest where B-roll or visuals would improve engagement.',
+        'I have a 10-minute video about Python automation. Help me repurpose it into: a blog post, 5 tweets, a LinkedIn post, and a short clip concept for TikTok.',
+      ],
+    },
+    careerTip:
+      'Do not start a YouTube channel to make money. Start because you have something genuinely useful to teach. The creators who last are the ones who care about the topic, not just the metrics. AI makes production faster — use that speed to focus on quality.',
+  },
+  {
+    id: 'ai-software-development',
+    slug: 'ai-software-development',
+    name: 'AI-Assisted Software Development',
+    tagline: 'Build software faster and better using AI coding tools, agents, and verification practices.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Code',
+    difficulty: 3,
+    difficultyLabel: 'Medium',
+    timeEstimate: '6 to 10 weeks',
+    techStack: ['GitHub Copilot', 'Cursor', 'Claude Code', 'ChatGPT', 'VS Code'],
+    overview: {
+      description:
+      'AI coding tools can dramatically accelerate software development — but only if you understand what they generate and can verify it. This track teaches AI-assisted development with emphasis on code review, testing, and professional practices.',
+      whatYouCanBuild: [
+        'AI-assisted web applications',
+        'Rapid prototyping workflows',
+        'AI-powered features',
+        'Debugging and testing systems',
+        'Professional AI development practices',
+      ],
+      jobTitles: [
+        'AI-Assisted Developer',
+        'Full-Stack Developer',
+        'Software Engineer',
+        'Product Engineer',
+        'Technical Founder',
+      ],
+      salaryRange: '$50,000 to $150,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'AI Coding Fundamentals',
+        duration: '1 week',
+        topics: ['How AI coding tools work', 'Code completion vs generation', 'Context and prompting for code', 'When to use AI for code', 'Limitations of AI coding'],
+        description: 'Understand how AI coding tools actually work so you can use them effectively and know their limits.',
+      },
+      {
+        id: 2,
+        title: 'Code Generation',
+        duration: '1 week',
+        topics: ['Generating boilerplate', 'Creating components', 'Writing functions', 'API integration', 'Database schemas'],
+        description: 'Learn to use AI for generating code efficiently while understanding exactly what it produces.',
+      },
+      {
+        id: 3,
+        title: 'Debugging With AI',
+        duration: '1 week',
+        topics: ['Error diagnosis', 'Stack trace analysis', 'AI-assisted debugging', 'Root cause analysis', 'Verification after fixes'],
+        description: 'AI can help you debug faster, but you still need to understand the root cause and verify the fix.',
+      },
+      {
+        id: 4,
+        title: 'AI Coding Tools',
+        duration: '1 week',
+        topics: ['GitHub Copilot', 'Cursor', 'Claude Code', 'v0.dev', 'Tool selection'],
+        description: 'Explore the major AI coding tools and learn when each is most effective for different types of tasks.',
+      },
+      {
+        id: 5,
+        title: 'Coding Agents',
+        duration: '1 week',
+        topics: ['What coding agents are', 'Agent workflows', 'Multi-file changes', 'Scope control', 'Review practices'],
+        description: 'AI coding agents can make complex changes across multiple files. Learn to use them safely with proper scope control and review.',
+      },
+      {
+        id: 6,
+        title: 'Testing & Verification',
+        duration: '1 week',
+        topics: ['AI-generated tests', 'Test quality assessment', 'Manual verification', 'Integration testing', 'Code review with AI'],
+        description: 'Passing tests do not automatically make code correct. Learn to verify AI-generated code thoroughly.',
+      },
+      {
+        id: 7,
+        title: 'Building With AI',
+        duration: '1 week',
+        topics: ['Full-stack development with AI', 'Rapid prototyping', 'Feature development', 'Architecture decisions', 'Performance considerations'],
+        description: 'Combine AI tools into a complete development workflow for building real applications efficiently.',
+      },
+      {
+        id: 8,
+        title: 'Professional AI-Assisted Development',
+        duration: '1 week',
+        topics: ['Team workflows', 'Code standards with AI', 'Documentation', 'Deployment', 'Maintainability'],
+        description: 'Professional development with AI requires standards, review processes, and long-term thinking about maintainability.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-s1',
+        title: 'GitHub Copilot Documentation',
+        description:
+          'Official docs for GitHub Copilot. Covers setup, features, and best practices for AI-assisted coding.',
+        url: 'https://docs.github.com/en/copilot',
+        type: 'docs',
+        free: true,
+        source: 'GitHub',
+      },
+      {
+        id: 'ai-s2',
+        title: 'Anthropic — Build With Claude',
+        description:
+          'Prompt engineering for code generation, debugging, and development workflows.',
+        url: 'https://www.anthropic.com/learn/build-with-claude',
+        type: 'docs',
+        free: true,
+        source: 'Anthropic',
+      },
+      {
+        id: 'ai-s3',
+        title: 'Microsoft — Generative AI for Beginners',
+        description:
+          '18-lesson course covering AI fundamentals useful for understanding the models behind coding tools.',
+        url: 'https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/',
+        type: 'video',
+        free: true,
+        source: 'Microsoft',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-s-p1',
+        title: 'AI-Assisted Landing Page',
+        description:
+          'Build a complete landing page using AI coding tools. Define requirements, use AI for planning and implementation, review generated code, debug issues, and deploy.',
+        level: 'beginner',
+        techTags: ['AI', 'HTML', 'CSS', 'JavaScript'],
+      },
+      {
+        id: 'ai-s-p2',
+        title: 'AI-Assisted Web Application',
+        description:
+          'Build a functional web application with AI assistance. Focus on understanding the generated code, reviewing architecture decisions, and testing thoroughly.',
+        level: 'intermediate',
+        techTags: ['AI', 'React', 'Node.js', 'Testing'],
+      },
+      {
+        id: 'ai-s-p3',
+        title: 'AI-Powered Application',
+        description:
+          'Build an application that integrates AI capabilities — chat, analysis, generation — using AI coding tools for the development process.',
+        level: 'advanced',
+        techTags: ['AI', 'Full-Stack', 'AI API', 'Testing'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Generating boilerplate code',
+        'Debugging errors quickly',
+        'Writing tests',
+        'Rapid prototyping',
+        'Learning new frameworks',
+      ],
+      notFor: [
+        'Accepting code without understanding it',
+        'Security-sensitive code without review',
+        'Architecture decisions without consideration',
+      ],
+      tools: [
+        {
+          name: 'GitHub Copilot',
+          use: 'In-editor code completion and generation',
+          url: 'https://github.com/features/copilot',
+        },
+        {
+          name: 'Cursor',
+          use: 'Full AI code editor for larger projects',
+          url: 'https://cursor.sh',
+        },
+        {
+          name: 'Claude Code',
+          use: 'CLI-based AI coding assistant',
+          url: 'https://claude.ai',
+        },
+      ],
+      samplePrompts: [
+        'An AI coding agent modifies several files and reports that all tests pass. You inspect the diff and notice that it changed authentication logic unrelated to your original task. What should you do? A) Accept the changes because the tests passed. B) Accept the changes because an AI agent knows the codebase. C) Review the changes, revert unrelated modifications, and verify the intended behavior independently. D) Delete the project and start again.',
+        'I need to build a user registration form with email validation, password strength checking, and a terms acceptance checkbox. Use React with TypeScript. After generating the code, explain what each part does and identify any security considerations.',
+        'Here is a 500-line React component that keeps re-rendering. Use AI to identify the performance issue, explain why it happens, and fix it without breaking the existing functionality.',
+      ],
+    },
+    careerTip:
+      'The developers who get hired are not the ones who know the most AI tools — they are the ones who can verify AI output, understand generated code, and build reliable software. AI makes you faster; understanding makes you valuable.',
+  },
+  {
+    id: 'ai-automation',
+    slug: 'ai-automation',
+    name: 'AI Automation',
+    tagline: 'Automate repetitive tasks and build intelligent workflows using AI and APIs.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Zap',
+    difficulty: 3,
+    difficultyLabel: 'Medium',
+    timeEstimate: '5 to 8 weeks',
+    techStack: ['n8n', 'Make', 'Zapier', 'Python', 'APIs'],
+    overview: {
+      description:
+      'AI automation combines the power of AI with workflow automation to eliminate repetitive tasks. Learn to build workflows that classify, extract, route, and process information — with human oversight where it matters.',
+      whatYouCanBuild: [
+        'AI-powered workflow automations',
+        'Data extraction pipelines',
+        'Content processing workflows',
+        'Notification and routing systems',
+        'Business process automation',
+      ],
+      jobTitles: [
+        'Automation Engineer',
+        'Operations Engineer',
+        'Workflow Designer',
+        'No-Code Builder',
+        'Business Process Analyst',
+      ],
+      salaryRange: '$45,000 to $120,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'Automation Fundamentals',
+        duration: '1 week',
+        topics: ['What to automate', 'What not to automate', 'Automation thinking', 'Workflow design', 'Error handling basics'],
+        description: 'Not everything should be automated. Learn to identify good automation candidates and design reliable workflows.',
+      },
+      {
+        id: 2,
+        title: 'Workflows',
+        duration: '1 week',
+        topics: ['Workflow design patterns', 'Triggers and actions', 'Conditional logic', 'Error handling', 'Testing workflows'],
+        description: 'Learn the fundamental patterns of workflow design — triggers, actions, conditions, and error handling.',
+      },
+      {
+        id: 3,
+        title: 'APIs',
+        duration: '1 week',
+        topics: ['What APIs are', 'REST APIs', 'Authentication', 'Making API calls', 'Reading API responses'],
+        description: 'APIs are the backbone of automation. Understand how to connect different services through their APIs.',
+      },
+      {
+        id: 4,
+        title: 'Webhooks',
+        duration: '1 week',
+        topics: ['Webhook concepts', 'Setting up webhooks', 'Receiving data', 'Processing events', 'Webhook security'],
+        description: 'Webhooks let services notify your workflows when things happen. Learn to set up and process webhook events.',
+      },
+      {
+        id: 5,
+        title: 'AI in Workflows',
+        duration: '1 week',
+        topics: ['Adding AI to workflows', 'Text classification', 'Information extraction', 'Content generation', 'Decision routing'],
+        description: 'Learn to add AI capabilities to your workflows for classification, extraction, generation, and routing.',
+      },
+      {
+        id: 6,
+        title: 'Structured Data',
+        duration: '1 week',
+        topics: ['JSON handling', 'Data transformation', 'CSV processing', 'Database operations', 'Data validation'],
+        description: 'Automations work with data. Learn to handle structured data effectively in your workflows.',
+      },
+      {
+        id: 7,
+        title: 'Human Approval',
+        duration: '3 to 5 days',
+        topics: ['When humans need to review', 'Approval workflows', 'Notification systems', 'Escalation paths', 'Audit trails'],
+        description: 'Not everything should run automatically. Learn to build human oversight into your automations.',
+      },
+      {
+        id: 8,
+        title: 'Reliable Automation',
+        duration: '1 week',
+        topics: ['Error handling patterns', 'Retry logic', 'Monitoring', 'Logging', 'Maintenance'],
+        description: 'Production automations need to be reliable. Learn to build automations that handle errors gracefully.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-a1',
+        title: 'OpenAI Academy — Agents & Workflows',
+        description:
+          'Structured agent and workflow thinking. Covers directing agents, providing context, defining outputs, and setting boundaries.',
+        url: 'https://academy.openai.com/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-a2',
+        title: 'n8n Documentation',
+        description:
+          'Official docs for n8n, a free and open-source workflow automation tool. Excellent for learning automation concepts.',
+        url: 'https://docs.n8n.io',
+        type: 'docs',
+        free: true,
+        source: 'n8n',
+      },
+      {
+        id: 'ai-a3',
+        title: 'Make Academy',
+        description:
+          'Free courses on building automations with Make (formerly Integromat). Good for visual workflow learning.',
+        url: 'https://www.make.com/en/academy',
+        type: 'docs',
+        free: true,
+        source: 'Make',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-a-p1',
+        title: 'AI Workflow Automation',
+        description:
+          'Build an automation that processes form submissions through AI classification, information extraction, routing, draft response generation, and human review before recording results.',
+        level: 'intermediate',
+        techTags: ['AI', 'Automation', 'APIs', 'Workflows'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Eliminating repetitive manual tasks',
+        'Processing information at scale',
+        'Building consistent workflows',
+        'Connecting different services',
+        'Reducing human error in routine tasks',
+      ],
+      notFor: [
+        'Tasks requiring human judgment and empathy',
+        'Critical decisions without oversight',
+        'Processes that change frequently',
+      ],
+      tools: [
+        {
+          name: 'n8n',
+          use: 'Open-source workflow automation',
+          url: 'https://n8n.io',
+        },
+        {
+          name: 'Make',
+          use: 'Visual workflow automation',
+          url: 'https://make.com',
+        },
+        {
+          name: 'Zapier',
+          use: 'Simple automation between apps',
+          url: 'https://zapier.com',
+        },
+      ],
+      samplePrompts: [
+        'I receive 50 customer support emails per day. Help me design a workflow that: classifies emails by urgency and topic, extracts key information, drafts a response, and routes to the right team member for review.',
+        'I want to automate my content publishing workflow. When I finish a blog post, it should: generate social media excerpts, create an email newsletter version, schedule posts, and notify my editor. Design this workflow.',
+        'What are the three most common mistakes people make when building AI automations, and how do I avoid each one?',
+      ],
+    },
+    careerTip:
+      'Automation is not about replacing humans — it is about removing the boring parts so humans can focus on the interesting parts. The best automations are the ones where humans still make the important decisions.',
+  },
+  {
+    id: 'ai-agents',
+    slug: 'ai-agents',
+    name: 'AI Agents',
+    tagline: 'Understand, design, and build AI agents that can plan, use tools, and accomplish goals.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Bot',
+    difficulty: 4,
+    difficultyLabel: 'Hard',
+    timeEstimate: '6 to 10 weeks',
+    techStack: ['LangChain', 'OpenAI API', 'Claude API', 'Python', 'Tool Use'],
+    overview: {
+      description:
+      'AI agents go beyond simple chat — they can plan, use tools, make decisions, and accomplish multi-step goals. This track teaches you to understand, design, and build AI agent systems with appropriate human oversight.',
+      whatYouCanBuild: [
+        'AI research agents',
+        'Tool-using AI systems',
+        'Multi-step reasoning workflows',
+        'Agent-based applications',
+        'Human-in-the-loop agent systems',
+      ],
+      jobTitles: [
+        'AI Engineer',
+        'Agent Developer',
+        'AI Systems Designer',
+        'Automation Engineer',
+        'AI Product Developer',
+      ],
+      salaryRange: '$60,000 to $150,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'What AI Agents Are',
+        duration: '1 week',
+        topics: ['Agent concepts', 'Autonomous vs guided', 'Agent architectures', 'Use cases', 'Limitations'],
+        description: 'Understand what AI agents are, how they work, and when they are appropriate versus overkill.',
+      },
+      {
+        id: 2,
+        title: 'Agents vs Chatbots',
+        duration: '3 to 5 days',
+        topics: ['Chatbot limitations', 'Agent capabilities', 'Decision-making', 'Goal-oriented behavior', 'When to use each'],
+        description: 'Agents differ from chatbots in fundamental ways. Understand when each approach is appropriate.',
+      },
+      {
+        id: 3,
+        title: 'Agents vs Workflows',
+        duration: '3 to 5 days',
+        topics: ['Deterministic workflows', 'Dynamic agent behavior', 'When agents are better', 'When workflows are better', 'Hybrid approaches'],
+        description: 'Not every task needs an agent. Learn when deterministic workflows are better than agent-based approaches.',
+      },
+      {
+        id: 4,
+        title: 'Tools',
+        duration: '1 week',
+        topics: ['Tool definitions', 'Tool selection', 'API integration', 'File operations', 'Web browsing', 'Code execution'],
+        description: 'Agents need tools to interact with the world. Learn to define, select, and integrate tools for agent systems.',
+      },
+      {
+        id: 5,
+        title: 'Context & Memory',
+        duration: '1 week',
+        topics: ['Context windows', 'Memory systems', 'Conversation history', 'Long-term memory', 'RAG for agents'],
+        description: 'Agents need to remember and use context effectively. Learn about memory systems and context management.',
+      },
+      {
+        id: 6,
+        title: 'Planning',
+        duration: '1 week',
+        topics: ['Task decomposition', 'Plan generation', 'Plan execution', 'Replanning', 'Error recovery'],
+        description: 'Agents must plan before acting. Learn task decomposition, plan generation, and adaptive replanning.',
+      },
+      {
+        id: 7,
+        title: 'Tool Use',
+        duration: '1 week',
+        topics: ['Function calling', 'Tool chaining', 'Result interpretation', 'Multi-tool reasoning', 'Tool selection strategies'],
+        description: 'Deep dive into how agents use tools — from function calling to multi-tool reasoning chains.',
+      },
+      {
+        id: 8,
+        title: 'Human Oversight',
+        duration: '3 to 5 days',
+        topics: ['Human-in-the-loop', 'Approval workflows', 'Safety boundaries', 'Escalation', 'Monitoring'],
+        description: 'Agents should not operate without oversight for important tasks. Learn to build appropriate human checkpoints.',
+      },
+      {
+        id: 9,
+        title: 'Reliability',
+        duration: '1 week',
+        topics: ['Failure modes', 'Retry strategies', 'Fallback behavior', 'Testing agents', 'Production readiness'],
+        description: 'Agent systems fail in unpredictable ways. Learn to build reliable agent systems with proper error handling.',
+      },
+      {
+        id: 10,
+        title: 'Agent Workflow Design',
+        duration: '1 week',
+        topics: ['End-to-end agent systems', 'Multi-agent coordination', 'Orchestration patterns', 'Performance optimization', 'Cost management'],
+        description: 'Design complete agent systems that coordinate multiple agents, manage resources, and deliver reliable results.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-ag1',
+        title: 'OpenAI Academy — Agents & Workflows',
+        description:
+          'Structured agent and workflow thinking. Covers directing agents, providing context, defining outputs, and setting boundaries.',
+        url: 'https://academy.openai.com/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-ag2',
+        title: 'Anthropic — Build With Claude',
+        description:
+          'Prompt engineering, tool use, and building with Claude. Covers agentic patterns and evaluation.',
+        url: 'https://www.anthropic.com/learn/build-with-claude',
+        type: 'docs',
+        free: true,
+        source: 'Anthropic',
+      },
+      {
+        id: 'ai-ag3',
+        title: 'LangChain Documentation',
+        description:
+          'Build AI-powered applications with LangChain — agents, chains, memory, and tool integration.',
+        url: 'https://python.langchain.com/docs/get_started/introduction',
+        type: 'docs',
+        free: true,
+        source: 'LangChain',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-ag-p1',
+        title: 'AI Research Agent',
+        description:
+          'Design or build a workflow where an AI agent accepts a research question, uses approved tools, collects evidence, structures findings, cites sources, and returns a bounded output.',
+        level: 'advanced',
+        techTags: ['AI', 'Agents', 'Tool Use', 'Research'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Automating complex multi-step tasks',
+        'Research and information gathering',
+        'Building intelligent applications',
+        'Creating tool-using AI systems',
+        'Developing autonomous workflows',
+      ],
+      notFor: [
+        'Simple tasks that a direct API call handles',
+        'Applications requiring perfect reliability',
+        'Tasks without appropriate human oversight',
+      ],
+      tools: [
+        {
+          name: 'LangChain',
+          use: 'Framework for building AI agents and chains',
+          url: 'https://langchain.com',
+        },
+        {
+          name: 'OpenAI API',
+          use: 'Function calling and agent capabilities',
+          url: 'https://platform.openai.com',
+        },
+        {
+          name: 'Claude API',
+          use: 'Tool use and agentic workflows',
+          url: 'https://console.anthropic.com',
+        },
+      ],
+      samplePrompts: [
+        'I want to build a research agent that takes a question, searches the web, reads relevant pages, extracts key information, and produces a structured summary with source citations. Help me design the architecture and tool definitions.',
+        'When should I use a simple workflow versus an AI agent for a task? Give me a decision framework with three concrete examples of each.',
+        'Design an AI agent workflow for processing customer support tickets: classify urgency, extract key information, draft a response, and route to the appropriate team. Include human approval steps.',
+      ],
+    },
+    careerTip:
+      'AI agents are the most exciting and most overhyped area in AI right now. The builders who succeed are the ones who start with simple, reliable systems and add complexity only when needed — not the ones who try to build fully autonomous agents on day one.',
+  },
+  {
+    id: 'ai-engineering',
+    slug: 'ai-engineering',
+    name: 'AI Data, APIs & Engineering',
+    tagline: 'Build AI-powered applications using APIs, embeddings, RAG, and modern AI engineering practices.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Database',
+    difficulty: 4,
+    difficultyLabel: 'Hard',
+    timeEstimate: '8 to 12 weeks',
+    techStack: ['Python', 'OpenAI API', 'Groq', 'Pinecone', 'FastAPI'],
+    overview: {
+      description:
+      'AI engineering is about building applications that use AI models effectively — choosing the right model, managing data, implementing retrieval, and deploying reliably. This track covers the technical foundations of building AI-powered applications.',
+      whatYouCanBuild: [
+        'AI-powered APIs and services',
+        'RAG (Retrieval-Augmented Generation) systems',
+        'Document Q&A applications',
+        'AI evaluation pipelines',
+        'Production AI applications',
+      ],
+      jobTitles: [
+        'AI Engineer',
+        'ML Engineer',
+        'Backend Developer (AI)',
+        'Full-Stack AI Developer',
+        'AI Platform Engineer',
+      ],
+      salaryRange: '$60,000 to $160,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'AI APIs',
+        duration: '1 week',
+        topics: ['API basics', 'OpenAI API', 'Groq API', 'Anthropic API', 'Rate limits and pricing'],
+        description: 'Learn to interact with AI models through APIs — the foundation of AI engineering.',
+      },
+      {
+        id: 2,
+        title: 'Model Selection',
+        duration: '1 week',
+        topics: ['Model comparison', 'Capability assessment', 'Cost-performance tradeoffs', 'Latency considerations', 'Task-model matching'],
+        description: 'Choose the right model for each task based on capability, cost, speed, and accuracy requirements.',
+      },
+      {
+        id: 3,
+        title: 'Structured Outputs',
+        duration: '1 week',
+        topics: ['JSON mode', 'Function calling', 'Output schemas', 'Validation', 'Error handling'],
+        description: 'Get reliable, structured output from AI models for downstream processing.',
+      },
+      {
+        id: 4,
+        title: 'Embeddings',
+        duration: '1 week',
+        topics: ['What embeddings are', 'Text embeddings', 'Similarity search', 'Embedding models', 'Use cases'],
+        description: 'Embeddings turn text into numbers that capture meaning. Learn to use them for search, clustering, and retrieval.',
+      },
+      {
+        id: 5,
+        title: 'Retrieval',
+        duration: '1 week',
+        topics: ['Document processing', 'Chunking strategies', 'Metadata handling', 'Retrieval quality', 'Performance optimization'],
+        description: 'Effective retrieval is the foundation of RAG. Learn to process documents and retrieve relevant information.',
+      },
+      {
+        id: 6,
+        title: 'RAG',
+        duration: '1 week',
+        topics: ['RAG architecture', 'Index pipeline', 'Query pipeline', 'Context injection', 'Quality evaluation'],
+        description: 'Build Retrieval-Augmented Generation systems that combine document retrieval with AI generation.',
+      },
+      {
+        id: 7,
+        title: 'Vector Search',
+        duration: '1 week',
+        topics: ['Vector databases', 'Pinecone', 'Chroma', 'Similarity search', 'Hybrid search'],
+        description: 'Vector search enables semantic similarity matching. Learn to implement it for AI applications.',
+      },
+      {
+        id: 8,
+        title: 'AI Evaluation',
+        duration: '1 week',
+        topics: ['Evaluation metrics', 'Testing AI output', 'Quality assessment', 'Benchmarking', 'Continuous evaluation'],
+        description: 'How do you know if your AI application is working well? Learn to evaluate AI output systematically.',
+      },
+      {
+        id: 9,
+        title: 'Cost & Latency',
+        duration: '3 to 5 days',
+        topics: ['Token economics', 'Caching strategies', 'Batch processing', 'Model optimization', 'Cost monitoring'],
+        description: 'AI APIs cost money per token. Learn to optimize for cost and latency without sacrificing quality.',
+      },
+      {
+        id: 10,
+        title: 'Deployment',
+        duration: '1 week',
+        topics: ['Production readiness', 'API deployment', 'Monitoring', 'Scaling', 'Security'],
+        description: 'Deploy AI applications to production with proper monitoring, scaling, and security practices.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-e1',
+        title: 'OpenAI API Documentation',
+        description:
+          'Official docs for the OpenAI API. Covers chat, embeddings, function calling, and more.',
+        url: 'https://platform.openai.com/docs',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI',
+      },
+      {
+        id: 'ai-e2',
+        title: 'Anthropic — Build With Claude',
+        description:
+          'Prompt engineering, evaluations, RAG, and building AI applications with Claude.',
+        url: 'https://www.anthropic.com/learn/build-with-claude',
+        type: 'docs',
+        free: true,
+        source: 'Anthropic',
+      },
+      {
+        id: 'ai-e3',
+        title: 'Groq API Quickstart',
+        description:
+          'Run LLMs at incredible speed. Free tier available for learning.',
+        url: 'https://console.groq.com/docs/quickstart',
+        type: 'docs',
+        free: true,
+        source: 'Groq',
+      },
+      {
+        id: 'ai-e4',
+        title: 'LangChain Python Docs',
+        description:
+          'Build AI-powered apps with LangChain — chains, memory, and retrieval.',
+        url: 'https://python.langchain.com/docs/get_started/introduction',
+        type: 'docs',
+        free: true,
+        source: 'LangChain',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-e-p1',
+        title: 'Build a Small AI Application',
+        description:
+          'Build a complete AI application — document Q&A, study assistant, research assistant, or support assistant — using free/local options where possible.',
+        level: 'advanced',
+        techTags: ['AI', 'Python', 'APIs', 'RAG'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Building AI-powered applications',
+        'Implementing RAG systems',
+        'Choosing and comparing AI models',
+        'Optimizing AI application performance',
+        'Deploying AI to production',
+      ],
+      notFor: [
+        'Building from scratch without understanding the tools',
+        'Ignoring cost and latency in production',
+        'Skipping evaluation and testing',
+      ],
+      tools: [
+        {
+          name: 'OpenAI API',
+          use: 'Chat, embeddings, function calling',
+          url: 'https://platform.openai.com',
+        },
+        {
+          name: 'Groq',
+          use: 'Fast inference for learning and prototyping',
+          url: 'https://groq.com',
+        },
+        {
+          name: 'Pinecone',
+          use: 'Vector database for RAG',
+          url: 'https://pinecone.io',
+        },
+      ],
+      samplePrompts: [
+        'I want to build a document Q&A system. I have 100 PDF documents. Design the architecture: how to process documents, create embeddings, store them, retrieve relevant chunks, and generate answers with citations.',
+        'Compare the OpenAI, Anthropic, and Groq APIs for a chat application. Consider: cost, speed, quality, context window, and free tier. Which would you choose for a learning project and why?',
+        'My RAG system returns irrelevant documents. The user asks about Python but gets results about Java. What are the most likely causes and how do I fix each one?',
+      ],
+    },
+    careerTip:
+      'AI engineering is the fastest-growing area in software. The fundamentals — APIs, data handling, retrieval, evaluation — are more important than any specific framework. Master the concepts and you can adapt to any tool.',
+  },
+  {
+    id: 'ai-design',
+    slug: 'ai-design',
+    name: 'AI Design & Creative Work',
+    tagline: 'Use AI to enhance your design process while maintaining creative judgment and quality.',
+    category: 'ai',
+    colorHex: '#7C3AED',
+    icon: 'Palette',
+    difficulty: 2,
+    difficultyLabel: 'Beginner-Friendly',
+    timeEstimate: '4 to 6 weeks',
+    techStack: ['Midjourney', 'DALL-E', 'Figma AI', 'Canva AI', 'Figma'],
+    overview: {
+      description:
+      'AI can accelerate design ideation, visual exploration, and prototyping — but great design still requires human taste, judgment, and understanding of users. This track teaches AI as a design partner, not a design replacement.',
+      whatYouCanBuild: [
+        'AI-assisted product concepts',
+        'Rapid visual exploration',
+        'Design system prototyping',
+        'Brand identity exploration',
+        'UI/UX with AI acceleration',
+      ],
+      jobTitles: [
+        'AI-Enhanced Designer',
+        'Product Designer',
+        'UI Designer',
+        'Creative Director',
+        'Brand Designer',
+      ],
+      salaryRange: '$40,000 to $110,000/year',
+    },
+    roadmap: [
+      {
+        id: 1,
+        title: 'AI in Design',
+        duration: '3 to 5 days',
+        topics: ['How AI fits in design', 'AI design tools landscape', 'What AI does well in design', 'What AI cannot do', 'Human design judgment'],
+        description: 'Understand where AI helps in the design process and where human judgment remains essential.',
+      },
+      {
+        id: 2,
+        title: 'UI Ideation',
+        duration: '1 week',
+        topics: ['AI for brainstorming layouts', 'Rapid concept generation', 'Style exploration', 'Prompt-driven design', 'Filtering AI output'],
+        description: 'Use AI to generate design concepts rapidly, then apply your judgment to filter and refine the best ideas.',
+      },
+      {
+        id: 3,
+        title: 'Image Generation',
+        duration: '1 week',
+        topics: ['AI image tools', 'Prompt crafting for images', 'Style consistency', 'Iteration techniques', 'Quality control'],
+        description: 'Learn to generate images effectively with AI tools while maintaining quality and consistency.',
+      },
+      {
+        id: 4,
+        title: 'Visual Exploration',
+        duration: '1 week',
+        topics: ['Mood boards with AI', 'Color palette generation', 'Typography exploration', 'Visual direction', 'Brand identity'],
+        description: 'Use AI to explore visual directions quickly, then make informed decisions about brand and style.',
+      },
+      {
+        id: 5,
+        title: 'Design Refinement',
+        duration: '1 week',
+        topics: ['AI-assisted iteration', 'Feedback processing', 'Design system consistency', 'Accessibility considerations', 'Quality standards'],
+        description: 'AI can help with iteration, but refinement requires understanding design principles and user needs.',
+      },
+      {
+        id: 6,
+        title: 'Prototyping',
+        duration: '1 week',
+        topics: ['AI for wireframes', 'Rapid prototyping', 'Interactive mockups', 'User testing preparation', 'Design-to-code'],
+        description: 'Use AI to move from concept to prototype faster, while maintaining design quality and user focus.',
+      },
+      {
+        id: 7,
+        title: 'Brand Consistency',
+        duration: '3 to 5 days',
+        topics: ['Design systems', 'Brand guidelines', 'AI for maintaining consistency', 'Style guides', 'Cross-platform coherence'],
+        description: 'Use AI to help maintain brand consistency across different contexts while preserving design integrity.',
+      },
+      {
+        id: 8,
+        title: 'Human Design Judgment',
+        duration: '3 to 5 days',
+        topics: ['When to override AI', 'User empathy', 'Accessibility', 'Cultural sensitivity', 'Design ethics'],
+        description: 'The most important design skill is judgment. Learn when AI suggestions should be accepted, modified, or rejected.',
+      },
+    ],
+    resources: [
+      {
+        id: 'ai-d1',
+        title: 'OpenAI Academy — Applied AI Foundations',
+        description:
+          'Move from individual prompts to repeatable workflows. Useful for building design workflows with AI.',
+        url: 'https://academy.openai.com/',
+        type: 'docs',
+        free: true,
+        source: 'OpenAI Academy',
+      },
+      {
+        id: 'ai-d2',
+        title: 'Figma AI Features',
+        description:
+          'Official Figma documentation on AI-powered design features and workflows.',
+        url: 'https://help.figma.com/hc/en-us/categories/360002051613',
+        type: 'docs',
+        free: true,
+        source: 'Figma',
+      },
+    ],
+    projects: [
+      {
+        id: 'ai-d-p1',
+        title: 'AI-Assisted Product Concept',
+        description:
+          'Design a complete product concept using AI for ideation and exploration: define the problem, identify audience, explore visual directions, generate alternatives, select a direction, refine the design, and explain your design decisions.',
+        level: 'intermediate',
+        techTags: ['AI', 'Design', 'Prototyping', 'UX'],
+      },
+    ],
+    aiGuide: {
+      goodFor: [
+        'Rapid visual exploration',
+        'Generating design concepts',
+        'Creating mood boards and style directions',
+        'Accelerating prototyping',
+        'Maintaining design system consistency',
+      ],
+      notFor: [
+        'Replacing user research and testing',
+        'Making final design decisions without human review',
+        'Ignoring accessibility and usability',
+      ],
+      tools: [
+        {
+          name: 'Midjourney',
+          use: 'AI image generation for concepts and exploration',
+          url: 'https://midjourney.com',
+        },
+        {
+          name: 'Figma AI',
+          use: 'AI features within Figma for design workflows',
+          url: 'https://figma.com',
+        },
+        {
+          name: 'Canva AI',
+          use: 'AI-powered design for non-designers',
+          url: 'https://canva.com',
+        },
+      ],
+      samplePrompts: [
+        'I am designing a mobile app for tracking personal fitness goals. Help me explore 5 different visual directions: minimal, playful, professional, bold, and zen. For each, suggest a color palette, typography style, and key UI patterns.',
+        'I have a design for a dashboard. Review it for: visual hierarchy issues, accessibility problems, inconsistent spacing, and opportunities to improve the user flow. Be specific about what to change.',
+        'Help me create a brand identity concept for a new AI education platform targeting African learners. Explore: name options, color directions, typography choices, and visual personality traits.',
+      ],
+    },
+    careerTip:
+      'AI makes designers faster, but it does not make them better. The designers who thrive are the ones who use AI to explore more ideas in less time, while relying on deep understanding of users, accessibility, and design principles to make the right choices.',
+  },
 ];
 
 export const getAllTracks = () => TRACKS
@@ -5030,5 +6939,6 @@ export const CATEGORIES = [
   { id: 'design' as TrackCategory, label:'DESIGN', description:'Creative and product disciplines', color:'#C26B57' },
   { id: 'analyze' as TrackCategory, label:'ANALYZE', description:'Data, research and analytical disciplines', color:'#6C8FC0' },
   { id: 'grow' as TrackCategory, label:'GROW', description:'Business, communication and professional skills', color:'#C29645' },
+  { id: 'ai' as TrackCategory, label:'AI', description:'Artificial intelligence, prompting, automation and AI-powered building', color:'#7C3AED' },
 ]
 

@@ -50,7 +50,7 @@ export function ProductSlide() {
   CAPABILITIES[3].value = `${stats.resourceCount} resources`
 
   return (
-    <section className="bg-void">
+    <section id="product" className="bg-void">
       <div className="container py-36 md:py-40">
         <AnimateIn>
           <div className="mx-auto max-w-3xl">

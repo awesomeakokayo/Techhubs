@@ -1,12 +1,54 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Mail } from 'lucide-react'
+import { ArrowRight, Mail, Share2, Copy, Check, Printer } from 'lucide-react'
 import { AnimateIn } from '@/components/ui/AnimateIn'
 
 export function FinalCTASlide() {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText('https://techskillhub.cv/pitch-deck')
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Fallback for older browsers
+      const input = document.createElement('input')
+      input.value = 'https://techskillhub.cv/pitch-deck'
+      document.body.appendChild(input)
+      input.select()
+      document.execCommand('copy')
+      document.body.removeChild(input)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'TechSkillHub — Pitch Deck',
+          text: 'Discover TechSkillHub\'s mission to make structured, practical technology education more accessible across Africa.',
+          url: 'https://techskillhub.cv/pitch-deck',
+        })
+      } catch {
+        // User cancelled or share failed — fall back to copy
+        handleCopyUrl()
+      }
+    } else {
+      handleCopyUrl()
+    }
+  }
+
+  const handlePrint = () => {
+    window.print()
+  }
+
   return (
-    <section className="bg-void">
+    <section id="final-cta" className="bg-void">
       <div className="container py-36 md:py-40">
         <AnimateIn>
           <div className="mx-auto max-w-3xl text-center">
@@ -33,6 +75,32 @@ export function FinalCTASlide() {
               >
                 <Mail size={16} className="shrink-0" /> Partner With Us
               </Link>
+            </div>
+
+            {/* Share / Copy / Print */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={handleShare}
+                className="btn btn-ghost inline-flex items-center gap-1.5 px-3 py-2 text-sm"
+              >
+                <Share2 size={14} /> Share
+              </button>
+              <button
+                type="button"
+                onClick={handleCopyUrl}
+                className="btn btn-ghost inline-flex items-center gap-1.5 px-3 py-2 text-sm"
+              >
+                {copied ? <Check size={14} className="text-teal" /> : <Copy size={14} />}
+                {copied ? 'Copied!' : 'Copy URL'}
+              </button>
+              <button
+                type="button"
+                onClick={handlePrint}
+                className="btn btn-ghost inline-flex items-center gap-1.5 px-3 py-2 text-sm"
+              >
+                <Printer size={14} /> Print / Save PDF
+              </button>
             </div>
 
             <div className="mt-12 space-y-2">

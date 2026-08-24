@@ -96,7 +96,7 @@ function Check({ yes }: { yes: boolean }) {
 
 export function CompetitiveSlide() {
   return (
-    <section className="bg-void">
+    <section id="competitive" className="bg-void">
       <div className="container py-36 md:py-40">
         <AnimateIn>
           <div className="mx-auto max-w-3xl">

@@ -56,7 +56,7 @@ const PHASES = [
 
 export function RoadmapSlide() {
   return (
-    <section className="bg-void">
+    <section id="roadmap" className="bg-void">
       <div className="container py-36 md:py-40">
         <AnimateIn>
           <div className="mx-auto max-w-3xl">

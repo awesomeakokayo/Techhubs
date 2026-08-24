@@ -26,6 +26,7 @@ const COMPANY: NavLink[] = [
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
   { href: '/ai-guide', label: 'AI Guide' },
+  { href: '/pitch-deck', label: 'Pitch Deck' },
 ]
 
 const STAGES = [

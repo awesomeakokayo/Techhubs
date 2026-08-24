@@ -70,6 +70,17 @@ export default function AboutPage() {
           </section>
 
           <section>
+            <h2 className="font-editorial text-display-md mb-3">For investors &amp; partners</h2>
+            <p>
+              If you&apos;re exploring partnership, investment, or collaboration opportunities, we
+              have a dedicated pitch deck that outlines our vision, product, and roadmap.
+            </p>
+            <Link href="/pitch-deck" className="btn btn-secondary mt-4 inline-flex items-center gap-2">
+              View Pitch Deck <ArrowRight size={16} className="shrink-0" />
+            </Link>
+          </section>
+
+          <section>
             <h2 className="font-editorial text-display-md mb-3">Share your feedback</h2>
             <p>
               Every page has a &quot;was this helpful?&quot; prompt and a contact page. If a
