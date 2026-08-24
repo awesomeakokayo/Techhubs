@@ -1,13 +1,9 @@
 import { buildGuidedPath, type GuidedStep } from './guided-path'
 import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS, AI_RESOURCE_STAGE_MAP, AI_STAGE_CHECKPOINTS } from './ai-curriculum'
+import { getAIPracticeTasks } from './ai-practice'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
 
-/**
- * Adds Phase 3A AI resources, applied stage checks, and portfolio projects to
- * the existing guided path. The underlying guided-path engine remains the
- * source of truth; this only enriches AI tracks.
- */
 export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   const base = buildGuidedPath(trackId)
   if (!AI_TRACK_IDS.has(trackId)) return base
@@ -40,6 +36,21 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
           resourceType: resource.type,
           resourceSource: resource.source,
           resourceFree: resource.free,
+        })
+      }
+
+      for (const task of getAIPracticeTasks(trackId, stageId)) {
+        output.push({
+          index: 0,
+          type: 'resource',
+          title: task.title,
+          description: `${task.description} ${task.instructions.join(' ')}`,
+          estimatedTime: '15–30 min',
+          resourceId: task.id,
+          stageId,
+          resourceType: 'practice',
+          resourceSource: 'TechSkillHub Guided Practice',
+          resourceFree: true,
         })
       }
 
