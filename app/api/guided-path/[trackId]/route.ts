@@ -122,7 +122,6 @@ export async function POST(
     })
   }
 
-  // Finishing the final step earns the course completion certificate.
   if (stepIndex === steps.length - 1) {
     await prisma.courseCompletion.upsert({
       where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
