@@ -5,6 +5,7 @@ import { TRACKS } from '@/lib/tracks'
 import { getAIEnrichedTrack } from '@/lib/ai-track'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { getTrackIcon } from '@/lib/icons'
+import { AICapstoneCard } from '@/components/ai/AICapstoneCard'
 
 export const metadata: Metadata = getPageMetadata({
   title: 'AI Learning Paths: Learn, Build & Work With AI',
@@ -169,6 +170,10 @@ export default function AIHubPage() {
             )
           })}
         </div>
+      </section>
+
+      <section className="container pt-16 md:pt-20">
+        <AICapstoneCard />
       </section>
 
       <section className="container pt-20 md:pt-28">
