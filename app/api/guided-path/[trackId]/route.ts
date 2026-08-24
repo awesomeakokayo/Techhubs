@@ -59,9 +59,6 @@ export async function POST(
 
   const body = await req.json().catch(() => null)
   const stepIndex = typeof body?.stepIndex === 'number' ? body.stepIndex : -1
-  const answers = Array.isArray(body?.answers)
-    ? body.answers.map((value: unknown) => (typeof value === 'number' ? value : -1))
-    : []
 
   if (stepIndex < 0) {
     return NextResponse.json({ error: 'Invalid stepIndex' }, { status: 400 })
@@ -81,8 +78,9 @@ export async function POST(
     })
   }
 
-  // Guided paths are intentionally sequential. The server, not the browser,
-  // decides what is currently unlockable.
+  // Guided paths are sequential. The server is authoritative about what is
+  // currently unlockable, preventing clients from skipping ahead by calling
+  // the endpoint directly.
   if (stepIndex !== enrollment.currentStepIndex) {
     return NextResponse.json(
       { error: 'Complete the currently unlocked step before continuing.' },
@@ -93,18 +91,6 @@ export async function POST(
   const completedStep = steps[stepIndex]
   if (!completedStep) {
     return NextResponse.json({ error: 'Step not found' }, { status: 404 })
-  }
-
-  // Quiz correctness is enforced server-side so a client cannot bypass
-  // mastery by calling the endpoint directly.
-  if (completedStep.type === 'quiz') {
-    const questions = completedStep.quizQuestions ?? []
-    if (answers.length !== questions.length || questions.some((q, index) => answers[index] !== q.correctIndex)) {
-      return NextResponse.json(
-        { error: 'Mastery check failed. Answer every question correctly to continue.' },
-        { status: 422 }
-      )
-    }
   }
 
   enrollment = await prisma.guidedPathEnrollment.update({
