@@ -2,9 +2,14 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { buildGuidedPath } from '@/lib/guided-path'
+import { buildAIWorldClassPath } from '@/lib/ai-guided-path'
 import { hasTrackAccess } from '@/lib/access'
 
 export const dynamic = 'force-dynamic'
+
+function getSteps(trackId: string) {
+  return trackId.startsWith('ai-') ? buildAIWorldClassPath(trackId) : buildGuidedPath(trackId)
+}
 
 export async function GET(
   _req: Request,
@@ -20,7 +25,7 @@ export async function GET(
     return NextResponse.json({ error: 'Course access required' }, { status: 403 })
   }
 
-  const steps = buildGuidedPath(params.trackId)
+  const steps = getSteps(params.trackId)
 
   let enrollment = await prisma.guidedPathEnrollment.findUnique({
     where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
@@ -58,7 +63,7 @@ export async function POST(
     return NextResponse.json({ error: 'Invalid stepIndex' }, { status: 400 })
   }
 
-  const steps = buildGuidedPath(params.trackId)
+  const steps = getSteps(params.trackId)
   if (stepIndex >= steps.length) {
     return NextResponse.json({ error: 'Step index out of range' }, { status: 400 })
   }
