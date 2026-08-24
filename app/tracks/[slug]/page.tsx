@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getTrackBySlug, TRACKS } from '@/lib/tracks'
+import { getAIEnrichedTrack } from '@/lib/ai-track'
 import { TrackPageView } from '@/components/tracks/TrackPageView'
 import type { Metadata } from 'next'
 import { getPageMetadata } from '@/lib/seo/utils'
@@ -12,11 +13,12 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const track = getTrackBySlug(params.slug)
   if (!track) return { title: 'Track Not Found' }
+  const enrichedTrack = getAIEnrichedTrack(track)
   return getPageMetadata({
-    title: `${track.name}: Path, Roadmap & Resources`,
-    description: `${track.tagline} Follow the ${track.name.toLowerCase()} roadmap with curated free resources, projects and career guidance.`,
-    path: `/tracks/${track.slug}`,
-    keywords: [`${track.name.toLowerCase()} roadmap`, `${track.name.toLowerCase()} learning path`],
+    title: `${enrichedTrack.name}: Path, Roadmap & Resources`,
+    description: `${enrichedTrack.tagline} Follow the ${enrichedTrack.name.toLowerCase()} roadmap with curated free resources, projects and career guidance.`,
+    path: `/tracks/${enrichedTrack.slug}`,
+    keywords: [`${enrichedTrack.name.toLowerCase()} roadmap`, `${enrichedTrack.name.toLowerCase()} learning path`],
     type: 'article',
   })
 }
@@ -28,11 +30,12 @@ export function generateStaticParams(): { slug: string }[] {
 export default async function TrackPage({ params }: Props) {
   const track = getTrackBySlug(params.slug)
   if (!track) notFound()
+  const enrichedTrack = getAIEnrichedTrack(track)
 
   return (
     <>
-      <PageViewTracker path={`/tracks/${track.slug}`} eventName="track_page_open" />
-      <TrackPageView track={track} />
+      <PageViewTracker path={`/tracks/${enrichedTrack.slug}`} eventName="track_page_open" />
+      <TrackPageView track={enrichedTrack} />
     </>
   )
 }
