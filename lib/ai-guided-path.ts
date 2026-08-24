@@ -4,6 +4,9 @@ import { getAIPracticeTasks } from './ai-practice'
 import { getAdvancedAIPracticeTasks } from './ai-practice-advanced'
 import { getAIProjectsForStage } from './ai-projects'
 import { getAIStageObjective } from './ai-stage-objectives'
+import { getAIStageLesson } from './ai-stage-lessons'
+import { getAISupplementalQuestions } from './ai-assessment-bank'
+import { getVerifiedAIResource } from './ai-resource-audit'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
 
@@ -28,9 +31,17 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
     if (step.type === 'concept') {
       const objective = getAIStageObjective(trackId, stageId)
       if (objective) {
+        const lesson = getAIStageLesson(trackId, stageId, step.title, objective.objective, objective.successCriteria)
         output.push({
           ...step,
-          description: `${step.description} By the end of this stage, you should be able to: ${objective.objective}`,
+          description: [
+            step.description,
+            `\n\nLEARNING OBJECTIVE\n${objective.objective}`,
+            `\n\nTECHSKILLHUB LESSON\n${lesson.lesson}`,
+            `\n\nWORKED EXAMPLE\n${lesson.workedExample}`,
+            `\n\nCOMMON MISTAKES\n• ${lesson.commonMistakes.join('\n• ')}`,
+            `\n\nAPPLIED CHALLENGE\n${lesson.appliedChallenge}`,
+          ].join('\n'),
           topics: [...(step.topics ?? []), ...objective.successCriteria.map((criterion) => `Success: ${criterion}`)],
         })
         continue
@@ -43,18 +54,20 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       injectedStages.add(stageId)
 
       for (const resource of resources.filter((item) => resourceStages[item.id] === stageId)) {
+        const audit = getVerifiedAIResource(resource.id)
+        if (audit && (!audit.free || !audit.includeInGuidedPath)) continue
         output.push({
           index: 0,
           type: 'resource',
           title: resource.title,
           description: resource.description,
           estimatedTime: resource.type === 'video' ? '30–120 min' : '30–90 min',
-          resourceUrl: resource.url,
+          resourceUrl: audit?.verifiedUrl ?? resource.url,
           resourceId: resource.id,
           stageId,
           resourceType: resource.type,
-          resourceSource: resource.source,
-          resourceFree: resource.free,
+          resourceSource: audit?.provider ?? resource.source,
+          resourceFree: audit?.free ?? resource.free,
         })
       }
 
@@ -78,14 +91,19 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
         })
       }
 
-      const stageQuestions = checkpoints[stageId]
-      if (stageQuestions?.length) {
+      const objective = getAIStageObjective(trackId, stageId)
+      const authoredQuestions = objective
+        ? getAISupplementalQuestions(trackId, stageId, objective)
+        : []
+      const stageQuestions = [...(checkpoints[stageId] ?? []), ...authoredQuestions]
+
+      if (stageQuestions.length) {
         output.push({
           index: 0,
           type: 'quiz',
           title: `Applied Mastery Check — Stage ${stageId}`,
-          description: 'These questions test whether you can apply the stage concepts to realistic work. You must understand the reasoning, not just recognize definitions.',
-          estimatedTime: '10–15 min',
+          description: 'This checkpoint tests application, diagnosis, and evaluation. AI pathways require at least 80% to continue. The server re-checks your submitted answers.',
+          estimatedTime: '10–20 min',
           stageId,
           quizQuestions: stageQuestions,
         })
