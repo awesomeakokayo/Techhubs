@@ -1,8 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, Route, FolderKanban, Target, BookOpen } from 'lucide-react'
 import { CATEGORIES, TRACKS } from '@/lib/tracks'
 import { StructuredData } from '@/components/seo/StructuredData'
 import { faqJsonLd } from '@/lib/seo/utils'
+import { AnimateIn } from '@/components/ui/AnimateIn'
+import { StaggerGroup, StaggerItem } from '@/components/ui/StaggerGroup'
 
 const WHY = [
   { title: 'Structured learning', text: 'Every skill in the right order, so you always know what to learn next.' },
@@ -60,9 +64,9 @@ export function SeoContentSection() {
           <h2 className="font-editorial text-display-lg max-w-2xl">
             Start with your goal. We&apos;ll map the path.
           </h2>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {CATEGORIES.map((cat) => (
-              <li key={cat.id}>
+              <StaggerItem key={cat.id}>
                 <Link href={`/paths/${cat.id}`} className="card group flex h-full flex-col gap-2 no-underline">
                   <span className="h-2 w-2 rounded-full" style={{ background: cat.color }} aria-hidden />
                   <h3 className="font-display text-lg text-text-primary group-hover:text-teal">
@@ -73,9 +77,9 @@ export function SeoContentSection() {
                     Explore <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
                   </span>
                 </Link>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </StaggerGroup>
         </div>
       </section>
 
