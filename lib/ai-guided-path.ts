@@ -3,6 +3,7 @@ import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS, AI_RESOURCE_STAGE_MAP, A
 import { getAIPracticeTasks } from './ai-practice'
 import { getAdvancedAIPracticeTasks } from './ai-practice-advanced'
 import { getAIProjectsForStage } from './ai-projects'
+import { getAIStageObjective } from './ai-stage-objectives'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
 
@@ -18,11 +19,24 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   const finalStage = base.reduce((max, step) => Math.max(max, step.stageId), 0)
 
   for (const step of base) {
-    // The generic engine selects projects by difficulty. AI uses explicit
-    // competency-to-project mappings instead, so remove the generic project.
+    // AI uses explicit competency-to-project mappings instead of the generic
+    // difficulty-based project selection in the shared guided-path engine.
     if (step.type === 'project') continue
 
     const stageId = step.stageId
+
+    if (step.type === 'concept') {
+      const objective = getAIStageObjective(trackId, stageId)
+      if (objective) {
+        output.push({
+          ...step,
+          description: `${step.description} By the end of this stage, you should be able to: ${objective.objective}`,
+          topics: [...(step.topics ?? []), ...objective.successCriteria.map((criterion) => `Success: ${criterion}`)],
+        })
+        continue
+      }
+    }
+
     const shouldInject = !injectedStages.has(stageId) && step.type === 'checkpoint'
 
     if (shouldInject) {
@@ -77,8 +91,8 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
         })
       }
 
-      // Portfolio projects are deliberately placed after the mastery check.
-      // A learner first demonstrates understanding, then proves application.
+      // The portfolio artifact follows the mastery check: demonstrate the
+      // competency, then prove that application through real work.
       const stageProjects = getAIProjectsForStage(trackId, stageId)
       for (const project of stageProjects) {
         output.push({
@@ -100,5 +114,4 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   return output.map((step, index) => ({ ...step, index }))
 }
 
-// Keep the extension data exported for existing consumers.
 export { AI_PROJECT_EXTENSIONS }
