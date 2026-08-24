@@ -7,6 +7,7 @@ import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
 import { getVerifiedAIResource } from './ai-resource-audit'
+import { isAIProjectPortfolioReady } from './ai-project-quality'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
 
@@ -22,8 +23,6 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   const finalStage = base.reduce((max, step) => Math.max(max, step.stageId), 0)
 
   for (const step of base) {
-    // AI uses explicit competency-to-project mappings instead of the generic
-    // difficulty-based project selection in the shared guided-path engine.
     if (step.type === 'project') continue
 
     const stageId = step.stageId
@@ -92,9 +91,7 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       }
 
       const objective = getAIStageObjective(trackId, stageId)
-      const authoredQuestions = objective
-        ? getAISupplementalQuestions(trackId, stageId, objective)
-        : []
+      const authoredQuestions = objective ? getAISupplementalQuestions(trackId, stageId, objective) : []
       const stageQuestions = [...(checkpoints[stageId] ?? []), ...authoredQuestions]
 
       if (stageQuestions.length) {
@@ -109,9 +106,7 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
         })
       }
 
-      // The portfolio artifact follows the mastery check: demonstrate the
-      // competency, then prove that application through real work.
-      const stageProjects = getAIProjectsForStage(trackId, stageId)
+      const stageProjects = getAIProjectsForStage(trackId, stageId).filter((project) => isAIProjectPortfolioReady(project.id))
       for (const project of stageProjects) {
         output.push({
           index: 0,
