@@ -35,5 +35,5 @@ export const AI_SEARCH_INTENTS: AISearchIntent[] = [
 
 export function getAISearchIntentForQuery(query: string): AISearchIntent | null {
   const normalized = query.trim().toLowerCase()
-  return AISearchIntents.find((intent) => intent.query.toLowerCase() === normalized) ?? null
+  return AI_SEARCH_INTENTS.find((intent) => intent.query.toLowerCase() === normalized) ?? null
 }
