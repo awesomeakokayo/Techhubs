@@ -39,7 +39,7 @@ export async function GET(
 
   return NextResponse.json({
     steps,
-    currentStepIndex: enrollment.currentStepIndex,
+    currentStepIndex: Math.min(enrollment.currentStepIndex, steps.length),
   })
 }
 
@@ -57,8 +57,12 @@ export async function POST(
     return NextResponse.json({ error: 'Course access required' }, { status: 403 })
   }
 
-  const body = await req.json()
+  const body = await req.json().catch(() => null)
   const stepIndex = typeof body?.stepIndex === 'number' ? body.stepIndex : -1
+  const answers = Array.isArray(body?.answers)
+    ? body.answers.map((value: unknown) => (typeof value === 'number' ? value : -1))
+    : []
+
   if (stepIndex < 0) {
     return NextResponse.json({ error: 'Invalid stepIndex' }, { status: 400 })
   }
@@ -68,7 +72,6 @@ export async function POST(
     return NextResponse.json({ error: 'Step index out of range' }, { status: 400 })
   }
 
-  // Ensure enrollment exists before updating
   let enrollment = await prisma.guidedPathEnrollment.findUnique({
     where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
   })
@@ -78,45 +81,68 @@ export async function POST(
     })
   }
 
+  // Guided paths are intentionally sequential. The server, not the browser,
+  // decides what is currently unlockable.
+  if (stepIndex !== enrollment.currentStepIndex) {
+    return NextResponse.json(
+      { error: 'Complete the currently unlocked step before continuing.' },
+      { status: 409 }
+    )
+  }
+
+  const completedStep = steps[stepIndex]
+  if (!completedStep) {
+    return NextResponse.json({ error: 'Step not found' }, { status: 404 })
+  }
+
+  // Quiz correctness is enforced server-side so a client cannot bypass
+  // mastery by calling the endpoint directly.
+  if (completedStep.type === 'quiz') {
+    const questions = completedStep.quizQuestions ?? []
+    if (answers.length !== questions.length || questions.some((q, index) => answers[index] !== q.correctIndex)) {
+      return NextResponse.json(
+        { error: 'Mastery check failed. Answer every question correctly to continue.' },
+        { status: 422 }
+      )
+    }
+  }
+
   enrollment = await prisma.guidedPathEnrollment.update({
     where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
     data: { currentStepIndex: stepIndex + 1 },
   })
 
-  const completedStep = steps[stepIndex]
+  const existing = await prisma.userProgress.findFirst({
+    where: {
+      userId: session.user.id,
+      trackId: params.trackId,
+      itemType: completedStep.type === 'project' ? 'project' : 'stage',
+      stageId: completedStep.stageId ?? undefined,
+      resourceId: completedStep.resourceId || completedStep.projectId || undefined,
+    },
+  })
 
-  if (completedStep) {
-    const existing = await prisma.userProgress.findFirst({
-      where: {
+  if (!existing) {
+    await prisma.userProgress.create({
+      data: {
         userId: session.user.id,
         trackId: params.trackId,
         itemType: completedStep.type === 'project' ? 'project' : 'stage',
-        stageId: completedStep.stageId ?? undefined,
-        resourceId: completedStep.resourceId || completedStep.projectId || undefined,
+        stageId: completedStep.stageId,
+        resourceId: completedStep.resourceId || completedStep.projectId,
+        status: 'COMPLETED',
+        completedAt: new Date(),
       },
     })
-    if (!existing) {
-      await prisma.userProgress.create({
-        data: {
-          userId: session.user.id,
-          trackId: params.trackId,
-          itemType: completedStep.type === 'project' ? 'project' : 'stage',
-          stageId: completedStep.stageId,
-          resourceId: completedStep.resourceId || completedStep.projectId,
-          status: 'COMPLETED',
-          completedAt: new Date(),
-        },
-      })
-    }
+  }
 
-    // Finishing the final step earns the course completion certificate.
-    if (stepIndex === steps.length - 1) {
-      await prisma.courseCompletion.upsert({
-        where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
-        create: { userId: session.user.id, trackId: params.trackId, completedAt: new Date() },
-        update: { completedAt: new Date() },
-      })
-    }
+  // Finishing the final step earns the course completion certificate.
+  if (stepIndex === steps.length - 1) {
+    await prisma.courseCompletion.upsert({
+      where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
+      create: { userId: session.user.id, trackId: params.trackId, completedAt: new Date() },
+      update: { completedAt: new Date() },
+    })
   }
 
   return NextResponse.json({ currentStepIndex: enrollment.currentStepIndex })
