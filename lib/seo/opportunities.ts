@@ -20,20 +20,12 @@ export interface OpportunityInputs {
   conversionPotential: number
 }
 
-/**
- * Normalize an input into 0..1. Accepts a 0..1 float, a guess from 0..100,
- * or a 0..10 scale and clamps to the valid range.
- */
 function normalize(value: number): number {
   if (value <= 1) return Math.min(1, Math.max(0, value))
   if (value <= 10) return Math.min(1, Math.max(0, value / 10))
   return Math.min(1, Math.max(0, value / 100))
 }
 
-/**
- * Opportunity Score = Demand × Relevance × Content Gap × Conversion Potential.
- * Combined on normalized values → 0..1, scaled to 0..100.
- */
 export function scoreOpportunity(inputs: OpportunityInputs): number {
   const score =
     normalize(inputs.searchDemand) *
@@ -57,10 +49,8 @@ export interface ScoredOpportunity {
 
 /**
  * Current opportunity table derived from the search-intent map.
- *
- * NOTE: demand/values below are editorial estimates (P2/P3 quality) until
- * Google Search Console / Bing Webmaster data is ingested. The model itself
- * is ready to consume real values once those sources are connected.
+ * AI estimates remain editorial estimates until real Search Console/Bing data
+ * is connected; they are intentionally conservative and clearly labeled.
  */
 export function getScoredOpportunities(): ScoredOpportunity[] {
   const rows = getSearchToPageMatrix()
@@ -80,7 +70,17 @@ export function getScoredOpportunities(): ScoredOpportunity[] {
     'become-frontend-dev': { searchDemand: 0.7, productRelevance: 1, contentGap: 0.2, conversionPotential: 0.8 },
     'become-backend-dev': { searchDemand: 0.6, productRelevance: 1, contentGap: 0.3, conversionPotential: 0.8 },
     'become-software-engineer': { searchDemand: 0.5, productRelevance: 0.8, contentGap: 0.4, conversionPotential: 0.7 },
-    'learn-ai': { searchDemand: 0.7, productRelevance: 0.8, contentGap: 0.4, conversionPotential: 0.7 },
+    'learn-ai': { searchDemand: 0.8, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-beginner': { searchDemand: 0.8, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-learn': { searchDemand: 0.8, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-for-work': { searchDemand: 0.8, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-prompting': { searchDemand: 0.7, productRelevance: 1, contentGap: 0.7, conversionPotential: 0.8 },
+    'ai-research': { searchDemand: 0.7, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.8 },
+    'ai-coding': { searchDemand: 0.8, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-youtube': { searchDemand: 0.7, productRelevance: 0.9, contentGap: 0.8, conversionPotential: 0.8 },
+    'ai-automation': { searchDemand: 0.7, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-agents': { searchDemand: 0.8, productRelevance: 1, contentGap: 0.8, conversionPotential: 0.9 },
+    'ai-design': { searchDemand: 0.6, productRelevance: 0.9, contentGap: 0.8, conversionPotential: 0.8 },
   }
 
   const results: ScoredOpportunity[] = []
@@ -118,6 +118,9 @@ export function getContentPriorityTable(): { opportunity: string; searchIntent: 
     'frontend-roadmap': { opportunity: 'Frontend roadmap', gap: 'Strong', funnelValue: 'High' },
     'get-into-tech': { opportunity: 'Get into tech', gap: 'New guide added this stage', funnelValue: 'High' },
     'projects-for-portfolio': { opportunity: 'Portfolio projects', gap: 'Project-level pages only; journey added', funnelValue: 'Medium' },
+    'learn-ai': { opportunity: 'Learn AI', gap: 'AI hub + guided paths actively being rebuilt', funnelValue: 'Very High' },
+    'ai-coding': { opportunity: 'AI coding', gap: 'AI software-development path + projects', funnelValue: 'Very High' },
+    'ai-research': { opportunity: 'AI research', gap: 'Verification practice + evidence project', funnelValue: 'High' },
   }
   return SEARCH_INTENTS.map((i) => {
     const meta = byKey[i.id]
