@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import { Check, ChevronDown, ChevronUp } from 'lucide-react'
 import { Project } from '@/lib/tracks'
-import { toggleProject, getTrackProgress } from '@/lib/progress'
+import { toggleProject, getTrackProgress, syncTrackProgressToServer } from '@/lib/progress'
 import { trackEvent } from '@/lib/analytics'
 import { AI_PROJECT_BRIEFS } from '@/lib/ai-project-briefs'
 
@@ -22,10 +22,15 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
   const [confirmed, setConfirmed] = useState(done)
   const brief = trackId.startsWith('ai-') ? AI_PROJECT_BRIEFS[project.id] : undefined
 
+  const syncCompletion = async () => {
+    await syncTrackProgressToServer(trackId)
+  }
+
   const completeProject = () => {
     if (togglingRef.current || !confirmed) return
     togglingRef.current = true
     toggleProject(trackId, project.id)
+    void syncCompletion()
     trackEvent({
       event_name: 'project_mark_complete',
       track_slug: trackSlug ?? trackId,
@@ -46,6 +51,7 @@ export function ProjectCard({ trackId, trackSlug, project, index, onProgressChan
               if (togglingRef.current) return
               togglingRef.current = true
               toggleProject(trackId, project.id)
+              void syncCompletion()
               setConfirmed(false)
               onProgressChange?.()
               setTimeout(() => { togglingRef.current = false }, 300)
