@@ -11,6 +11,14 @@ function getSteps(trackId: string) {
   return trackId.startsWith('ai-') ? buildAIWorldClassPath(trackId) : buildGuidedPath(trackId)
 }
 
+function getQuizPassRequirement(trackId: string, questionCount: number) {
+  // Phase 3 AI mastery standard: 80% is enough to demonstrate stage mastery.
+  // Keep the existing all-correct behavior for non-AI tracks until their
+  // curriculum is rebuilt against the same standard.
+  const threshold = trackId.startsWith('ai-') ? 0.8 : 1
+  return Math.ceil(questionCount * threshold)
+}
+
 export async function GET(_req: Request, { params }: { params: { trackId: string } }) {
   const session = await auth()
   if (!session?.user?.id) return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
@@ -44,22 +52,30 @@ export async function POST(req: Request, { params }: { params: { trackId: string
   if (!completedStep) return NextResponse.json({ error: 'Step not found' }, { status: 404 })
 
   // The browser may present quiz feedback, but the server remains the authority.
-  // A quiz step can advance only when every submitted answer matches the
-  // deterministic quiz data used to render that step.
+  // AI quizzes use the Phase 3 mastery threshold; other tracks retain the
+  // existing all-correct behavior until they receive the same curriculum upgrade.
   if (completedStep.type === 'quiz') {
     const submittedAnswers = body?.answers
-    if (!Array.isArray(submittedAnswers) || submittedAnswers.length !== (completedStep.quizQuestions?.length ?? 0)) {
+    const quizQuestions = completedStep.quizQuestions ?? []
+    if (!Array.isArray(submittedAnswers) || submittedAnswers.length !== quizQuestions.length) {
       return NextResponse.json({ error: 'Answer every question before continuing.' }, { status: 400 })
     }
 
-    const quizQuestions = completedStep.quizQuestions ?? []
-    const allCorrect = quizQuestions.every((question, questionIndex) => {
+    const correctCount = quizQuestions.reduce((count, question, questionIndex) => {
       const answer = submittedAnswers[questionIndex]
-      return typeof answer === 'number' && answer === question.correctIndex
-    })
+      return count + (typeof answer === 'number' && answer === question.correctIndex ? 1 : 0)
+    }, 0)
+    const requiredCorrect = getQuizPassRequirement(params.trackId, quizQuestions.length)
+    const passed = correctCount >= requiredCorrect
 
-    if (!allCorrect) {
-      return NextResponse.json({ error: 'Not all answers are correct. Review the explanations and try again.' }, { status: 422 })
+    if (!passed) {
+      const score = quizQuestions.length ? Math.round((correctCount / quizQuestions.length) * 100) : 0
+      return NextResponse.json({
+        error: `Mastery check not passed. You scored ${score}%. You need at least ${Math.round((requiredCorrect / quizQuestions.length) * 100)}%. Review the explanations and try again.`,
+        score,
+        requiredCorrect,
+        totalQuestions: quizQuestions.length,
+      }, { status: 422 })
     }
   }
 
