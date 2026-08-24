@@ -18,6 +18,7 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   const checkpoints = AI_STAGE_CHECKPOINTS[trackId] ?? {}
   const injectedStages = new Set<number>()
   const output: GuidedStep[] = []
+  const finalStage = base.reduce((max, step) => Math.max(max, step.stageId), 0)
 
   for (const step of base) {
     const stageId = step.stageId
@@ -42,22 +43,20 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
         })
       }
 
-      const project = projects.find((item) => {
-        const mappedStage = Math.min(5, Math.max(1, stageId))
-        return mappedStage >= 4 ? item.level === 'advanced' : mappedStage >= 2 ? item.level !== 'beginner' : item.level === 'beginner' || item.level === 'intermediate'
-      })
-
-      if (project) {
-        output.push({
-          index: 0,
-          type: 'project',
-          title: `Build: ${project.title}`,
-          description: project.description,
-          estimatedTime: '1–3 days',
-          projectId: project.id,
-          stageId,
-          techTags: project.techTags,
-        })
+      if (stageId === finalStage) {
+        const project = projects[0]
+        if (project) {
+          output.push({
+            index: 0,
+            type: 'project',
+            title: `Build: ${project.title}`,
+            description: project.description,
+            estimatedTime: '1–3 days',
+            projectId: project.id,
+            stageId,
+            techTags: project.techTags,
+          })
+        }
       }
 
       const stageQuestions = checkpoints[stageId]
