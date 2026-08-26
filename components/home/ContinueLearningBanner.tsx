@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
 import { getInProgressTracks, getTrackPercent, getTrackProgress } from '@/lib/progress'
-import { getNextStep } from '@/lib/guided-path'
 import { getTrackIcon } from '@/lib/icons'
 
 export function ContinueLearningBanner() {
@@ -27,10 +26,7 @@ export function ContinueLearningBanner() {
             <h2 className="font-editorial text-xl">
               Welcome back. Continue where you left off.
             </h2>
-            <Link
-              href="/tracks"
-              className="inline-flex items-center gap-1 text-sm font-semibold text-teal no-underline hover:text-teal-bright"
-            >
+            <Link href="/tracks" className="inline-flex items-center gap-1 text-sm font-semibold text-teal no-underline hover:text-teal-bright">
               All tracks <ArrowRight size={14} className="shrink-0" />
             </Link>
           </div>
@@ -40,29 +36,14 @@ export function ContinueLearningBanner() {
               const Icon = getTrackIcon(track.icon)
               const tp = getTrackProgress(track.id)
               const pct = getTrackPercent(track.id, track.roadmap.length, track.projects.length)
-              const next = getNextStep(track.id, tp.completedStages, tp.completedProjects)
               return (
-                <Link
-                  key={track.id}
-                  href={`/tracks/${track.slug}`}
-                  className="group flex items-center gap-4 border border-border-default bg-surface px-4 py-3.5 no-underline transition-colors hover:border-teal/40"
-                  style={{ borderRadius: 'var(--radius-md)' }}
-                >
-                  <div
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border"
-                    style={{ backgroundColor: `${track.colorHex}14`, borderColor: `${track.colorHex}33`, color: track.colorHex }}
-                    aria-hidden
-                  >
+                <Link key={track.id} href={`/tracks/${track.slug}`} className="group flex items-center gap-4 border border-border-default bg-surface px-4 py-3.5 no-underline transition-colors hover:border-teal/40" style={{ borderRadius: 'var(--radius-md)' }}>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border" style={{ backgroundColor: `${track.colorHex}14`, borderColor: `${track.colorHex}33`, color: track.colorHex }} aria-hidden>
                     <Icon size={18} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate font-display text-sm font-semibold text-text-primary">{track.name}</p>
                     <p className="font-mono text-[0.65rem] uppercase tracking-widest text-teal">{pct}% complete</p>
-                    {next && (
-                      <p className="mt-1 truncate text-xs text-text-muted">
-                        Next up: {next.title}
-                      </p>
-                    )}
                   </div>
                   <ArrowRight size={14} className="shrink-0 text-text-muted transition-all group-hover:translate-x-0.5 group-hover:text-teal" aria-hidden />
                 </Link>
