@@ -7,7 +7,7 @@ import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
 import { annotateAIQuestions } from './ai-assessment-audit'
-import { getAIInstructionalGapResources } from './ai-instructional-gap-resources'
+import { getAIResourceAuditsForStage } from './ai-resource-registry'
 import { AI_PROJECT_BRIEFS } from './ai-project-briefs'
 import { getAIProjectAudit } from './ai-project-audit'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
@@ -51,8 +51,9 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
 
     output.push({ ...stage, index: index++, learningPhase: 'learn', title: `Learn: ${stage.title}`, description: lesson ? [stage.description, `\n\nLEARNING OBJECTIVE\n${objective.objective}`, `\n\nTECHSKILLHUB LESSON\n${lesson.lesson}`, `\n\nCOMMON MISTAKES\n• ${lesson.commonMistakes.join('\n• ')}`].join('\n') : stage.description, topics: lesson ? [...(stage.topics ?? []), ...objective.successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics })
 
-    const seeResource = getAIInstructionalGapResources(trackId, stageId)[0]
-    output.push({ index: index++, type: 'resource', learningPhase: 'see', title: `See: ${stage.title} in Practice`, description: ['WORKED EXAMPLE\n' + (lesson?.workedExample ?? 'Study a realistic example showing the competency in use.'), seeResource ? `\n\nOPTIONAL AUTHORITATIVE REINFORCEMENT\n${seeResource.title}\n${seeResource.description}` : ''].join(''), estimatedTime: '10–20 min', resourceUrl: seeResource?.url, resourceId: seeResource?.id, stageId, resourceType: 'example', resourceSource: 'TechSkillHub Worked Example', resourceFree: true })
+    const auditedResources = getAIResourceAuditsForStage(trackId, stageId)
+    const seeResource = auditedResources[0]
+    output.push({ index: index++, type: 'resource', learningPhase: 'see', title: `See: ${stage.title} in Practice`, description: ['WORKED EXAMPLE\n' + (lesson?.workedExample ?? 'Study a realistic example showing the competency in use.'), seeResource ? `\n\nOPTIONAL VERIFIED REINFORCEMENT\n${seeResource.provider}: ${seeResource.competency}` : ''].join(''), estimatedTime: '10–20 min', resourceUrl: seeResource?.url, resourceId: seeResource?.id, stageId, resourceType: seeResource?.type ?? 'example', resourceSource: seeResource?.provider ?? 'TechSkillHub Worked Example', resourceFree: true })
 
     const practiceTasks = [...getAIPracticeTasks(trackId, stageId), ...getAdvancedAIPracticeTasks(trackId, stageId)]
     const primaryPractice = practiceTasks[0]
