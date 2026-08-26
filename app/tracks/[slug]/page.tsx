@@ -35,7 +35,7 @@ export default async function TrackPage({ params }: Props) {
   return (
     <>
       <PageViewTracker path={`/tracks/${enrichedTrack.slug}`} eventName="track_page_open" />
-      <TrackPageView track={enrichedTrack} />
+      <TrackPageView track={enrichedTrack} hasAccess />
     </>
   )
 }
