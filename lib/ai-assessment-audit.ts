@@ -14,8 +14,8 @@ export interface AIAssessmentTrace {
  * Phase 6 assessment contract.
  *
  * Every AI quiz question receives explicit provenance back to the stage whose
- * Learn / See / Practice content taught the competency. The generated order is
- * deliberately application-heavy: Understand -> Apply -> Apply -> Analyze -> Evaluate.
+ * Learn / See / Practice content taught the competency. The generated order
+ * is deliberately application-heavy: Understand -> Apply -> Apply -> Analyze -> Evaluate.
  */
 export const AI_ASSESSMENT_COGNITIVE_ORDER: QuizCognitiveLevel[] = [
   'understand',
@@ -33,7 +33,7 @@ export function annotateAIQuestions(
   const objective = getAIStageObjective(trackId, stageId)
   const teachingSource = objective
     ? `AI Stage ${stageId} Learn: ${objective.objective}`
-    : `AI Stage ${stageId} Learn: ${objective ? objective.objective : 'stage competency'}`
+    : `AI Stage ${stageId} Learn: stage competency`
 
   return questions.slice(0, 5).map((question, index) => ({
     ...question,
