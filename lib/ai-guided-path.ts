@@ -1,12 +1,11 @@
 import { buildGuidedPath, type GuidedStep, type QuizQuestion } from './guided-path'
-import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS, AI_RESOURCE_STAGE_MAP, AI_STAGE_CHECKPOINTS } from './ai-curriculum'
+import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS, AI_STAGE_CHECKPOINTS } from './ai-curriculum'
 import { getAIPracticeTasks } from './ai-practice'
 import { getAdvancedAIPracticeTasks } from './ai-practice-advanced'
 import { getAIProjectsForStage } from './ai-projects'
 import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
-import { getVerifiedAIResource } from './ai-resource-audit'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
@@ -32,7 +31,6 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       ? getAIStageLesson(trackId, stageId, stage.title, objective.objective, objective.successCriteria)
       : null
 
-    // 1. LEARN — authored and taught by TechSkillHub.
     output.push({
       ...stage,
       index: index++,
@@ -44,7 +42,6 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       topics: lesson ? [...(stage.topics ?? []), ...objective!.successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics,
     })
 
-    // 2. SEE — one worked example. This is intentionally separate from Learn.
     output.push({
       index: index++,
       type: 'resource',
@@ -58,7 +55,6 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       resourceFree: true,
     })
 
-    // 3. PRACTICE — exactly one coherent learner-performed task.
     const practiceTasks = [...getAIPracticeTasks(trackId, stageId), ...getAdvancedAIPracticeTasks(trackId, stageId)]
     const primaryPractice = practiceTasks[0]
     output.push({
@@ -77,7 +73,6 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       resourceFree: true,
     })
 
-    // 4. VERIFY — multiple-choice judgment/application assessment.
     const authoredQuestions = objective ? getAISupplementalQuestions(trackId, stageId, objective) : []
     const questions = [...(AI_STAGE_CHECKPOINTS[trackId]?.[stageId] ?? []), ...authoredQuestions]
     const verifyQuestions: QuizQuestion[] = questions.length ? questions : [{
@@ -102,7 +97,6 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       quizQuestions: verifyQuestions,
     })
 
-    // 5. BUILD — every stage ends with an artifact using the competency.
     const mappedProject = getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
     if (mappedProject) {
       output.push({
