@@ -6,22 +6,71 @@ import { getAIProjectsForStage } from './ai-projects'
 import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
+import { getVerifiedAIResource } from './ai-resource-audit'
+import { getAIInstructionalGapResources } from './ai-instructional-gap-resources'
+import { AI_PROJECT_BRIEFS } from './ai-project-briefs'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
+
+export type AILearningPhase = 'learn' | 'see' | 'practice' | 'verify' | 'build'
+type AIWorldClassStep = GuidedStep & { learningPhase: AILearningPhase }
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
 
-/**
- * Phase 4 contract for every AI stage:
- * LEARN -> SEE -> PRACTICE -> VERIFY -> BUILD.
- *
- * Each AI stage produces exactly five learner-facing steps. External resources
- * are reinforcement only; they never replace the TechSkillHub lesson.
- */
+function buildFallbackVerifyQuestions(stageTitle: string, objective: string, successCriteria: string[]): QuizQuestion[] {
+  return [
+    {
+      question: `A learner has completed ${stageTitle}, but their result does not meet one of the stated success criteria. What should happen next?`,
+      options: [
+        'Ship it because the AI produced it.',
+        'Change the success criteria so the result passes.',
+        'Inspect the failure, make a targeted correction, and verify the result again.',
+        'Ignore the criteria for advanced stages.',
+      ],
+      correctIndex: 2,
+      explanation: 'Professional mastery requires checking the work against the intended outcome and iterating when it falls short.',
+    },
+    {
+      question: `Which behavior best demonstrates mastery of this stage: ${objective}`,
+      options: [
+        'Producing more AI output without checking it.',
+        'Following the tool’s default behavior exactly.',
+        'Applying the competency deliberately and explaining the tradeoffs behind the result.',
+        'Choosing the most expensive tool available.',
+      ],
+      correctIndex: 2,
+      explanation: 'The competency is the learner’s judgment and ability to apply the method, not the tool’s output volume.',
+    },
+    {
+      question: `Which evidence would be most useful for proving the stage was actually learned?`,
+      options: [
+        'A screenshot of an AI response.',
+        `An artifact showing the learner applied ${successCriteria[0] ?? 'the competency'} and checked the result.`,
+        'A list of AI tools they know by name.',
+        'A longer prompt with more instructions.',
+      ],
+      correctIndex: 1,
+      explanation: 'Applied evidence is stronger than a screenshot, tool list, or prompt length because it demonstrates competency in practice.',
+    },
+  ]
+}
+
+function buildProjectDescription(stageTitle: string, objective: string, successCriteria: string[], existingDescription?: string, brief?: typeof AI_PROJECT_BRIEFS[string]) {
+  const parts = [
+    existingDescription ?? `Create a small, working artifact that demonstrates ${stageTitle}.`,
+    `\n\nBUILD OBJECTIVE\n${objective}`,
+    `\n\nDELIVERABLES\n${brief?.deliverables.map((item) => `• ${item}`).join('\n') ?? '• Build a usable artifact for the stage competency.\n• Include a before/after or decision record where iteration matters.\n• Document the inputs, decisions, outputs, and verification performed.'}`,
+    `\n\nACCEPTANCE CRITERIA\n${brief?.acceptanceCriteria.map((item) => `• ${item}`).join('\n') ?? successCriteria.map((criterion) => `• ${criterion}`).join('\n')}`,
+    `\n\nEVIDENCE\n${brief?.evidence.map((item) => `• ${item}`).join('\n') ?? '• Working artifact\n• Brief implementation notes\n• Verification evidence'}`,
+  ]
+  if (brief?.stretchGoal) parts.push(`\n\nSTRETCH GOAL\n${brief.stretchGoal}`)
+  return parts.join('')
+}
+
 export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   const base = buildGuidedPath(trackId)
   if (!AI_TRACK_IDS.has(trackId)) return base
 
-  const output: GuidedStep[] = []
+  const output: AIWorldClassStep[] = []
   let index = 0
 
   for (const stage of base.filter((step) => step.type === 'concept')) {
@@ -42,13 +91,19 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       topics: lesson ? [...(stage.topics ?? []), ...objective!.successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics,
     })
 
+    const seeResource = getAIInstructionalGapResources(trackId, stageId)[0]
     output.push({
       index: index++,
       type: 'resource',
       learningPhase: 'see',
       title: `See: ${stage.title} in Practice`,
-      description: lesson?.workedExample ?? 'Study a realistic example showing the competency in use. Pay attention to the decisions, constraints, failure modes, and quality checks.',
-      estimatedTime: '10–15 min',
+      description: [
+        'WORKED EXAMPLE\n' + (lesson?.workedExample ?? 'Study a realistic example showing the competency in use.'),
+        seeResource ? `\n\nOPTIONAL AUTHORITATIVE REINFORCEMENT\n${seeResource.title}\n${seeResource.description}` : '',
+      ].join(''),
+      estimatedTime: '10–20 min',
+      resourceUrl: seeResource?.url,
+      resourceId: seeResource?.id,
       stageId,
       resourceType: 'example',
       resourceSource: 'TechSkillHub Worked Example',
@@ -63,10 +118,10 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       learningPhase: 'practice',
       title: primaryPractice ? `Practice: ${primaryPractice.title}` : `Practice: Apply ${stage.title}`,
       description: primaryPractice
-        ? `${primaryPractice.description}\n\nINSTRUCTIONS\n${primaryPractice.instructions.join('\n')}`
+        ? `${primaryPractice.description}\n\nINSTRUCTIONS\n${primaryPractice.instructions.map((item) => `• ${item}`).join('\n')}\n\nSUCCESS CRITERIA\n${primaryPractice.successCriteria.map((item) => `• ${item}`).join('\n')}`
         : lesson?.appliedChallenge ?? `Apply ${stage.title} to a realistic problem. Record your approach, result, one failure mode, and how you checked the result.`,
       estimatedTime: '15–30 min',
-      resourceId: primaryPractice?.id,
+      resourceId: primaryPractice?.id ?? `ai-phase4-${trackId}-${stageId}-practice`,
       stageId,
       resourceType: 'practice',
       resourceSource: 'TechSkillHub Guided Practice',
@@ -75,17 +130,10 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
 
     const authoredQuestions = objective ? getAISupplementalQuestions(trackId, stageId, objective) : []
     const questions = [...(AI_STAGE_CHECKPOINTS[trackId]?.[stageId] ?? []), ...authoredQuestions]
-    const verifyQuestions: QuizQuestion[] = questions.length ? questions : [{
-      question: `You have completed the ${stage.title} practice. Which action best demonstrates professional mastery?`,
-      options: [
-        'Accept the first AI result because it is fluent.',
-        'Repeat the same prompt until the result looks better.',
-        'Apply the competency, inspect the result against explicit success criteria, and correct weaknesses before shipping.',
-        'Skip verification if the output is produced by a popular tool.',
-      ],
-      correctIndex: 2,
-      explanation: 'Mastery means applying the competency and exercising judgment over the result, not merely producing an AI output.',
-    }]
+    const verifyQuestions: QuizQuestion[] = questions.length >= 3
+      ? questions.slice(0, 5)
+      : [...questions, ...buildFallbackVerifyQuestions(stage.title, objective?.objective ?? stage.title, objective?.successCriteria ?? [])].slice(0, 5)
+
     output.push({
       index: index++,
       type: 'quiz',
@@ -98,34 +146,30 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
     })
 
     const mappedProject = getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
-    if (mappedProject) {
-      output.push({
-        index: index++,
-        type: 'project',
-        learningPhase: 'build',
-        title: `Build: ${mappedProject.title}`,
-        description: mappedProject.description,
-        estimatedTime: stageId >= 8 ? '2–5 days' : '1–2 days',
-        projectId: mappedProject.id,
-        stageId,
-        techTags: mappedProject.techTags,
-      })
-    } else {
-      output.push({
-        index: index++,
-        type: 'project',
-        learningPhase: 'build',
-        title: `Build: ${stage.title} Mini-Project`,
-        description: lesson
-          ? `Create a small, working artifact that demonstrates the competency from this stage. Start from your Practice result, use the Verify feedback to improve it, and document your inputs, decisions, output, and quality checks.\n\nBUILD SUCCESS CRITERIA\n${objective?.successCriteria.map((criterion) => `• ${criterion}`).join('\n') ?? '• The artifact works for the intended use case.\n• You can explain the decisions you made.\n• You verify the result before calling it complete.'}`
-          : `Create a small working artifact that demonstrates ${stage.title}. Document your decisions and verify the result before considering the build complete.`,
-        estimatedTime: '1–2 days',
-        stageId,
-        resourceType: 'build',
-        resourceSource: 'TechSkillHub Stage Build',
-        resourceFree: true,
-      })
-    }
+    const brief = mappedProject?.id ? AI_PROJECT_BRIEFS[mappedProject.id] : undefined
+    const buildTitle = mappedProject ? `Build: ${mappedProject.title}` : `Build: ${stage.title} Mini-Project`
+    const buildDescription = buildProjectDescription(
+      stage.title,
+      objective?.objective ?? stage.description,
+      objective?.successCriteria ?? [],
+      mappedProject?.description,
+      brief,
+    )
+
+    output.push({
+      index: index++,
+      type: 'project',
+      learningPhase: 'build',
+      title: buildTitle,
+      description: buildDescription,
+      estimatedTime: stageId >= 8 ? '2–5 days' : '1–2 days',
+      projectId: mappedProject?.id,
+      stageId,
+      techTags: mappedProject?.techTags,
+      resourceType: 'build',
+      resourceSource: brief ? 'TechSkillHub Portfolio Project Brief' : 'TechSkillHub Stage Build',
+      resourceFree: true,
+    })
   }
 
   return output
