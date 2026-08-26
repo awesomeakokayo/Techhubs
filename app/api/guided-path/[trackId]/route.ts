@@ -7,25 +7,77 @@ import { hasTrackAccess } from '@/lib/access'
 
 export const dynamic = 'force-dynamic'
 
+const AI_GUIDED_PATH_VERSION = 4
+
 function getSteps(trackId: string) {
   return trackId.startsWith('ai-') ? buildAIWorldClassPath(trackId) : buildGuidedPath(trackId)
 }
 
 function getQuizPassRequirement(trackId: string, questionCount: number) {
-  // Phase 3 AI mastery standard: 80% is enough to demonstrate stage mastery.
-  // Keep the existing all-correct behavior for non-AI tracks until their
-  // curriculum is rebuilt against the same standard.
   const threshold = trackId.startsWith('ai-') ? 0.8 : 1
   return Math.ceil(questionCount * threshold)
+}
+
+async function migrateAIEnrollmentIfNeeded(userId: string, trackId: string, steps: ReturnType<typeof getSteps>) {
+  let enrollment = await prisma.guidedPathEnrollment.findUnique({
+    where: { userId_trackId: { userId, trackId } },
+  })
+  if (!enrollment) {
+    enrollment = await prisma.guidedPathEnrollment.create({ data: { userId, trackId } })
+  }
+
+  if (!trackId.startsWith('ai-')) return enrollment
+
+  const trackProgress = await prisma.userTrackProgress.findUnique({
+    where: { userId_trackId: { userId, trackId } },
+  })
+  const storedData = trackProgress?.data && typeof trackProgress.data === 'object' && !Array.isArray(trackProgress.data)
+    ? trackProgress.data as Record<string, unknown>
+    : {}
+
+  if (storedData.aiGuidedPathVersion === AI_GUIDED_PATH_VERSION) return enrollment
+
+  const completed = await prisma.userProgress.findMany({
+    where: {
+      userId,
+      trackId,
+      status: 'COMPLETED',
+      stageId: { not: null },
+      itemType: 'stage',
+    },
+    select: { stageId: true },
+  })
+  const completedStages = new Set(completed.flatMap((item) => item.stageId == null ? [] : [item.stageId]))
+  const nextStage = steps.find((step) => step.type === 'concept' && !completedStages.has(step.stageId))
+  const nextIndex = nextStage ? nextStage.index : steps.length
+
+  enrollment = await prisma.guidedPathEnrollment.update({
+    where: { userId_trackId: { userId, trackId } },
+    data: { currentStepIndex: nextIndex },
+  })
+
+  await prisma.userTrackProgress.upsert({
+    where: { userId_trackId: { userId, trackId } },
+    create: {
+      userId,
+      trackId,
+      data: { aiGuidedPathVersion: AI_GUIDED_PATH_VERSION },
+    },
+    update: {
+      data: { ...storedData, aiGuidedPathVersion: AI_GUIDED_PATH_VERSION },
+    },
+  })
+
+  return enrollment
 }
 
 export async function GET(_req: Request, { params }: { params: { trackId: string } }) {
   const session = await auth()
   if (!session?.user?.id) return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
   if (!(await hasTrackAccess(session.user.id, params.trackId))) return NextResponse.json({ error: 'Course access required' }, { status: 403 })
+
   const steps = getSteps(params.trackId)
-  let enrollment = await prisma.guidedPathEnrollment.findUnique({ where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } } })
-  if (!enrollment) enrollment = await prisma.guidedPathEnrollment.create({ data: { userId: session.user.id, trackId: params.trackId } })
+  const enrollment = await migrateAIEnrollmentIfNeeded(session.user.id, params.trackId, steps)
   return NextResponse.json({ steps, currentStepIndex: Math.min(enrollment.currentStepIndex, steps.length) })
 }
 
@@ -41,8 +93,7 @@ export async function POST(req: Request, { params }: { params: { trackId: string
   const steps = getSteps(params.trackId)
   if (stepIndex >= steps.length) return NextResponse.json({ error: 'Step index out of range' }, { status: 400 })
 
-  let enrollment = await prisma.guidedPathEnrollment.findUnique({ where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } } })
-  if (!enrollment) enrollment = await prisma.guidedPathEnrollment.create({ data: { userId: session.user.id, trackId: params.trackId } })
+  const enrollment = await migrateAIEnrollmentIfNeeded(session.user.id, params.trackId, steps)
 
   if (stepIndex !== enrollment.currentStepIndex) {
     return NextResponse.json({ error: 'Complete the currently unlocked step before continuing.' }, { status: 409 })
@@ -51,9 +102,6 @@ export async function POST(req: Request, { params }: { params: { trackId: string
   const completedStep = steps[stepIndex]
   if (!completedStep) return NextResponse.json({ error: 'Step not found' }, { status: 404 })
 
-  // The browser may present quiz feedback, but the server remains the authority.
-  // AI quizzes use the Phase 3 mastery threshold; other tracks retain the
-  // existing all-correct behavior until they receive the same curriculum upgrade.
   if (completedStep.type === 'quiz') {
     const submittedAnswers = body?.answers
     const quizQuestions = completedStep.quizQuestions ?? []
@@ -79,7 +127,7 @@ export async function POST(req: Request, { params }: { params: { trackId: string
     }
   }
 
-  enrollment = await prisma.guidedPathEnrollment.update({
+  const updatedEnrollment = await prisma.guidedPathEnrollment.update({
     where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
     data: { currentStepIndex: stepIndex + 1 },
   })
@@ -116,5 +164,5 @@ export async function POST(req: Request, { params }: { params: { trackId: string
     })
   }
 
-  return NextResponse.json({ currentStepIndex: enrollment.currentStepIndex })
+  return NextResponse.json({ currentStepIndex: updatedEnrollment.currentStepIndex })
 }
