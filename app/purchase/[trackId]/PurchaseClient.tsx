@@ -10,11 +10,6 @@ export function PurchaseClient({
   trackId: string
   trackName: string
   trackSlug: string
-  region?: never
-  regionLabel?: never
-  currency?: never
-  hasAccess?: never
-  grandfathered?: never
 }) {
   return (
     <div className="max-w-2xl mx-auto py-20 px-6 text-center">
@@ -40,7 +35,7 @@ export function PurchaseClient({
           </div>
         ))}
       </div>
-      <Link href={`/guided-path/${trackSlug}`} className="btn btn-primary inline-flex items-center gap-2">
+      <Link href={`/guided-path/${trackId}`} className="btn btn-primary inline-flex items-center gap-2">
         <GraduationCap size={16} /> Start the Guided Path <ArrowRight size={16} />
       </Link>
       <p className="mt-4 text-xs text-text-muted">
