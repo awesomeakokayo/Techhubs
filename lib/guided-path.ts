@@ -21,11 +21,17 @@ export interface GuidedStep {
   resourceFree?: boolean
 }
 
+export type QuizCognitiveLevel = 'recall' | 'understand' | 'apply' | 'analyze' | 'evaluate'
+
 export interface QuizQuestion {
   question: string
   options: string[]
   correctIndex: number
   explanation: string
+  /** Curriculum provenance. AI assessments populate these explicitly in Phase 6. */
+  teachingSource?: string
+  teachingStageId?: number
+  cognitiveLevel?: QuizCognitiveLevel
 }
 
 const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
@@ -220,10 +226,8 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         if (!map) return false
         return map[r.id] === stage.id
       })
-      .sort((a, b) => track.resources.indexOf(a) - track.resources.indexOf(b))
 
     for (const resource of stageResources) {
-      const quiz = getQuizForResource(resource.id)
       steps.push({
         index: index++,
         type: 'resource',
@@ -237,95 +241,29 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         resourceSource: resource.source,
         resourceFree: resource.free,
       })
-      if (quiz) {
-        steps.push({
-          index: index++,
-          type: 'quiz',
-          title: `Check Your Understanding — ${resource.title}`,
-          description: `Verify what you learned from "${resource.title}" before moving on.`,
-          estimatedTime: '5–10 min',
-          resourceId: resource.id,
-          stageId: stage.id,
-          quizQuestions: quiz,
-        })
-      }
     }
 
-    const levelMap: Record<number, string> = { 1: 'beginner', 2: 'beginner', 3: 'intermediate', 4: 'intermediate', 5: 'advanced' }
-    const matchingProject = track.projects.find((p) => {
-      const target = p.level
-      const stageTarget = levelMap[stage.id] || 'advanced'
-      if (target === stageTarget) return true
-      if (stage.id <= 2 && target === 'beginner') return true
-      if (stage.id >= 4 && target === 'advanced') return true
-      if (stage.id === 3 && target === 'intermediate') return true
-      return false
-    })
-    if (matchingProject) {
+    const stageQuiz = QUIZ_DATA[stage.quizId ?? '']
+    if (stageQuiz?.length) {
       steps.push({
         index: index++,
-        type: 'project',
-        title: `Build: ${matchingProject.title}`,
-        description: matchingProject.description,
-        estimatedTime: '1–3 days',
-        projectId: matchingProject.id,
+        type: 'quiz',
+        title: `Checkpoint: ${stage.title}`,
+        description: 'Complete the knowledge check before continuing.',
+        estimatedTime: '10–15 min',
         stageId: stage.id,
-        techTags: matchingProject.techTags,
+        quizQuestions: stageQuiz,
       })
     }
-
-    steps.push({
-      index: index++,
-      type: 'checkpoint',
-      title: `Stage ${stage.id} Complete`,
-      description: `You've finished ${stage.title}. Ready to move to the next stage?`,
-      estimatedTime: '—',
-      stageId: stage.id,
-    })
   }
 
   return steps
 }
 
-function getQuizForResource(resourceId: string): QuizQuestion[] | undefined {
-  return QUIZ_DATA[resourceId]
-}
-
-export function getFirstUnlockedStep(
-  steps: GuidedStep[],
-  completedStepIndices: number[]
-): number {
-  for (let i = 0; i < steps.length; i++) {
-    if (!completedStepIndices.includes(i)) return i
+export function getProject(projectId: string): Project | undefined {
+  for (const track of TRACKS) {
+    const project = track.projects?.find((item) => item.id === projectId)
+    if (project) return project
   }
-  return steps.length - 1
-}
-
-/**
- * What's-next engine: turns local progress (completed stages + projects)
- * into the title of the precise next guided-path step for a track.
- *
- * A step counts as complete when its stage is finished (concepts, resources
- * and checkpoints follow stage completion) or its project is marked done.
- */
-export function getNextStep(
-  trackId: string,
-  completedStages: number[],
-  completedProjects: string[]
-): { title: string; index: number } | null {
-  const steps = buildGuidedPath(trackId)
-  if (steps.length === 0) return null
-
-  const isDone = (s: GuidedStep): boolean => {
-    if (s.type === 'project') return completedProjects.includes(s.projectId ?? '')
-    return completedStages.includes(s.stageId)
-  }
-
-  const completedIndices = steps
-    .map((s, i) => ({ s, i }))
-    .filter(({ s }) => isDone(s))
-    .map(({ i }) => i)
-
-  const nextIndex = getFirstUnlockedStep(steps, completedIndices)
-  return { title: steps[nextIndex].title, index: nextIndex }
+  return undefined
 }
