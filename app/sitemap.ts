@@ -6,6 +6,7 @@ import { GUIDE_CONTENT } from '@/lib/seo/guides'
 import { CAREER_CONTENT } from '@/lib/seo/careers'
 import { RESOURCE_PAGE_CONTENT } from '@/lib/seo/resource-pages'
 import { EXTRA_ROADMAPS } from '@/lib/seo/roadmaps'
+import { AI_ROADMAPS } from '@/lib/seo/ai-roadmaps'
 import { PROJECT_LEVELS } from '@/lib/seo/projects'
 
 interface SitemapEntry {
@@ -17,6 +18,7 @@ interface SitemapEntry {
 
 const STATIC: SitemapEntry[] = [
   { url: '/', changeFrequency: 'weekly', priority: 1 },
+  { url: '/ai', changeFrequency: 'weekly', priority: 0.95 },
   { url: '/start', changeFrequency: 'weekly', priority: 0.9 },
   { url: '/roadmaps', changeFrequency: 'weekly', priority: 0.9 },
   { url: '/guides', changeFrequency: 'weekly', priority: 0.9 },
@@ -33,70 +35,38 @@ const STATIC: SitemapEntry[] = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: SitemapEntry[] = [...STATIC]
 
-  // Track-based roadmaps under /roadmaps/[slug]
   for (const track of TRACKS) {
-    entries.push({
-      url: `/roadmaps/${track.slug}`,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    })
+    entries.push({ url: `/roadmaps/${track.slug}`, changeFrequency: 'monthly', priority: 0.8 })
   }
 
-  // Extra standalone roadmaps (JavaScript, React)
   for (const rm of Object.values(EXTRA_ROADMAPS)) {
-    entries.push({
-      url: `/roadmaps/${rm.slug}`,
-      lastModified: rm.modifiedTime,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    })
+    entries.push({ url: `/roadmaps/${rm.slug}`, lastModified: rm.modifiedTime, changeFrequency: 'monthly', priority: 0.8 })
   }
 
-  // Track detail pages
+  for (const rm of Object.values(AI_ROADMAPS)) {
+    entries.push({ url: `/roadmaps/${rm.slug}`, lastModified: rm.modifiedTime, changeFrequency: 'monthly', priority: 0.85 })
+  }
+
   for (const track of TRACKS) {
     entries.push({ url: `/tracks/${track.slug}`, changeFrequency: 'monthly', priority: 0.7 })
   }
 
-  // Path category pages
   for (const cat of CATEGORIES) {
-    entries.push({
-      url: `/paths/${cat.id}`,
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    })
+    entries.push({ url: `/paths/${cat.id}`, changeFrequency: 'monthly', priority: 0.6 })
   }
 
-  // Guides
   for (const guide of Object.values(GUIDE_CONTENT)) {
-    entries.push({
-      url: `/guides/${guide.slug}`,
-      lastModified: guide.modifiedTime,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    })
+    entries.push({ url: `/guides/${guide.slug}`, lastModified: guide.modifiedTime, changeFrequency: 'monthly', priority: 0.8 })
   }
 
-  // Careers
   for (const career of Object.values(CAREER_CONTENT)) {
-    entries.push({
-      url: `/careers/${career.slug}`,
-      lastModified: career.modifiedTime,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })
+    entries.push({ url: `/careers/${career.slug}`, lastModified: career.modifiedTime, changeFrequency: 'monthly', priority: 0.7 })
   }
 
-  // Resource hub pages
   for (const resource of Object.values(RESOURCE_PAGE_CONTENT)) {
-    entries.push({
-      url: `/resources/${resource.slug}`,
-      lastModified: resource.modifiedTime,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })
+    entries.push({ url: `/resources/${resource.slug}`, lastModified: resource.modifiedTime, changeFrequency: 'monthly', priority: 0.7 })
   }
 
-  // Project level pages
   for (const level of PROJECT_LEVELS) {
     entries.push({ url: `/projects/${level.slug}`, changeFrequency: 'monthly', priority: 0.7 })
   }

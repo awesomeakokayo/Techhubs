@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getTrackBySlug, TRACKS } from '@/lib/tracks'
 import { EXTRA_ROADMAPS, ROADMAP_SLUG_ALIASES, resolveRoadmapSlug } from '@/lib/seo/roadmaps'
+import { AI_ROADMAPS } from '@/lib/seo/ai-roadmaps'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { RoadmapLayout, trackToRoadmap, customRoadmapToLayout } from '@/components/seo/RoadmapLayout'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
@@ -11,10 +12,15 @@ interface Props {
   params: { slug: string }
 }
 
+function getCustomRoadmap(slug: string) {
+  return EXTRA_ROADMAPS[slug] ?? AI_ROADMAPS[slug]
+}
+
 export function generateStaticParams() {
   const slugs = new Set<string>()
   for (const track of TRACKS) slugs.add(track.slug)
   for (const rm of Object.values(EXTRA_ROADMAPS)) slugs.add(rm.slug)
+  for (const rm of Object.values(AI_ROADMAPS)) slugs.add(rm.slug)
   for (const alias of Object.keys(ROADMAP_SLUG_ALIASES)) slugs.add(alias)
   return Array.from(slugs).map((slug) => ({ slug }))
 }
@@ -22,7 +28,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = resolveRoadmapSlug(params.slug)
   const track = getTrackBySlug(slug)
-  const custom = EXTRA_ROADMAPS[slug]
+  const custom = getCustomRoadmap(slug)
 
   if (track) {
     const title = `${track.name} Roadmap for Beginners: Learn ${track.name} Step by Step`
@@ -40,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: custom.seoTitle,
       description: custom.description,
       path: `/roadmaps/${params.slug}`,
-      keywords: [`${custom.slug} roadmap`, 'roadmap for beginners'],
+      keywords: [`${custom.slug} roadmap`, 'AI roadmap', 'roadmap for beginners'],
       type: 'article',
       publishedTime: custom.publishedTime,
       modifiedTime: custom.modifiedTime,
@@ -53,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function RoadmapPage({ params }: Props) {
   const slug = resolveRoadmapSlug(params.slug)
   const track = getTrackBySlug(slug)
-  const custom = EXTRA_ROADMAPS[slug]
+  const custom = getCustomRoadmap(slug)
   if (!track && !custom) notFound()
 
   const label = track ? track.name : custom!.title
@@ -66,7 +72,7 @@ export default function RoadmapPage({ params }: Props) {
   const shared = {
     path: `/roadmaps/${params.slug}`,
     breadcrumbs,
-    ctaHref: track ? `/tracks/${track.slug}` : `/start`,
+    ctaHref: track ? `/tracks/${track.slug}` : (custom?.related[0]?.href ?? '/ai'),
   }
 
   return (
