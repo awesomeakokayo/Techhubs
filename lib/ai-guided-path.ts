@@ -8,6 +8,7 @@ import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
 import { getVerifiedAIResource } from './ai-resource-audit'
 import { AI_COMPETENCY_RESOURCE_MAP } from './ai-competency-resource-map'
+import { getAIInstructionalGapResources } from './ai-instructional-gap-resources'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
@@ -90,6 +91,25 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
           stageId,
           resourceType: resource.type,
           resourceSource: audit.provider,
+          resourceFree: true,
+        })
+      }
+
+      // Stage-specific gap resources are placed after the mapped resources and
+      // before practice, so a learner is not asked to perform a skill they have
+      // only been told to discover independently.
+      for (const resource of getAIInstructionalGapResources(trackId, stageId)) {
+        output.push({
+          index: 0,
+          type: 'resource',
+          title: resource.title,
+          description: `${resource.description} This resource fills the instructional gap identified for this stage and is not a paid prerequisite.`,
+          estimatedTime: resource.type === 'video' ? '15–60 min' : '20–60 min',
+          resourceUrl: resource.url,
+          resourceId: resource.id,
+          stageId,
+          resourceType: resource.type,
+          resourceSource: resource.source,
           resourceFree: true,
         })
       }
