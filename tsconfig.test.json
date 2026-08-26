@@ -10,5 +10,11 @@
     "moduleResolution": "node",
     "types": ["node"]
   },
-  "include": ["lib/pricing.ts", "lib/risk.ts", "lib/payments.ts", "lib/payment-log.ts"]
+  "include": [
+    "lib/pricing.ts",
+    "lib/risk.ts",
+    "lib/payments.ts",
+    "lib/payment-log.ts",
+    "lib/ai-competency-resource-map.ts"
+  ]
 }
