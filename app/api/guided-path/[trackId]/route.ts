@@ -37,19 +37,14 @@ async function migrateAIEnrollmentIfNeeded(userId: string, trackId: string, step
 
   if (storedData.aiGuidedPathVersion === AI_GUIDED_PATH_VERSION) return enrollment
 
-  const completed = await prisma.userProgress.findMany({
-    where: {
-      userId,
-      trackId,
-      status: 'COMPLETED',
-      stageId: { not: null },
-      itemType: 'stage',
-    },
-    select: { stageId: true },
+  // The Phase 4 path changes the number and meaning of indices, so an old
+  // currentStepIndex cannot be translated safely. Preserve historical progress
+  // records, but restart an incomplete AI path at Learn. A previously completed
+  // course remains completed and is left at the end of the new path.
+  const completion = await prisma.courseCompletion.findUnique({
+    where: { userId_trackId: { userId, trackId } },
   })
-  const completedStages = new Set(completed.flatMap((item) => item.stageId == null ? [] : [item.stageId]))
-  const nextStage = steps.find((step) => step.type === 'concept' && !completedStages.has(step.stageId))
-  const nextIndex = nextStage ? nextStage.index : steps.length
+  const nextIndex = completion ? steps.length : 0
 
   enrollment = await prisma.guidedPathEnrollment.update({
     where: { userId_trackId: { userId, trackId } },
