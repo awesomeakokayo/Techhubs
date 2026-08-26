@@ -49,27 +49,98 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
     const objective = getAIStageObjective(trackId, stageId)
     const lesson = objective ? getAIStageLesson(trackId, stageId, stage.title, objective.objective, objective.successCriteria) : null
 
-    output.push({ ...stage, index: index++, learningPhase: 'learn', title: `Learn: ${stage.title}`, description: lesson ? [stage.description, `\n\nLEARNING OBJECTIVE\n${objective.objective}`, `\n\nTECHSKILLHUB LESSON\n${lesson.lesson}`, `\n\nCOMMON MISTAKES\n• ${lesson.commonMistakes.join('\n• ')}`].join('\n') : stage.description, topics: lesson ? [...(stage.topics ?? []), ...objective.successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics })
+    const objectiveText = objective?.objective ?? stage.description
+    const successCriteria = objective?.successCriteria ?? []
+    output.push({
+      ...stage,
+      index: index++,
+      learningPhase: 'learn',
+      title: `Learn: ${stage.title}`,
+      description: lesson
+        ? [
+            stage.description,
+            `\n\nLEARNING OBJECTIVE\n${objectiveText}`,
+            `\n\nTECHSKILLHUB LESSON\n${lesson.lesson}`,
+            `\n\nCOMMON MISTAKES\n• ${lesson.commonMistakes.join('\n• ')}`,
+          ].join('\n')
+        : stage.description,
+      topics: lesson ? [...(stage.topics ?? []), ...successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics,
+    })
 
     const auditedResources = getAIResourceAuditsForStage(trackId, stageId)
     const seeResource = auditedResources[0]
-    output.push({ index: index++, type: 'resource', learningPhase: 'see', title: `See: ${stage.title} in Practice`, description: ['WORKED EXAMPLE\n' + (lesson?.workedExample ?? 'Study a realistic example showing the competency in use.'), seeResource ? `\n\nOPTIONAL VERIFIED REINFORCEMENT\n${seeResource.provider}: ${seeResource.competency}` : ''].join(''), estimatedTime: '10–20 min', resourceUrl: seeResource?.url, resourceId: seeResource?.id, stageId, resourceType: seeResource?.type ?? 'example', resourceSource: seeResource?.provider ?? 'TechSkillHub Worked Example', resourceFree: true })
+    output.push({
+      index: index++,
+      type: 'resource',
+      learningPhase: 'see',
+      title: `See: ${stage.title} in Practice`,
+      description: [
+        'WORKED EXAMPLE\n' + (lesson?.workedExample ?? 'Study a realistic example showing the competency in use.'),
+        seeResource ? `\n\nOPTIONAL VERIFIED REINFORCEMENT\n${seeResource.provider}: ${seeResource.competency}` : '',
+      ].join(''),
+      estimatedTime: '10–20 min',
+      resourceUrl: seeResource?.url,
+      resourceId: seeResource?.id,
+      stageId,
+      resourceType: seeResource?.type ?? 'example',
+      resourceSource: seeResource?.provider ?? 'TechSkillHub Worked Example',
+      resourceFree: true,
+    })
 
     const practiceTasks = [...getAIPracticeTasks(trackId, stageId), ...getAdvancedAIPracticeTasks(trackId, stageId)]
     const primaryPractice = practiceTasks[0]
-    output.push({ index: index++, type: 'resource', learningPhase: 'practice', title: primaryPractice ? `Practice: ${primaryPractice.title}` : `Practice: Apply ${stage.title}`, description: primaryPractice ? `${primaryPractice.description}\n\nINSTRUCTIONS\n${primaryPractice.instructions.map((item) => `• ${item}`).join('\n')}\n\nSUCCESS CRITERIA\n${primaryPractice.successCriteria.map((item) => `• ${item}`).join('\n')}` : lesson?.appliedChallenge ?? `Apply ${stage.title} to a realistic problem. Record your approach, result, one failure mode, and how you checked the result.`, estimatedTime: '15–30 min', resourceId: primaryPractice?.id ?? `ai-phase4-${trackId}-${stageId}-practice`, stageId, resourceType: 'practice', resourceSource: 'TechSkillHub Guided Practice', resourceFree: true })
+    output.push({
+      index: index++,
+      type: 'resource',
+      learningPhase: 'practice',
+      title: primaryPractice ? `Practice: ${primaryPractice.title}` : `Practice: Apply ${stage.title}`,
+      description: primaryPractice
+        ? `${primaryPractice.description}\n\nINSTRUCTIONS\n${primaryPractice.instructions.map((item) => `• ${item}`).join('\n')}\n\nSUCCESS CRITERIA\n${primaryPractice.successCriteria.map((item) => `• ${item}`).join('\n')}`
+        : lesson?.appliedChallenge ?? `Apply ${stage.title} to a realistic problem. Record your approach, result, one failure mode, and how you checked the result.`,
+      estimatedTime: '15–30 min',
+      resourceId: primaryPractice?.id ?? `ai-phase4-${trackId}-${stageId}-practice`,
+      stageId,
+      resourceType: 'practice',
+      resourceSource: 'TechSkillHub Guided Practice',
+      resourceFree: true,
+    })
 
     const authoredQuestions = objective ? getAISupplementalQuestions(trackId, stageId, objective) : []
     const questions = [...(AI_STAGE_CHECKPOINTS[trackId]?.[stageId] ?? []), ...authoredQuestions]
-    const rawVerifyQuestions: QuizQuestion[] = questions.length >= 3 ? questions.slice(0, 5) : [...questions, ...buildFallbackVerifyQuestions(stage.title, objective?.objective ?? stage.title, objective?.successCriteria ?? [])].slice(0, 5)
+    const rawVerifyQuestions: QuizQuestion[] = questions.length >= 3
+      ? questions.slice(0, 5)
+      : [...questions, ...buildFallbackVerifyQuestions(stage.title, objectiveText, successCriteria)].slice(0, 5)
     const verifyQuestions = annotateAIQuestions(trackId, stageId, rawVerifyQuestions)
-    output.push({ index: index++, type: 'quiz', learningPhase: 'verify', title: `Verify: Stage ${stageId} Mastery`, description: 'Test application and professional judgment in realistic situations. AI stages require at least 80% to continue.', estimatedTime: '10–20 min', stageId, quizQuestions: verifyQuestions })
+    output.push({
+      index: index++,
+      type: 'quiz',
+      learningPhase: 'verify',
+      title: `Verify: Stage ${stageId} Mastery`,
+      description: 'Test application and professional judgment in realistic situations. AI stages require at least 80% to continue.',
+      estimatedTime: '10–20 min',
+      stageId,
+      quizQuestions: verifyQuestions,
+    })
 
     const mappedProject = getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
     const brief = mappedProject?.id ? AI_PROJECT_BRIEFS[mappedProject.id] : undefined
     const audit = mappedProject?.id ? getAIProjectAudit(mappedProject.id) : null
-    output.push({ index: index++, type: 'project', learningPhase: 'build', title: mappedProject ? `Build: ${mappedProject.title}` : `Build: ${stage.title} Mini-Project`, description: buildProjectDescription(stage.title, objective?.objective ?? stage.description, objective?.successCriteria ?? [], mappedProject?.description, brief, audit), estimatedTime: stageId >= 8 ? '2–5 days' : '1–2 days', projectId: mappedProject?.id, stageId, techTags: mappedProject?.techTags, resourceType: 'build', resourceSource: brief ? 'TechSkillHub Portfolio Project Brief' : 'TechSkillHub Stage Build', resourceFree: true })
+    output.push({
+      index: index++,
+      type: 'project',
+      learningPhase: 'build',
+      title: mappedProject ? `Build: ${mappedProject.title}` : `Build: ${stage.title} Mini-Project`,
+      description: buildProjectDescription(stage.title, objectiveText, successCriteria, mappedProject?.description, brief, audit),
+      estimatedTime: stageId >= 8 ? '2–5 days' : '1–2 days',
+      projectId: mappedProject?.id,
+      stageId,
+      techTags: mappedProject?.techTags,
+      resourceType: 'build',
+      resourceSource: brief ? 'TechSkillHub Portfolio Project Brief' : 'TechSkillHub Stage Build',
+      resourceFree: true,
+    })
   }
+
   return output
 }
 
