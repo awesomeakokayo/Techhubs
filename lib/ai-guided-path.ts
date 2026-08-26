@@ -6,6 +6,7 @@ import { getAIProjectsForStage } from './ai-projects'
 import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
+import { annotateAIQuestions } from './ai-assessment-audit'
 import { getAIInstructionalGapResources } from './ai-instructional-gap-resources'
 import { AI_PROJECT_BRIEFS } from './ai-project-briefs'
 import { getAIProjectAudit } from './ai-project-audit'
@@ -59,7 +60,8 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
 
     const authoredQuestions = objective ? getAISupplementalQuestions(trackId, stageId, objective) : []
     const questions = [...(AI_STAGE_CHECKPOINTS[trackId]?.[stageId] ?? []), ...authoredQuestions]
-    const verifyQuestions: QuizQuestion[] = questions.length >= 3 ? questions.slice(0, 5) : [...questions, ...buildFallbackVerifyQuestions(stage.title, objective?.objective ?? stage.title, objective?.successCriteria ?? [])].slice(0, 5)
+    const rawVerifyQuestions: QuizQuestion[] = questions.length >= 3 ? questions.slice(0, 5) : [...questions, ...buildFallbackVerifyQuestions(stage.title, objective?.objective ?? stage.title, objective?.successCriteria ?? [])].slice(0, 5)
+    const verifyQuestions = annotateAIQuestions(trackId, stageId, rawVerifyQuestions)
     output.push({ index: index++, type: 'quiz', learningPhase: 'verify', title: `Verify: Stage ${stageId} Mastery`, description: 'Test application and professional judgment in realistic situations. AI stages require at least 80% to continue.', estimatedTime: '10–20 min', stageId, quizQuestions: verifyQuestions })
 
     const mappedProject = getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
