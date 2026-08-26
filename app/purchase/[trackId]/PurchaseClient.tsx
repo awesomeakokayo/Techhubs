@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowRight, BookOpen, GraduationCap } from 'lucide-react'
 
 export function PurchaseClient({
+  trackId,
   trackName,
   trackSlug,
 }: {
