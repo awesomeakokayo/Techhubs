@@ -6,7 +6,6 @@ import { getAIProjectsForStage } from './ai-projects'
 import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
-import { getVerifiedAIResource } from './ai-resource-audit'
 import { getAIInstructionalGapResources } from './ai-instructional-gap-resources'
 import { AI_PROJECT_BRIEFS } from './ai-project-briefs'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
@@ -41,7 +40,7 @@ function buildFallbackVerifyQuestions(stageTitle: string, objective: string, suc
       explanation: 'The competency is the learner’s judgment and ability to apply the method, not the tool’s output volume.',
     },
     {
-      question: `Which evidence would be most useful for proving the stage was actually learned?`,
+      question: 'Which evidence would be most useful for proving the stage was actually learned?',
       options: [
         'A screenshot of an AI response.',
         `An artifact showing the learner applied ${successCriteria[0] ?? 'the competency'} and checked the result.`,
@@ -54,7 +53,13 @@ function buildFallbackVerifyQuestions(stageTitle: string, objective: string, suc
   ]
 }
 
-function buildProjectDescription(stageTitle: string, objective: string, successCriteria: string[], existingDescription?: string, brief?: typeof AI_PROJECT_BRIEFS[string]) {
+function buildProjectDescription(
+  stageTitle: string,
+  objective: string,
+  successCriteria: string[],
+  existingDescription?: string,
+  brief?: (typeof AI_PROJECT_BRIEFS)[string],
+) {
   const parts = [
     existingDescription ?? `Create a small, working artifact that demonstrates ${stageTitle}.`,
     `\n\nBUILD OBJECTIVE\n${objective}`,
@@ -86,9 +91,9 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       learningPhase: 'learn',
       title: `Learn: ${stage.title}`,
       description: lesson
-        ? [stage.description, `\n\nLEARNING OBJECTIVE\n${objective!.objective}`, `\n\nTECHSKILLHUB LESSON\n${lesson.lesson}`, `\n\nCOMMON MISTAKES\n• ${lesson.commonMistakes.join('\n• ')}`].join('\n')
+        ? [stage.description, `\n\nLEARNING OBJECTIVE\n${objective.objective}`, `\n\nTECHSKILLHUB LESSON\n${lesson.lesson}`, `\n\nCOMMON MISTAKES\n• ${lesson.commonMistakes.join('\n• ')}`].join('\n')
         : stage.description,
-      topics: lesson ? [...(stage.topics ?? []), ...objective!.successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics,
+      topics: lesson ? [...(stage.topics ?? []), ...objective.successCriteria.map((criterion) => `Success: ${criterion}`)] : stage.topics,
     })
 
     const seeResource = getAIInstructionalGapResources(trackId, stageId)[0]
@@ -147,21 +152,18 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
 
     const mappedProject = getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
     const brief = mappedProject?.id ? AI_PROJECT_BRIEFS[mappedProject.id] : undefined
-    const buildTitle = mappedProject ? `Build: ${mappedProject.title}` : `Build: ${stage.title} Mini-Project`
-    const buildDescription = buildProjectDescription(
-      stage.title,
-      objective?.objective ?? stage.description,
-      objective?.successCriteria ?? [],
-      mappedProject?.description,
-      brief,
-    )
-
     output.push({
       index: index++,
       type: 'project',
       learningPhase: 'build',
-      title: buildTitle,
-      description: buildDescription,
+      title: mappedProject ? `Build: ${mappedProject.title}` : `Build: ${stage.title} Mini-Project`,
+      description: buildProjectDescription(
+        stage.title,
+        objective?.objective ?? stage.description,
+        objective?.successCriteria ?? [],
+        mappedProject?.description,
+        brief,
+      ),
       estimatedTime: stageId >= 8 ? '2–5 days' : '1–2 days',
       projectId: mappedProject?.id,
       stageId,
