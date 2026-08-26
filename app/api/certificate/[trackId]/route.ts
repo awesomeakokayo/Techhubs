@@ -113,8 +113,13 @@ export async function GET(_request: Request, { params }: { params: { trackId: st
     completedAt: completion.completedAt,
   })
 
+  // Copy into a standalone ArrayBuffer so NextResponse receives a BodyInit type
+  // accepted by the current TypeScript/Next.js runtime definitions.
+  const body = new ArrayBuffer(pdf.byteLength)
+  new Uint8Array(body).set(pdf)
+
   const filename = `techskillhub-${params.trackId}-certificate.pdf`
-  return new NextResponse(pdf, {
+  return new NextResponse(body, {
     status: 200,
     headers: {
       'Content-Type': 'application/pdf',
