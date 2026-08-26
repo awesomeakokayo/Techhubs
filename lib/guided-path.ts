@@ -1,5 +1,4 @@
 import { TRACKS, Resource, Project } from './tracks'
-import { QUIZ_DATA } from './quiz-data'
 
 export type GuidedStepType = 'concept' | 'resource' | 'project' | 'checkpoint' | 'quiz'
 
@@ -220,12 +219,11 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
       topics: stage.topics,
     })
 
-    const stageResources = track.resources
-      .filter((r) => {
-        const map = RESOURCE_STAGE_MAP[trackId]
-        if (!map) return false
-        return map[r.id] === stage.id
-      })
+    const stageResources = track.resources.filter((resource) => {
+      const map = RESOURCE_STAGE_MAP[trackId]
+      if (!map) return false
+      return map[resource.id] === stage.id
+    })
 
     for (const resource of stageResources) {
       steps.push({
@@ -240,19 +238,6 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         resourceType: resource.type,
         resourceSource: resource.source,
         resourceFree: resource.free,
-      })
-    }
-
-    const stageQuiz = QUIZ_DATA[stage.quizId ?? '']
-    if (stageQuiz?.length) {
-      steps.push({
-        index: index++,
-        type: 'quiz',
-        title: `Checkpoint: ${stage.title}`,
-        description: 'Complete the knowledge check before continuing.',
-        estimatedTime: '10–15 min',
-        stageId: stage.id,
-        quizQuestions: stageQuiz,
       })
     }
   }
