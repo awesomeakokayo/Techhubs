@@ -16,35 +16,19 @@ export interface GrantInput {
 }
 
 /**
- * True when a user can access a specific course's guided path + sync:
- * either a grandfathered site-wide subscription (ACTIVE and within its
- * period) or a valid per-course TrackAccess row.
+ * TechSkillHub learning is now fully free and open-source.
+ *
+ * The existing purchase/subscription tables remain available for historical
+ * compatibility, but access to tracks and guided paths no longer depends on
+ * payment state.
  */
-export async function hasTrackAccess(userId: string, trackId: string): Promise<boolean> {
-  const now = new Date()
-
-  const [sub, access] = await Promise.all([
-    prisma.subscription.findUnique({
-      where: { userId },
-      select: { status: true, currentPeriodEnd: true },
-    }),
-    prisma.trackAccess.findUnique({
-      where: { userId_trackId: { userId, trackId } },
-      select: { status: true, expiresAt: true },
-    }),
-  ])
-
-  if (sub?.status === 'ACTIVE' && sub.currentPeriodEnd && sub.currentPeriodEnd > now) {
-    return true
-  }
-  if (access?.status === 'ACTIVE' && access.expiresAt > now) {
-    return true
-  }
-  return false
+export async function hasTrackAccess(_userId: string, _trackId: string): Promise<boolean> {
+  return true
 }
 
-/** Grant or extend per-course access. Extends from the later of now or the
- *  current expiry so overlapping purchases stack instead of shrinking. */
+/** Grant or extend per-course access for legacy compatibility. New learning
+ * access does not require this function; it is retained so historical payment
+ * records and account migrations do not break. */
 export async function grantTrackAccess(input: GrantInput) {
   const days = input.days ?? 30
   const now = new Date()
@@ -97,7 +81,7 @@ export interface TrackEntitlements {
   owned: OwnedCourse[]
 }
 
-/** Everything the account page needs to render "My courses". */
+/** Legacy account entitlement data. Learning access is no longer paywalled. */
 export async function getTrackEntitlements(userId: string): Promise<TrackEntitlements> {
   const now = new Date()
 
@@ -131,7 +115,7 @@ export async function getTrackEntitlements(userId: string): Promise<TrackEntitle
   }
 }
 
-/** Only checks the per-course TrackAccess row (used for renewal UI). */
+/** Only checks the legacy per-course TrackAccess row (used for historical UI). */
 export async function getTrackAccess(userId: string, trackId: string) {
   return prisma.trackAccess.findUnique({
     where: { userId_trackId: { userId, trackId } },
