@@ -7,6 +7,7 @@ import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
 import { getVerifiedAIResource } from './ai-resource-audit'
+import { getAIInstructionalGapResources } from './ai-instructional-gap-resources'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
@@ -51,6 +52,23 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
 
     if (shouldInject) {
       injectedStages.add(stageId)
+
+      // Phase 3: teach first, reinforce the exact skill, then practice.
+      for (const resource of getAIInstructionalGapResources(trackId, stageId)) {
+        output.push({
+          index: 0,
+          type: 'resource',
+          title: resource.title,
+          description: resource.description,
+          estimatedTime: resource.type === 'video' ? '30–120 min' : '20–60 min',
+          resourceUrl: resource.url,
+          resourceId: resource.id,
+          stageId,
+          resourceType: resource.type,
+          resourceSource: resource.source,
+          resourceFree: true,
+        })
+      }
 
       for (const resource of resources.filter((item) => resourceStages[item.id] === stageId)) {
         const audit = getVerifiedAIResource(resource.id)
