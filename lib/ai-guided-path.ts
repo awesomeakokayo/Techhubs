@@ -1,5 +1,5 @@
 import { buildGuidedPath, type GuidedStep } from './guided-path'
-import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS, AI_RESOURCE_STAGE_MAP, AI_STAGE_CHECKPOINTS } from './ai-curriculum'
+import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS, AI_STAGE_CHECKPOINTS } from './ai-curriculum'
 import { getAIPracticeTasks } from './ai-practice'
 import { getAdvancedAIPracticeTasks } from './ai-practice-advanced'
 import { getAIProjectsForStage } from './ai-projects'
@@ -7,16 +7,34 @@ import { getAIStageObjective } from './ai-stage-objectives'
 import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
 import { getVerifiedAIResource } from './ai-resource-audit'
+import { AI_COMPETENCY_RESOURCE_MAP } from './ai-competency-resource-map'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
 
 const AI_TRACK_IDS = new Set(Object.keys(AI_RESOURCE_EXTENSIONS))
+
+function getMappedResources(trackId: string, stageId: number) {
+  const mapped = AI_COMPETENCY_RESOURCE_MAP.filter(
+    (entry) => entry.trackId === trackId && entry.stageId === stageId,
+  )
+
+  const ids = mapped.flatMap((entry) => [entry.primaryResourceId, entry.secondaryResourceId]).filter(Boolean) as string[]
+  const uniqueIds = [...new Set(ids)]
+
+  return uniqueIds
+    .map((resourceId) => {
+      const resource = (AI_RESOURCE_EXTENSIONS[trackId] ?? []).find((item) => item.id === resourceId)
+      if (!resource) return null
+      const audit = getVerifiedAIResource(resource.id)
+      if (!audit || !audit.free || !audit.includeInGuidedPath) return null
+      return { resource, audit }
+    })
+    .filter((item): item is NonNullable<typeof item> => Boolean(item))
+}
 
 export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
   const base = buildGuidedPath(trackId)
   if (!AI_TRACK_IDS.has(trackId)) return base
 
-  const resources = AI_RESOURCE_EXTENSIONS[trackId] ?? []
-  const resourceStages = AI_RESOURCE_STAGE_MAP[trackId] ?? {}
   const checkpoints = AI_STAGE_CHECKPOINTS[trackId] ?? {}
   const injectedStages = new Set<number>()
   const output: GuidedStep[] = []
@@ -52,21 +70,27 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
     if (shouldInject) {
       injectedStages.add(stageId)
 
-      for (const resource of resources.filter((item) => resourceStages[item.id] === stageId)) {
-        const audit = getVerifiedAIResource(resource.id)
-        if (audit && (!audit.free || !audit.includeInGuidedPath)) continue
+      for (const { resource, audit } of getMappedResources(trackId, stageId)) {
+        const entry = AI_COMPETENCY_RESOURCE_MAP.find(
+          (item) => item.trackId === trackId && item.stageId === stageId &&
+            (item.primaryResourceId === resource.id || item.secondaryResourceId === resource.id),
+        )
+        const fitNote = entry?.resourceFit === 'supporting'
+          ? 'Use this alongside the TechSkillHub lesson; the resource reinforces the competency rather than replacing instruction.'
+          : 'Use this resource to deepen and practice the competency taught in the TechSkillHub lesson.'
+
         output.push({
           index: 0,
           type: 'resource',
           title: resource.title,
-          description: resource.description,
+          description: `${resource.description} ${fitNote}`,
           estimatedTime: resource.type === 'video' ? '30–120 min' : '30–90 min',
-          resourceUrl: audit?.verifiedUrl ?? resource.url,
+          resourceUrl: audit.verifiedUrl,
           resourceId: resource.id,
           stageId,
           resourceType: resource.type,
-          resourceSource: audit?.provider ?? resource.source,
-          resourceFree: audit?.free ?? resource.free,
+          resourceSource: audit.provider,
+          resourceFree: true,
         })
       }
 
@@ -80,7 +104,7 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
           index: 0,
           type: 'resource',
           title: task.title,
-          description: `${task.description} ${task.instructions.join(' ')}`,
+          description: `${task.description} ${task.instructions.join(' ')} Success criteria: ${task.successCriteria.join('; ')}`,
           estimatedTime: '15–30 min',
           resourceId: task.id,
           stageId,
