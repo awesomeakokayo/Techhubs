@@ -181,8 +181,10 @@ export function ArticleLayout({
             <ContentFeedback path={path} contentType={kind.toLowerCase()} />
           </div>
 
-          <aside className="hidden lg:block overflow-hidden">
-            <RelatedContent title="Related" links={page.related} sidebar />
+          <aside className="hidden lg:block">
+            <div className="sticky top-24">
+              <RelatedContent title="Related" links={page.related} sidebar />
+            </div>
           </aside>
         </div>
 

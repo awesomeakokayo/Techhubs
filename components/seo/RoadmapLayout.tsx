@@ -195,7 +195,9 @@ export function RoadmapLayout({
           </div>
 
           <aside className="hidden lg:block">
-            <RelatedContent title="Related" links={related} />
+            <div className="sticky top-24">
+              <RelatedContent title="Related" links={related} sidebar />
+            </div>
           </aside>
         </div>
 
