@@ -4,23 +4,26 @@ Thank you for contributing to TechSkillHub. The project is open source, and impr
 
 ## Before you start
 
-Read the [OPEN_SOURCE.md](./OPEN_SOURCE.md) policy and check existing issues and pull requests before starting substantial work.
+Read [OPEN_SOURCE.md](./OPEN_SOURCE.md) and [docs/README.md](./docs/README.md). Check existing issues and pull requests before starting substantial work.
 
 For larger changes, open an issue first so the proposed direction can be discussed before implementation.
 
 ## Local development
 
-```bash
-npm install
+Follow [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) for the complete local setup and validation workflow.
+
+~~~bash
+npm ci
 npm run dev
-```
+~~~
 
 Run validation before submitting a pull request:
 
-```bash
-npm run build
+~~~bash
+npm run lint
 npm run test
-```
+npm run build
+~~~
 
 ## Pull requests
 
@@ -28,7 +31,9 @@ Keep pull requests focused on one meaningful change. Explain what changed, why i
 
 For UI changes, include screenshots where they make the change easier to review.
 
-For changes to authentication, payments, access control, progress persistence, certificates, or other server-side behavior, explain the security and backwards-compatibility considerations.
+For changes to authentication, payments, access control, progress persistence, certificates, database schema, or other server-side behaviour, explain the security and backwards-compatibility considerations.
+
+If the change affects setup, architecture, deployment, operations, or product behaviour, update the relevant document under docs/ in the same pull request.
 
 ## Curriculum contributions
 
@@ -48,11 +53,11 @@ Do not fabricate resources, credentials, statistics, projects, or claims of indu
 
 Use clear, imperative commit messages, for example:
 
-```text
+~~~text
 feat: add AI agent evaluation roadmap
 fix: prevent duplicate progress records
 docs: improve contributor setup
-```
+~~~
 
 ## Code style
 
