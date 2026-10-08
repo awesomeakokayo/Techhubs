@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, RotateCcw, Clock } from 'lucide-react'
@@ -166,6 +167,8 @@ export function TrackQuiz() {
   const [level, setLevel] = useState<Level | null>(null)
   const [weeklyHours, setWeeklyHours] = useState<number | null>(null)
   const [timeLabel, setTimeLabel] = useState<string | undefined>(undefined)
+  const [primaryGoal, setPrimaryGoal] = useState('')
+  const { data: session } = useSession()
   const [done, setDone] = useState(false)
   const [started, setStarted] = useState(false)
   const [showSaved, setShowSaved] = useState(() => getProgress().quizResult?.completed ?? false)
@@ -178,6 +181,7 @@ export function TrackQuiz() {
     setLevel(null)
     setWeeklyHours(null)
     setTimeLabel(undefined)
+    setPrimaryGoal('')
     setDone(false)
     setShowSaved(false)
   }
@@ -199,6 +203,7 @@ export function TrackQuiz() {
       setShowSaved(false)
       trackEvent({ event_name: 'quiz_started', path: '/find-your-path' })
     }
+    if (stage === 2) setPrimaryGoal(option.label)
 
     const nextScores = { ...scores }
     Object.entries(option.scores).forEach(([k, v]) => {
@@ -223,25 +228,38 @@ export function TrackQuiz() {
     }
     setWeeklyHours(opt.weeklyHours)
     setTimeLabel(opt.label)
-    finish(scores, reasons, opt.weeklyHours, opt.label, level)
+    void finish(scores, reasons, opt.weeklyHours, opt.label, level, primaryGoal)
   }
 
-  const finish = (
+  const finish = async (
     finalScores: Record<string, number>,
     finalReasons: Record<string, string[]>,
     hours: number | null,
     time: string | undefined,
-    level: Level | null
+    level: Level | null,
+    goal: string,
   ) => {
     setSubmitting(true)
-    setDone(true)
     const top = Object.entries(finalScores)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3)
       .map(([id]) => id)
     try {
       saveQuizResult(top, { level: level ?? undefined, time, weeklyHours: hours ?? undefined })
-    } catch { /* localStorage error */ }
+      if (session?.user?.id && goal && level && hours && top[0]) {
+        await fetch('/api/learner-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            primaryGoal: goal,
+            experienceLevel: level,
+            weeklyHours: hours,
+            recommendedTrackId: top[0],
+          }),
+        })
+      }
+    } catch { /* localStorage or profile persistence error */ }
+    setDone(true)
     trackQuizCompletion(top, '/find-your-path')
     trackEvent({ event_name: 'recommended_tracks_generated', path: '/find-your-path', quiz_result: top, quiz_level: level ?? '' })
   }
