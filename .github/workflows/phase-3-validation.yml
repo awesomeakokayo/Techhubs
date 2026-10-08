@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - phase-3-ai-world-class-rebuild
+      - feat/retention-v1
 
 jobs:
   validate:
