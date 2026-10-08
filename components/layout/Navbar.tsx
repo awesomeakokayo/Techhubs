@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { Menu, Search, X, ArrowRight, User } from 'lucide-react'
+import { Menu, Search, X, ArrowRight, LayoutDashboard } from 'lucide-react'
 import { SearchModal } from '@/components/search/SearchModal'
 
 const NAV_LINKS = [
@@ -75,11 +75,11 @@ export function Navbar() {
             </div>
             {session ? (
               <Link
-                href="/account"
+                href="/dashboard"
                 className="flex h-10 w-10 items-center justify-center rounded-md text-text-secondary transition-colors hover:text-teal"
-                aria-label="Account"
+                aria-label="Learning home"
               >
-                <User size={18} />
+                <LayoutDashboard size={18} />
               </Link>
             ) : (
               <Link
@@ -142,6 +142,12 @@ export function Navbar() {
               ))}
             </nav>
             <div className="mt-auto border-t border-border-subtle pt-6 space-y-3">
+              {session && (
+                <Link href="/dashboard" className="btn btn-secondary w-full justify-center inline-flex items-center gap-1.5" onClick={() => setMenuOpen(false)}>
+                  <LayoutDashboard size={16} />
+                  Learning Home
+                </Link>
+              )}
               {!session && (
                 <Link
                   href="/login"
