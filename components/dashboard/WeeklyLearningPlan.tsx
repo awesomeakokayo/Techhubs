@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CalendarCheck, Check, Loader2, Save } from 'lucide-react'
-import { WEEKDAY_LABELS } from '@/lib/learning-rhythm'
+import { calculateWeeklyPlanProgress, WEEKDAY_LABELS } from '@/lib/learning-rhythm'
 
 interface WeekDay {
   key: string
@@ -28,11 +28,8 @@ export function WeeklyLearningPlan({
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
 
-  const selectedSoFar = savedDays.filter((day) => day <= todayWeekday)
-  const completedSoFar = selectedSoFar.filter((day) => currentWeekDays[day - 1]?.active)
-  const adherence = selectedSoFar.length
-    ? Math.round((completedSoFar.length / selectedSoFar.length) * 100)
-    : 0
+  const activeWeekdays = currentWeekDays.flatMap((day, index) => day.active ? [index + 1] : [])
+  const planProgress = calculateWeeklyPlanProgress(savedDays, activeWeekdays, todayWeekday)
   const dirty = days.length !== savedDays.length || days.some((day) => !savedDays.includes(day))
 
   function toggleDay(day: number) {
@@ -141,22 +138,22 @@ export function WeeklyLearningPlan({
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">Plan progress so far</p>
             <p className="mt-1 text-sm font-semibold text-text-primary">
-              {selectedSoFar.length
-                ? `${completedSoFar.length} of ${selectedSoFar.length} planned ${selectedSoFar.length === 1 ? 'day' : 'days'}`
+              {planProgress.plannedDaysElapsed
+                ? `${planProgress.completedPlannedDays} of ${planProgress.plannedDaysElapsed} planned ${planProgress.plannedDaysElapsed === 1 ? 'day' : 'days'}`
                 : 'Your first planned session is coming up'}
             </p>
           </div>
-          <span className="font-mono text-sm text-text-secondary">{adherence}%</span>
+          <span className="font-mono text-sm text-text-secondary">{planProgress.percent}%</span>
         </div>
         <div
           className="mt-3 h-2 overflow-hidden rounded-full bg-border-subtle"
           role="progressbar"
           aria-label="Weekly plan progress so far"
           aria-valuemin={0}
-          aria-valuemax={selectedSoFar.length || 1}
-          aria-valuenow={completedSoFar.length}
+          aria-valuemax={planProgress.plannedDaysElapsed || 1}
+          aria-valuenow={planProgress.completedPlannedDays}
         >
-          <div className="h-full rounded-full bg-teal transition-all" style={{ width: adherence + '%' }} />
+          <div className="h-full rounded-full bg-teal transition-all" style={{ width: planProgress.percent + '%' }} />
         </div>
         <p className="mt-2 text-xs leading-5 text-text-muted">
           A completed day means at least one guided-path activity was completed on that local calendar day.
