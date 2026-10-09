@@ -5,7 +5,9 @@ import { getTrackById } from '@/lib/tracks'
 import { isLearnerExperienceLevel, isWeeklyHours } from '@/lib/learner-profile'
 import {
   DEFAULT_LEARNER_TIME_ZONE,
+  DEFAULT_PLANNED_STUDY_DAYS,
   isDailyGoalSteps,
+  isPlannedStudyDays,
   isValidTimeZone,
 } from '@/lib/learning-rhythm'
 
@@ -85,10 +87,11 @@ export async function PATCH(req: Request) {
   const body = await req.json().catch(() => null)
   const dailyGoalSteps = body?.dailyGoalSteps
   const timeZone = body?.timeZone
+  const plannedStudyDays = body?.plannedStudyDays
 
-  if (!isDailyGoalSteps(dailyGoalSteps) && timeZone === undefined) {
+  if (dailyGoalSteps === undefined && timeZone === undefined && plannedStudyDays === undefined) {
     return NextResponse.json(
-      { error: 'Provide a supported daily goal or time zone.' },
+      { error: 'Provide a daily goal, time zone, or weekly study schedule.' },
       { status: 400 },
     )
   }
@@ -98,6 +101,12 @@ export async function PATCH(req: Request) {
   if (timeZone !== undefined && !isValidTimeZone(timeZone)) {
     return NextResponse.json({ error: 'Provide a valid time zone.' }, { status: 400 })
   }
+  if (plannedStudyDays !== undefined && !isPlannedStudyDays(plannedStudyDays)) {
+    return NextResponse.json(
+      { error: 'Choose between one and seven unique days for your weekly plan.' },
+      { status: 400 },
+    )
+  }
 
   const profile = await prisma.learnerProfile.upsert({
     where: { userId },
@@ -105,10 +114,12 @@ export async function PATCH(req: Request) {
       userId,
       dailyGoalSteps: isDailyGoalSteps(dailyGoalSteps) ? dailyGoalSteps : 1,
       timeZone: isValidTimeZone(timeZone) ? timeZone : DEFAULT_LEARNER_TIME_ZONE,
+      plannedStudyDays: isPlannedStudyDays(plannedStudyDays) ? plannedStudyDays : [...DEFAULT_PLANNED_STUDY_DAYS],
     },
     update: {
       ...(isDailyGoalSteps(dailyGoalSteps) ? { dailyGoalSteps } : {}),
       ...(isValidTimeZone(timeZone) ? { timeZone } : {}),
+      ...(isPlannedStudyDays(plannedStudyDays) ? { plannedStudyDays } : {}),
     },
   })
 
