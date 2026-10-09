@@ -65,7 +65,7 @@ export function DailyGoalControl({
 
       <div className="mt-5">
         <div className="flex items-center justify-between gap-3 text-sm">
-          <span className="text-text-secondary">Today's progress</span>
+          <span className="text-text-secondary">Today&apos;s progress</span>
           <span className="font-mono text-xs text-text-muted">{completed} of {goal}</span>
         </div>
         <div
