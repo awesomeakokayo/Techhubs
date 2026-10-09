@@ -21,7 +21,8 @@ import { buildGuidedPath } from '@/lib/guided-path'
 import { buildAIWorldClassPath } from '@/lib/ai-guided-path'
 import type { LearnerExperienceLevel } from '@/lib/learner-profile'
 import { DailyGoalControl } from '@/components/dashboard/DailyGoalControl'
-import { calculateLearningRhythm, DEFAULT_LEARNER_TIME_ZONE, WEEKLY_ACTIVE_DAY_GOAL } from '@/lib/learning-rhythm'
+import { WeeklyLearningPlan } from '@/components/dashboard/WeeklyLearningPlan'
+import { calculateLearningRhythm, DEFAULT_LEARNER_TIME_ZONE, DEFAULT_PLANNED_STUDY_DAYS, getLocalWeekday, WEEKDAY_LABELS } from '@/lib/learning-rhythm'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -134,6 +135,33 @@ export default async function DashboardPage() {
     profile?.timeZone || DEFAULT_LEARNER_TIME_ZONE,
   )
   const dailyGoalSteps = profile?.dailyGoalSteps ?? 1
+  const plannedStudyDays = profile?.plannedStudyDays?.length
+    ? profile.plannedStudyDays
+    : [...DEFAULT_PLANNED_STUDY_DAYS]
+  const todayWeekday = getLocalWeekday(now, profile?.timeZone || DEFAULT_LEARNER_TIME_ZONE)
+  const isPlannedStudyDay = plannedStudyDays.includes(todayWeekday)
+  const nextPlannedDay = plannedStudyDays.find((day) => day > todayWeekday) ?? plannedStudyDays[0]
+  const nextPlannedDayLabel = WEEKDAY_LABELS[nextPlannedDay - 1]
+  const planNudgeTitle = isPlannedStudyDay
+    ? rhythm.activeToday
+      ? rhythm.activitiesToday >= dailyGoalSteps
+        ? 'You have completed today’s goal.'
+        : 'You are on your way.'
+      : 'Keep today’s plan small.'
+    : rhythm.activeToday
+      ? 'You made room for learning today.'
+      : 'Today is your planned rest day.'
+  const planNudgeDescription = isPlannedStudyDay
+    ? rhythm.activeToday
+      ? rhythm.activitiesToday >= dailyGoalSteps
+        ? 'Your activity has been recorded. Take a break or continue when you feel ready.'
+        : 'One activity is already logged. There is still room for another small step toward your daily goal.'
+      : nextStep
+        ? 'A short session on ' + (focusTrack?.name ?? 'your learning path') + ' is enough to get started. Your next step is ready.'
+        : 'Complete one small guided-path activity to log today’s progress.'
+    : rhythm.activeToday
+      ? 'You learned outside your usual schedule. That flexibility counts, too.'
+      : 'Your next planned learning day is ' + nextPlannedDayLabel + '. You can rest today and return when it fits.'
   const activityMilestones = [
     { count: 1, title: 'First step taken' },
     { count: 5, title: 'Building momentum' },
@@ -245,6 +273,27 @@ export default async function DashboardPage() {
             </div>
           </section>
         )}
+
+        <section className="card mb-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal/10 text-teal">
+                <CalendarDays size={18} />
+              </div>
+              <div>
+                <p className="section-label">{isPlannedStudyDay ? 'TODAY’S LEARNING PLAN' : 'YOUR LEARNING RHYTHM'}</p>
+                <h2 className="mt-1 font-display text-lg font-semibold text-text-primary">{planNudgeTitle}</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-text-secondary">{planNudgeDescription}</p>
+              </div>
+            </div>
+            {isPlannedStudyDay && focusTrack && nextStep && !rhythm.activitiesToday || (isPlannedStudyDay && focusTrack && nextStep && rhythm.activitiesToday < dailyGoalSteps) ? (
+              <Link href={'/guided-path/' + focusTrack.id} className="btn btn-primary inline-flex shrink-0 items-center justify-center gap-2">
+                Continue learning
+                <ArrowRight size={15} />
+              </Link>
+            ) : null}
+          </div>
+        </section>
 
         <section className="grid gap-5 lg:grid-cols-[1.65fr_1fr]">
           <article className="overflow-hidden rounded-xl border border-border-default bg-surface">
@@ -420,7 +469,7 @@ export default async function DashboardPage() {
                 <div className="rounded-lg border border-border-subtle p-4">
                   <p className="text-xs text-text-muted">Active days this week</p>
                   <p className="mt-2 font-editorial text-3xl text-text-primary">
-                    {rhythm.activeDaysThisWeek}<span className="text-lg text-text-muted">/{WEEKLY_ACTIVE_DAY_GOAL}</span>
+                    {rhythm.activeDaysThisWeek}<span className="text-lg text-text-muted">/{plannedStudyDays.length}</span>
                   </p>
                   <p className="mt-1 text-xs leading-5 text-text-muted">A flexible weekly rhythm</p>
                 </div>
@@ -495,6 +544,14 @@ export default async function DashboardPage() {
               </div>
             </section>
           </aside>
+        </section>
+
+        <section className="mt-8">
+          <WeeklyLearningPlan
+            initialDays={plannedStudyDays}
+            currentWeekDays={rhythm.currentWeekDays}
+            todayWeekday={todayWeekday}
+          />
         </section>
 
         <section className="mt-8">
