@@ -32,22 +32,19 @@ export function WeeklyLearningPlan({
   const completedSoFar = selectedSoFar.filter((day) => currentWeekDays[day - 1]?.active)
   const adherence = selectedSoFar.length
     ? Math.round((completedSoFar.length / selectedSoFar.length) * 100)
-    : 100
+    : 0
   const dirty = days.length !== savedDays.length || days.some((day) => !savedDays.includes(day))
 
   function toggleDay(day: number) {
     setNotice('')
     setError('')
-    setDays((current) => {
-      if (current.includes(day)) {
-        if (current.length === 1) {
-          setError('Keep at least one planned learning day.')
-          return current
-        }
-        return current.filter((item) => item !== day)
-      }
-      return [...current, day].sort((a, b) => a - b)
-    })
+    if (days.includes(day) && days.length === 1) {
+      setError('Keep at least one planned learning day.')
+      return
+    }
+    setDays((current) => current.includes(day)
+      ? current.filter((item) => item !== day)
+      : [...current, day].sort((a, b) => a - b))
   }
 
   async function savePlan() {
@@ -144,7 +141,9 @@ export function WeeklyLearningPlan({
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.12em] text-text-muted">Plan progress so far</p>
             <p className="mt-1 text-sm font-semibold text-text-primary">
-              {completedSoFar.length} of {selectedSoFar.length} planned {selectedSoFar.length === 1 ? 'day' : 'days'}
+              {selectedSoFar.length
+                ? `${completedSoFar.length} of ${selectedSoFar.length} planned ${selectedSoFar.length === 1 ? 'day' : 'days'}`
+                : 'Your first planned session is coming up'}
             </p>
           </div>
           <span className="font-mono text-sm text-text-secondary">{adherence}%</span>
