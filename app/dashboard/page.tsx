@@ -472,7 +472,7 @@ export default async function DashboardPage() {
                   </p>
                 </div>
                 <div className="rounded-lg border border-border-subtle p-4">
-                  <p className="text-xs text-text-muted">Active days this week</p>
+                  <p className="text-xs text-text-muted">Planned days completed</p>
                   <p className="mt-2 font-editorial text-3xl text-text-primary">
                     {plannedActiveDaysThisWeek}<span className="text-lg text-text-muted">/{plannedStudyDays.length}</span>
                   </p>
