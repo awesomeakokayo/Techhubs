@@ -8,6 +8,7 @@ on:
       - phase-3-ai-world-class-rebuild
       - feat/retention-v1
       - feat/retention-v2
+      - feat/retention-v3
 
 jobs:
   validate:
