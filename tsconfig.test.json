@@ -8,7 +8,15 @@
     "skipLibCheck": true,
     "strict": false,
     "moduleResolution": "node",
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
-  "include": ["lib/pricing.ts", "lib/risk.ts", "lib/payments.ts", "lib/payment-log.ts"]
+  "include": [
+    "lib/pricing.ts",
+    "lib/risk.ts",
+    "lib/payments.ts",
+    "lib/payment-log.ts",
+    "lib/learning-rhythm.ts"
+  ]
 }
