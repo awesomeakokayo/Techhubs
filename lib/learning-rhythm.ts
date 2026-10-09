@@ -2,7 +2,7 @@ export const DEFAULT_LEARNER_TIME_ZONE = 'Africa/Lagos'
 export const DAILY_GOAL_OPTIONS = [1, 2, 3] as const
 export const WEEKLY_ACTIVE_DAY_GOAL = 5
 export const DEFAULT_PLANNED_STUDY_DAYS = [1, 2, 3, 4, 5] as const
-export const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const
+export const WEEKDAY_LABELS: readonly string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 export interface LearningDay {
   key: string
