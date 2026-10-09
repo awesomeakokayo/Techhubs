@@ -3,7 +3,6 @@ import { redirect } from 'next/navigation'
 import {
   ArrowRight,
   BarChart3,
-  BookOpen,
   CalendarDays,
   CheckCircle2,
   Clock3,
@@ -22,7 +21,7 @@ import { buildGuidedPath } from '@/lib/guided-path'
 import { buildAIWorldClassPath } from '@/lib/ai-guided-path'
 import type { LearnerExperienceLevel } from '@/lib/learner-profile'
 import { DailyGoalControl } from '@/components/dashboard/DailyGoalControl'
-import { calculateLearningRhythm, DEFAULT_LEARNER_TIME_ZONE } from '@/lib/learning-rhythm'
+import { calculateLearningRhythm, DEFAULT_LEARNER_TIME_ZONE, WEEKLY_ACTIVE_DAY_GOAL } from '@/lib/learning-rhythm'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -145,7 +144,8 @@ export default async function DashboardPage() {
   ]
   const nextMilestone = activityMilestones.find((milestone) => milestone.count > totalActivities)
   const nextActivityTarget = nextMilestone?.count ?? Math.ceil((totalActivities + 1) / 100) * 100
-  const previousActivityTarget = [...activityMilestones].filter((milestone) => milestone.count < nextActivityTarget).at(-1)?.count ?? 0
+  const previousMilestones = activityMilestones.filter((milestone) => milestone.count < nextActivityTarget)
+  const previousActivityTarget = previousMilestones.length ? previousMilestones[previousMilestones.length - 1].count : 0
   const milestoneProgress = Math.min(100, Math.round(
     ((totalActivities - previousActivityTarget) / Math.max(1, nextActivityTarget - previousActivityTarget)) * 100,
   ))
@@ -420,7 +420,7 @@ export default async function DashboardPage() {
                 <div className="rounded-lg border border-border-subtle p-4">
                   <p className="text-xs text-text-muted">Active days this week</p>
                   <p className="mt-2 font-editorial text-3xl text-text-primary">
-                    {rhythm.activeDaysThisWeek}<span className="text-lg text-text-muted">/5</span>
+                    {rhythm.activeDaysThisWeek}<span className="text-lg text-text-muted">/{WEEKLY_ACTIVE_DAY_GOAL}</span>
                   </p>
                   <p className="mt-1 text-xs leading-5 text-text-muted">A flexible weekly rhythm</p>
                 </div>
