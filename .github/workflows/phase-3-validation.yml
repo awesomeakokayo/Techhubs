@@ -7,6 +7,7 @@ on:
     branches:
       - phase-3-ai-world-class-rebuild
       - feat/retention-v1
+      - feat/retention-v2
 
 jobs:
   validate:
