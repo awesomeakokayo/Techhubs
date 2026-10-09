@@ -3,7 +3,9 @@ const assert = require('node:assert/strict')
 const {
   calculateLearningRhythm,
   getLearningMilestones,
+  getLocalWeekday,
   isDailyGoalSteps,
+  isPlannedStudyDays,
   isValidTimeZone,
 } = require('../.test-dist/learning-rhythm.js')
 
@@ -78,4 +80,22 @@ test('daily goal and time zone validators reject unsupported values', () => {
   assert.equal(isDailyGoalSteps('2'), false)
   assert.equal(isValidTimeZone('Africa/Lagos'), true)
   assert.equal(isValidTimeZone('Not/AReal_TimeZone'), false)
+})
+
+test('weekly learning schedule accepts unique ISO weekdays only', () => {
+  assert.equal(isPlannedStudyDays([1]), true)
+  assert.equal(isPlannedStudyDays([1, 2, 3, 4, 5]), true)
+  assert.equal(isPlannedStudyDays([6, 7]), true)
+  assert.equal(isPlannedStudyDays([]), false)
+  assert.equal(isPlannedStudyDays([1, 1]), false)
+  assert.equal(isPlannedStudyDays([0, 2]), false)
+  assert.equal(isPlannedStudyDays([1, 2, 3, 4, 5, 6, 7, 1]), false)
+  assert.equal(isPlannedStudyDays('1,2,3'), false)
+})
+
+test('local weekday uses ISO weekday numbering in the learner time zone', () => {
+  const fridayUtc = new Date('2026-10-09T12:00:00.000Z')
+  assert.equal(getLocalWeekday(fridayUtc, 'Africa/Lagos'), 5)
+  assert.equal(getLocalWeekday(new Date('2026-10-10T00:30:00.000Z'), 'America/Los_Angeles'), 5)
+  assert.equal(getLocalWeekday(new Date('2026-10-10T12:00:00.000Z'), 'Africa/Lagos'), 6)
 })
