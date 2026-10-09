@@ -35,6 +35,8 @@ model LearnerProfile {
   weeklyHours         Int?
   recommendedTrackId  String?
   onboardingCompleted Boolean  @default(false)
+  dailyGoalSteps      Int      @default(1)
+  timeZone            String   @default("Africa/Lagos")
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
@@ -133,6 +135,7 @@ model UserProgress {
 
   @@unique([userId, trackId, itemType, resourceId, stageId])
   @@index([userId, trackId])
+  @@index([userId, completedAt])
 }
 
 model UserTrackProgress {
