@@ -1,6 +1,8 @@
 export const DEFAULT_LEARNER_TIME_ZONE = 'Africa/Lagos'
 export const DAILY_GOAL_OPTIONS = [1, 2, 3] as const
 export const WEEKLY_ACTIVE_DAY_GOAL = 5
+export const DEFAULT_PLANNED_STUDY_DAYS = [1, 2, 3, 4, 5] as const
+export const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const
 
 export interface LearningDay {
   key: string
@@ -67,6 +69,22 @@ export function isValidTimeZone(value: unknown): value is string {
 
 export function isDailyGoalSteps(value: unknown): value is (typeof DAILY_GOAL_OPTIONS)[number] {
   return typeof value === 'number' && DAILY_GOAL_OPTIONS.includes(value as (typeof DAILY_GOAL_OPTIONS)[number])
+}
+
+export function isPlannedStudyDays(value: unknown): value is number[] {
+  return Array.isArray(value) &&
+    value.length >= 1 &&
+    value.length <= 7 &&
+    value.every((day) => Number.isInteger(day) && day >= 1 && day <= 7) &&
+    new Set(value).size === value.length
+}
+
+export function getLocalWeekday(
+  date = new Date(),
+  timeZone = DEFAULT_LEARNER_TIME_ZONE,
+): number {
+  const localKey = dateKey(date, timeZone)
+  return ((weekdayIndex(localKey) + 6) % 7) + 1
 }
 
 export function calculateLearningRhythm(
