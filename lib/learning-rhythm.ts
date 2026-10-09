@@ -87,6 +87,36 @@ export function getLocalWeekday(
   return ((weekdayIndex(localKey) + 6) % 7) + 1
 }
 
+export interface WeeklyPlanProgress {
+  plannedDaysElapsed: number
+  completedPlannedDays: number
+  percent: number
+  nextPlannedDay: number
+}
+
+export function calculateWeeklyPlanProgress(
+  plannedStudyDays: number[],
+  activeWeekdays: number[],
+  todayWeekday: number,
+): WeeklyPlanProgress {
+  const validPlannedDays = Array.from(new Set(
+    plannedStudyDays.filter((day) => Number.isInteger(day) && day >= 1 && day <= 7),
+  )).sort((a, b) => a - b)
+  const plannedDaysElapsed = validPlannedDays.filter((day) => day <= todayWeekday)
+  const activeDaySet = new Set(activeWeekdays)
+  const completedPlannedDays = plannedDaysElapsed.filter((day) => activeDaySet.has(day)).length
+  const nextPlannedDay = validPlannedDays.find((day) => day > todayWeekday) ?? validPlannedDays[0] ?? 1
+
+  return {
+    plannedDaysElapsed: plannedDaysElapsed.length,
+    completedPlannedDays,
+    percent: plannedDaysElapsed.length
+      ? Math.round((completedPlannedDays / plannedDaysElapsed.length) * 100)
+      : 0,
+    nextPlannedDay,
+  }
+}
+
 export function calculateLearningRhythm(
   activityDates: Array<Date | string | null>,
   now = new Date(),
