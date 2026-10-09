@@ -4,11 +4,14 @@ import {
   ArrowRight,
   BarChart3,
   BookOpen,
+  CalendarDays,
   CheckCircle2,
   Clock3,
   Compass,
   ExternalLink,
+  Flame,
   Gauge,
+  Trophy,
   UserRound,
 } from 'lucide-react'
 import { auth } from '@/auth'
@@ -18,6 +21,8 @@ import { getTrackIcon } from '@/lib/icons'
 import { buildGuidedPath } from '@/lib/guided-path'
 import { buildAIWorldClassPath } from '@/lib/ai-guided-path'
 import type { LearnerExperienceLevel } from '@/lib/learner-profile'
+import { DailyGoalControl } from '@/components/dashboard/DailyGoalControl'
+import { calculateLearningRhythm, DEFAULT_LEARNER_TIME_ZONE } from '@/lib/learning-rhythm'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -73,10 +78,13 @@ export default async function DashboardPage() {
   if (!session?.user?.id) redirect('/login?next=/dashboard')
 
   const userId = session.user.id
-  const weekStart = new Date()
+  const now = new Date()
+  const weekStart = new Date(now)
   weekStart.setDate(weekStart.getDate() - 7)
+  const historyStart = new Date(now)
+  historyStart.setDate(historyStart.getDate() - 400)
 
-  const [profile, enrollments, completions, weeklyActivity, weeklyProjects] = await Promise.all([
+  const [profile, enrollments, completions, activityRecords, totalActivities, weeklyActivity, weeklyProjects] = await Promise.all([
     prisma.learnerProfile.findUnique({ where: { userId } }),
     prisma.guidedPathEnrollment.findMany({
       where: { userId },
@@ -93,22 +101,54 @@ export default async function DashboardPage() {
       where: { userId },
       select: { trackId: true },
     }),
+    prisma.userProgress.findMany({
+      where: {
+        userId,
+        status: 'COMPLETED',
+        completedAt: { gte: historyStart },
+      },
+      select: { completedAt: true },
+    }),
+    prisma.userProgress.count({
+      where: { userId, status: 'COMPLETED' },
+    }),
     prisma.userProgress.count({
       where: {
         userId,
-        createdAt: { gte: weekStart },
+        completedAt: { gte: weekStart },
         status: 'COMPLETED',
       },
     }),
     prisma.userProgress.count({
       where: {
         userId,
-        createdAt: { gte: weekStart },
+        completedAt: { gte: weekStart },
         itemType: 'project',
         status: 'COMPLETED',
       },
     }),
   ])
+
+  const rhythm = calculateLearningRhythm(
+    activityRecords.map((activity) => activity.completedAt),
+    now,
+    profile?.timeZone || DEFAULT_LEARNER_TIME_ZONE,
+  )
+  const dailyGoalSteps = profile?.dailyGoalSteps ?? 1
+  const activityMilestones = [
+    { count: 1, title: 'First step taken' },
+    { count: 5, title: 'Building momentum' },
+    { count: 10, title: 'Learning in action' },
+    { count: 25, title: 'Committed builder' },
+    { count: 50, title: 'Skill builder' },
+    { count: 100, title: 'Learning champion' },
+  ]
+  const nextMilestone = activityMilestones.find((milestone) => milestone.count > totalActivities)
+  const nextActivityTarget = nextMilestone?.count ?? Math.ceil((totalActivities + 1) / 100) * 100
+  const previousActivityTarget = [...activityMilestones].filter((milestone) => milestone.count < nextActivityTarget).at(-1)?.count ?? 0
+  const milestoneProgress = Math.min(100, Math.round(
+    ((totalActivities - previousActivityTarget) / Math.max(1, nextActivityTarget - previousActivityTarget)) * 100,
+  ))
 
   const completedTrackIds = new Set(completions.map((item) => item.trackId))
   const typedEnrollments = enrollments as Enrollment[]
@@ -348,18 +388,102 @@ export default async function DashboardPage() {
               </Link>
             </section>
 
+            <DailyGoalControl
+              initialGoal={dailyGoalSteps}
+              activitiesToday={rhythm.activitiesToday}
+            />
+
             <section className="card">
-              <p className="section-label">THIS WEEK</p>
-              <div className="mt-4 grid grid-cols-2 gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="section-label">LEARNING RHYTHM</p>
+                  <h2 className="mt-1 font-display text-lg font-semibold text-text-primary">Consistency over intensity.</h2>
+                </div>
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal/10 text-teal">
+                  <Flame size={19} />
+                </div>
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3">
                 <div className="rounded-lg border border-border-subtle p-4">
-                  <BookOpen size={17} className="text-teal" />
-                  <p className="mt-3 font-editorial text-3xl text-text-primary">{weeklyActivity}</p>
-                  <p className="mt-1 text-xs leading-5 text-text-muted">learning activities completed</p>
+                  <p className="text-xs text-text-muted">Current streak</p>
+                  <p className="mt-2 font-editorial text-3xl text-text-primary">
+                    {rhythm.currentStreakDays}
+                    <span className="ml-1 text-sm font-medium text-text-muted">
+                      {rhythm.currentStreakDays === 1 ? 'day' : 'days'}
+                    </span>
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-text-muted">
+                    {rhythm.activeToday ? 'You have learned today.' : 'Complete an activity to continue.'}
+                  </p>
                 </div>
                 <div className="rounded-lg border border-border-subtle p-4">
-                  <BarChart3 size={17} className="text-teal" />
-                  <p className="mt-3 font-editorial text-3xl text-text-primary">{weeklyProjects}</p>
-                  <p className="mt-1 text-xs leading-5 text-text-muted">projects completed</p>
+                  <p className="text-xs text-text-muted">Active days this week</p>
+                  <p className="mt-2 font-editorial text-3xl text-text-primary">
+                    {rhythm.activeDaysThisWeek}<span className="text-lg text-text-muted">/5</span>
+                  </p>
+                  <p className="mt-1 text-xs leading-5 text-text-muted">A flexible weekly rhythm</p>
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-xs font-medium text-text-muted">THIS WEEK</p>
+                  <CalendarDays size={14} className="text-text-muted" />
+                </div>
+                <div className="mt-3 grid grid-cols-7 gap-1.5">
+                  {rhythm.currentWeekDays.map((day) => (
+                    <div key={day.key} className="flex flex-col items-center gap-1.5">
+                      <span className={'text-[10px] ' + (day.isToday ? 'font-semibold text-teal' : 'text-text-muted')}>
+                        {day.label}
+                      </span>
+                      <div
+                        aria-label={day.label + (day.active ? ': activity completed' : ': no activity recorded')}
+                        className={
+                          'flex h-7 w-7 items-center justify-center rounded-full border ' +
+                          (day.active
+                            ? 'border-teal bg-teal text-white'
+                            : day.isToday
+                              ? 'border-teal/50 text-teal'
+                              : 'border-border-default text-transparent')
+                        }
+                      >
+                        {day.active && <CheckCircle2 size={13} />}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-5 border-t border-border-subtle pt-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="section-label">NEXT MILESTONE</p>
+                    <p className="mt-1 text-sm font-semibold text-text-primary">
+                      {nextMilestone?.title ?? 'Keep building your learning record'}
+                    </p>
+                    <p className="mt-1 text-xs text-text-muted">
+                      {totalActivities} of {nextActivityTarget} completed activities
+                    </p>
+                  </div>
+                  <Trophy size={17} className="mt-1 shrink-0 text-teal" />
+                </div>
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-border-subtle">
+                  <div className="h-full rounded-full bg-teal transition-all" style={{ width: milestoneProgress + '%' }} />
+                </div>
+                <p className="mt-2 text-xs text-text-muted">
+                  {Math.max(0, nextActivityTarget - totalActivities)} more {nextActivityTarget - totalActivities === 1 ? 'activity' : 'activities'} to go
+                </p>
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3 border-t border-border-subtle pt-4">
+                <div>
+                  <p className="text-xs text-text-muted">Activities in last 7 days</p>
+                  <p className="mt-1 font-display text-xl font-semibold text-text-primary">{weeklyActivity}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-text-muted">Projects completed in last 7 days</p>
+                  <p className="mt-1 font-display text-xl font-semibold text-text-primary">{weeklyProjects}</p>
                 </div>
               </div>
               <div className="mt-4 flex items-center justify-between border-t border-border-subtle pt-4">
