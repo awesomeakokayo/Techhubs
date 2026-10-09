@@ -37,6 +37,7 @@ model LearnerProfile {
   onboardingCompleted Boolean  @default(false)
   dailyGoalSteps      Int      @default(1)
   timeZone            String   @default("Africa/Lagos")
+  plannedStudyDays    Int[]    @default([1, 2, 3, 4, 5])
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
