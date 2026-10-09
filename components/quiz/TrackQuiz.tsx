@@ -255,6 +255,7 @@ export function TrackQuiz() {
             experienceLevel: level,
             weeklyHours: hours,
             recommendedTrackId: top[0],
+            timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
           }),
         })
       }
