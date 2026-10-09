@@ -142,26 +142,6 @@ export default async function DashboardPage() {
   const isPlannedStudyDay = plannedStudyDays.includes(todayWeekday)
   const nextPlannedDay = plannedStudyDays.find((day) => day > todayWeekday) ?? plannedStudyDays[0]
   const nextPlannedDayLabel = WEEKDAY_LABELS[nextPlannedDay - 1]
-  const planNudgeTitle = isPlannedStudyDay
-    ? rhythm.activeToday
-      ? rhythm.activitiesToday >= dailyGoalSteps
-        ? 'You have completed today’s goal.'
-        : 'You are on your way.'
-      : 'Keep today’s plan small.'
-    : rhythm.activeToday
-      ? 'You made room for learning today.'
-      : 'Today is your planned rest day.'
-  const planNudgeDescription = isPlannedStudyDay
-    ? rhythm.activeToday
-      ? rhythm.activitiesToday >= dailyGoalSteps
-        ? 'Your activity has been recorded. Take a break or continue when you feel ready.'
-        : 'One activity is already logged. There is still room for another small step toward your daily goal.'
-      : nextStep
-        ? 'A short session on ' + (focusTrack?.name ?? 'your learning path') + ' is enough to get started. Your next step is ready.'
-        : 'Complete one small guided-path activity to log today’s progress.'
-    : rhythm.activeToday
-      ? 'You learned outside your usual schedule. That flexibility counts, too.'
-      : 'Your next planned learning day is ' + nextPlannedDayLabel + '. You can rest today and return when it fits.'
   const activityMilestones = [
     { count: 1, title: 'First step taken' },
     { count: 5, title: 'Building momentum' },
@@ -211,6 +191,31 @@ export default async function DashboardPage() {
   const focusIndex = activeFocus?.enrollment.currentStepIndex ?? 0
   const nextStep = focusSteps[focusIndex]
   const focusPercent = activeFocus?.percent ?? 0
+
+  const planNudgeTitle = isPlannedStudyDay
+    ? rhythm.activeToday
+      ? rhythm.activitiesToday >= dailyGoalSteps
+        ? 'You have completed today’s goal.'
+        : 'You are on your way.'
+      : 'Keep today’s plan small.'
+    : rhythm.activeToday
+      ? 'You made room for learning today.'
+      : 'Today is your planned rest day.'
+  const planNudgeDescription = isPlannedStudyDay
+    ? rhythm.activeToday
+      ? rhythm.activitiesToday >= dailyGoalSteps
+        ? 'Your activity has been recorded. Take a break or continue when you feel ready.'
+        : 'One activity is already logged. There is still room for another small step toward your daily goal.'
+      : nextStep
+        ? 'A short session on ' + (focusTrack?.name ?? 'your learning path') + ' is enough to get started. Your next step is ready.'
+        : 'Complete one small guided-path activity to log today’s progress.'
+    : rhythm.activeToday
+      ? 'You learned outside your usual schedule. That flexibility counts, too.'
+      : 'Your next planned learning day is ' + nextPlannedDayLabel + '. You can rest today and return when it fits.'
+
+  const plannedActiveDaysThisWeek = rhythm.currentWeekDays.filter(
+    (day, index) => day.active && plannedStudyDays.includes(index + 1),
+  ).length
 
   const profileComplete = Boolean(
     profile?.onboardingCompleted &&
@@ -286,7 +291,7 @@ export default async function DashboardPage() {
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-text-secondary">{planNudgeDescription}</p>
               </div>
             </div>
-            {isPlannedStudyDay && focusTrack && nextStep && !rhythm.activitiesToday || (isPlannedStudyDay && focusTrack && nextStep && rhythm.activitiesToday < dailyGoalSteps) ? (
+            {isPlannedStudyDay && focusTrack && nextStep && rhythm.activitiesToday < dailyGoalSteps ? (
               <Link href={'/guided-path/' + focusTrack.id} className="btn btn-primary inline-flex shrink-0 items-center justify-center gap-2">
                 Continue learning
                 <ArrowRight size={15} />
@@ -469,7 +474,7 @@ export default async function DashboardPage() {
                 <div className="rounded-lg border border-border-subtle p-4">
                   <p className="text-xs text-text-muted">Active days this week</p>
                   <p className="mt-2 font-editorial text-3xl text-text-primary">
-                    {rhythm.activeDaysThisWeek}<span className="text-lg text-text-muted">/{plannedStudyDays.length}</span>
+                    {plannedActiveDaysThisWeek}<span className="text-lg text-text-muted">/{plannedStudyDays.length}</span>
                   </p>
                   <p className="mt-1 text-xs leading-5 text-text-muted">A flexible weekly rhythm</p>
                 </div>
