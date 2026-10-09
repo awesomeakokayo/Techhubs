@@ -4,10 +4,11 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { AlertTriangle, ArrowRight, BookOpen, BookOpenCheck, CheckCircle2, ChevronLeft, Code2, ExternalLink, FileText, GraduationCap, Lightbulb, Lock, RotateCcw, Sparkles, Trophy, Users, Wrench, Youtube } from 'lucide-react'
+import { AlertTriangle, ArrowRight, BookOpen, BookOpenCheck, CheckCircle2, ChevronLeft, Code2, ExternalLink, FileText, GraduationCap, Lightbulb, Lock, RotateCcw, Sparkles, Trophy, Users, Wrench, Youtube, X } from 'lucide-react'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { TRACKS } from '@/lib/tracks'
 import type { GuidedStep } from '@/lib/guided-path'
+import type { LearningMilestone } from '@/lib/learning-rhythm'
 
 function getYouTubeId(url?: string) {
   if (!url) return null
@@ -35,6 +36,7 @@ export default function GuidedPathPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [milestones, setMilestones] = useState<LearningMilestone[]>([])
 
   useEffect(() => {
     let cancelled = false
@@ -78,8 +80,10 @@ export default function GuidedPathPage() {
       setError(data?.error || 'Your progress could not be saved. Please try again.')
       return
     }
+    const data = await response.json().catch(() => null)
     setCompletedIndices((previous) => previous.includes(stepIndex) ? previous : [...previous, stepIndex])
-    setCurrentIndex(stepIndex + 1)
+    setCurrentIndex(typeof data?.currentStepIndex === 'number' ? data.currentStepIndex : stepIndex + 1)
+    setMilestones(Array.isArray(data?.milestones) ? data.milestones : [])
     setAnswers({})
     setSubmitted(false)
   }
@@ -88,18 +92,65 @@ export default function GuidedPathPage() {
   if (error && steps.length === 0) return <div className="flex min-h-[60vh] items-center justify-center text-[var(--color-error)]">{error}</div>
   if (!steps.length) return <div className="flex min-h-[60vh] items-center justify-center text-text-secondary">Track not found.</div>
 
-  if (currentIndex >= steps.length) return <div className="max-w-2xl mx-auto py-20 px-6 text-center"><div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full" style={{ background: 'rgba(22,163,74,0.1)' }}><Trophy size={30} style={{ color: 'var(--color-success)' }} /></div><h1 className="font-editorial text-4xl text-text-primary">Course complete!</h1><p className="mt-4 text-text-secondary">You completed the guided path for {track?.name || trackId}.</p><div className="mt-8 flex justify-center gap-3"><Link href={`/certificate/${trackId}`} className="btn btn-primary inline-flex items-center gap-2">Get certificate <ArrowRight size={16} /></Link><Link href={track ? `/tracks/${track.slug}` : '/tracks'} className="btn btn-secondary">Back to track</Link></div></div>
+  if (currentIndex >= steps.length) return <div className="max-w-2xl mx-auto py-20 px-6 text-center">
+    <MilestoneCelebration milestones={milestones} onDismiss={() => setMilestones([])} />
+    <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full" style={{ background: 'rgba(22,163,74,0.1)' }}><Trophy size={30} style={{ color: 'var(--color-success)' }} /></div>
+    <h1 className="font-editorial text-4xl text-text-primary">Course complete!</h1>
+    <p className="mt-4 text-text-secondary">You completed the guided path for {track?.name || trackId}.</p>
+    <div className="mt-8 flex flex-wrap justify-center gap-3"><Link href={`/certificate/${trackId}`} className="btn btn-primary inline-flex items-center gap-2">Get certificate <ArrowRight size={16} /></Link><Link href={track ? `/tracks/${track.slug}` : '/tracks'} className="btn btn-secondary">Back to track</Link><Link href="/dashboard" className="btn btn-secondary">Learning Home</Link></div>
+  </div>
 
   return <main className="max-w-2xl mx-auto px-6 py-10">
     <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Tracks', href: '/tracks' }, { label: track?.name || trackId, href: `/tracks/${track?.slug || trackId}` }, { label: 'Guided Path' }]} />
     <Link href={track ? `/tracks/${track.slug}` : '/tracks'} className="mt-3 inline-flex items-center gap-1 text-sm text-text-secondary"><ChevronLeft size={14} /> Back to {track?.name || 'Track'}</Link>
     <div className="mt-6 flex items-center gap-2"><span className="badge inline-flex items-center gap-1"><GraduationCap size={12} /> PRO</span><span className="text-xs text-text-muted">Guided Path · Cross-device sync</span></div>
     <div className="mt-6"><p className="section-label">YOUR LEARNING PATH</p><div className="progress-bar-container mt-3"><div className="progress-bar-fill" style={{ width: `${progress}%` }} /></div><p className="mt-2 text-sm text-text-secondary">Step {currentIndex + 1} of {steps.length} · {progress}% complete</p></div>
+    <MilestoneCelebration milestones={milestones} onDismiss={() => setMilestones([])} />
     {error && <div className="mt-5 rounded-md p-3" style={{ background: 'rgba(220,38,38,0.08)', border: '1px solid rgba(220,38,38,0.22)' }}><p className="text-sm text-[var(--color-error)]">{error}</p></div>}
     <StepCard step={currentStep} answerMap={answers} submitted={submitted} quizResult={quizResult} onSelect={(key, value) => setAnswers((previous) => ({ ...previous, [key]: value }))} onSubmitQuiz={() => { setError(''); setSubmitted(true) }} onRetryQuiz={() => { setAnswers({}); setSubmitted(false); setError('') }} onComplete={() => completeStep(currentIndex)} />
     <div className="mt-6 space-y-3">{steps.slice(currentIndex + 1, currentIndex + 4).map((step) => <div key={step.index} className="card opacity-40 flex items-center gap-3"><Lock size={16} className="text-text-muted" /><div><p className="text-sm font-medium text-text-secondary">{step.title}</p><p className="text-xs text-text-muted">Complete current step to unlock</p></div></div>)}</div>
     {completedIndices.length > 0 && <details className="mt-8"><summary className="cursor-pointer text-sm text-text-secondary">View {completedIndices.length} completed steps</summary><div className="mt-3 space-y-2">{steps.filter((_, index) => completedIndices.includes(index)).map((step) => <div key={step.index} className="flex items-center gap-2 text-sm text-text-secondary"><CheckCircle2 size={14} className="text-[var(--color-success)]" />{step.title}</div>)}</div></details>}
   </main>
+}
+
+function MilestoneCelebration({
+  milestones,
+  onDismiss,
+}: {
+  milestones: LearningMilestone[]
+  onDismiss: () => void
+}) {
+  if (!milestones.length) return null
+  return (
+    <section
+      role="status"
+      aria-live="polite"
+      className="mb-5 rounded-xl border border-teal/30 bg-teal/5 p-4 sm:p-5"
+    >
+      <div className="flex items-start gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal/10 text-teal">
+          <Trophy size={19} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-teal">MILESTONE UNLOCKED</p>
+          {milestones.map((milestone) => (
+            <div key={milestone.code} className="mt-2">
+              <h2 className="font-display text-lg font-semibold text-text-primary">{milestone.title}</h2>
+              <p className="mt-1 text-sm leading-6 text-text-secondary">{milestone.description}</p>
+            </div>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={onDismiss}
+          aria-label="Dismiss milestone message"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-teal/10 hover:text-text-primary"
+        >
+          <X size={16} />
+        </button>
+      </div>
+    </section>
+  )
 }
 
 function StepCard({ step, answerMap, submitted, quizResult, onSelect, onSubmitQuiz, onRetryQuiz, onComplete }: { step: GuidedStep; answerMap: Record<string, number>; submitted: boolean; quizResult: { correctCount: number; total: number; score: number; requiredCorrect: number; passed: boolean }; onSelect: (key: string, value: number) => void; onSubmitQuiz: () => void; onRetryQuiz: () => void; onComplete: () => void }) {
