@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, LoaderCircle, Target } from 'lucide-react'
+import { Check, Loader2, Target } from 'lucide-react'
 import { DAILY_GOAL_OPTIONS } from '@/lib/learning-rhythm'
 
 export function DailyGoalControl({
@@ -105,7 +105,7 @@ export function DailyGoalControl({
             </button>
           ))}
         </div>
-        {saving && <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-text-muted"><LoaderCircle size={13} className="animate-spin" />Saving your goal</p>}
+        {saving && <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-text-muted"><Loader2 size={13} className="animate-spin" />Saving your goal</p>}
         {error && <p role="alert" className="mt-2 text-xs text-[var(--color-error)]">{error}</p>}
       </div>
     </section>
