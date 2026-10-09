@@ -4,6 +4,11 @@ import { prisma } from '@/lib/prisma'
 import { buildGuidedPath } from '@/lib/guided-path'
 import { buildAIWorldClassPath } from '@/lib/ai-guided-path'
 import { hasTrackAccess } from '@/lib/access'
+import {
+  calculateLearningRhythm,
+  DEFAULT_LEARNER_TIME_ZONE,
+  getLearningMilestones,
+} from '@/lib/learning-rhythm'
 
 export const dynamic = 'force-dynamic'
 
@@ -122,42 +127,115 @@ export async function POST(req: Request, { params }: { params: { trackId: string
     }
   }
 
-  const updatedEnrollment = await prisma.guidedPathEnrollment.update({
-    where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
-    data: { currentStepIndex: stepIndex + 1 },
-  })
+  const userId = session.user.id
+  const completedAt = new Date()
+  const historyStart = new Date(completedAt)
+  historyStart.setDate(historyStart.getDate() - 400)
 
-  const existing = await prisma.userProgress.findFirst({
-    where: {
-      userId: session.user.id,
-      trackId: params.trackId,
-      itemType: completedStep.type === 'project' ? 'project' : 'stage',
-      stageId: completedStep.stageId ?? undefined,
-      resourceId: completedStep.resourceId || completedStep.projectId || undefined,
-    },
-  })
+  try {
+    const outcome = await prisma.$transaction(async (tx) => {
+      // Compare-and-swap the unlocked step index so a double click or duplicate
+      // request cannot advance the same guided path twice.
+      const claimed = await tx.guidedPathEnrollment.updateMany({
+        where: {
+          userId,
+          trackId: params.trackId,
+          currentStepIndex: stepIndex,
+        },
+        data: { currentStepIndex: stepIndex + 1 },
+      })
 
-  if (!existing) {
-    await prisma.userProgress.create({
-      data: {
-        userId: session.user.id,
-        trackId: params.trackId,
-        itemType: completedStep.type === 'project' ? 'project' : 'stage',
-        stageId: completedStep.stageId,
-        resourceId: completedStep.resourceId || completedStep.projectId,
-        status: 'COMPLETED',
-        completedAt: new Date(),
-      },
+      if (claimed.count !== 1) throw new Error('STEP_ALREADY_ADVANCED')
+
+      const previousActivityCount = await tx.userProgress.count({
+        where: { userId, status: 'COMPLETED' },
+      })
+      const recentActivityRecords = await tx.userProgress.findMany({
+        where: {
+          userId,
+          status: 'COMPLETED',
+          completedAt: { gte: historyStart },
+        },
+        select: { completedAt: true },
+      })
+      const profile = await tx.learnerProfile.findUnique({
+        where: { userId },
+        select: { timeZone: true },
+      })
+      const timeZone = profile?.timeZone || DEFAULT_LEARNER_TIME_ZONE
+
+      const existing = await tx.userProgress.findFirst({
+        where: {
+          userId,
+          trackId: params.trackId,
+          itemType: completedStep.type === 'project' ? 'project' : 'stage',
+          stageId: completedStep.stageId ?? undefined,
+          resourceId: completedStep.resourceId || completedStep.projectId || undefined,
+        },
+      })
+
+      const isNewActivity = !existing || existing.status !== 'COMPLETED'
+      if (!existing) {
+        await tx.userProgress.create({
+          data: {
+            userId,
+            trackId: params.trackId,
+            itemType: completedStep.type === 'project' ? 'project' : 'stage',
+            stageId: completedStep.stageId,
+            resourceId: completedStep.resourceId || completedStep.projectId,
+            status: 'COMPLETED',
+            completedAt,
+          },
+        })
+      } else if (existing.status !== 'COMPLETED') {
+        await tx.userProgress.update({
+          where: { id: existing.id },
+          data: { status: 'COMPLETED', completedAt },
+        })
+      }
+
+      if (stepIndex === steps.length - 1) {
+        await tx.courseCompletion.upsert({
+          where: { userId_trackId: { userId, trackId: params.trackId } },
+          create: { userId, trackId: params.trackId, completedAt },
+          update: { completedAt },
+        })
+      }
+
+      let milestones: ReturnType<typeof getLearningMilestones> = []
+      if (isNewActivity) {
+        const previousRhythm = calculateLearningRhythm(
+          recentActivityRecords.map((activity) => activity.completedAt),
+          completedAt,
+          timeZone,
+        )
+        const nextRhythm = calculateLearningRhythm(
+          [...recentActivityRecords.map((activity) => activity.completedAt), completedAt],
+          completedAt,
+          timeZone,
+        )
+        milestones = getLearningMilestones(
+          previousActivityCount,
+          previousActivityCount + 1,
+          previousRhythm,
+          nextRhythm,
+        )
+      }
+
+      return {
+        currentStepIndex: stepIndex + 1,
+        milestones,
+      }
     })
-  }
 
-  if (stepIndex === steps.length - 1) {
-    await prisma.courseCompletion.upsert({
-      where: { userId_trackId: { userId: session.user.id, trackId: params.trackId } },
-      create: { userId: session.user.id, trackId: params.trackId, completedAt: new Date() },
-      update: { completedAt: new Date() },
-    })
+    return NextResponse.json(outcome)
+  } catch (error) {
+    if (error instanceof Error && error.message === 'STEP_ALREADY_ADVANCED') {
+      return NextResponse.json(
+        { error: 'This step has already been completed. Refresh your path to continue.' },
+        { status: 409 },
+      )
+    }
+    throw error
   }
-
-  return NextResponse.json({ currentStepIndex: updatedEnrollment.currentStepIndex })
 }
