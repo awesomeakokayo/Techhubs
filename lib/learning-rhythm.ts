@@ -16,7 +16,7 @@ export interface LearningRhythm {
   currentStreakDays: number
   activeDaysThisWeek: number
   activeToday: boolean
-  lastSevenDays: LearningDay[]
+  currentWeekDays: LearningDay[]
 }
 
 function dateKey(date: Date, timeZone: string): string {
@@ -99,12 +99,12 @@ export function calculateLearningRhythm(
   const activitiesThisWeek = keyedActivities.filter(({ key }) => key >= weekStart && key <= todayKey).length
   const activitiesToday = keyedActivities.filter(({ key }) => key === todayKey).length
 
-  const lastSevenDays = Array.from({ length: 7 }, (_, index) => {
-    const key = shiftDateKey(todayKey, index - 6)
+  const currentWeekDays = Array.from({ length: 7 }, (_, index) => {
+    const key = shiftDateKey(weekStart, index)
     return {
       key,
       label: dayLabel(key),
-      active: keys.has(key),
+      active: key <= todayKey && keys.has(key),
       isToday: key === todayKey,
     }
   })
@@ -116,7 +116,7 @@ export function calculateLearningRhythm(
     currentStreakDays,
     activeDaysThisWeek,
     activeToday,
-    lastSevenDays,
+    currentWeekDays,
   }
 }
 
