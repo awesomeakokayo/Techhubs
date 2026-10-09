@@ -28,7 +28,7 @@ export function WeeklyLearningPlan({
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
 
-  const selectedSoFar = days.filter((day) => day <= todayWeekday)
+  const selectedSoFar = savedDays.filter((day) => day <= todayWeekday)
   const completedSoFar = selectedSoFar.filter((day) => currentWeekDays[day - 1]?.active)
   const adherence = selectedSoFar.length
     ? Math.round((completedSoFar.length / selectedSoFar.length) * 100)
