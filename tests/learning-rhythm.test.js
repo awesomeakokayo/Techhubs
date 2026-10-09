@@ -2,6 +2,7 @@ const test = require('node:test')
 const assert = require('node:assert/strict')
 const {
   calculateLearningRhythm,
+  calculateWeeklyPlanProgress,
   getLearningMilestones,
   getLocalWeekday,
   isDailyGoalSteps,
@@ -98,4 +99,35 @@ test('local weekday uses ISO weekday numbering in the learner time zone', () => 
   assert.equal(getLocalWeekday(fridayUtc, 'Africa/Lagos'), 5)
   assert.equal(getLocalWeekday(new Date('2026-10-10T00:30:00.000Z'), 'America/Los_Angeles'), 5)
   assert.equal(getLocalWeekday(new Date('2026-10-10T12:00:00.000Z'), 'Africa/Lagos'), 6)
+})
+
+test('weekly plan adherence counts only scheduled days that have elapsed', () => {
+  const progress = calculateWeeklyPlanProgress(
+    [1, 2, 4, 5],
+    [1, 3, 4],
+    4,
+  )
+
+  assert.equal(progress.plannedDaysElapsed, 3)
+  assert.equal(progress.completedPlannedDays, 2)
+  assert.equal(progress.percent, 67)
+  assert.equal(progress.nextPlannedDay, 5)
+})
+
+test('weekly plan progress does not report completion before the first planned day', () => {
+  const progress = calculateWeeklyPlanProgress([6, 7], [], 3)
+
+  assert.equal(progress.plannedDaysElapsed, 0)
+  assert.equal(progress.completedPlannedDays, 0)
+  assert.equal(progress.percent, 0)
+  assert.equal(progress.nextPlannedDay, 6)
+})
+
+test('weekly plan calculation safely ignores invalid stored day values', () => {
+  const progress = calculateWeeklyPlanProgress([0, 1, 1, 8], [1], 1)
+
+  assert.equal(progress.plannedDaysElapsed, 1)
+  assert.equal(progress.completedPlannedDays, 1)
+  assert.equal(progress.percent, 100)
+  assert.equal(progress.nextPlannedDay, 1)
 })
