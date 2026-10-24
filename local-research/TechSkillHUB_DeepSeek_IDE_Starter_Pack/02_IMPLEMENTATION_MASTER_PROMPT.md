@@ -8,7 +8,9 @@ Implement the 186-stage curriculum research package so each stage has accurate i
 
 ### Required data inputs
 
-Use the extracted files under `local-research/research_package/TechSkillHUB_Curriculum_Research_Deliverables/`:
+Use the extracted research deliverables from the operator-supplied `CURRICULUM_PACKAGE_DIR`. The input ZIP is preserved at `local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/research_package/source-deliverables.zip`, but its expanded contents are intentionally not tracked. If the operator has not supplied an extracted path, stop before implementation and request extraction into a temporary directory outside the tracked application tree. Do not recreate, regenerate, or silently substitute for missing source inputs.
+
+Before proceeding, verify the supplied directory contains `02_STAGE_LEARNING_SPECS.json`, `03_RESOURCE_CANDIDATES.csv`, `04_APPROVED_RESOURCE_MAP.csv`, `05_QUIZ_BANK.jsonl`, `06_STAGE_MASTERY_AND_PRACTICE.json`, `07_PHASE_PROJECTS.json`, `08_REVIEW_AND_OPEN_ISSUES.csv`, `09_RESOURCE_VERIFICATION_LOG.csv`, and `research-progress.json`. Archive parent-folder names may vary.
 - `02_STAGE_LEARNING_SPECS.json`
 - `03_RESOURCE_CANDIDATES.csv`
 - `04_APPROVED_RESOURCE_MAP.csv`

@@ -10,8 +10,11 @@ The existing repository has significant uncommitted work. Preserve it. The resea
 
 ## Input files
 
-Find the extracted package under `local-research/`. Expected folder:
-`research_package/TechSkillHUB_Curriculum_Research_Deliverables/`
+The expanded curriculum folder is intentionally not tracked in this public repository. The preserved input archive is:
+`local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/research_package/source-deliverables.zip`
+with its matching checksum file `SOURCE_ARCHIVE_SHA256.txt` in the same directory.
+
+Use the actual `CURRICULUM_PACKAGE_DIR` provided by the operator. If no extracted directory is provided, inspect the archive/checksum metadata and ask for extraction into a temporary directory outside the tracked application tree before proceeding. Do not assume an extracted folder exists under the repository. Once provided, locate the directory containing `01_STAGE_MANIFEST.csv`, `02_STAGE_LEARNING_SPECS.json`, and `00_EXECUTIVE_PLAN.md`; the archive's parent-folder layout may vary. Do not modify the archive or regenerate missing files.
 
 Read these first:
 - `00_EXECUTIVE_PLAN.md`

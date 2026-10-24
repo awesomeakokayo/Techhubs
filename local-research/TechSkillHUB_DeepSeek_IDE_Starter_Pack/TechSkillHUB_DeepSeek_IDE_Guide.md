@@ -27,45 +27,49 @@ Interpret its statuses correctly:
 
 Open `C:\Tech Skill Hub` in your IDE/OpenCode. Do not open the research ZIP as if it were the application repository. The existing project has a large uncommitted worktree; preserve it.
 
-## Step 2 — Extract the starter pack locally
+## Step 2 — Extract the curriculum source ZIP to a temporary folder
 
-Save `TechSkillHUB_DeepSeek_IDE_Starter_Pack.zip` to your Downloads folder. In PowerShell, adjust `$repo` and `$zip` if needed:
+The application repository keeps the archive and checksum, not a second expanded copy of the 19 deliverables. Use the repository's preserved source archive instead of looking for a second starter-pack ZIP.
+
+In PowerShell, adjust `$repo` if needed. This extracts to `$env:TEMP`, outside the tracked application tree:
 
 ```powershell
 $repo = 'C:\Tech Skill Hub'
-$zip = Join-Path $env:USERPROFILE 'Downloads\TechSkillHUB_DeepSeek_IDE_Starter_Pack.zip'
-$dest = Join-Path $repo 'local-research\TechSkillHUB-2026-10-21'
-if (-not (Test-Path $repo)) { throw "Repository not found: $repo" }
-if (-not (Test-Path $zip)) { throw "ZIP not found: $zip" }
-Get-FileHash -LiteralPath $zip -Algorithm SHA256
-Expand-Archive -LiteralPath $zip -DestinationPath $dest -Force
-Get-ChildItem -LiteralPath $dest -Recurse -File | Measure-Object
+$pack = Join-Path $repo 'local-research\TechSkillHUB_DeepSeek_IDE_Starter_Pack\research_package'
+$zip = Join-Path $pack 'source-deliverables.zip'
+$checksumFile = Join-Path $pack 'SOURCE_ARCHIVE_SHA256.txt'
+$dest = Join-Path $env:TEMP 'TechSkillHUB-Curriculum-Research-2026-10-21'
 
-# Optional but recommended: ignore only this local research-input directory
-# in this clone, without changing the tracked .gitignore.
-$exclude = (git -C $repo rev-parse --git-path info/exclude).Trim()
-if (-not [IO.Path]::IsPathRooted($exclude)) { $exclude = Join-Path $repo $exclude }
-$excludeDir = Split-Path $exclude
-if (-not (Test-Path $excludeDir)) { New-Item -ItemType Directory -Path $excludeDir -Force | Out-Null }
-if (-not (Test-Path $exclude)) { New-Item -ItemType File -Path $exclude -Force | Out-Null }
-$existing = Get-Content -LiteralPath $exclude -ErrorAction SilentlyContinue
-if ($existing -notcontains '/local-research/') {
-  Add-Content -LiteralPath $exclude -Value "`n# Local-only TechSkillHUB research package`n/local-research/"
-}
+if (-not (Test-Path $repo)) { throw "Repository not found: $repo" }
+if (-not (Test-Path $zip)) { throw "Source archive not found: $zip" }
+if (-not (Test-Path $checksumFile)) { throw "Checksum file not found: $checksumFile" }
+
+$expectedLine = Get-Content -LiteralPath $checksumFile | Where-Object { $_ -match '^[0-9a-fA-F]{64}\s+source-deliverables\.zip$' } | Select-Object -First 1
+if (-not $expectedLine) { throw 'Could not read the source-deliverables.zip SHA-256 record.' }
+$expected = ($expectedLine -split '\s+')[0].ToLowerInvariant()
+$actual = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($actual -ne $expected) { throw "Archive checksum mismatch. Expected $expected; got $actual." }
+
+if (Test-Path $dest) { throw "Destination already exists. Choose a new temporary path rather than overwriting: $dest" }
+Expand-Archive -LiteralPath $zip -DestinationPath $dest
+Get-ChildItem -LiteralPath $dest -Recurse -File | Measure-Object
+Get-ChildItem -LiteralPath $dest -Recurse -Filter '01_STAGE_MANIFEST.csv' | Select-Object -ExpandProperty FullName
 git -C $repo status --short --untracked-files=normal
 ```
 
-The extracted directory contains the prompts and the research input files. The extracted research files are local inputs, not application source files. Keep them out of commits. Optionally add `/local-research/` to `.git/info/exclude` (the local Git exclude file, not the tracked `.gitignore`) after inspecting the repository layout. Do not run `git clean` to manage these files.
+Copy the directory containing `01_STAGE_MANIFEST.csv` into the IDE prompt as `CURRICULUM_PACKAGE_DIR`. The archive may wrap files in a parent folder; use the exact path printed by the command. Keep the extracted inputs outside the repository and do not run `git clean` to manage them.
+
+The tracked prompts are already in `local-research\TechSkillHUB_DeepSeek_IDE_Starter_Pack\`. You do not need to extract another copy of the prompt pack.
 
 ## Step 3 — run read-only preflight first
 
-Open `01_PREFLIGHT_PROMPT.md` from the extracted starter pack and paste its full contents into the IDE agent chat. The agent must inspect actual app types and data sources and create the preflight report without editing app source.
+Open the tracked `local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/01_PREFLIGHT_PROMPT.md` and paste its full contents into the IDE agent chat. Give the agent the verified `CURRICULUM_PACKAGE_DIR` path printed in Step 2. The agent must inspect actual app types and data sources and create the preflight report without editing app source.
 
 Read `docs/curriculum-import-preflight.md` and JSON before implementation. Check that it identifies the real target files for curriculum, quizzes, answer-key protection, resources, AI mastery, projects and progress compatibility. If the mapping is vague, ask for exact target files and schema field mapping before proceeding.
 
 ## Step 4 — run the implementation prompt
 
-Only after reviewing preflight, open `02_IMPLEMENTATION_MASTER_PROMPT.md` and paste it to the IDE agent. Keep the agent in the `C:\Tech Skill Hub` repository root.
+Only after reviewing preflight, open the tracked `local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/02_IMPLEMENTATION_MASTER_PROMPT.md` and paste it to the IDE agent. Reuse the same `CURRICULUM_PACKAGE_DIR`. Keep the agent in the `C:\Tech Skill Hub` repository root.
 
 The prompt starts with a 20-stage pilot covering four disciplines:
 - Frontend: 5 stages.
