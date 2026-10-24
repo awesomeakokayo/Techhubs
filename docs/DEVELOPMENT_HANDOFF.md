@@ -1,12 +1,11 @@
 # TechSkillHub — Development Handoff
 
 **Last verified:** 2026-10-24
-**Feature branch:** `feat/retention-v3`
-**Security/cleanup branch under review:** `audit/techskillhub-security-cleanup` (PR #5, stacked on PR #4)
-**HEAD at inspection:** `bed93f1` (`docs: record branch publication and pull request status`)
-**Comparison:** 61 commits ahead of `origin/main`, 0 behind at the inspected branch head.
-**Working tree at inspection:** clean, no stashes
-**Production:** `main` = `a4dc39c`; Vercel production status `success`. This branch is **not merged**, so production is unchanged.
+**Feature branch (PR #4 head):** `feat/retention-v3` (`bed93f1`)
+**Security/cleanup branch (PR #5):** `audit/techskillhub-security-cleanup` (includes the Track Pass three-month correction and migration documentation updates)
+**Comparison:** the feature branch is 61 commits ahead of `origin/main`; PR #5 remains stacked on PR #4.
+**Local working tree:** not inspected by this remote review.
+**Production:** `main` = `a4dc39c`; PR #4 and PR #5 remain unmerged, so these branch changes have not been deployed to production.
 
 This document records what is actually in the repository and what was actually executed.
 It does not authorise a merge, deployment, live migration, payment activation, or customer
@@ -17,7 +16,7 @@ communication. Prior evidence records remain in `docs/LAUNCH_READINESS.md`,
 
 ## 1. Verification scope
 
-This handoff predates the final review of PR #5. Do not interpret the earlier local validation results as validation of subsequent security-cleanup or Paystack pricing changes. The latest release checks remain open until PR #5's updated diff is validated.
+The previously recorded local validation results are a PR #4 baseline and are not a current-commit CI verdict for later PR #5 changes. GitHub Actions validation has been unable to start because GitHub reports an account billing lock; a green Vercel preview alone does not establish that the test suite passed.
 
 Performed in this session:
 
@@ -39,10 +38,10 @@ Performed in this session:
 | Resource link probe (`scripts/verify-resource-links.mjs`) | Probes ~326 external URLs; not re-run in this session. Prior result is recorded below. |
 | `prisma migrate diff` | Needs a shadow database. Prior evidence reports "No difference detected"; not re-run here. |
 | DB integration tests | 29 tests skip unless `TSH_CHECKLIST_IMPORT_TEST_DB` points at a disposable database. |
-| Live migrations / production config / provider sandbox | Require explicit owner approval and real credentials. Not touched. |
+| Live migration history | Reconciled on production Neon on 2026-10-24; ten migrations are applied and schema diff is empty. Payment/provider configuration and real provider sandbox transactions remain untouched. |
 | Google OAuth production flow | Requires the real client and callback URL. Not exercised. |
 
-No production database, deployment, billing setting, or credential was read or modified.
+At the time of the earlier repository inspection, no production database, deployment, billing setting, or credential was read or modified. A separate production Neon schema migration was subsequently completed on 2026-10-24; see `docs/database/NEON_MIGRATION_GUIDE.md`. Payment settings and production deployment configuration were not changed.
 
 ---
 
@@ -108,9 +107,9 @@ Lemon Squeezy webhook, contact, and a production-gated `debug` route.
 `EntitlementEvent`.
 
 10 tracked migrations under `prisma/migrations/` (`0_init` through
-`20261015_assessment_credit_reservation`). Migrations are additive and unchanged in this
-session. Live migration-history recovery is **not executed** (approval-gated; see
-`docs/LAUNCH_READINESS.md` §3).
+`20261015_assessment_credit_reservation`). Production migration history was reconciled on
+2026-10-24: all 10 migrations are finished, `migrate status` is up to date, and
+`migrate diff` reports no schema drift. See `docs/database/NEON_MIGRATION_GUIDE.md`.
 
 ---
 
@@ -155,7 +154,7 @@ was made.
 
 ---
 
-## 5. Verification results (this session)
+## 5. Baseline verification results (PR #4, before latest PR #5 changes)
 
 | Check | Command | Result |
 | --- | --- | --- |
@@ -195,7 +194,7 @@ Playwright or a database-backed test job.
 8. **Google OAuth production flow unverified.**
 9. **`.env.example` was incomplete** — now extended with Google, Lemon Squeezy, SMTP and
    E2E variables (names and placeholders only).
-10. **Research bundle organization** — the security-cleanup PR removes the exploded generated curriculum/reviewer output and duplicate extracted research folder from the tracked tree while preserving the source-deliverables ZIP, the resource-verification ZIP, checksums, and the generator source. Verify that PR #5's Vercel preview and code checks pass before merging.
+10. **Research bundle organization** — the security-cleanup PR removes the exploded generated curriculum/reviewer output and duplicate extracted research folder from the tracked tree while preserving the source-deliverables ZIP, the resource-verification ZIP, checksums, and the generator source. Confirm a successful Vercel deployment for the current PR #5 head and restore a valid CI verdict after the GitHub billing lock is resolved before merging.
 11. **Stacked branch history** — v1/v2/v3 are sequential; v3 contains all prior work.
     Open one PR from v3 to `main`; do not merge v1/v2 separately.
 12. **PR #3 (`docs/project-documentation`) is stale.** It adds an architecture/deployment
