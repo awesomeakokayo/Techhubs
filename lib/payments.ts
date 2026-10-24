@@ -139,10 +139,10 @@ export async function fulfillOrder(reference: string): Promise<FulfillResult> {
     return { status: 'already_fulfilled', trackId: order.trackId }
   }
 
-  // A Track Pass is a six-month, one-time purchase handled by the canonical
+  // A Track Pass is a three-month, one-time purchase handled by the canonical
   // commercial service. Fulfilling it through the legacy day-count path would
   // grant permanent (never-expiring) access, so refuse and let the verified
-  // webhook grant the correct six-month period.
+  // webhook grant the correct three-month period.
   if (requiresCanonicalBilling(order.plan)) {
     paymentLogError('payment_rejected', 'track pass requires canonical billing service', {
       reference,

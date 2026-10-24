@@ -32,15 +32,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Checkout is not available yet.' }, { status: 503 })
   }
 
-  // Fail-closed launch guard: even if checkout was switched on by mistake, refuse
-  // to create a paid session until the paid model (enforcement + limits + premium
-  // tracks + approved prices + configured provider) is actually complete.
-  const guard = launchReadiness(process.env)
-  if (!guard.ready) {
-    paymentLogError('checkout_initialized', 'launch guard blocked checkout', { blockers: guard.blockers })
-    return NextResponse.json({ error: 'Checkout is not available yet.' }, { status: 503 })
-  }
-
   const session = await auth()
   if (!session?.user?.id || !session.user.email) {
     return NextResponse.json({ error: 'Please sign in to continue.' }, { status: 401 })
@@ -78,8 +69,12 @@ export async function POST(req: Request) {
     trackId = requested
   }
 
-  const preferred = body?.provider === 'paystack' || body?.provider === 'lemonsqueezy' ? (body.provider as ProviderId) : null
-  const provider = selectProvider(planId, preferred)
+  // Choose the payment provider from the trusted edge country signal, not
+  // from client input. Nigerian checkout uses Paystack; other markets prefer
+  // Lemon Squeezy. The server still validates plan/provider price and launch gates.
+  const country = req.headers.get('x-vercel-ip-country')?.trim().toUpperCase() ?? ''
+  const preferredProvider: ProviderId = country === 'NG' ? 'paystack' : 'lemonsqueezy'
+  const provider = selectProvider(planId, preferredProvider)
   if (!provider) {
     return NextResponse.json({ error: 'No payment method is currently available.' }, { status: 503 })
   }
@@ -87,6 +82,14 @@ export async function POST(req: Request) {
   const price = resolveProviderPrice(provider, planId)
   if (!price) {
     return NextResponse.json({ error: 'This plan is not available at the moment.' }, { status: 503 })
+  }
+
+  // Evaluate the exact product and provider, so approving the Nigerian Track
+  // Pass cannot accidentally unlock any unapproved international Pro price.
+  const guard = launchReadiness(process.env, planId, provider)
+  if (!guard.ready) {
+    paymentLogError('checkout_initialized', 'launch guard blocked checkout', { blockers: guard.blockers, planId, provider })
+    return NextResponse.json({ error: 'Checkout is not available yet.' }, { status: 503 })
   }
 
   const reference = `TSH_${session.user.id.slice(0, 8)}_${crypto.randomUUID()}`

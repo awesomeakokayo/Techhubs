@@ -11,11 +11,11 @@ that code; where they disagree, the code wins and this document must be correcte
 | Concern | Canonical code |
 | --- | --- |
 | Plan identities, tiers, kind, interval, feature bullets | `lib/commercial/plans.ts` |
-| Plan prices (provisional, provider/currency keyed) | `lib/commercial/pricing.ts` |
+| Plan prices and per-price approval flags (provider/currency keyed) | `lib/commercial/pricing.ts` |
 | Provider → product/variant mapping | `lib/commercial/providers.ts` |
 | Entitlement resolution (`hasTrackAccess`, tiers) | `lib/commercial/entitlements.ts` |
 | Assessment-credit allowance + atomic reservation | `lib/commercial/assessment-credits.ts` |
-| Track Pass (one-time, 6 months) | `lib/commercial/track-pass.ts` |
+| Track Pass (one-time, 3 months) | `lib/commercial/track-pass.ts` |
 | Checkout fail-closed gate | `lib/commercial/launch.ts` |
 | Existing-learner transition policy | `lib/commercial/transition.ts` |
 | Staged rollout / pilot cohorts | `lib/commercial/rollout.ts` |
@@ -47,10 +47,12 @@ Internal plan ids are stable and are **not** display text.
   (§7).
 
 ### Product 2 — Track Pass
-- **$9 USD** (provisional; `amountMinor: 900`) for **one** eligible premium track of the
-  learner's choice.
-- **Six calendar months** of access from verified successful payment
+- **₦6,000** via Paystack for **one** eligible premium track of the learner's choice,
+  one-time. The amount is 600,000 kobo (`amountMinor: 600000`).
+- **Three calendar months** of access from verified successful payment
   (`lib/commercial/track-pass.ts`).
+- The **$9 USD** Lemon Squeezy Track Pass price remains provisional and cannot be charged
+  until its individual price approval is changed in code.
 - **One-time payment. No automatic renewal.** Nothing is charged when the term ends.
 - After expiry, a **new verified purchase** is required to continue premium access to
   that track.
@@ -75,9 +77,10 @@ Internal plan ids are stable and are **not** display text.
 - Same core Pro entitlements as monthly (all premium tracks, 150/month allowance),
   billed once per year at a discounted effective monthly price.
 
-> **NGN pricing is intentionally undefined.** No naira prices have been calculated or
-> approved; inventing them is prohibited (`lib/commercial/pricing.ts`). Paystack prices
-> stay empty until the merchant is approved and the owner supplies approved NGN values.
+> **Pricing approval is per product.** The code-level approved price is ₦6,000 for a
+> three-month Track Pass through Paystack. The Lemon Squeezy USD prices remain
+> unapproved. The master `COMMERCE_PRICES_APPROVED` flag must remain off until the
+> pre-release checks are complete; turning it on does not approve the other prices.
 
 ---
 
@@ -90,7 +93,7 @@ Internal plan ids are stable and are **not** display text.
 | AI-verified section mastery | ✅ (allowance-bound) | ✅ | ✅ |
 | Phase projects + AI project assessment | ✅ where free | ✅ for the chosen track | ✅ |
 | Monthly AI-assessment allowance | 20 | 30 | 150 |
-| Access term | ongoing | 6 calendar months | monthly / annual, renews |
+| Access term | ongoing | 3 calendar months | monthly / annual, renews |
 | Auto-renewal | — | **none** | yes (until cancelled) |
 | Progress / submissions / certificates kept after expiry | ✅ | ✅ | ✅ |
 | Certificate eligibility | guided completion only | guided completion only | guided completion only |
@@ -135,15 +138,17 @@ off. Every other track stays in the Free catalogue.
 
 ## 5. Pricing approval status
 
-| Product | Provisional price | Publication status |
+| Product / provider | Price in code | Price approval |
 | --- | --- | --- |
-| Track Pass | $9.00 USD (900) | **NOT approved** |
-| Pro Monthly | $12.00 USD (1200) | **NOT approved** |
-| Pro Annual | $96.00 USD (9600) | **NOT approved** |
-| Paystack (NGN) | — | **undefined / not calculated** |
+| Nigerian Track Pass / Paystack | ₦6,000 (600,000 kobo), one-time / three calendar months | Individually approved in code; not yet sandbox-verified or published |
+| International Track Pass / Lemon Squeezy | $9.00 USD (900) | **NOT approved** |
+| Pro Monthly / Lemon Squeezy | $12.00 USD (1200) | **NOT approved** |
+| Pro Annual / Lemon Squeezy | $96.00 USD (9600) | **NOT approved** |
+| Pro plans / Paystack NGN | — | Not configured; no price invented |
 
-Gated by `COMMERCE_PRICES_APPROVED` (current value: **false**). Pricing version stamp:
-`TSH-COMMERCE-2026-10`.
+The global publication/checkout gate `COMMERCE_PRICES_APPROVED` remains **false**, so
+the price is still hidden. Pricing version stamp:
+`TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000`.
 
 ---
 
@@ -154,7 +159,7 @@ Gated by `COMMERCE_PRICES_APPROVED` (current value: **false**). Pricing version 
 | Lemon Squeezy | Track Pass | `LEMONSQUEEZY_VARIANT_TRACK_PASS` | **No** (no sandbox verification) |
 | Lemon Squeezy | Pro Monthly | `LEMONSQUEEZY_VARIANT_PRO_MONTHLY` | **No** |
 | Lemon Squeezy | Pro Annual | `LEMONSQUEEZY_VARIANT_PRO_ANNUAL` | **No** |
-| Paystack | all plans | `PAYSTACK_SECRET_KEY` (+ plan codes) | **No** (merchant/payout unverified) |
+| Paystack | Track Pass only | `PAYSTACK_SECRET_KEY` (no provider product ID) | **Not sandbox-verified** (merchant/payout still to confirm) |
 
 Provider *capabilities* are modelled in `lib/commercial/providers.ts` and only read whether
 configuration is present (booleans) — never secret values. **No provider sandbox
@@ -227,7 +232,7 @@ code wins and the document was corrected.
 
 | Spec claim | Canonical source | Verified |
 | --- | --- | --- |
-| Track Pass is one-time, 6 **calendar** months, no auto-renewal | `lib/commercial/plans.ts` (`PLANS.TRACK_PASS`: `kind:'ONE_TIME'`), `lib/commercial/track-pass.ts` (`TRACK_PASS_TERM_MONTHS = 6`, UTC, month-end/leap-year clamped) | ✅ |
+| Track Pass is one-time, 3 **calendar** months, no auto-renewal | `lib/commercial/plans.ts` (`PLANS.TRACK_PASS`: `kind:'ONE_TIME'`), `lib/commercial/track-pass.ts` (`TRACK_PASS_TERM_MONTHS = 3`, UTC, month-end/leap-year clamped) | ✅ |
 | Track Pass grants exactly one premium track | `plans.ts` (`grantsTrackCount: 1`) | ✅ |
 | Pro grants every premium track | `plans.ts` (`grantsAllPremiumTracks: true`) | ✅ |
 | Allowances are finite: Free 20 / Pass 30 / Pro 150 per **UTC calendar month** | `plans.ts` (`allowanceForTier`), `lib/commercial/entitlements.ts` (`monthBounds`) | ✅ |
@@ -236,7 +241,7 @@ code wins and the document was corrected.
 | Access starts at the **verified-payment** instant, not at order creation | `service.ts` (entitlement from verified webhook state) | ✅ |
 | Cancellation continues to period end; past-due gets a grace to period end | `entitlements.ts` (PAST_DUE/CANCELLED grant until `currentPeriodEnd`) | ✅ |
 | Progress/completions/submissions/achievements/certificates are retained after expiry | `transition.ts` + `docs/learner-continuity.md` (retention on any recorded activity) | ✅ |
-| Provisional USD prices 900 / 1200 / 9600; NGN undefined | `lib/commercial/pricing.ts` (`PROVISIONAL_PRICES`; Paystack intentionally empty) | ✅ |
+| USD prices 900 / 1200 / 9600 remain provisional; NGN Track Pass is ₦6,000; NGN Pro plans are undefined | `lib/commercial/pricing.ts` (`PRICE_CATALOGUE`; only Paystack Track Pass individually approved) | ✅ |
 | Premium wave = frontend, backend, python | `lib/commercial/premium.ts` (`PREMIUM_WAVE_1`, `PREMIUM_TRACK_IDS`) | ✅ |
 | Checkout is fail-closed behind `launch.ts` | `lib/commercial/launch.ts`, `app/api/billing/checkout/route.ts` | ✅ |
 
@@ -246,13 +251,12 @@ makes a genuine sandbox run impossible. It is now config-gated
 (`COMMERCE_PROVIDER_TEST_MODE`, default `false`) via `providerTestMode()`; test-mode
 deliveries still never grant entitlement. See `docs/provider-sandbox-test-matrix.md`.
 
-## 11. Draft approval checklists (status: PENDING — none approved)
+## 11. Draft approval checklists (status: PENDING — full product launch is not approved)
 
-Each checklist is complete for decision-making but **not approved**. Approval must be
-recorded by a named human owner; nothing here renders prices or enables checkout.
+These checklists remain **not approved for launch**. The Nigerian Track Pass amount is individually approved in code, but price publication, payment fulfilment, settlement, policy and deployment checks remain open. Approval must be recorded by a named human owner; this document does not enable checkout.
 
 **A. Product descriptions**
-- [ ] Track Pass description ("six months, one track, no auto-renewal") approved.
+- [ ] Track Pass description ("three months, one track, no auto-renewal") approved.
 - [ ] Pro Monthly / Pro Annual descriptions approved.
 - [ ] Free-tier description ("no credit card") approved.
 - [ ] No copy implies lifetime access, auto-renewal or a price while prices are hidden.
@@ -289,8 +293,8 @@ recorded by a named human owner; nothing here renders prices or enables checkout
 | Item | Status |
 | --- | --- |
 | Product definitions consistent (code ↔ docs) | ✅ Consistent |
-| Prices | ❌ Not approved (draft only, hidden) |
-| NGN prices | ❌ Undefined (owner to supply) |
+| Prices | ⚠️ Partial: NGN Track Pass individually approved in code; master publish gate off and USD prices unapproved |
+| NGN prices | ✅ ₦6,000 Track Pass entry in code; Pro plan prices remain undefined |
 | Track eligibility / human sign-off | ❌ 0 of 32 approved |
 | Customer disclosures | ❌ Draft pending |
 | Cancellation / refund policy | ❌ Draft pending |

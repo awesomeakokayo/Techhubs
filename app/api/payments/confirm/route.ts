@@ -61,7 +61,7 @@ export async function POST(req: Request) {
         { status: 502 }
       )
     case 'mismatch':
-      // A Track Pass is granted only by the canonical billing service (six-month
+      // A Track Pass is granted only by the canonical billing service (three-month
       // period), never the legacy day-count path. Its webhook verification grants
       // access; the browser confirm step just reports "verifying".
       if (result.reason === 'track_pass_requires_canonical_service') {

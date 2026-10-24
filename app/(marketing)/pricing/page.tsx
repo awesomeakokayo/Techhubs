@@ -1,12 +1,16 @@
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import { Check } from 'lucide-react'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 import { CheckoutButton } from '@/components/commercial/CheckoutButton'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { PLAN_IDS, PLANS, allowanceForTier, type PlanId } from '@/lib/commercial/plans'
-import { formatPrice, pricesApprovedForPublication, resolveProviderPrice } from '@/lib/commercial/pricing'
-import { checkoutEnabled } from '@/lib/commercial/providers'
+import { formatPrice, isPriceApproved, pricesApprovedForPublication, resolveProviderPrice } from '@/lib/commercial/pricing'
+import { checkoutEnabled, selectProvider, type ProviderId } from '@/lib/commercial/providers'
+import { launchReadiness } from '@/lib/commercial/launch'
+import { TRACKS } from '@/lib/tracks'
+import { premiumTrackIds } from '@/lib/commercial/plans'
 
 const pricesApproved = pricesApprovedForPublication()
 
@@ -22,16 +26,22 @@ export const metadata: Metadata = {
   robots: pricesApproved ? undefined : { index: false, follow: false },
 }
 
-function planPriceLabel(planId: PlanId): string {
-  if (!pricesApproved) return 'Pricing to be announced'
-  const price = resolveProviderPrice('lemonsqueezy', planId)
-  if (!price) return 'Pricing to be announced'
+function planPriceLabel(planId: PlanId, provider: ProviderId | null): string {
+  if (!pricesApproved || !provider) return 'Pricing to be announced'
+  const price = resolveProviderPrice(provider, planId)
+  if (!price || !isPriceApproved(price)) return 'Pricing to be announced'
   const suffix = planId === 'PRO_MONTHLY' ? ' / month' : planId === 'PRO_ANNUAL' ? ' / year' : ''
   return `${formatPrice(price)}${suffix}`
 }
 
 export default function PricingPage() {
+  const country = headers().get('x-vercel-ip-country')?.trim().toUpperCase() ?? ''
+  const preferredProvider: ProviderId = country === 'NG' ? 'paystack' : 'lemonsqueezy'
   const checkoutReady = checkoutEnabled()
+  const trackOptions = premiumTrackIds().flatMap((id) => {
+    const track = TRACKS.find((item) => item.id === id)
+    return track ? [{ id: track.id, name: track.name }] : []
+  })
 
   return (
     <div className="section pt-16">
@@ -65,18 +75,25 @@ export default function PricingPage() {
 
           {PLAN_IDS.map((planId) => {
             const plan = PLANS[planId]
+            const provider = selectProvider(planId, preferredProvider)
+            const planCheckoutReady = checkoutReady && launchReadiness(process.env, planId, provider).ready
             return (
               <article key={planId} className="card flex flex-col border-teal/30">
                 <h2 className="font-display text-lg font-semibold text-text-primary">{plan.displayName}</h2>
                 <p className="mt-1 text-sm text-text-secondary">{plan.summary}</p>
-                <p className="mt-4 font-display text-2xl text-text-primary">{planPriceLabel(planId)}</p>
+                <p className="mt-4 font-display text-2xl text-text-primary">{planPriceLabel(planId, provider)}</p>
                 <ul className="mt-4 space-y-2 text-sm text-text-secondary">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {feature}</li>
                   ))}
                 </ul>
                 <div className="mt-6">
-                  <CheckoutButton planId={planId} label={checkoutReady ? `Choose ${plan.displayName}` : 'Notify me when available'} className="btn btn-primary w-full justify-center" />
+                  <CheckoutButton
+                    planId={planId}
+                    trackOptions={planId === 'TRACK_PASS' ? trackOptions : undefined}
+                    label={planCheckoutReady ? (provider === 'paystack' && planId === 'TRACK_PASS' ? 'Pay ₦6,000 with Paystack' : `Choose ${plan.displayName}`) : 'Checkout coming soon'}
+                    className="btn btn-primary w-full justify-center"
+                  />
                 </div>
               </article>
             )
@@ -85,7 +102,7 @@ export default function PricingPage() {
 
         <p className="mt-10 text-xs text-text-muted">
           Paid plans are optional. No subscription or payment is started without your explicit action, and your existing progress and certificates are preserved.
-          A Track Pass is a one-time payment for six calendar months of access to one premium track; it does not renew automatically and nothing is charged when it ends.
+          A Track Pass is a one-time payment for three calendar months of access to one premium track; it does not renew automatically and nothing is charged when it ends.
           Your progress, submissions and earned certificates are kept after a pass expires.
         </p>
 
@@ -117,11 +134,11 @@ const PRICING_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'How long does a Track Pass last?',
-    a: 'A Track Pass gives six calendar months of access to one premium track you choose. The six months are calculated on our servers from the moment your verified payment completes, not from when checkout was opened.',
+    a: 'A Track Pass gives three calendar months of access to one premium track you choose. The three months are calculated on our servers from the moment your verified payment completes, not from when checkout was opened.',
   },
   {
     q: 'Does a Track Pass renew automatically?',
-    a: 'No. A Track Pass is a one-time payment. It does not renew and nothing is charged when the six months end. To continue premium access to that track after it ends, you would choose a new purchase yourself.',
+    a: 'No. A Track Pass is a one-time payment. It does not renew and nothing is charged when the three months end. To continue premium access to that track after it ends, you would choose a new purchase yourself.',
   },
   {
     q: 'Is Pro a subscription?',

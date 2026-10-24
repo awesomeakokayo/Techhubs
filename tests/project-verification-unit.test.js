@@ -14,7 +14,7 @@ const {
   scanForSecrets,
   looksLikePlaceholder,
 } = require('../.test-dist/project-verification/validation.js')
-const { isPrivateIp } = require('../.test-dist/project-verification/safe-fetch.js')
+const { isPrivateIp, createPinnedLookup, safeFetchText } = require('../.test-dist/project-verification/safe-fetch.js')
 const { parseGithubUrl } = require('../.test-dist/project-verification/github.js')
 const { computeRubricVersion, deriveContract, disciplineForTrack, toPublicContract } = require('../.test-dist/project-verification/contract.js')
 const { parseAssessmentResponse, decideAssessment, normalizeStatus } = require('../.test-dist/project-verification/schema.js')
@@ -33,6 +33,11 @@ test('classifies provider hosts correctly', () => {
   assert.equal(classifyProvider('https://docs.google.com/document/d/abc/edit').provider, 'google_docs')
   assert.equal(classifyProvider('https://drive.google.com/file/d/abc/view').provider, 'google_drive')
   assert.equal(classifyProvider('https://example.com/page').provider, 'web')
+  // Provider classification must match domain boundaries, not an attacker-controlled suffix.
+  assert.equal(classifyProvider('https://notfigma.com/file/abc').provider, 'web')
+  assert.equal(classifyProvider('https://fakecodesandbox.io/s/demo').provider, 'web')
+  assert.equal(classifyProvider('https://maliciousrepl.it/@user/demo').provider, 'web')
+  assert.equal(classifyProvider('https://evil-notion.so/page').provider, 'web')
   assert.equal(classifyProvider('mailto:x@y.com').provider, 'unknown')
   assert.equal(classifyProvider('not a url').provider, 'unknown')
 })
@@ -84,14 +89,86 @@ test('placeholder detection flags empty and boilerplate READMEs', () => {
 
 /* ---------------- SSRF address filtering ---------------- */
 
-test('blocks private, loopback, link-local and metadata addresses', () => {
-  for (const ip of ['127.0.0.1', '10.0.0.5', '192.168.1.1', '172.16.0.1', '169.254.169.254', '100.64.0.1', '::1', 'fe80::1', 'fc00::1']) {
+test('blocks private, special-use, documentation, multicast and non-global addresses', () => {
+  for (const ip of [
+    '127.0.0.1', '10.0.0.5', '192.168.1.1', '172.16.0.1', '169.254.169.254',
+    '100.64.0.1', '0.0.0.0', '192.0.2.1', '198.51.100.1', '203.0.113.1',
+    '198.18.0.1', '224.0.0.1', '255.255.255.255', '::', '::1',
+    'fe80::1', 'fe90::1', 'fc00::1', 'fd00::1', 'ff02::1',
+    '2001:db8::1', '2001::1', '2002::1', '3fff::1', '::ffff:192.168.1.1', '::ffff:8.8.8.8', 'not-an-ip',
+  ]) {
     assert.equal(isPrivateIp(ip), true, `${ip} should be blocked`)
   }
-  for (const ip of ['93.184.216.34', '8.8.8.8', '1.1.1.1']) {
+  for (const ip of ['93.184.216.34', '8.8.8.8', '1.1.1.1', '192.0.1.1', '2001:4860:4860::8888']) {
     assert.equal(isPrivateIp(ip), false, `${ip} should be allowed`)
   }
 })
+
+test('pins socket DNS lookups to the already-validated address', () => {
+  const lookup = createPinnedLookup('93.184.216.34')
+  lookup('attacker.example', {}, (error, address, family) => {
+    assert.equal(error, null)
+    assert.equal(address, '93.184.216.34')
+    assert.equal(family, 4)
+  })
+  lookup('attacker.example', { all: true }, (error, addresses) => {
+    assert.equal(error, null)
+    assert.deepEqual(addresses, [{ address: '93.184.216.34', family: 4 }])
+  })
+  assert.throws(() => createPinnedLookup('not-an-ip'), /valid resolved IP/)
+})
+
+test('rejects redirects whose destination resolves to a private address', async () => {
+  const lookups = []
+  const requests = []
+  const result = await safeFetchText('https://example.com/start', {
+    resolveImpl: async (hostname) => {
+      lookups.push(hostname)
+      return hostname === 'example.com' ? ['93.184.216.34'] : ['127.0.0.1']
+    },
+    fetchImpl: async (url) => {
+      requests.push(String(url))
+      return new Response(null, {
+        status: 302,
+        headers: { location: 'http://internal.example/admin' },
+      })
+    },
+  })
+  assert.equal(result.ok, false)
+  assert.equal(result.kind, 'blocked')
+  assert.deepEqual(lookups, ['example.com', 'internal.example'])
+  assert.equal(requests.length, 1)
+})
+
+test('follows a redirect only after resolving and checking the new host', async () => {
+  const lookups = []
+  const requests = []
+  const result = await safeFetchText('https://example.com/start', {
+    resolveImpl: async (hostname) => {
+      lookups.push(hostname)
+      return ['93.184.216.34']
+    },
+    fetchImpl: async (url) => {
+      requests.push(String(url))
+      if (requests.length === 1) {
+        return new Response(null, {
+          status: 302,
+          headers: { location: 'https://docs.example.com/guide' },
+        })
+      }
+      return new Response('public learning document', {
+        status: 200,
+        headers: { 'content-type': 'text/plain; charset=utf-8' },
+      })
+    },
+  })
+  assert.equal(result.ok, true)
+  assert.equal(result.finalUrl, 'https://docs.example.com/guide')
+  assert.equal(result.body, 'public learning document')
+  assert.deepEqual(lookups, ['example.com', 'docs.example.com'])
+  assert.equal(requests.length, 2)
+})
+
 
 /* ---------------- GitHub URL parsing ---------------- */
 

@@ -53,15 +53,20 @@ test('no provider is available and no selection can be made without configuratio
   assert.equal(selectProvider('TRACK_PASS', 'paystack', {}), null)
 })
 
-test('with Lemon Squeezy configured, it is selected for all products', () => {
+test('Lemon Squeezy is available for configured products with a known price', () => {
   assert.deepEqual(availableProviders('TRACK_PASS', FULL_LS_ENV), ['lemonsqueezy'])
   assert.equal(selectProvider('PRO_ANNUAL', null, FULL_LS_ENV), 'lemonsqueezy')
-  assert.equal(selectProvider('PRO_ANNUAL', 'paystack', FULL_LS_ENV), 'lemonsqueezy')
+  assert.equal(selectProvider('PRO_ANNUAL', 'paystack', FULL_LS_ENV), null)
+  assert.equal(selectProvider('PRO_ANNUAL', null, FULL_LS_ENV), 'lemonsqueezy')
   assert.equal(providerProductId('lemonsqueezy', 'PRO_MONTHLY', FULL_LS_ENV), '12')
 })
 
-test('Paystack is only available when its secret is present', () => {
+test('Paystack is restricted to the approved NGN Track Pass', () => {
   const env = { PAYSTACK_SECRET_KEY: 'sk' }
-  assert.deepEqual(availableProviders('PRO_MONTHLY', env), ['paystack'])
-  assert.equal(selectProvider('PRO_MONTHLY', 'lemonsqueezy', env), 'paystack')
+  assert.deepEqual(availableProviders('TRACK_PASS', env), ['paystack'])
+  assert.equal(selectProvider('TRACK_PASS', 'paystack', env), 'paystack')
+  assert.deepEqual(availableProviders('PRO_MONTHLY', env), [])
+  assert.deepEqual(availableProviders('PRO_ANNUAL', env), [])
+  assert.equal(selectProvider('PRO_MONTHLY', 'lemonsqueezy', env), null)
+  assert.equal(providerProductId('paystack', 'TRACK_PASS', env), null)
 })

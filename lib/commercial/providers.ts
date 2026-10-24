@@ -8,6 +8,7 @@
 
 import type { PlanId } from './plans'
 import { PLAN_IDS } from './plans'
+import { resolveProviderPrice } from './pricing'
 
 export type ProviderId = 'paystack' | 'lemonsqueezy'
 
@@ -36,13 +37,8 @@ export const PROVIDER_PRODUCT_ENV: Record<ProviderId, Partial<Record<PlanId, str
     PRO_MONTHLY: 'LEMONSQUEEZY_VARIANT_PRO_MONTHLY',
     PRO_ANNUAL: 'LEMONSQUEEZY_VARIANT_PRO_ANNUAL',
   },
-  paystack: {
-    // Paystack initializes a transaction directly; it needs no pre-created plan,
-    // but the merchant must have the capability enabled (verified out of band).
-    TRACK_PASS: 'PAYSTACK_SECRET_KEY',
-    PRO_MONTHLY: 'PAYSTACK_SECRET_KEY',
-    PRO_ANNUAL: 'PAYSTACK_SECRET_KEY',
-  },
+  // Paystack transactions do not require a provider-side plan/product id.
+  paystack: {},
 }
 
 type Env = Record<string, string | undefined>
@@ -113,8 +109,8 @@ export function providerCapabilities(provider: ProviderId, env: Env = process.en
   return {
     id: 'paystack',
     label: PROVIDER_LABELS.paystack,
-    supports: PLAN_IDS,
-    // NGN only, and only where the merchant account is verified by the owner.
+    // Nigerian Track Pass only until more NGN plan prices are explicitly approved.
+    supports: ['TRACK_PASS'],
     currencies: ['NGN'],
     configured: paystackConfigured(env),
   }
@@ -124,16 +120,17 @@ export function providerCapabilities(provider: ProviderId, env: Env = process.en
 export function availableProviders(planId: PlanId, env: Env = process.env): ProviderId[] {
   return PROVIDER_IDS.filter((id) => {
     const caps = providerCapabilities(id, env)
-    return caps.configured && caps.supports.includes(planId)
+    return caps.configured && caps.supports.includes(planId) && resolveProviderPrice(id, planId) !== null
   })
 }
 
 /**
  * Resolve the provider for a checkout.
  *
- * A caller may pass a preferred provider (learner's explicit choice). It is used
- * only when it is configured and supports the plan; otherwise the first available
- * provider is used. Returns null when nothing can fulfil the plan — never guesses.
+ * A preferred provider represents the server-derived market/currency decision.
+ * Never fall back across providers when that preference is unavailable: doing so
+ * could silently charge a Nigerian learner in USD or an international learner in
+ * NGN. Returns null when the provider for that market cannot fulfil the plan.
  */
 export function selectProvider(
   planId: PlanId,
@@ -142,7 +139,7 @@ export function selectProvider(
 ): ProviderId | null {
   const available = availableProviders(planId, env)
   if (available.length === 0) return null
-  if (preferred && available.includes(preferred)) return preferred
+  if (preferred) return available.includes(preferred) ? preferred : null
   return available[0]
 }
 

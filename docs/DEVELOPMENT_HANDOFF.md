@@ -1,11 +1,11 @@
 # TechSkillHub — Development Handoff
 
 **Last verified:** 2026-10-24
-**Active branch:** `feat/retention-v3`
-**HEAD at inspection:** `76da929` (`chore: stop tracking local workspace files and dev logs`)
-**Comparison:** 57 commits ahead of `origin/main`, 0 behind (before the documentation commits added with this handoff)
-**Working tree at inspection:** clean, no stashes
-**Production:** `main` = `a4dc39c`; Vercel production status `success`. This branch is **not merged**, so production is unchanged.
+**Feature branch (PR #4 head):** `feat/retention-v3` (`bed93f1`)
+**Security/cleanup branch (PR #5):** `audit/techskillhub-security-cleanup` (includes the Track Pass three-month correction and migration documentation updates)
+**Comparison:** the feature branch is 61 commits ahead of `origin/main`; PR #5 remains stacked on PR #4.
+**Local working tree:** not inspected by this remote review.
+**Production:** `main` = `a4dc39c`; PR #4 and PR #5 remain unmerged, so these branch changes have not been deployed to production.
 
 This document records what is actually in the repository and what was actually executed.
 It does not authorise a merge, deployment, live migration, payment activation, or customer
@@ -15,6 +15,8 @@ communication. Prior evidence records remain in `docs/LAUNCH_READINESS.md`,
 ---
 
 ## 1. Verification scope
+
+The previously recorded local validation results are a PR #4 baseline and are not a current-commit CI verdict for later PR #5 changes. GitHub Actions validation has been unable to start because GitHub reports an account billing lock; a green Vercel preview alone does not establish that the test suite passed.
 
 Performed in this session:
 
@@ -32,14 +34,14 @@ Performed in this session:
 
 | Check | Reason |
 | --- | --- |
-| Playwright E2E | `playwright.config.ts` falls back to `DATABASE_URL`, which in `.env.local` points at the shared/production database. Running it would create `@example.test` users and progress rows in that database. It was not run. |
+| Playwright E2E | Not run in this inspection because a disposable database was not supplied. `playwright.config.ts` now fails closed unless `E2E_DATABASE_URL` is explicit and different from configured shared `DATABASE_URL` values. |
 | Resource link probe (`scripts/verify-resource-links.mjs`) | Probes ~326 external URLs; not re-run in this session. Prior result is recorded below. |
 | `prisma migrate diff` | Needs a shadow database. Prior evidence reports "No difference detected"; not re-run here. |
 | DB integration tests | 29 tests skip unless `TSH_CHECKLIST_IMPORT_TEST_DB` points at a disposable database. |
-| Live migrations / production config / provider sandbox | Require explicit owner approval and real credentials. Not touched. |
+| Live migration history | Reconciled on production Neon on 2026-10-24; ten migrations are applied and schema diff is empty. Payment/provider configuration and real provider sandbox transactions remain untouched. |
 | Google OAuth production flow | Requires the real client and callback URL. Not exercised. |
 
-No production database, deployment, billing setting, or credential was read or modified.
+At the time of the earlier repository inspection, no production database, deployment, billing setting, or credential was read or modified. A separate production Neon schema migration was subsequently completed on 2026-10-24; see `docs/database/NEON_MIGRATION_GUIDE.md`. Payment settings and production deployment configuration were not changed.
 
 ---
 
@@ -48,7 +50,7 @@ No production database, deployment, billing setting, or credential was read or m
 | Ref | Purpose | State |
 | --- | --- | --- |
 | `main` | Production branch; Vercel deploys it | `a4dc39c` — includes the certificate download fix and founder analytics |
-| `feat/retention-v3` | Active development: retention v1–v3 plus the launch/curriculum/commercial work | `76da929`; 57 ahead of `origin/main`, 12 commits not yet on `origin/feat/retention-v3` |
+| `feat/retention-v3` | Active development: retention v1–v3 plus the launch/curriculum/commercial work | `bed93f1`; 61 commits ahead of `origin/main`; PR #4 open |
 | `feat/retention-v1` | Historical retention work | Fully contained in v3 |
 | `feat/retention-v2` | Historical retention work | Fully contained in v3 |
 | `phase-3-ai-world-class-rebuild` | Earlier AI rebuild | Merged via PR #1 |
@@ -60,24 +62,12 @@ No production database, deployment, billing setting, or credential was read or m
 **Note:** the 12 unpushed commits are all authored by `Awesome Akokayo <awesomeakokayo@gmail.com>`.
 No AI agent, bot, or co-author trailer was added.
 
-### Commits awaiting push (at inspection)
+### Publication and CI status at inspection
 
-| Commit | Subject |
-| --- | --- |
-| `3fb75ad` | feat: restructure site into route groups with redesigned shell and marketing pages |
-| `3dcf29c` | fix: apply pre-launch security hardening |
-| `faa5d8f` | feat: extend prisma schema and track the baseline migration |
-| `1193dc0` | feat: add commercial billing, entitlements and staged rollout |
-| `221e23b` | feat: land the authored curriculum package with quality audits |
-| `3903171` | feat: rebuild guided path progression with quizzes and enrollment versioning |
-| `12cee7a` | feat: add AI project verification with reserved assessment credits |
-| `e463b0d` | feat: add importable checklist progress tracking |
-| `c655226` | feat: add retention events, re-engagement and safe progress sync |
-| `b091c9b` | test: add playwright e2e journeys and widen test typecheck coverage |
-| `a4dd6a8` | docs: add launch readiness, product specification and review packets |
-| `76da929` | chore: stop tracking local workspace files and dev logs |
-
----
+- `feat/retention-v3` is pushed and PR #4 targets `main`.
+- The Vercel preview for commit `7c2d5e8` succeeded at the time of the publication record.
+- GitHub Actions validation could not start because GitHub reported an account billing lock. This is a CI availability blocker, not evidence that the current changes passed CI.
+- `main` remains unchanged. Merging, production deployment, live migrations, and payment activation remain separate owner-approved actions.
 
 ## 3. Architecture
 
@@ -89,7 +79,7 @@ No AI agent, bot, or co-author trailer was added.
 | Auth | NextAuth v5 beta, Google OAuth, JWT sessions, Prisma adapter; fail-closed test credentials only outside production |
 | Hosting | Vercel (production on `main`, previews on branches) |
 | AI assessment | DeepSeek provider by default; public GitHub repository inspection; atomically reserved monthly credits |
-| Payments | Lemon Squeezy (primary) and Paystack (legacy), webhook-driven entitlements; checkout fail-closed |
+| Payments | Paystack for Nigerian Track Pass (₦6,000 / three calendar months); Lemon Squeezy for potential international plans whose USD prices remain unapproved; signed-webhook-driven entitlements and fail-closed checkout |
 | Email | Nodemailer/SMTP for the contact form |
 | Analytics | `@vercel/analytics`, `@vercel/speed-insights`, first-party learning events |
 
@@ -117,9 +107,9 @@ Lemon Squeezy webhook, contact, and a production-gated `debug` route.
 `EntitlementEvent`.
 
 10 tracked migrations under `prisma/migrations/` (`0_init` through
-`20261015_assessment_credit_reservation`). Migrations are additive and unchanged in this
-session. Live migration-history recovery is **not executed** (approval-gated; see
-`docs/LAUNCH_READINESS.md` §3).
+`20261015_assessment_credit_reservation`). Production migration history was reconciled on
+2026-10-24: all 10 migrations are finished, `migrate status` is up to date, and
+`migrate diff` reports no schema drift. See `docs/database/NEON_MIGRATION_GUIDE.md`.
 
 ---
 
@@ -147,7 +137,7 @@ journey is missing or unverified; **Blocked** = requires credentials, approval, 
 | SEO | Implemented | Metadata helpers, `sitemap.ts`, `robots.ts`, static generation for catalogue routes. No Lighthouse/Core Web Vitals run in this session. |
 | Responsive design and accessibility | Partial | A prior E2E suite reported a mobile-layout and no-hydration pass; that suite was not re-run here. No dedicated automated accessibility audit. |
 | Rate limiting | Missing (launch blocker) | No shared-store limiter for contact or authenticated write endpoints. See `docs/LAUNCH_READINESS.md` §2. |
-| Live migration history | Blocked | Schema and migrations validate, but the live `_prisma_migrations` history has not been reconciled. Approval-gated. |
+| Live migration history | Reconciled (2026-10-24) | Ten migrations applied to production Neon branch `main`. Final `migrate status` clean, `migrate diff` empty, learner rows unchanged. Restore branch `backup/pre-migration-20261024` retained. See `docs/database/NEON_MIGRATION_GUIDE.md`. |
 
 ### Catalogue quality
 
@@ -164,7 +154,7 @@ was made.
 
 ---
 
-## 5. Verification results (this session)
+## 5. Baseline verification results (PR #4, before latest PR #5 changes)
 
 | Check | Command | Result |
 | --- | --- | --- |
@@ -188,30 +178,23 @@ Playwright or a database-backed test job.
 
 ## 6. Known issues, debt and blockers
 
-1. **Publishing credential (current blocker).** The local GitHub CLI session is
-   `taskboro`, which has read-only access to `awesomeakokayo/Techhubs`. The stored
-   `awesomeakokayo` token is expired (401). No SSH key is configured. The 12 commits and
-   this handoff cannot be pushed until the owner authenticates.
-2. **Playwright can hit the production database.** `playwright.config.ts` uses
-   `process.env.E2E_DATABASE_URL ?? process.env.DATABASE_URL`, and `.env.local` sets the
-   shared database. Set `E2E_DATABASE_URL` to a disposable database before running E2E.
+1. **GitHub Actions billing lock.** The feature branch is pushed and PR #4 is open, but the validation job did not start because the GitHub account is locked due to a billing issue. Re-run CI after the billing blocker is resolved.
+2. **Playwright requires an isolated database.** The configuration now refuses to start unless `E2E_DATABASE_URL` is explicitly set to PostgreSQL and does not resolve to the same normalized host/database target as any configured shared `DATABASE_URL` in the process environment or Next.js dotenv files. The guard ignores port and credentials and normalizes a common managed-PostgreSQL pooler hostname suffix. E2E was not run in this inspection.
 3. **No rate limiting** on public/authenticated write endpoints (Vercel serverless;
    needs Upstash/Vercel KV or edge WAF).
-4. **Live migration history not reconciled.** 10 migrations are tracked; `0_init`
-   matches the live schema, but live history must be resolved with approval, a snapshot,
-   and a clone rehearsal.
+4. **Live migration history — resolved 2026-10-24.** All 10 migrations are applied to
+   production; `_prisma_migrations` holds ten finished rows. A restore branch
+   (`backup/pre-migration-20261024`) is retained. Keep using the direct/unpooled endpoint
+   for future `prisma migrate` runs, and correct `DATABASE_URL_UNPOOLED` in `.env.local`
+   (it still duplicates the pooled URL).
 5. **Four unresolved supplementary resources** and unverifiable video playback (see §4).
 6. **Human curriculum sign-off absent** — `docs/curriculum-quality-signoff.json` does
    not exist; automated scores are not approval.
-7. **Commercial approvals absent** — prices unapproved, NGN undefined, provider sandbox
-   and payout unverified, refund/legal copy unapproved.
+7. **Commercial release gates remain open** — the ₦6,000 / three-month Paystack Track Pass is individually approved in code, but global price publication, checkout and enforcement flags remain off; USD prices, provider sandbox, payout, refund/legal copy and existing-user transition are not yet cleared.
 8. **Google OAuth production flow unverified.**
 9. **`.env.example` was incomplete** — now extended with Google, Lemon Squeezy, SMTP and
    E2E variables (names and placeholders only).
-10. **Large generated artifacts are committed** — the generated curriculum modules
-    (~91k-line resource registry), audit JSON, reviewer packets, and two ZIPs. The repo's
-    loose object store is ~19 MB. Do not rewrite history to shrink it; consider Git LFS or
-    excluding future generated bundles.
+10. **Research bundle organization** — the security-cleanup PR removes the exploded generated curriculum/reviewer output and duplicate extracted research folder from the tracked tree while preserving the source-deliverables ZIP, the resource-verification ZIP, checksums, and the generator source. Confirm a successful Vercel deployment for the current PR #5 head and restore a valid CI verdict after the GitHub billing lock is resolved before merging.
 11. **Stacked branch history** — v1/v2/v3 are sequential; v3 contains all prior work.
     Open one PR from v3 to `main`; do not merge v1/v2 separately.
 12. **PR #3 (`docs/project-documentation`) is stale.** It adds an architecture/deployment
@@ -241,8 +224,10 @@ Requirements and guardrails:
 4. Pushing a branch creates a Vercel **preview**; pushing/merging to `main` deploys
    **production**. There is no deployment workflow in the repo; Vercel's Git integration
    performs the deploy.
-5. Migrations are additive and tracked. Do not run `prisma migrate` against the live
-   database without the approval process in `docs/LAUNCH_READINESS.md` §3.
+5. Migrations are additive and tracked. History is reconciled as of 2026-10-24, so
+   `prisma migrate deploy` is now safe against the live database using the direct
+   endpoint. Still follow the snapshot-plus-clone-rehearsal procedure in
+   `docs/database/NEON_MIGRATION_GUIDE.md` for any new migration.
 6. Keep commerce flags at their safe defaults until launch approval:
    `COMMERCE_CHECKOUT_ENABLED=false`, `COMMERCE_ENTITLEMENTS_ENFORCED=false`,
    `COMMERCE_PRICES_APPROVED=false`, `COMMERCE_PROVIDER_TEST_MODE=false`.
@@ -251,12 +236,11 @@ Requirements and guardrails:
 
 ## 8. Next tasks, in priority order
 
-**P0 — publish and review**
+**P0 — review and validate**
 
-1. Authenticate as the repository owner (or a collaborator with write access).
-2. Push `feat/retention-v3` (the 12 commits plus this handoff).
-3. Open a PR to `main` with the verification results and outstanding risks; wait for CI.
-4. Merge only with owner approval; merging deploys production via Vercel.
+1. Resolve the GitHub Actions billing lock and re-run lint, unit/contract tests, type-check, Prisma validation, production build, and curriculum audit.
+2. Run Playwright only against a disposable PostgreSQL database supplied through `E2E_DATABASE_URL`.
+3. Review PR #4 and the follow-up hardening/cleanup changes together; merge to `main` only with owner approval, because the merge triggers Vercel production deployment.
 
 **P1 — safety before any launch**
 
@@ -312,14 +296,11 @@ E2E_DATABASE_URL="postgresql://..." npm run test:e2e
 
 Published on 2026-10-24:
 
-- `feat/retention-v3` pushed from `8c1a115` to `7c2d5e8` — 15 commits (the 12 work
-  commits listed in §2 plus three documentation commits).
+- `feat/retention-v3` is pushed at `bed93f1` (61 commits ahead of `main` at inspection).
 - Pull request: [#4 — Retention v3, curriculum package and launch readiness](https://github.com/awesomeakokayo/Techhubs/pull/4)
   (`feat/retention-v3` → `main`), mergeable at the time of opening.
 - Vercel **preview** deployment for `7c2d5e8`: succeeded.
-- GitHub Actions `validate`: **did not run**. GitHub reported: *"The job was not started
-  because your account is locked due to a billing issue."* This is an account-level
-  blocker, not a code failure; it must be resolved in GitHub billing before CI can run.
+- GitHub Actions `validate`: **did not start** because GitHub reported an account billing lock. This is not a code result; resolve billing before treating CI as available.
 - `main` is unchanged. No merge, production deployment, migration or payment activation
   was performed.
 

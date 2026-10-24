@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { buildGuidedPath, requiredCorrectFor, toPublicStep, expectedPathVersion } from '@/lib/guided-path'
+import { getTrackById } from '@/lib/tracks'
 import type { GuidedStep } from '@/lib/guided-path'
 import { migrateEnrollmentIfNeeded, acknowledgePathUpdate } from '@/lib/path-enrollment'
 import type { PathUpdateNotice } from '@/lib/path-compat'
@@ -114,6 +115,7 @@ async function ensureEnrollment(
 export async function GET(_req: Request, { params }: { params: { trackId: string } }) {
   const session = await auth()
   if (!session?.user?.id) return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+  if (!getTrackById(params.trackId)) return NextResponse.json({ error: 'Track not found' }, { status: 404 })
   if (!(await hasTrackAccess(session.user.id, params.trackId))) return NextResponse.json({ error: 'Course access required' }, { status: 403 })
 
   const steps = getSteps(params.trackId)
@@ -301,6 +303,7 @@ async function advanceWithinTransaction(
 export async function POST(req: Request, { params }: { params: { trackId: string } }) {
   const session = await auth()
   if (!session?.user?.id) return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+  if (!getTrackById(params.trackId)) return NextResponse.json({ error: 'Track not found' }, { status: 404 })
   if (!(await hasTrackAccess(session.user.id, params.trackId))) return NextResponse.json({ error: 'Course access required' }, { status: 403 })
 
   const body = await req.json().catch(() => null)

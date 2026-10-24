@@ -1,15 +1,19 @@
 # TechSkillHUB — Launch Readiness Notes
 
 Internal working document. Covers security hardening applied, the rate-limiting
-requirement, the live migration-recovery plan (not executed), the curriculum
-audit summary, and the release-readiness checklist.
+requirement, production Neon migration recovery completed on 2026-10-24, the curriculum
+audit summary, and the remaining release-readiness gates.
 
 ## 1. Security hardening applied
 
-- **`/api/debug`**: now returns `404` in production (was exposing session id,
-  session-cookie name/prefix and cookie names). Retained for local diagnostics.
-- **`components/ui/PremiumModal.tsx`**: deleted. It was unused dead code that
-  linked to the non-existent `/purchase/:id` route.
+- **Pricing decision (2026-10-24):** the code catalogue contains an individually approved
+  ₦6,000 Paystack Track Pass for three calendar months. Lemon Squeezy USD prices remain
+  individually unapproved. The checkout master switch, price-publication switch and
+  entitlement enforcement must not be enabled in production until the provider sandbox,
+  existing-learner transition, and database migration-history checks are complete.
+
+- **`/api/debug`**: returns `404` in production. Development/preview diagnostics now report only session presence and forwarded-host metadata; they do not return session identifiers or cookie names/values.
+- **Legacy commerce APIs**: unused `POST /api/payments/initialize` and `GET /api/payments/pricing` are retired with `410 Gone`; current checkout is handled by the launch-guarded `/api/billing/checkout` route.
 - **`app/robots.ts`**: removed the stale `/purchase/` disallow entry.
 - **`app/api/contact/route.ts`**: strict type checks and length caps
   (name ≤120, email ≤254, subject ≤200, message ≤5000) before sending mail.
@@ -39,29 +43,41 @@ Required (one of):
 If credentials/infra are unavailable, this remains an open launch blocker, not a
 code defect that can be fixed locally.
 
-## 3. Live migration recovery (NOT executed — approval-gated)
+## 3. Live migration recovery (COMPLETED 2026-10-24)
 
-Current state: **7 migrations** (`0_init`, `20261008_retention_profile`,
-`20261009_retention_plan`, `20261009_retention_rhythm`, `20261010_learning_events`,
-`20261010_notifications`, `20261011_checklist_progress`) replay cleanly on a fresh
-disposable PostgreSQL. All SQL is unchanged (`0_init` sha256
-`44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`).
+Current state: **10 tracked migrations applied** (`0_init` through
+`20261015_assessment_credit_reservation`). The live Prisma migration history was
+reconciled and the three newer commercial/assessment-credit migrations were deployed on
+2026-10-24 against the production Neon branch `main` (`br-wild-dream-atthu40u`,
+endpoint `ep-silent-bread-at33fcy4`). Final `prisma migrate status` reported
+"Database schema is up to date!" and `prisma migrate diff` reported no difference. All
+SQL is unchanged (`0_init` sha256
+`44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`). Full record:
+[docs/database/NEON_MIGRATION_GUIDE.md](./database/NEON_MIGRATION_GUIDE.md#completion-record-2026-10-24).
 
-Remaining requirements before recording live history (do not run yet):
-1. **Environment inventory** — enumerate every environment (Vercel production /
-   preview / development, any staging, local) and which share the Neon database,
-   and whether it holds real learner data.
-2. **Correct unpooled configuration** — `DATABASE_URL_UNPOOLED` currently equals
-   the pooled `-pooler` URL; replace it with the true direct endpoint and run all
-   `prisma migrate` commands against the direct connection (pooled PgBouncer does
-   not support the session-level locks Migrate needs).
-3. **Snapshot / branch** the live database immediately before any change.
-4. **Clone rehearsal** — restore a schema-only clone, run the resolve procedure on
-   the clone, confirm `migrate status` is clean and `migrate diff` is empty, then
-   rehearse rollback.
-5. **Resolve on live** — `migrate resolve --applied` each of the 7 migrations
-   (no DDL executed; the schema already matches), then verify; keep the rollback =
-   `DROP TABLE "_prisma_migrations"` within the window, or restore the snapshot.
+Preconditions satisfied before the change:
+
+1. **Environment inventory** — production is the Neon `TechSkillHub` project
+   (`blue-bread-46258191`); preview branches are separate Neon branches, so a preview
+   deployment does not share the production database.
+2. **Direct connection** — all `prisma migrate` commands ran against the direct
+   (unpooled) endpoint via an in-memory override; the pooled `-pooler` host was not used
+   for Migrate. `DATABASE_URL_UNPOOLED` in `.env.local` still duplicates the pooled URL
+   and should be corrected for future runs.
+3. **Snapshot / branch** — Neon restore branch `backup/pre-migration-20261024`
+   (`br-frosty-forest-at4wuahe`) created from `main` at LSN `0/40B7D60`, confirmed `ready`.
+4. **Clone rehearsal** — a disposable PostgreSQL 17 clone restored from a schema-only
+   dump ran the full sequence to a clean `migrate status` with an empty `migrate diff`.
+5. **Resolve on live** — the 7 historical migrations were marked applied (no DDL), then
+   `migrate deploy` applied the 3 newer migrations. `_prisma_migrations` holds ten
+   finished rows and no rollbacks. Rollback remains: restore the branch, or
+   `DROP TABLE "_prisma_migrations"` within the retention window.
+6. **Data preservation verified** — `User` 76, `UserProgress` 223, `CourseCompletion` 7,
+   `LearningEvent` 37, `Subscription` 8, `PaymentOrder` 5, `LearnerProfile` 1,
+   `ChecklistProgress` 4 (identical before and after).
+
+The resolve steps encountered transient `P1002` timeouts and were retried against a
+verified-healthy database; no schema or SQL error occurred.
 
 Never mark `20261011_checklist_progress` as applied on a database where its table
 does not exist.
@@ -121,7 +137,7 @@ content rewrite was out of scope).
 
 ## 5. Release-readiness checklist
 
-Local, verifiable now (all currently passing):
+Baseline local checks recorded on the PR #4 code before the latest PR #5 changes (not a current-commit CI verdict):
 - [x] `npm test` green (unit; 3 DB integration tests skipped without a DB).
 - [x] `npm run lint` clean.
 - [x] `npx tsc --noEmit -p tsconfig.json` clean.
@@ -134,8 +150,9 @@ Local, verifiable now (all currently passing):
 
 Requires credentials / access / authorization (blockers):
 - [ ] Rate limiting provider credentials (Upstash/Vercel KV) — §2.
-- [ ] Live migration-history recovery: environment inventory, unpooled URL fix,
-      snapshot, clone rehearsal, rollback verification — §3.
+- [x] Production migration-history reconciliation completed 2026-10-24: ten migrations
+      applied, final status up to date, schema diff empty, and learner counts preserved — §3.
+- [ ] Correct `DATABASE_URL_UNPOOLED` in `.env.local`; it still duplicates the pooled URL.
 - [ ] Google OAuth production verification (real client + callback) — not covered
       by automated tests (test auth was used).
 - [ ] Content work for P1–P4 (above).
@@ -159,7 +176,7 @@ Requires credentials / access / authorization (blockers):
   Total migrations: 10.
 - **Still blocked (unchanged):** Lemon Squeezy / Paystack merchant, product,
   variant, currency/settlement and approved-pricing verification; rate-limiting
-  credentials; live migration-history recovery; Google OAuth production.
+  credentials; GitHub Actions billing lock; disposable-database E2E; Google OAuth production.
 
 The release decision remains tiered: code-level complete and
 local/disposable-verified, but **not** provider-of-record verified and **not**
@@ -199,8 +216,8 @@ A track may be considered individually once signed off; an awaiting track is **n
 - [ ] Product definitions reconciled code ↔ docs (`docs/product-specification.md` §10): **consistent**.
 - [ ] Draft approval checklists (descriptions, prices, eligibility, disclosures, cancellation/refund,
       support): **drafted, not approved** (§11).
-- [ ] Prices approved: **no** (`COMMERCE_PRICES_APPROVED=false`; 3 provisional USD prices).
-- [ ] NGN prices: **undefined** (must not be invented).
+- [ ] Global price publication: **off** (`COMMERCE_PRICES_APPROVED=false`). The Nigerian Track Pass price is individually approved in code at ₦6,000 for three calendar months; international USD prices remain unapproved.
+- [ ] Additional NGN prices: **not configured**. Pro Monthly/Annual are not offered through Paystack; no extra NGN prices should be invented.
 
 ### 7.4 Provider sandbox verification
 - [ ] Lemon Squeezy sandbox order → webhook → entitlement: **not performed** (matrix ready;
@@ -214,7 +231,8 @@ A track may be considered individually once signed off; an awaiting track is **n
 
 ### 7.6 Database migration/recovery readiness
 - [x] `prisma validate` valid; `migrate diff` reports no drift; migrations not rewritten.
-- [ ] Live migration-history recovery: **not executed** — approval-gated (§3).
+- [x] Live migration-history reconciliation completed 2026-10-24: 10 finished ledger rows,
+      clean `migrate status`, no schema diff, no learner-row changes; restore branch retained.
 
 ### 7.7 Existing-user transition approval
 - [x] Transition policy implemented and dry-runnable (`lib/commercial/transition.ts`,
@@ -236,7 +254,7 @@ A track may be considered individually once signed off; an awaiting track is **n
 
 ### Technical verification (supporting evidence for 7.1–7.3)
 - [x] Unit/integration tests: **472 pass / 0 fail / 0 skip** on disposable PostgreSQL.
-- [x] Playwright E2E: **40 passed** (incl. returning-learner continuity and new-learner path).
+- [x] Historical Playwright record: **40 passed** (returning-learner continuity and new-learner path). This is prior evidence, not a result from the current inspection. The current Playwright config now refuses to run without an explicit isolated `E2E_DATABASE_URL`; the suite must be rerun against a disposable database.
 - [x] `tsc --noEmit` clean; lint clean; `prisma validate` valid; `migrate diff` empty.
 - [x] Production build succeeds.
 
