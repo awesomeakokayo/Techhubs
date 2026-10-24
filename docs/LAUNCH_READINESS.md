@@ -43,26 +43,41 @@ Required (one of):
 If credentials/infra are unavailable, this remains an open launch blocker, not a
 code defect that can be fixed locally.
 
-## 3. Live migration recovery (NOT executed — approval-gated)
+## 3. Live migration recovery (COMPLETED 2026-10-24)
 
-Current state: **10 tracked migrations** (from `0_init` through `20261015_assessment_credit_reservation`). The previous fresh-database replay record covered the first seven migrations; revalidate the three newer commercial/assessment-credit migrations on a fresh disposable PostgreSQL before release. The live migration-history recovery remains approval-gated. All SQL is unchanged (`0_init` sha256
-`44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`).
+Current state: **10 tracked migrations applied** (`0_init` through
+`20261015_assessment_credit_reservation`). The live Prisma migration history was
+reconciled and the three newer commercial/assessment-credit migrations were deployed on
+2026-10-24 against the production Neon branch `main` (`br-wild-dream-atthu40u`,
+endpoint `ep-silent-bread-at33fcy4`). Final `prisma migrate status` reported
+"Database schema is up to date!" and `prisma migrate diff` reported no difference. All
+SQL is unchanged (`0_init` sha256
+`44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`). Full record:
+[docs/database/NEON_MIGRATION_GUIDE.md](./database/NEON_MIGRATION_GUIDE.md#completion-record-2026-10-24).
 
-Remaining requirements before recording live history (do not run yet):
-1. **Environment inventory** — enumerate every environment (Vercel production /
-   preview / development, any staging, local) and which share the Neon database,
-   and whether it holds real learner data.
-2. **Correct unpooled configuration** — `DATABASE_URL_UNPOOLED` currently equals
-   the pooled `-pooler` URL; replace it with the true direct endpoint and run all
-   `prisma migrate` commands against the direct connection (pooled PgBouncer does
-   not support the session-level locks Migrate needs).
-3. **Snapshot / branch** the live database immediately before any change.
-4. **Clone rehearsal** — restore a schema-only clone, run the resolve procedure on
-   the clone, confirm `migrate status` is clean and `migrate diff` is empty, then
-   rehearse rollback.
-5. **Resolve on live** — `migrate resolve --applied` each of the 7 migrations
-   (no DDL executed; the schema already matches), then verify; keep the rollback =
-   `DROP TABLE "_prisma_migrations"` within the window, or restore the snapshot.
+Preconditions satisfied before the change:
+
+1. **Environment inventory** — production is the Neon `TechSkillHub` project
+   (`blue-bread-46258191`); preview branches are separate Neon branches, so a preview
+   deployment does not share the production database.
+2. **Direct connection** — all `prisma migrate` commands ran against the direct
+   (unpooled) endpoint via an in-memory override; the pooled `-pooler` host was not used
+   for Migrate. `DATABASE_URL_UNPOOLED` in `.env.local` still duplicates the pooled URL
+   and should be corrected for future runs.
+3. **Snapshot / branch** — Neon restore branch `backup/pre-migration-20261024`
+   (`br-frosty-forest-at4wuahe`) created from `main` at LSN `0/40B7D60`, confirmed `ready`.
+4. **Clone rehearsal** — a disposable PostgreSQL 17 clone restored from a schema-only
+   dump ran the full sequence to a clean `migrate status` with an empty `migrate diff`.
+5. **Resolve on live** — the 7 historical migrations were marked applied (no DDL), then
+   `migrate deploy` applied the 3 newer migrations. `_prisma_migrations` holds ten
+   finished rows and no rollbacks. Rollback remains: restore the branch, or
+   `DROP TABLE "_prisma_migrations"` within the retention window.
+6. **Data preservation verified** — `User` 76, `UserProgress` 223, `CourseCompletion` 7,
+   `LearningEvent` 37, `Subscription` 8, `PaymentOrder` 5, `LearnerProfile` 1,
+   `ChecklistProgress` 4 (identical before and after).
+
+The resolve steps encountered transient `P1002` timeouts and were retried against a
+verified-healthy database; no schema or SQL error occurred.
 
 Never mark `20261011_checklist_progress` as applied on a database where its table
 does not exist.

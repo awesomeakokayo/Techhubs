@@ -1,9 +1,9 @@
 # Neon PostgreSQL migration and release runbook
 
-**Status: preflight required; do not run production DDL yet.** The repository's
-launch-readiness audit records a pending live Prisma migration-history recovery.
-This environment does not have a direct Neon database connection, so I cannot
-truthfully certify which tables or migrations currently exist in your database.
+**Status: completed on 2026-10-24.** The live Prisma migration history has been
+reconciled and all ten migrations are applied to the production Neon branch. See
+[Completion record](#completion-record-2026-10-24) at the end of this file. The steps
+below remain the procedure to follow for any future migration, not a pending action.
 
 ## What the feature branch adds
 
@@ -88,3 +88,49 @@ The correct DDL depends on the Neon schema and migration ledger currently presen
 read-only preflight is the first SQL to run. After those results are available, the
 remaining DDL can be selected from the existing versioned migrations without guessing,
 reapplying enum changes, or accidentally marking a missing table as already migrated.
+
+## Completion record (2026-10-24)
+
+Production recovery was executed against the `TechSkillHub` Neon project
+(`blue-bread-46258191`), branch `main` (`br-wild-dream-atthu40u`), endpoint
+`ep-silent-bread-at33fcy4`.
+
+Preconditions satisfied before any DDL:
+
+- Neon restore branch `backup/pre-migration-20261024` (`br-frosty-forest-at4wuahe`)
+  created from `main` at LSN `0/40B7D60` and confirmed `ready`.
+- Read-only preflight confirmed `_prisma_migrations` was absent, the retention tables and
+  columns existed, and the commercial/assessment-credit objects did not.
+- The exact sequence was rehearsed on a disposable PostgreSQL 17 clone restored from a
+  schema-only production dump. The clone finished with "Database schema is up to date"
+  and `prisma migrate diff` reported no difference.
+- Commands ran with an in-memory override to the direct (unpooled) endpoint. No `.env`
+  file was modified.
+
+Execution:
+
+1. `prisma validate` — schema valid.
+2. `prisma migrate resolve --applied` for the seven historical migrations
+   (`0_init`, `20261008_retention_profile`, `20261009_retention_plan`,
+   `20261009_retention_rhythm`, `20261010_learning_events`,
+   `20261010_notifications`, `20261011_checklist_progress`).
+3. `prisma migrate status` — exactly the three newer migrations pending.
+4. `prisma migrate deploy` — `20261013_commercial_billing`,
+   `20261014_track_pass_six_months`, `20261015_assessment_credit_reservation` applied.
+5. `prisma migrate status` — "Database schema is up to date!"
+6. `prisma migrate diff` against `prisma/schema.prisma` — no difference detected.
+
+The resolve steps hit transient `P1002` connection timeouts (the server was reachable but
+timed out). Each was retried against a verified-healthy database; no command failed on a
+schema or SQL error. `_prisma_migrations` ended with ten finished rows and no rollbacks.
+
+Learner data was preserved exactly: `User` 76, `UserProgress` 223, `CourseCompletion` 7,
+`LearningEvent` 37, `Subscription` 8, `PaymentOrder` 5, `LearnerProfile` 1,
+`ChecklistProgress` 4.
+
+The restore branch can be deleted once the release is confirmed stable. It costs only
+copy-on-write storage while retained.
+
+Database readiness is one release gate only. Payment sandbox verification, OAuth
+verification, the end-to-end checks and the 3-vs-6-month Track Pass term discrepancy
+remain open; paid checkout stays disabled.

@@ -138,7 +138,7 @@ journey is missing or unverified; **Blocked** = requires credentials, approval, 
 | SEO | Implemented | Metadata helpers, `sitemap.ts`, `robots.ts`, static generation for catalogue routes. No Lighthouse/Core Web Vitals run in this session. |
 | Responsive design and accessibility | Partial | A prior E2E suite reported a mobile-layout and no-hydration pass; that suite was not re-run here. No dedicated automated accessibility audit. |
 | Rate limiting | Missing (launch blocker) | No shared-store limiter for contact or authenticated write endpoints. See `docs/LAUNCH_READINESS.md` §2. |
-| Live migration history | Blocked | Schema and migrations validate, but the live `_prisma_migrations` history has not been reconciled. Approval-gated. |
+| Live migration history | Reconciled (2026-10-24) | Ten migrations applied to production Neon branch `main`. Final `migrate status` clean, `migrate diff` empty, learner rows unchanged. Restore branch `backup/pre-migration-20261024` retained. See `docs/database/NEON_MIGRATION_GUIDE.md`. |
 
 ### Catalogue quality
 
@@ -183,9 +183,11 @@ Playwright or a database-backed test job.
 2. **Playwright requires an isolated database.** The configuration now refuses to start unless `E2E_DATABASE_URL` is explicitly set to PostgreSQL and does not resolve to the same normalized host/database target as any configured shared `DATABASE_URL` in the process environment or Next.js dotenv files. The guard ignores port and credentials and normalizes a common managed-PostgreSQL pooler hostname suffix. E2E was not run in this inspection.
 3. **No rate limiting** on public/authenticated write endpoints (Vercel serverless;
    needs Upstash/Vercel KV or edge WAF).
-4. **Live migration history not reconciled.** 10 migrations are tracked; `0_init`
-   matches the live schema, but live history must be resolved with approval, a snapshot,
-   and a clone rehearsal.
+4. **Live migration history — resolved 2026-10-24.** All 10 migrations are applied to
+   production; `_prisma_migrations` holds ten finished rows. A restore branch
+   (`backup/pre-migration-20261024`) is retained. Keep using the direct/unpooled endpoint
+   for future `prisma migrate` runs, and correct `DATABASE_URL_UNPOOLED` in `.env.local`
+   (it still duplicates the pooled URL).
 5. **Four unresolved supplementary resources** and unverifiable video playback (see §4).
 6. **Human curriculum sign-off absent** — `docs/curriculum-quality-signoff.json` does
    not exist; automated scores are not approval.
@@ -223,8 +225,10 @@ Requirements and guardrails:
 4. Pushing a branch creates a Vercel **preview**; pushing/merging to `main` deploys
    **production**. There is no deployment workflow in the repo; Vercel's Git integration
    performs the deploy.
-5. Migrations are additive and tracked. Do not run `prisma migrate` against the live
-   database without the approval process in `docs/LAUNCH_READINESS.md` §3.
+5. Migrations are additive and tracked. History is reconciled as of 2026-10-24, so
+   `prisma migrate deploy` is now safe against the live database using the direct
+   endpoint. Still follow the snapshot-plus-clone-rehearsal procedure in
+   `docs/database/NEON_MIGRATION_GUIDE.md` for any new migration.
 6. Keep commerce flags at their safe defaults until launch approval:
    `COMMERCE_CHECKOUT_ENABLED=false`, `COMMERCE_ENTITLEMENTS_ENFORCED=false`,
    `COMMERCE_PRICES_APPROVED=false`, `COMMERCE_PROVIDER_TEST_MODE=false`.
