@@ -134,5 +134,10 @@ The restore branch can be deleted once the release is confirmed stable. It costs
 copy-on-write storage while retained.
 
 Database readiness is one release gate only. Payment sandbox verification, OAuth
-verification, the end-to-end checks and the 3-vs-6-month Track Pass term discrepancy
-remain open; paid checkout stays disabled.
+verification and the end-to-end checks remain open; paid checkout stays disabled.
+
+The Track Pass term was settled on 2026-10-24 as **three calendar months**:
+`TRACK_PASS_TERM_MONTHS` is now `3` in `lib/commercial/track-pass.ts`, matching the
+pricing/track copy and `docs/product-specification.md`. The historical migration name
+`20261014_track_pass_six_months` is intentionally unchanged, because migration names
+record history and must not be rewritten to describe a new business decision.

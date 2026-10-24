@@ -75,7 +75,7 @@ credentials. "Expected" is the behaviour the code must exhibit.
 | P8 | **Retried** webhook after a transient failure | Eventually consistent; still exactly-once effect | Force a failure then redeliver | ☐ |
 | P9 | **Wrong order / user / product / amount / currency** | Rejected or recorded without granting the wrong entitlement; amount/currency mismatch never grants | Craft mismatched events | ☐ |
 | P10 | **Track-specific** entitlement (Track Pass) | Only the chosen premium track unlocks; other premium tracks stay gated | Assert `canAccessTrack` for all premium ids | ☐ |
-| P11 | **Six-calendar-month expiry** | Access ends at `expiresAt` (UTC, month-clamped); data retained | Fast-forward clock / set `expiresAt` past | ☐ |
+| P11 | **Three-calendar-month expiry** | Access ends at `expiresAt` (UTC, month-clamped); data retained | Fast-forward clock / set `expiresAt` past | ☐ |
 | P12 | **Repurchase** after expiry | New verified payment creates a new access period; no auto-charge | Complete a second test checkout | ☐ |
 | P13 | Pro **subscription creation** | Subscription ACTIVE → tier `PRO`; all premium tracks unlocked; Pro allowance | Complete a test subscription | ☐ |
 | P14 | Pro **renewal** | Period extends; remains `PRO`; no double grant | Simulate a renewal event | ☐ |
