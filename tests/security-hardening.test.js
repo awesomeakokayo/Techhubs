@@ -36,3 +36,9 @@ test('resource index and global search use the same enriched track catalogue', (
   assert.match(enrichment, /export function getAIEnrichedTracks/)
   assert.doesNotMatch(resources, /trackOptions\.slice\(0,\s*6\)/)
 })
+
+test('guided-path API validates track IDs before enrollment or progression writes', () => {
+  const source = read('app/api/guided-path/[trackId]/route.ts')
+  assert.match(source, /import \{ getTrackById \} from '@\/lib\/tracks'/)
+  assert.equal((source.match(/if \(!getTrackById\(params\.trackId\)\).*status: 404/g) ?? []).length, 2)
+})
