@@ -7,6 +7,7 @@ const root = path.resolve(__dirname, '..')
 const guided = fs.readFileSync(path.join(root, 'lib', 'ai-guided-path.ts'), 'utf8')
 const audit = fs.readFileSync(path.join(root, 'lib', 'ai-assessment-audit.ts'), 'utf8')
 const objectives = fs.readFileSync(path.join(root, 'lib', 'ai-stage-objectives.ts'), 'utf8')
+const quizTypes = fs.readFileSync(path.join(root, 'lib', 'guided-path.ts'), 'utf8')
 
 const tracks = {
   'ai-foundations': 6,
@@ -24,9 +25,9 @@ const tracks = {
 test('Phase 6 metadata exists on AI quiz questions', () => {
   assert.match(guided, /annotateAIQuestions/)
   assert.match(guided, /const verifyQuestions = annotateAIQuestions/) 
-  assert.match(audit, /teachingSource\?: string/)
-  assert.match(audit, /teachingStageId\?: number/)
-  assert.match(audit, /cognitiveLevel\?: QuizCognitiveLevel/)
+  assert.match(quizTypes, /teachingSource\?: string/)
+  assert.match(quizTypes, /teachingStageId\?: number/)
+  assert.match(quizTypes, /cognitiveLevel\?: QuizCognitiveLevel/)
 })
 
 test('every AI track/stage has a taught competency objective', () => {
@@ -47,14 +48,14 @@ test('AI assessment emphasizes application and reasoning', () => {
 })
 
 test('AI assessments cannot silently pass without provenance', () => {
-  assert.match(audit, /missing local teaching-stage provenance/)
+  assert.match(audit, /has no local teaching-stage provenance/)
   assert.match(audit, /missing teachingSource/)
   assert.match(audit, /missing cognitiveLevel/)
 })
 
 test('AI Verify is tied to the stage before Build', () => {
   assert.match(guided, /learningPhase: 'verify'/)
-  assert.match(guided, /stageId, quizQuestions: verifyQuestions/) 
+  assert.match(guided, /stageId,\s*quizQuestions: verifyQuestions/) 
   assert.match(guided, /learningPhase: 'build'/)
 })
 

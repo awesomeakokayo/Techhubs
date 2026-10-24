@@ -1,0 +1,38 @@
+TechSkillHUB Curriculum Research Checkpoint QA
+Generated: 2026-10-21
+PASS: 29 | WARN: 3 | FAIL: 0
+
+PASS: track_count_32 — 32
+PASS: stage_count_186 — 186
+PASS: manifest_one_row_per_stage — 186
+PASS: unique_stage_spec_keys — 186
+PASS: quiz_bank_930 — 930
+PASS: five_questions_per_stage — 186 stage keys; count range 5-5
+PASS: quiz_points_total_100_each_stage — 186/186 stages total 100
+PASS: unique_question_ids — 930
+PASS: answer_key_matches_option — 0
+PASS: rationale_and_feedback_present — 0
+PASS: unique_normalized_question_stems — 0 duplicate groups remain after repair
+PASS: stage_specs_synced_to_quiz_bank — 186/186 stage question lists match the JSONL bank
+PASS: mastery_rubrics_total_100 — 186 mastery/practice records; all weights =100
+PASS: phase_project_count_125 — 125
+PASS: phase_project_rubrics_total_100 — 0 rubrics invalid
+PASS: generic_phase_project_criteria_remediated — 86/86 historical generic contracts replaced; 0 exact generic contracts remain
+PASS: resource_candidate_rows_610 — 610
+PASS: resource_map_rows_584 — 584
+PASS: verification_log_count_reconciled — 1021
+PASS: no_l4_playback_claim — L4 count must remain zero
+PASS: no_premium_or_human_approval — All stage specs remain unapproved
+WARN: live_reverification_complete_all_186 — 0/186 stage primary pages fully reverified in current environment; web tool rate limit + DNS fetch failure documented
+WARN: SME_validation — No qualified independent human review/sign-off was supplied; authored assessments/rubrics remain drafts
+WARN: free_access_gates — 143 provisional archived candidates, 43 blocked by archive screen; current access/account/paywall states remain unverified
+PASS: archive_checksum — ec2ff32e9f7c805cc9c6db1972426fdbe412a31ec3487ace1993867ae3cf6266
+PASS: json_parse_02_STAGE_LEARNING_SPECS.json — JSON parse passed
+PASS: json_parse_06_STAGE_MASTERY_AND_PRACTICE.json — JSON parse passed
+PASS: json_parse_07_PHASE_PROJECTS.json — JSON parse passed
+PASS: json_parse_research-progress.json — JSON parse passed
+PASS: jsonl_parse_quiz_bank — JSONL parse
+PASS: quiz_duplicate_repair_audit_log_present — 3 aggregate audit rows; limitations disclose the absence of an item-level before/after diff.
+PASS: blocked_stage_status_synced — 43 resource-gated stages marked blocked across manifest, learning specs and persistent ledger; 143 remain provisional/needs human review.
+
+WARN entries are real approval/access limitations, not a statement of course readiness.

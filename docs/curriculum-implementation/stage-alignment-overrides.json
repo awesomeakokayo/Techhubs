@@ -1,0 +1,481 @@
+{
+  "schema": "tsh-stage-alignment-overrides-v1",
+  "generatedAt": "2026-10-22",
+  "purpose": "Correct the ai-youtube stages whose package objectives were shifted away from the canonical stage titles and topics. Stable stage and question IDs are preserved.",
+  "stages": [
+    {
+      "trackId": "ai-youtube",
+      "stageId": 4,
+      "title": "AI Voice & Audio",
+      "objective": "Record, generate and edit clear narration and sound for a video while preserving intelligibility, accessibility and audience trust.",
+      "targetOutcomes": [
+        "Choose between recorded and synthetic narration",
+        "Capture clean voice audio",
+        "Mix narration, music and effects",
+        "Check pronunciation, accessibility and disclosure"
+      ],
+      "workedExample": "You compare a recorded take with a synthetic voiceover, fix plosives and levels, and confirm names and figures are pronounced correctly before publishing.",
+      "practice": {
+        "title": "Practice: AI Voice & Audio",
+        "instructions": "Produce a 60-90 second narrated segment. Compare a recorded take with a synthetic voice, correct a pronunciation or emphasis error, mix music under the voice, and check the result on phone speakers and with captions. Focus on: Record, generate and edit clear narration and sound for a video while preserving intelligibility, accessibility and audience trust.",
+        "expectedOutput": "A audio edit and narration package that demonstrates the stage outcome with inspectable evidence.",
+        "hints": [
+          "State the audience and the decision the artifact supports.",
+          "Use at least one stage topic: .",
+          "Test one ordinary case and one failure/edge case.",
+          "Keep private data and third-party secrets out of the submission."
+        ],
+        "completionCriteria": [
+          "The artifact directly demonstrates: Record, generate and edit clear narration and sound for a video while preserving intelligibility, accessibility and audience trust.",
+          "At least one check or result is captured.",
+          "One limitation, failure mode or rejected alternative is documented."
+        ]
+      },
+      "mastery": {
+        "prompt": "Demonstrate the corrected outcome for **AI Voice & Audio**: Record, generate and edit clear narration and sound for a video while preserving intelligibility, accessibility and audience trust.\n\nSubmit a genuine audio edit and narration package. Include one ordinary case, one meaningful failure or edge case, and a short decision log showing what you checked and why. Do not submit secrets or another person's private data.",
+        "criteria": [
+          {
+            "criterionId": "ai-youtube-4-c1",
+            "name": "Narration choice and rights",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Choose recorded or synthetic narration for a stated reason and document consent, rights and disclosure decisions.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-4-c2",
+            "name": "Clean capture and correction",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Capture or generate intelligible audio and correct pronunciation, levels and distracting noise.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-4-c3",
+            "name": "Mix and accessibility",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Balance voice, music and effects, and provide captions or a transcript that match the audible words.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-4-c4",
+            "name": "Trust and disclosure",
+            "weight": 20,
+            "mandatory": true,
+            "description": "Resolve impersonation, synthetic-media disclosure and factual pronunciation risks before publishing.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-4-c5",
+            "name": "Evidence and reflection",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Submit the audio, a short decision log and one failed take or correction with an explanation of what changed.",
+            "stageSpecificEvidence": "Artifact, decision log and failure/edge-case evidence are all present."
+          }
+        ],
+        "passThreshold": 80,
+        "criticalGate": {
+          "required": true,
+          "rule": "All five criteria must be evidenced; the policy, rights, accessibility and disclosure criterion is mandatory. A failed criterion requires targeted remediation and new evidence."
+        }
+      }
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 5,
+      "title": "AI Visual Production",
+      "objective": "Use AI and licensed sources to create coherent B-roll, images and screen recordings that support the story without misrepresenting reality.",
+      "targetOutcomes": [
+        "Plan visuals from the script",
+        "Source or generate appropriate visuals",
+        "Preserve accuracy and rights",
+        "Check legibility and accessibility"
+      ],
+      "workedExample": "You storyboard a 60-second explainer, replace a misleading generated image with a labelled diagram, and record the source and licence for every asset.",
+      "practice": {
+        "title": "Practice: AI Visual Production",
+        "instructions": "Storyboard a 60-second explainer, source or generate every visual, replace any misleading image with an accurate labelled alternative, and record the source and licence for each asset. Focus on: Use AI and licensed sources to create coherent B-roll, images and screen recordings that support the story without misrepresenting reality.",
+        "expectedOutput": "A visual production pack that demonstrates the stage outcome with inspectable evidence.",
+        "hints": [
+          "State the audience and the decision the artifact supports.",
+          "Use at least one stage topic: .",
+          "Test one ordinary case and one failure/edge case.",
+          "Keep private data and third-party secrets out of the submission."
+        ],
+        "completionCriteria": [
+          "The artifact directly demonstrates: Use AI and licensed sources to create coherent B-roll, images and screen recordings that support the story without misrepresenting reality.",
+          "At least one check or result is captured.",
+          "One limitation, failure mode or rejected alternative is documented."
+        ]
+      },
+      "mastery": {
+        "prompt": "Demonstrate the corrected outcome for **AI Visual Production**: Use AI and licensed sources to create coherent B-roll, images and screen recordings that support the story without misrepresenting reality.\n\nSubmit a genuine visual production pack. Include one ordinary case, one meaningful failure or edge case, and a short decision log showing what you checked and why. Do not submit secrets or another person's private data.",
+        "criteria": [
+          {
+            "criterionId": "ai-youtube-5-c1",
+            "name": "Visual plan and accuracy",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Map each visual to a claim and reject imagery that invents or distorts the evidence.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-5-c2",
+            "name": "Sourcing and rights",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Record the source, licence or generation method for every asset and use only permitted material.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-5-c3",
+            "name": "Coherent visual craft",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Use composition, pacing and screen recordings that support the story rather than decorate it.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-5-c4",
+            "name": "Accessibility and disclosure",
+            "weight": 20,
+            "mandatory": true,
+            "description": "Keep labels legible, provide alternatives where needed and disclose realistic synthetic media when required.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-5-c5",
+            "name": "Evidence and reflection",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Submit the storyboard, asset list and one corrected misleading visual with a decision log.",
+            "stageSpecificEvidence": "Artifact, decision log and failure/edge-case evidence are all present."
+          }
+        ],
+        "passThreshold": 80,
+        "criticalGate": {
+          "required": true,
+          "rule": "All five criteria must be evidenced; the policy, rights, accessibility and disclosure criterion is mandatory. A failed criterion requires targeted remediation and new evidence."
+        }
+      }
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 6,
+      "title": "Editing",
+      "objective": "Assemble an efficient AI-assisted edit that preserves clarity, pacing, captions and factual meaning.",
+      "targetOutcomes": [
+        "Organise an editing workflow",
+        "Review AI edits as suggestions",
+        "Protect meaning and continuity",
+        "Export a platform-ready file"
+      ],
+      "workedExample": "You cut a rambling section, restore a removed negation, and check the captions against the final audio before export.",
+      "practice": {
+        "title": "Practice: Editing",
+        "instructions": "Edit a short segment, use an AI rough cut or transcript as a draft, restore any meaning changed by automation, fix caption placement and export a platform-ready file. Focus on: Assemble an efficient AI-assisted edit that preserves clarity, pacing, captions and factual meaning.",
+        "expectedOutput": "A editing project and review log that demonstrates the stage outcome with inspectable evidence.",
+        "hints": [
+          "State the audience and the decision the artifact supports.",
+          "Use at least one stage topic: .",
+          "Test one ordinary case and one failure/edge case.",
+          "Keep private data and third-party secrets out of the submission."
+        ],
+        "completionCriteria": [
+          "The artifact directly demonstrates: Assemble an efficient AI-assisted edit that preserves clarity, pacing, captions and factual meaning.",
+          "At least one check or result is captured.",
+          "One limitation, failure mode or rejected alternative is documented."
+        ]
+      },
+      "mastery": {
+        "prompt": "Demonstrate the corrected outcome for **Editing**: Assemble an efficient AI-assisted edit that preserves clarity, pacing, captions and factual meaning.\n\nSubmit a genuine editing project and review log. Include one ordinary case, one meaningful failure or edge case, and a short decision log showing what you checked and why. Do not submit secrets or another person's private data.",
+        "criteria": [
+          {
+            "criterionId": "ai-youtube-6-c1",
+            "name": "Editing workflow",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Organise assets, timeline and versions so another reviewer can follow the edit.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-6-c2",
+            "name": "Meaning and continuity",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Preserve negations, claims, sequence and context after automated cuts.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-6-c3",
+            "name": "Pacing and clarity",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Make intentional cuts that improve comprehension rather than adding motion for its own sake.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-6-c4",
+            "name": "Captions and export quality",
+            "weight": 20,
+            "mandatory": true,
+            "description": "Check captions, audio and the exported file against platform specifications.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-6-c5",
+            "name": "Evidence and reflection",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Submit the export, a before/after cut and a review log identifying one AI suggestion accepted or rejected.",
+            "stageSpecificEvidence": "Artifact, decision log and failure/edge-case evidence are all present."
+          }
+        ],
+        "passThreshold": 80,
+        "criticalGate": {
+          "required": true,
+          "rule": "All five criteria must be evidenced; the policy, rights, accessibility and disclosure criterion is mandatory. A failed criterion requires targeted remediation and new evidence."
+        }
+      }
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 7,
+      "title": "Thumbnails & Packaging",
+      "objective": "Design honest thumbnails, titles and openings that set a clear viewer promise and earn clicks without misleading.",
+      "targetOutcomes": [
+        "Write a specific title",
+        "Design a legible thumbnail",
+        "Align the opening with the promise",
+        "Test packaging without clickbait"
+      ],
+      "workedExample": "You compare a cluttered thumbnail with a single-subject version at phone size, then rewrite the title so the opening can deliver it.",
+      "practice": {
+        "title": "Practice: Thumbnails & Packaging",
+        "instructions": "Create two honest thumbnail/title options for one video, check them at phone size, define one measurable test, and explain how the opening will deliver the promise. Focus on: Design honest thumbnails, titles and openings that set a clear viewer promise and earn clicks without misleading.",
+        "expectedOutput": "A packaging test pack that demonstrates the stage outcome with inspectable evidence.",
+        "hints": [
+          "State the audience and the decision the artifact supports.",
+          "Use at least one stage topic: .",
+          "Test one ordinary case and one failure/edge case.",
+          "Keep private data and third-party secrets out of the submission."
+        ],
+        "completionCriteria": [
+          "The artifact directly demonstrates: Design honest thumbnails, titles and openings that set a clear viewer promise and earn clicks without misleading.",
+          "At least one check or result is captured.",
+          "One limitation, failure mode or rejected alternative is documented."
+        ]
+      },
+      "mastery": {
+        "prompt": "Demonstrate the corrected outcome for **Thumbnails & Packaging**: Design honest thumbnails, titles and openings that set a clear viewer promise and earn clicks without misleading.\n\nSubmit a genuine packaging test pack. Include one ordinary case, one meaningful failure or edge case, and a short decision log showing what you checked and why. Do not submit secrets or another person's private data.",
+        "criteria": [
+          {
+            "criterionId": "ai-youtube-7-c1",
+            "name": "Audience and promise",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Name the viewer and state one credible promise without clickbait.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-7-c2",
+            "name": "Title craft",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Write a specific, searchable and honest title that matches the content.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-7-c3",
+            "name": "Thumbnail craft",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Use a legible subject, contrast and minimal text that survives small-screen display.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-7-c4",
+            "name": "Opening alignment",
+            "weight": 20,
+            "mandatory": true,
+            "description": "Show how the first 15-30 seconds delivers the packaging promise.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-7-c5",
+            "name": "Evidence and reflection",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Submit both options, the test definition and a reasoned choice with one limitation.",
+            "stageSpecificEvidence": "Artifact, decision log and failure/edge-case evidence are all present."
+          }
+        ],
+        "passThreshold": 80,
+        "criticalGate": {
+          "required": true,
+          "rule": "All five criteria must be evidenced; the policy, rights, accessibility and disclosure criterion is mandatory. A failed criterion requires targeted remediation and new evidence."
+        }
+      }
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 8,
+      "title": "Publishing",
+      "objective": "Publish a video with accurate metadata, scheduling and promotion that respect platform rules and audience expectations.",
+      "targetOutcomes": [
+        "Complete upload settings",
+        "Write descriptions and chapters",
+        "Schedule and promote responsibly",
+        "Verify the published result"
+      ],
+      "workedExample": "You schedule a video, add a description with sources and chapters, check visibility and captions, then confirm the live page.",
+      "practice": {
+        "title": "Practice: Publishing",
+        "instructions": "Prepare a private or synthetic test upload with title, description, chapters, sources, visibility and schedule. Verify the live page as a logged-out viewer on mobile and record any warning or correction. Focus on: Publish a video with accurate metadata, scheduling and promotion that respect platform rules and audience expectations.",
+        "expectedOutput": "A publishing checklist and private test upload that demonstrates the stage outcome with inspectable evidence.",
+        "hints": [
+          "State the audience and the decision the artifact supports.",
+          "Use at least one stage topic: .",
+          "Test one ordinary case and one failure/edge case.",
+          "Keep private data and third-party secrets out of the submission."
+        ],
+        "completionCriteria": [
+          "The artifact directly demonstrates: Publish a video with accurate metadata, scheduling and promotion that respect platform rules and audience expectations.",
+          "At least one check or result is captured.",
+          "One limitation, failure mode or rejected alternative is documented."
+        ]
+      },
+      "mastery": {
+        "prompt": "Demonstrate the corrected outcome for **Publishing**: Publish a video with accurate metadata, scheduling and promotion that respect platform rules and audience expectations.\n\nSubmit a genuine publishing checklist and private test upload. Include one ordinary case, one meaningful failure or edge case, and a short decision log showing what you checked and why. Do not submit secrets or another person's private data.",
+        "criteria": [
+          {
+            "criterionId": "ai-youtube-8-c1",
+            "name": "Metadata and settings",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Complete title, description, visibility, audience and scheduling fields accurately.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-8-c2",
+            "name": "Description, chapters and sources",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Make the description useful, cite sources and add chapters that match the edit.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-8-c3",
+            "name": "Responsible promotion",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Choose relevant promotion, disclose material AI assistance and avoid spam or misleading claims.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-8-c4",
+            "name": "Post-publish verification",
+            "weight": 20,
+            "mandatory": true,
+            "description": "Check the public result, captions, links, warnings and rights status before promotion.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-8-c5",
+            "name": "Evidence and reflection",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Submit the checklist, private-test evidence and one issue found and resolved.",
+            "stageSpecificEvidence": "Artifact, decision log and failure/edge-case evidence are all present."
+          }
+        ],
+        "passThreshold": 80,
+        "criticalGate": {
+          "required": true,
+          "rule": "All five criteria must be evidenced; the policy, rights, accessibility and disclosure criterion is mandatory. A failed criterion requires targeted remediation and new evidence."
+        }
+      }
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 9,
+      "title": "Analytics",
+      "objective": "Use YouTube Analytics and AI-assisted analysis to diagnose performance and choose one evidence-based next experiment.",
+      "targetOutcomes": [
+        "Read impressions, CTR and retention",
+        "Segment by traffic source",
+        "Separate correlation from causation",
+        "Choose one focused experiment"
+      ],
+      "workedExample": "You compare two videos with different traffic sources, identify where retention drops, and propose one change for the next upload.",
+      "practice": {
+        "title": "Practice: Analytics",
+        "instructions": "Use a real or provided analytics snapshot to compare two videos, segment by traffic source, identify one retention drop, and propose one controlled next experiment with a baseline and success measure. Focus on: Use YouTube Analytics and AI-assisted analysis to diagnose performance and choose one evidence-based next experiment.",
+        "expectedOutput": "A analytics diagnosis and experiment brief that demonstrates the stage outcome with inspectable evidence.",
+        "hints": [
+          "State the audience and the decision the artifact supports.",
+          "Use at least one stage topic: .",
+          "Test one ordinary case and one failure/edge case.",
+          "Keep private data and third-party secrets out of the submission."
+        ],
+        "completionCriteria": [
+          "The artifact directly demonstrates: Use YouTube Analytics and AI-assisted analysis to diagnose performance and choose one evidence-based next experiment.",
+          "At least one check or result is captured.",
+          "One limitation, failure mode or rejected alternative is documented."
+        ]
+      },
+      "mastery": {
+        "prompt": "Demonstrate the corrected outcome for **Analytics**: Use YouTube Analytics and AI-assisted analysis to diagnose performance and choose one evidence-based next experiment.\n\nSubmit a genuine analytics diagnosis and experiment brief. Include one ordinary case, one meaningful failure or edge case, and a short decision log showing what you checked and why. Do not submit secrets or another person's private data.",
+        "criteria": [
+          {
+            "criterionId": "ai-youtube-9-c1",
+            "name": "Metric reading",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Read impressions, CTR, watch time and retention accurately without treating one metric as the goal.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-9-c2",
+            "name": "Segmentation",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Compare traffic sources and audiences before drawing a conclusion.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-9-c3",
+            "name": "Causal caution",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Separate correlation from causation and name confounders or missing baseline data.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-9-c4",
+            "name": "Focused experiment",
+            "weight": 20,
+            "mandatory": true,
+            "description": "Propose one test with a defined change, comparison and success measure.",
+            "stageSpecificEvidence": "Evidence is inspectable in the submitted artifact."
+          },
+          {
+            "criterionId": "ai-youtube-9-c5",
+            "name": "Evidence and reflection",
+            "weight": 20,
+            "mandatory": false,
+            "description": "Submit the analysis, the experiment brief and one alternative explanation you rejected.",
+            "stageSpecificEvidence": "Artifact, decision log and failure/edge-case evidence are all present."
+          }
+        ],
+        "passThreshold": 80,
+        "criticalGate": {
+          "required": true,
+          "rule": "All five criteria must be evidenced; the policy, rights, accessibility and disclosure criterion is mandatory. A failed criterion requires targeted remediation and new evidence."
+        }
+      }
+    }
+  ]
+}

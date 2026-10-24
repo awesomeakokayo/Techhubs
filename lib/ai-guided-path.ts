@@ -8,9 +8,14 @@ import { getAIStageLesson } from './ai-stage-lessons'
 import { getAISupplementalQuestions } from './ai-assessment-bank'
 import { annotateAIQuestions } from './ai-assessment-audit'
 import { getAIResourceAuditsForStage } from './ai-resource-registry'
+import { resolveStageResources } from './stage-resources'
 import { AI_PROJECT_BRIEFS } from './ai-project-briefs'
 import { getAIProjectAudit } from './ai-project-audit'
 import { isAIProjectPortfolioReady } from './ai-project-quality'
+import { getPackageStageContent } from './curriculum-package/stage-content.generated'
+import { getPackageProjectIdForStage } from './curriculum-package/projects.generated'
+import { getExtraProject } from './curriculum-extended-projects'
+import { getProjectBrief } from './curriculum'
 
 export type AILearningPhase = 'learn' | 'see' | 'practice' | 'verify' | 'build'
 type AIWorldClassStep = GuidedStep & { learningPhase: AILearningPhase }
@@ -25,14 +30,14 @@ function buildFallbackVerifyQuestions(stageTitle: string, objective: string, suc
   ]
 }
 
-function buildProjectDescription(stageTitle: string, objective: string, successCriteria: string[], existingDescription?: string, brief?: (typeof AI_PROJECT_BRIEFS)[string], audit?: ReturnType<typeof getAIProjectAudit>) {
+function buildProjectDescription(stageTitle: string, objective: string, successCriteria: string[], existingDescription?: string, brief?: { deliverables?: string[]; evidence?: string[]; acceptanceCriteria?: string[]; stretchGoal?: string }, audit?: ReturnType<typeof getAIProjectAudit>) {
   const parts = [
     existingDescription ?? `Create a small, working artifact that demonstrates ${stageTitle}.`,
     `\n\nBUILD OBJECTIVE\n${objective}`,
     `\n\nPREREQUISITE TRACE\n${audit?.traces.map((trace) => `• Stage ${trace.sourceStageId}: ${trace.skill}\n  Learn → See → Practice → Verify`).join('\n') ?? '• Use the Learn → See → Practice → Verify work completed in this stage.'}`,
-    `\n\nDELIVERABLES\n${brief?.deliverables.map((item) => `• ${item}`).join('\n') ?? '• Build a usable artifact for the stage competency.\n• Include a before/after or decision record where iteration matters.\n• Document the inputs, decisions, outputs, and verification performed.'}`,
-    `\n\nACCEPTANCE CRITERIA\n${brief?.acceptanceCriteria.map((item) => `• ${item}`).join('\n') ?? successCriteria.map((criterion) => `• ${criterion}`).join('\n')}`,
-    `\n\nEVIDENCE\n${brief?.evidence.map((item) => `• ${item}`).join('\n') ?? '• Working artifact\n• Brief implementation notes\n• Verification evidence'}`,
+    `\n\nDELIVERABLES\n${brief?.deliverables?.map((item) => `• ${item}`).join('\n') ?? '• Build a usable artifact for the stage competency.\n• Include a before/after or decision record where iteration matters.\n• Document the inputs, decisions, outputs, and verification performed.'}`,
+    `\n\nACCEPTANCE CRITERIA\n${brief?.acceptanceCriteria?.map((item) => `• ${item}`).join('\n') ?? successCriteria.map((criterion) => `• ${criterion}`).join('\n')}`,
+    `\n\nEVIDENCE\n${brief?.evidence?.map((item) => `• ${item}`).join('\n') ?? '• Working artifact\n• Brief implementation notes\n• Verification evidence'}`,
   ]
   if (brief?.stretchGoal) parts.push(`\n\nSTRETCH GOAL\n${brief.stretchGoal}`)
   return parts.join('')
@@ -87,6 +92,29 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       resourceFree: true,
     })
 
+    // Every other resource mapped to this stage, so the learner receives the
+    // same resource set the curriculum-quality audit scores. The primary
+    // TechSkillHub lesson stays the teaching; these are verified support.
+    const mappedResources = resolveStageResources(trackId, stageId).filter(
+      (entry) => entry.resource.url !== seeResource?.url,
+    )
+    for (const entry of mappedResources) {
+      output.push({
+        index: index++,
+        type: 'resource',
+        learningPhase: 'see',
+        title: `Resource: ${entry.resource.title}`,
+        description: `${entry.resource.description}\n\nSOURCE\n${entry.resource.source}\n\nVerified supporting material for this stage; the TechSkillHub lesson above remains the primary teaching.`,
+        estimatedTime: '15–40 min',
+        resourceUrl: entry.resource.url,
+        resourceId: entry.resource.id,
+        stageId,
+        resourceType: entry.resource.type,
+        resourceSource: entry.resource.source,
+        resourceFree: entry.resource.free,
+      })
+    }
+
     const practiceTasks = [...getAIPracticeTasks(trackId, stageId), ...getAdvancedAIPracticeTasks(trackId, stageId)]
     const primaryPractice = practiceTasks[0]
     output.push({
@@ -105,11 +133,18 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       resourceFree: true,
     })
 
+    const packageStage = getPackageStageContent(trackId, stageId)
     const authoredQuestions = objective ? getAISupplementalQuestions(trackId, stageId, objective) : []
     const questions = [...(AI_STAGE_CHECKPOINTS[trackId]?.[stageId] ?? []), ...authoredQuestions]
-    const rawVerifyQuestions: QuizQuestion[] = questions.length >= 3
-      ? questions.slice(0, 5)
-      : [...questions, ...buildFallbackVerifyQuestions(stage.title, objectiveText, successCriteria)].slice(0, 5)
+    const rawVerifyQuestions: QuizQuestion[] = packageStage?.quiz?.length
+      ? packageStage.quiz.map((question) => ({
+          ...question,
+          reviewStatus: 'needs_human_review' as const,
+          provenance: question.provenance as unknown as Record<string, unknown>,
+        }))
+      : questions.length >= 3
+        ? questions.slice(0, 5)
+        : [...questions, ...buildFallbackVerifyQuestions(stage.title, objectiveText, successCriteria)].slice(0, 5)
     const verifyQuestions = annotateAIQuestions(trackId, stageId, rawVerifyQuestions)
     output.push({
       index: index++,
@@ -120,11 +155,30 @@ export function buildAIWorldClassPath(trackId: string): GuidedStep[] {
       estimatedTime: '10–20 min',
       stageId,
       quizQuestions: verifyQuestions,
+      ...(packageStage
+        ? {
+            contentReviewStatus: 'needs_human_review' as const,
+            contentProvenance: {
+              package: '05_QUIZ_BANK.jsonl',
+              sourcePackageHash: packageStage.packageProvenance.sourcePackageHash,
+              resourceStatus: packageStage.resourceDisposition.status,
+              resourceRequired: packageStage.resourceDisposition.required,
+              resourceReason: packageStage.resourceDisposition.reason,
+            },
+          }
+        : {}),
     })
 
-    const mappedProject = getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
-    const brief = mappedProject?.id ? AI_PROJECT_BRIEFS[mappedProject.id] : undefined
-    const audit = mappedProject?.id ? getAIProjectAudit(mappedProject.id) : null
+    const packageProjectId = getPackageProjectIdForStage(trackId, stageId)
+    const packageProject = packageProjectId ? getExtraProject(packageProjectId) : undefined
+    const mappedProject =
+      packageProject ?? getAIProjectsForStage(trackId, stageId).find((project) => isAIProjectPortfolioReady(project.id))
+    const brief = packageProject
+      ? getProjectBrief(packageProject.id, packageProject.level, packageProject.title)
+      : mappedProject?.id
+        ? AI_PROJECT_BRIEFS[mappedProject.id]
+        : undefined
+    const audit = !packageProject && mappedProject?.id ? getAIProjectAudit(mappedProject.id) : null
     output.push({
       index: index++,
       type: 'project',

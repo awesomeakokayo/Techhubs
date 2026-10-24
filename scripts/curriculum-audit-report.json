@@ -1,0 +1,1905 @@
+{
+  "generatedAt": "2026-10-11T19:59:41.596Z",
+  "summary": {
+    "tracks": 32,
+    "stages": 186,
+    "resources": 271,
+    "projects": 122,
+    "resourcesByType": {
+      "docs": 165,
+      "video": 53,
+      "practice": 17,
+      "book": 6,
+      "tool": 24,
+      "community": 6
+    },
+    "defects": {
+      "critical": 0,
+      "high": 0,
+      "medium": 6,
+      "low": 0
+    },
+    "totalDefects": 6,
+    "crossTrackDuplicateUrls": 18,
+    "tracksWithAssessment": 32,
+    "tracksWithProjectStep": 32,
+    "nonAITracks": 22
+  },
+  "tracks": [
+    {
+      "id": "frontend",
+      "name": "Frontend Development",
+      "category": "build",
+      "difficulty": 3,
+      "timeEstimate": "4 to 6 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Foundations",
+        "Core JavaScript",
+        "React Framework",
+        "Professional Skills",
+        "AI-Assisted Workflow"
+      ],
+      "resourceCount": 19,
+      "resourcesByType": {
+        "docs": 9,
+        "video": 5,
+        "practice": 3,
+        "book": 1,
+        "tool": 1,
+        "community": 0
+      },
+      "projectCount": 8,
+      "projectsByLevel": {
+        "beginner": 3,
+        "intermediate": 3,
+        "advanced": 2
+      },
+      "guidedStepCount": 40,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 19,
+        "practice": 5,
+        "quiz": 5,
+        "project": 6
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Frontend Developer",
+        "UI Developer",
+        "React Developer",
+        "Web Developer",
+        "Frontend Engineer"
+      ]
+    },
+    {
+      "id": "backend",
+      "name": "Backend Development",
+      "category": "build",
+      "difficulty": 4,
+      "timeEstimate": "5 to 8 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Foundations",
+        "Core Backend",
+        "Databases",
+        "Advanced Backend",
+        "Deployment"
+      ],
+      "resourceCount": 17,
+      "resourcesByType": {
+        "docs": 9,
+        "video": 7,
+        "practice": 1,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 2
+      },
+      "guidedStepCount": 37,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 17,
+        "practice": 5,
+        "quiz": 5,
+        "project": 5
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Backend Developer",
+        "API Developer",
+        "Node.js Developer",
+        "Python Developer",
+        "Software Engineer"
+      ]
+    },
+    {
+      "id": "fullstack",
+      "name": "Full-Stack Development",
+      "category": "build",
+      "difficulty": 5,
+      "timeEstimate": "8 to 12 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Complete Frontend Track",
+        "Complete Backend Track",
+        "Integration",
+        "Full Deployment",
+        "Production Patterns"
+      ],
+      "resourceCount": 9,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 2,
+        "advanced": 2
+      },
+      "guidedStepCount": 28,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 9,
+        "practice": 5,
+        "quiz": 5,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Full-Stack Developer",
+        "Software Engineer",
+        "Product Engineer",
+        "Web Application Developer"
+      ]
+    },
+    {
+      "id": "python",
+      "name": "Python Development",
+      "category": "build",
+      "difficulty": 3,
+      "timeEstimate": "3 to 5 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Python Basics",
+        "Intermediate Python",
+        "Python for the Web",
+        "Automation & Scripting",
+        "Python + AI"
+      ],
+      "resourceCount": 8,
+      "resourcesByType": {
+        "docs": 3,
+        "video": 4,
+        "practice": 0,
+        "book": 1,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 6,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 3,
+        "advanced": 1
+      },
+      "guidedStepCount": 29,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 8,
+        "practice": 5,
+        "quiz": 5,
+        "project": 6
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Python Developer",
+        "Backend Developer",
+        "Data Engineer",
+        "Automation Engineer",
+        "AI/ML Engineer"
+      ]
+    },
+    {
+      "id": "uiux",
+      "name": "UI/UX Design",
+      "category": "design",
+      "difficulty": 2,
+      "timeEstimate": "3 to 5 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Design Fundamentals",
+        "UX Foundations",
+        "Figma Mastery",
+        "Advanced UX",
+        "Portfolio & Case Studies"
+      ],
+      "resourceCount": 12,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 3,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 2
+      },
+      "guidedStepCount": 32,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 12,
+        "practice": 5,
+        "quiz": 5,
+        "project": 5
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "UI Designer",
+        "UX Designer",
+        "Product Designer",
+        "UX Researcher",
+        "Interaction Designer"
+      ]
+    },
+    {
+      "id": "qa",
+      "name": "QA Engineering",
+      "category": "grow",
+      "difficulty": 3,
+      "timeEstimate": "3 to 5 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Testing Fundamentals",
+        "Tools & API Testing",
+        "Test Automation",
+        "Advanced QA"
+      ],
+      "resourceCount": 10,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 1
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 26,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 10,
+        "practice": 4,
+        "quiz": 4,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "QA Engineer",
+        "Software Tester",
+        "Test Automation Engineer",
+        "SDET",
+        "Quality Analyst"
+      ]
+    },
+    {
+      "id": "data",
+      "name": "Data Analysis",
+      "category": "analyze",
+      "difficulty": 3,
+      "timeEstimate": "4 to 6 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Spreadsheets & Excel",
+        "SQL Fundamentals",
+        "Python for Data",
+        "BI & Visualization Tools",
+        "Statistics Basics"
+      ],
+      "resourceCount": 11,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 5,
+        "practice": 3,
+        "book": 1,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 31,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 11,
+        "practice": 5,
+        "quiz": 5,
+        "project": 5
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Data Analyst",
+        "Business Intelligence Analyst",
+        "Reporting Analyst",
+        "Operations Analyst"
+      ]
+    },
+    {
+      "id": "datascience",
+      "name": "Data Science",
+      "category": "analyze",
+      "difficulty": 5,
+      "timeEstimate": "9 to 14 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Prerequisite: Data Analysis",
+        "Statistics & Math",
+        "Machine Learning",
+        "Deep Learning Basics",
+        "MLOps & Deployment"
+      ],
+      "resourceCount": 10,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 2,
+        "practice": 0,
+        "book": 1,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 1,
+        "advanced": 2
+      },
+      "guidedStepCount": 29,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 10,
+        "practice": 5,
+        "quiz": 5,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Data Scientist",
+        "ML Engineer",
+        "AI Researcher",
+        "NLP Engineer",
+        "Computer Vision Engineer"
+      ]
+    },
+    {
+      "id": "devops",
+      "name": "DevOps Engineering",
+      "category": "grow",
+      "difficulty": 5,
+      "timeEstimate": "8 to 12 months",
+      "stageCount": 5,
+      "stageTitles": [
+        "Linux & Networking",
+        "Version Control & CI/CD",
+        "Containers & Docker",
+        "Cloud & Orchestration",
+        "Monitoring & Security"
+      ],
+      "resourceCount": 11,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 4,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 30,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 11,
+        "practice": 5,
+        "quiz": 5,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "DevOps Engineer",
+        "Site Reliability Engineer (SRE)",
+        "Platform Engineer",
+        "Cloud Engineer"
+      ]
+    },
+    {
+      "id": "cyber",
+      "name": "Cybersecurity",
+      "category": "grow",
+      "difficulty": 4,
+      "timeEstimate": "6 to 10 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Networking Fundamentals",
+        "Security Concepts",
+        "Ethical Hacking",
+        "Defensive Security"
+      ],
+      "resourceCount": 9,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 2,
+        "practice": 5,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 25,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 9,
+        "practice": 4,
+        "quiz": 4,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Security Analyst",
+        "Penetration Tester",
+        "Cybersecurity Engineer",
+        "SOC Analyst",
+        "Ethical Hacker"
+      ]
+    },
+    {
+      "id": "mobile",
+      "name": "Mobile Development",
+      "category": "build",
+      "difficulty": 4,
+      "timeEstimate": "5 to 8 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Prerequisites",
+        "Core Mobile Development",
+        "Firebase & Backend",
+        "Publishing & Polish"
+      ],
+      "resourceCount": 9,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 3,
+        "advanced": 1
+      },
+      "guidedStepCount": 25,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 9,
+        "practice": 4,
+        "quiz": 4,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Mobile Developer",
+        "React Native Developer",
+        "Flutter Developer",
+        "iOS Developer",
+        "Android Developer"
+      ]
+    },
+    {
+      "id": "video",
+      "name": "Video Editing",
+      "category": "grow",
+      "difficulty": 2,
+      "timeEstimate": "2 to 4 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Editing Fundamentals",
+        "Storytelling & Pacing",
+        "Visual Effects & Graphics",
+        "Platform-Specific Editing"
+      ],
+      "resourceCount": 9,
+      "resourcesByType": {
+        "docs": 5,
+        "video": 1,
+        "practice": 0,
+        "book": 0,
+        "tool": 3,
+        "community": 0
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 25,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 9,
+        "practice": 4,
+        "quiz": 4,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Video Editor",
+        "Content Creator",
+        "Motion Designer",
+        "Post-Production Editor",
+        "Social Media Video Editor"
+      ]
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube Automation",
+      "category": "grow",
+      "difficulty": 2,
+      "timeEstimate": "1 to 3 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Channel Strategy",
+        "Content Production",
+        "Growth & SEO",
+        "Monetization"
+      ],
+      "resourceCount": 9,
+      "resourcesByType": {
+        "docs": 3,
+        "video": 1,
+        "practice": 0,
+        "book": 0,
+        "tool": 5,
+        "community": 0
+      },
+      "projectCount": 3,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 0,
+        "advanced": 1
+      },
+      "guidedStepCount": 22,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 9,
+        "practice": 4,
+        "quiz": 4,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Content Creator",
+        "YouTube Strategist",
+        "Channel Manager",
+        "Digital Media Producer"
+      ]
+    },
+    {
+      "id": "marketing",
+      "name": "Digital Marketing",
+      "category": "grow",
+      "difficulty": 2,
+      "timeEstimate": "2 to 4 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Marketing Foundations",
+        "Core Channels",
+        "Paid Advertising",
+        "Analytics & Optimization"
+      ],
+      "resourceCount": 10,
+      "resourcesByType": {
+        "docs": 9,
+        "video": 1,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 26,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 10,
+        "practice": 4,
+        "quiz": 4,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Digital Marketing Manager",
+        "SEO Specialist",
+        "Paid Ads Manager",
+        "Content Marketer",
+        "Growth Marketer"
+      ]
+    },
+    {
+      "id": "ai",
+      "name": "AI for Work & Productivity",
+      "category": "grow",
+      "difficulty": 1,
+      "timeEstimate": "Ongoing",
+      "stageCount": 4,
+      "stageTitles": [
+        "Understanding AI Tools",
+        "Prompt Engineering",
+        "AI for Your Field",
+        "AI Ethics & Verification"
+      ],
+      "resourceCount": 6,
+      "resourcesByType": {
+        "docs": 4,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 3,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 21,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 6,
+        "practice": 4,
+        "quiz": 4,
+        "project": 3
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI-Augmented Developer",
+        "Prompt Engineer",
+        "AI Product Manager",
+        "LLM Application Developer"
+      ]
+    },
+    {
+      "id": "nocode",
+      "name": "No-Code Development",
+      "category": "design",
+      "difficulty": 1,
+      "timeEstimate": "1 to 2 months",
+      "stageCount": 3,
+      "stageTitles": [
+        "Website Building",
+        "App Building",
+        "Automation"
+      ],
+      "resourceCount": 5,
+      "resourcesByType": {
+        "docs": 4,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 1,
+        "community": 0
+      },
+      "projectCount": 4,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 18,
+      "guidedStepTypes": {
+        "concept": 3,
+        "resource": 5,
+        "practice": 3,
+        "quiz": 3,
+        "project": 4
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "No-Code Developer",
+        "Automation Specialist",
+        "Operations Manager",
+        "Product Manager"
+      ]
+    },
+    {
+      "id": "writing",
+      "name": "Technical Writing",
+      "category": "design",
+      "difficulty": 2,
+      "timeEstimate": "2 to 3 months",
+      "stageCount": 4,
+      "stageTitles": [
+        "Writing Fundamentals",
+        "Tools & Formats",
+        "Documentation Types",
+        "Portfolio & Specialization"
+      ],
+      "resourceCount": 7,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 3,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 20,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 7,
+        "practice": 4,
+        "quiz": 4,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Technical Writer",
+        "Documentation Engineer",
+        "Developer Advocate",
+        "Content Engineer"
+      ]
+    },
+    {
+      "id": "crypto",
+      "name": "Crypto & Web3",
+      "category": "build",
+      "difficulty": 4,
+      "timeEstimate": "6–10 months",
+      "stageCount": 11,
+      "stageTitles": [
+        "How Blockchain Actually Works",
+        "Wallets, Keys & On-Chain Security",
+        "Solidity Fundamentals",
+        "Token Standards & Development Tooling",
+        "DeFi Core Mechanics",
+        "DeFi Risks & Advanced Concepts",
+        "Web3 Frontend Foundations",
+        "dApp Data & Storage",
+        "Common Smart Contract Vulnerabilities",
+        "Auditing Tools & Practice",
+        "On-Chain Data Analysis"
+      ],
+      "resourceCount": 24,
+      "resourcesByType": {
+        "docs": 12,
+        "video": 3,
+        "practice": 5,
+        "book": 1,
+        "tool": 2,
+        "community": 1
+      },
+      "projectCount": 8,
+      "projectsByLevel": {
+        "beginner": 3,
+        "intermediate": 3,
+        "advanced": 2
+      },
+      "guidedStepCount": 58,
+      "guidedStepTypes": {
+        "concept": 11,
+        "resource": 24,
+        "practice": 11,
+        "quiz": 11,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Smart Contract Developer",
+        "Web3 Frontend Developer",
+        "Blockchain Engineer",
+        "Smart Contract Auditor",
+        "DeFi Analyst",
+        "Protocol Researcher",
+        "On-Chain Data Analyst"
+      ]
+    },
+    {
+      "id": "projectmgmt",
+      "name": "Project Management",
+      "category": "grow",
+      "difficulty": 2,
+      "timeEstimate": "2–4 months",
+      "stageCount": 6,
+      "stageTitles": [
+        "PM Foundations",
+        "Agile Principles",
+        "Scrum in Practice",
+        "Tools & Planning",
+        "Budgeting & Reporting",
+        "Certifications & Career"
+      ],
+      "resourceCount": 11,
+      "resourcesByType": {
+        "docs": 7,
+        "video": 1,
+        "practice": 0,
+        "book": 1,
+        "tool": 2,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 30,
+      "guidedStepTypes": {
+        "concept": 6,
+        "resource": 11,
+        "practice": 6,
+        "quiz": 6,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Project Manager",
+        "Scrum Master",
+        "Agile Coach",
+        "Programme Manager",
+        "Technical Project Manager",
+        "Delivery Manager"
+      ]
+    },
+    {
+      "id": "productmgmt",
+      "name": "Product Management",
+      "category": "grow",
+      "difficulty": 3,
+      "timeEstimate": "4–6 months",
+      "stageCount": 8,
+      "stageTitles": [
+        "Product Thinking Foundations",
+        "User Research & Discovery",
+        "Strategy & Prioritisation",
+        "Writing Product Requirements",
+        "Growth & Engagement Metrics",
+        "Retention, Funnels & Experiments",
+        "Shipping with Engineering",
+        "PM Career & Portfolio"
+      ],
+      "resourceCount": 13,
+      "resourcesByType": {
+        "docs": 6,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 2,
+        "community": 3
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 38,
+      "guidedStepTypes": {
+        "concept": 8,
+        "resource": 13,
+        "practice": 8,
+        "quiz": 8,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Product Manager",
+        "Associate PM",
+        "Senior PM",
+        "Technical PM",
+        "Growth PM",
+        "Director of Product",
+        "Chief Product Officer"
+      ]
+    },
+    {
+      "id": "dart",
+      "name": "Dart Programming",
+      "category": "build",
+      "difficulty": 2,
+      "timeEstimate": "4–8 weeks",
+      "stageCount": 4,
+      "stageTitles": [
+        "Dart Fundamentals",
+        "Object-Oriented Dart",
+        "Async Dart",
+        "Dart for Flutter"
+      ],
+      "resourceCount": 10,
+      "resourcesByType": {
+        "docs": 6,
+        "video": 2,
+        "practice": 0,
+        "book": 0,
+        "tool": 2,
+        "community": 0
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 23,
+      "guidedStepTypes": {
+        "concept": 4,
+        "resource": 10,
+        "practice": 4,
+        "quiz": 4,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Flutter Developer",
+        "Mobile Developer",
+        "Dart Developer",
+        "Cross-Platform Developer"
+      ]
+    },
+    {
+      "id": "sonic",
+      "name": "Sonic Blockchain Development",
+      "category": "build",
+      "difficulty": 4,
+      "timeEstimate": "2–4 months",
+      "stageCount": 6,
+      "stageTitles": [
+        "Web3 Basics (HackQuest Phase 1)",
+        "Sonic Ecosystem (HackQuest Phase 2)",
+        "Solidity Fundamentals (HackQuest Phases 3–4)",
+        "Build & Frameworks (HackQuest Phases 5–6)",
+        "Security & Ecosystem (HackQuest Phases 7–8)",
+        "FeeM Strategy & Mainnet"
+      ],
+      "resourceCount": 11,
+      "resourcesByType": {
+        "docs": 6,
+        "video": 1,
+        "practice": 0,
+        "book": 0,
+        "tool": 3,
+        "community": 1
+      },
+      "projectCount": 5,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 2,
+        "advanced": 1
+      },
+      "guidedStepCount": 30,
+      "guidedStepTypes": {
+        "concept": 6,
+        "resource": 11,
+        "practice": 6,
+        "quiz": 6,
+        "project": 1
+      },
+      "isAI": false,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Sonic Ecosystem Developer",
+        "Smart Contract Developer",
+        "Web3 Engineer",
+        "Blockchain Developer",
+        "DeFi Protocol Engineer"
+      ]
+    },
+    {
+      "id": "ai-foundations",
+      "name": "AI Foundations & Fluency",
+      "category": "ai",
+      "difficulty": 1,
+      "timeEstimate": "2 to 4 weeks",
+      "stageCount": 6,
+      "stageTitles": [
+        "Understanding AI",
+        "The Modern AI Landscape",
+        "Communicating With AI",
+        "Thinking With AI",
+        "AI Reliability",
+        "Building Repeatable AI Workflows"
+      ],
+      "resourceCount": 7,
+      "resourcesByType": {
+        "docs": 6,
+        "video": 1,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 2,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 0,
+        "advanced": 0
+      },
+      "guidedStepCount": 30,
+      "guidedStepTypes": {
+        "concept": 6,
+        "resource": 12,
+        "quiz": 6,
+        "project": 6
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI Literate Professional",
+        "Prompt Engineer",
+        "AI Workflow Designer",
+        "Content Strategist",
+        "Productivity Consultant"
+      ]
+    },
+    {
+      "id": "ai-work",
+      "name": "AI for Work & Productivity",
+      "category": "ai",
+      "difficulty": 2,
+      "timeEstimate": "3 to 5 weeks",
+      "stageCount": 5,
+      "stageTitles": [
+        "AI for Communication",
+        "AI for Documents",
+        "AI for Learning",
+        "AI for Planning",
+        "AI for Professional Workflows"
+      ],
+      "resourceCount": 3,
+      "resourcesByType": {
+        "docs": 3,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 3,
+      "projectsByLevel": {
+        "beginner": 2,
+        "intermediate": 1,
+        "advanced": 0
+      },
+      "guidedStepCount": 25,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 10,
+        "quiz": 5,
+        "project": 5
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI-Enhanced Professional",
+        "Project Manager",
+        "Operations Specialist",
+        "Marketing Manager",
+        "Business Analyst"
+      ]
+    },
+    {
+      "id": "ai-research",
+      "name": "AI Research, Search & Verification",
+      "category": "ai",
+      "difficulty": 2,
+      "timeEstimate": "3 to 5 weeks",
+      "stageCount": 5,
+      "stageTitles": [
+        "Search vs AI",
+        "AI-Assisted Research",
+        "Sources & Evidence",
+        "Verification & Fact Checking",
+        "Research Workflows"
+      ],
+      "resourceCount": 2,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 1,
+      "projectsByLevel": {
+        "beginner": 0,
+        "intermediate": 1,
+        "advanced": 0
+      },
+      "guidedStepCount": 25,
+      "guidedStepTypes": {
+        "concept": 5,
+        "resource": 10,
+        "quiz": 5,
+        "project": 5
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Research Analyst",
+        "Content Researcher",
+        "Policy Analyst",
+        "Market Researcher",
+        "Journalist"
+      ]
+    },
+    {
+      "id": "ai-content",
+      "name": "AI Content Creation",
+      "category": "ai",
+      "difficulty": 2,
+      "timeEstimate": "4 to 6 weeks",
+      "stageCount": 6,
+      "stageTitles": [
+        "Content Strategy",
+        "AI-Assisted Research",
+        "Writing & Scripting",
+        "AI Visual Creation",
+        "Content Production",
+        "Repurposing"
+      ],
+      "resourceCount": 2,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 3,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 2,
+        "advanced": 0
+      },
+      "guidedStepCount": 30,
+      "guidedStepTypes": {
+        "concept": 6,
+        "resource": 12,
+        "quiz": 6,
+        "project": 6
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Content Creator",
+        "Content Strategist",
+        "Marketing Specialist",
+        "Social Media Manager",
+        "Freelance Writer"
+      ]
+    },
+    {
+      "id": "ai-youtube",
+      "name": "AI Video & YouTube",
+      "category": "ai",
+      "difficulty": 3,
+      "timeEstimate": "6 to 10 weeks",
+      "stageCount": 10,
+      "stageTitles": [
+        "YouTube Fundamentals",
+        "Topic Research",
+        "AI-Assisted Scripting",
+        "AI Voice & Audio",
+        "AI Visual Production",
+        "Editing",
+        "Thumbnails & Packaging",
+        "Publishing",
+        "Analytics",
+        "Responsible Automation"
+      ],
+      "resourceCount": 2,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 2,
+      "projectsByLevel": {
+        "beginner": 0,
+        "intermediate": 2,
+        "advanced": 0
+      },
+      "guidedStepCount": 50,
+      "guidedStepTypes": {
+        "concept": 10,
+        "resource": 20,
+        "quiz": 10,
+        "project": 10
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "YouTuber",
+        "Video Content Creator",
+        "Educational Content Producer",
+        "Video Marketing Specialist",
+        "Social Media Video Creator"
+      ]
+    },
+    {
+      "id": "ai-software-development",
+      "name": "AI-Assisted Software Development",
+      "category": "ai",
+      "difficulty": 3,
+      "timeEstimate": "6 to 10 weeks",
+      "stageCount": 8,
+      "stageTitles": [
+        "AI Coding Fundamentals",
+        "Code Generation",
+        "Debugging With AI",
+        "AI Coding Tools",
+        "Coding Agents",
+        "Testing & Verification",
+        "Building With AI",
+        "Professional AI-Assisted Development"
+      ],
+      "resourceCount": 3,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 1,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 3,
+      "projectsByLevel": {
+        "beginner": 1,
+        "intermediate": 1,
+        "advanced": 1
+      },
+      "guidedStepCount": 40,
+      "guidedStepTypes": {
+        "concept": 8,
+        "resource": 16,
+        "quiz": 8,
+        "project": 8
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI-Assisted Developer",
+        "Full-Stack Developer",
+        "Software Engineer",
+        "Product Engineer",
+        "Technical Founder"
+      ]
+    },
+    {
+      "id": "ai-automation",
+      "name": "AI Automation",
+      "category": "ai",
+      "difficulty": 3,
+      "timeEstimate": "5 to 8 weeks",
+      "stageCount": 8,
+      "stageTitles": [
+        "Automation Fundamentals",
+        "Workflows",
+        "APIs",
+        "Webhooks",
+        "AI in Workflows",
+        "Structured Data",
+        "Human Approval",
+        "Reliable Automation"
+      ],
+      "resourceCount": 3,
+      "resourcesByType": {
+        "docs": 3,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 1,
+      "projectsByLevel": {
+        "beginner": 0,
+        "intermediate": 1,
+        "advanced": 0
+      },
+      "guidedStepCount": 40,
+      "guidedStepTypes": {
+        "concept": 8,
+        "resource": 16,
+        "quiz": 8,
+        "project": 8
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "Automation Engineer",
+        "Operations Engineer",
+        "Workflow Designer",
+        "No-Code Builder",
+        "Business Process Analyst"
+      ]
+    },
+    {
+      "id": "ai-agents",
+      "name": "AI Agents",
+      "category": "ai",
+      "difficulty": 4,
+      "timeEstimate": "6 to 10 weeks",
+      "stageCount": 10,
+      "stageTitles": [
+        "What AI Agents Are",
+        "Agents vs Chatbots",
+        "Agents vs Workflows",
+        "Tools",
+        "Context & Memory",
+        "Planning",
+        "Tool Use",
+        "Human Oversight",
+        "Reliability",
+        "Agent Workflow Design"
+      ],
+      "resourceCount": 3,
+      "resourcesByType": {
+        "docs": 3,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 1,
+      "projectsByLevel": {
+        "beginner": 0,
+        "intermediate": 0,
+        "advanced": 1
+      },
+      "guidedStepCount": 50,
+      "guidedStepTypes": {
+        "concept": 10,
+        "resource": 20,
+        "quiz": 10,
+        "project": 10
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI Engineer",
+        "Agent Developer",
+        "AI Systems Designer",
+        "Automation Engineer",
+        "AI Product Developer"
+      ]
+    },
+    {
+      "id": "ai-engineering",
+      "name": "AI Data, APIs & Engineering",
+      "category": "ai",
+      "difficulty": 4,
+      "timeEstimate": "8 to 12 weeks",
+      "stageCount": 10,
+      "stageTitles": [
+        "AI APIs",
+        "Model Selection",
+        "Structured Outputs",
+        "Embeddings",
+        "Retrieval",
+        "RAG",
+        "Vector Search",
+        "AI Evaluation",
+        "Cost & Latency",
+        "Deployment"
+      ],
+      "resourceCount": 4,
+      "resourcesByType": {
+        "docs": 4,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 1,
+      "projectsByLevel": {
+        "beginner": 0,
+        "intermediate": 0,
+        "advanced": 1
+      },
+      "guidedStepCount": 50,
+      "guidedStepTypes": {
+        "concept": 10,
+        "resource": 20,
+        "quiz": 10,
+        "project": 10
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI Engineer",
+        "ML Engineer",
+        "Backend Developer (AI)",
+        "Full-Stack AI Developer",
+        "AI Platform Engineer"
+      ]
+    },
+    {
+      "id": "ai-design",
+      "name": "AI Design & Creative Work",
+      "category": "ai",
+      "difficulty": 2,
+      "timeEstimate": "4 to 6 weeks",
+      "stageCount": 8,
+      "stageTitles": [
+        "AI in Design",
+        "UI Ideation",
+        "Image Generation",
+        "Visual Exploration",
+        "Design Refinement",
+        "Prototyping",
+        "Brand Consistency",
+        "Human Design Judgment"
+      ],
+      "resourceCount": 2,
+      "resourcesByType": {
+        "docs": 2,
+        "video": 0,
+        "practice": 0,
+        "book": 0,
+        "tool": 0,
+        "community": 0
+      },
+      "projectCount": 1,
+      "projectsByLevel": {
+        "beginner": 0,
+        "intermediate": 1,
+        "advanced": 0
+      },
+      "guidedStepCount": 40,
+      "guidedStepTypes": {
+        "concept": 8,
+        "resource": 16,
+        "quiz": 8,
+        "project": 8
+      },
+      "isAI": true,
+      "hasAssessment": true,
+      "hasProjectStep": true,
+      "jobTitles": [
+        "AI-Enhanced Designer",
+        "Product Designer",
+        "UI Designer",
+        "Creative Director",
+        "Brand Designer"
+      ]
+    }
+  ],
+  "defects": [
+    {
+      "track": "crypto",
+      "area": "roadmap",
+      "severity": "medium",
+      "code": "stage-dense",
+      "message": "Stage 2 \"Wallets, Keys & On-Chain Security\" bundles 7 topics.",
+      "acceptance": "Stage is split or explicitly sequenced into manageable units."
+    },
+    {
+      "track": "crypto",
+      "area": "roadmap",
+      "severity": "medium",
+      "code": "stage-dense",
+      "message": "Stage 11 \"On-Chain Data Analysis\" bundles 7 topics.",
+      "acceptance": "Stage is split or explicitly sequenced into manageable units."
+    },
+    {
+      "track": "projectmgmt",
+      "area": "roadmap",
+      "severity": "medium",
+      "code": "stage-dense",
+      "message": "Stage 1 \"PM Foundations\" bundles 7 topics.",
+      "acceptance": "Stage is split or explicitly sequenced into manageable units."
+    },
+    {
+      "track": "productmgmt",
+      "area": "roadmap",
+      "severity": "medium",
+      "code": "stage-dense",
+      "message": "Stage 1 \"Product Thinking Foundations\" bundles 7 topics.",
+      "acceptance": "Stage is split or explicitly sequenced into manageable units."
+    },
+    {
+      "track": "productmgmt",
+      "area": "roadmap",
+      "severity": "medium",
+      "code": "stage-dense",
+      "message": "Stage 3 \"Strategy & Prioritisation\" bundles 7 topics.",
+      "acceptance": "Stage is split or explicitly sequenced into manageable units."
+    },
+    {
+      "track": "productmgmt",
+      "area": "roadmap",
+      "severity": "medium",
+      "code": "stage-dense",
+      "message": "Stage 7 \"Shipping with Engineering\" bundles 7 topics.",
+      "acceptance": "Stage is split or explicitly sequenced into manageable units."
+    }
+  ],
+  "crossTrackDuplicates": [
+    {
+      "url": "https://fullstackopen.com/en",
+      "owners": [
+        {
+          "track": "frontend",
+          "id": "fe-11"
+        },
+        {
+          "track": "backend",
+          "id": "be-10"
+        },
+        {
+          "track": "fullstack",
+          "id": "fs-1"
+        }
+      ]
+    },
+    {
+      "url": "https://sqlzoo.net",
+      "owners": [
+        {
+          "track": "backend",
+          "id": "be-5"
+        },
+        {
+          "track": "data",
+          "id": "da-2"
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=0sOvCWFmrtA",
+      "owners": [
+        {
+          "track": "backend",
+          "id": "be-8"
+        },
+        {
+          "track": "python",
+          "id": "py-6"
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=fqMOX6JJhGo",
+      "owners": [
+        {
+          "track": "backend",
+          "id": "be-7"
+        },
+        {
+          "track": "devops",
+          "id": "dv-2"
+        }
+      ]
+    },
+    {
+      "url": "https://docs.github.com/en/actions",
+      "owners": [
+        {
+          "track": "backend",
+          "id": "be-13"
+        },
+        {
+          "track": "devops",
+          "id": "dv-3"
+        }
+      ]
+    },
+    {
+      "url": "https://console.groq.com/docs/quickstart",
+      "owners": [
+        {
+          "track": "python",
+          "id": "py-7"
+        },
+        {
+          "track": "ai-engineering",
+          "id": "ai-e3"
+        }
+      ]
+    },
+    {
+      "url": "https://python.langchain.com/docs/get_started/introduction",
+      "owners": [
+        {
+          "track": "python",
+          "id": "py-8"
+        },
+        {
+          "track": "ai-agents",
+          "id": "ai-ag3"
+        },
+        {
+          "track": "ai-engineering",
+          "id": "ai-e4"
+        }
+      ]
+    },
+    {
+      "url": "https://help.figma.com/hc/en-us/categories/360002051613",
+      "owners": [
+        {
+          "track": "uiux",
+          "id": "ux-2"
+        },
+        {
+          "track": "ai-design",
+          "id": "ai-d2"
+        }
+      ]
+    },
+    {
+      "url": "https://www.kaggle.com/learn",
+      "owners": [
+        {
+          "track": "data",
+          "id": "da-4"
+        },
+        {
+          "track": "datascience",
+          "id": "ds-3"
+        }
+      ]
+    },
+    {
+      "url": "https://www.pexels.com",
+      "owners": [
+        {
+          "track": "video",
+          "id": "vid-5"
+        },
+        {
+          "track": "youtube",
+          "id": "yt-6"
+        }
+      ]
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=umepbfKp5rI",
+      "owners": [
+        {
+          "track": "crypto",
+          "id": "cr-4"
+        },
+        {
+          "track": "sonic",
+          "id": "son-8"
+        }
+      ]
+    },
+    {
+      "url": "https://docs.openzeppelin.com/contracts",
+      "owners": [
+        {
+          "track": "crypto",
+          "id": "cr-7"
+        },
+        {
+          "track": "sonic",
+          "id": "son-6"
+        }
+      ]
+    },
+    {
+      "url": "https://openai.com/academy/ai-fundamentals/",
+      "owners": [
+        {
+          "track": "ai-foundations",
+          "id": "ai-f1"
+        },
+        {
+          "track": "ai-research",
+          "id": "ai-r1"
+        }
+      ]
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/training/modules/intro-generative-ai-explore-basics/",
+      "owners": [
+        {
+          "track": "ai-foundations",
+          "id": "ai-f3"
+        },
+        {
+          "track": "ai-research",
+          "id": "ai-r2"
+        }
+      ]
+    },
+    {
+      "url": "https://openai.com/academy/getting-started/",
+      "owners": [
+        {
+          "track": "ai-foundations",
+          "id": "ai-f5"
+        },
+        {
+          "track": "ai-work",
+          "id": "ai-w3"
+        }
+      ]
+    },
+    {
+      "url": "https://www.anthropic.com/learn/build-with-claude",
+      "owners": [
+        {
+          "track": "ai-foundations",
+          "id": "ai-f6"
+        },
+        {
+          "track": "ai-content",
+          "id": "ai-c2"
+        },
+        {
+          "track": "ai-youtube",
+          "id": "ai-y2"
+        },
+        {
+          "track": "ai-software-development",
+          "id": "ai-s2"
+        },
+        {
+          "track": "ai-agents",
+          "id": "ai-ag2"
+        },
+        {
+          "track": "ai-engineering",
+          "id": "ai-e2"
+        }
+      ]
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/",
+      "owners": [
+        {
+          "track": "ai-foundations",
+          "id": "ai-f7"
+        },
+        {
+          "track": "ai-software-development",
+          "id": "ai-s3"
+        }
+      ]
+    },
+    {
+      "url": "https://academy.openai.com/",
+      "owners": [
+        {
+          "track": "ai-work",
+          "id": "ai-w1"
+        },
+        {
+          "track": "ai-content",
+          "id": "ai-c1"
+        },
+        {
+          "track": "ai-youtube",
+          "id": "ai-y1"
+        },
+        {
+          "track": "ai-automation",
+          "id": "ai-a1"
+        },
+        {
+          "track": "ai-agents",
+          "id": "ai-ag1"
+        },
+        {
+          "track": "ai-design",
+          "id": "ai-d1"
+        }
+      ]
+    }
+  ]
+}

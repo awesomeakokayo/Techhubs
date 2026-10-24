@@ -33,6 +33,7 @@ export const AI_STAGE_OBJECTIVES: Record<string, Record<number, AIStageObjective
     3: { objective: 'Use AI for drafting and editing without surrendering voice, accuracy, originality, or final judgment.', successCriteria: ['Create a draft', 'Perform AI-assisted revision', 'Document human editorial changes'] },
     4: { objective: 'Use AI-assisted visuals and creative tools while maintaining accuracy, consistency, accessibility, and brand fit.', successCriteria: ['Define visual constraints', 'Reject misleading outputs', 'Refine visuals against a brief'] },
     5: { objective: 'Measure content using outcomes and quality signals rather than production volume alone.', successCriteria: ['Choose meaningful metrics', 'Interpret audience response', 'Propose the next iteration'] },
+    6: { objective: 'Repurpose one strong piece of content across channels while preserving its core value, adapting it to each format, and avoiding shallow duplication.', successCriteria: ['Identify the reusable core value', 'Adapt the content to each channel and format', 'Preserve accuracy and originality across versions'] },
   },
   'ai-youtube': {
     1: { objective: 'Build a YouTube strategy around a specific audience, clear value proposition, sustainable content pillars, and evidence of demand.', successCriteria: ['Define the audience', 'Choose a defensible niche/angle', 'Set sustainable content pillars'] },

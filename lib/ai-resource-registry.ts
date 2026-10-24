@@ -31,7 +31,7 @@ export const AI_RESOURCE_REGISTRY: Record<string, AIResourceAuditEntry> = {
   },
   'ai-f5-openai-evals': {
     id: 'ai-f5-openai-evals', trackId: 'ai-foundations',
-    url: 'https://platform.openai.com/docs/api-reference/evals',
+    url: 'https://platform.openai.com/docs/guides/evals',
     provider: 'OpenAI', free: true,
     competency: 'Create repeatable evaluations and inspect AI behavior against explicit testing criteria.', stage: 5, type: 'docs', status: 'verified', lastChecked: '2026-08-26'
   },
@@ -132,7 +132,7 @@ export const AI_RESOURCE_REGISTRY: Record<string, AIResourceAuditEntry> = {
     competency: 'Design responsible agent boundaries, data controls, accountability, and human oversight.', stage: 4, type: 'docs', status: 'verified', lastChecked: '2026-08-26'
   },
   'ai-ag7-openai-evals': {
-    id: 'ai-ag7-openai-evals', trackId: 'ai-agents', url: 'https://platform.openai.com/docs/api-reference/evals', provider: 'OpenAI', free: true,
+    id: 'ai-ag7-openai-evals', trackId: 'ai-agents', url: 'https://platform.openai.com/docs/guides/evals', provider: 'OpenAI', free: true,
     competency: 'Evaluate agent behavior with repeatable test cases and explicit expected outcomes.', stage: 7, type: 'docs', status: 'verified', lastChecked: '2026-08-26'
   },
   'ai-e1-openai-api': {
@@ -148,7 +148,7 @@ export const AI_RESOURCE_REGISTRY: Record<string, AIResourceAuditEntry> = {
     competency: 'Understand application patterns for models, retrieval, tools, and AI workflows.', stage: 4, type: 'docs', status: 'verified', lastChecked: '2026-08-26'
   },
   'ai-e8-openai-evals': {
-    id: 'ai-e8-openai-evals', trackId: 'ai-engineering', url: 'https://platform.openai.com/docs/api-reference/evals', provider: 'OpenAI', free: true,
+    id: 'ai-e8-openai-evals', trackId: 'ai-engineering', url: 'https://platform.openai.com/docs/guides/evals', provider: 'OpenAI', free: true,
     competency: 'Create repeatable AI evaluation runs for application quality and regression testing.', stage: 8, type: 'docs', status: 'verified', lastChecked: '2026-08-26'
   },
   'ai-d2-figma-help': {

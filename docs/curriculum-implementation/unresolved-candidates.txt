@@ -1,0 +1,343 @@
+# Unresolved stages and screened alternatives
+
+Generated from resource-verification.json on 2026-10-22. These stages have no selected required resource. Alternatives are leads only; a URL appearing here is not a recommendation or an approval.
+
+
+ai-content:4 | AI Visual Creation
+  Objective: Use AI-assisted visuals and creative tools while maintaining accuracy, consistency, accessibility, and brand fit.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - OpenAI — DALL·E 3 (how text-to-image generation works) | https://openai.com/index/dall-e-3/ | HTTP 200 | chars=3912 | hits=3 | suitable=false
+  - Google developer documentation style guide | https://developers.google.com/style | HTTP 200 | chars=3367 | hits=1 | suitable=false
+  - Channel monetization policies | https://support.google.com/youtube/answer/1311392 | HTTP 200 | chars=24245 | hits=2 | suitable=false
+
+ai-design:7 | Brand Consistency
+  Objective: Use AI to accelerate design-system application without compromising consistency or accessibility.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Get started with Figma AI | https://help.figma.com/hc/en-us/articles/23870272542231-Get-started-with-Figma-AI | HTTP 200 | chars=11932 | hits=2 | suitable=false
+  - People + AI Guidebook | https://pair.withgoogle.com/ | HTTP 200 | chars=1408 | hits=2 | suitable=false
+
+ai-foundations:2 | The Modern AI Landscape
+  Objective: Select AI tools based on the task, freshness requirements, evidence needs, modality, cost, and risk.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Evaluating AI generated content | https://libguides.library.qut.edu.au/library-guidance-for-ai/evaluating-generated-content | HTTP 200 | chars=3578 | hits=3 | suitable=false
+  - Reuters standards and values | https://reutersagency.com/about/standards-values/ | HTTP 200 | chars=49120 | hits=0 | suitable=false
+
+ai-research:5 | Research Workflows
+  Objective: Produce a research brief that exposes evidence, uncertainty, sources, and reasoning rather than only a polished conclusion.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Evaluating AI generated content | https://libguides.library.qut.edu.au/library-guidance-for-ai/evaluating-generated-content | HTTP 200 | chars=3578 | hits=2 | suitable=false
+  - Reuters standards and values | https://reutersagency.com/about/standards-values/ | HTTP 200 | chars=49120 | hits=1 | suitable=false
+
+ai-youtube:10 | Responsible Automation
+  Objective: Operate an AI-assisted channel with current platform rules, quality controls, and a repeatable improvement loop.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Disclosing use of GenAI content | https://support.google.com/youtube/answer/14328491 | HTTP 200 | chars=6104 | hits=1 | suitable=false
+  - Node.js Learn | https://nodejs.org/en/learn | HTTP 200 | chars=792 | hits=1 | suitable=false
+
+ai-youtube:2 | Topic Research
+  Objective: Research topics and competitors to find viewer demand and a differentiated editorial angle.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Evaluating AI generated content | https://libguides.library.qut.edu.au/library-guidance-for-ai/evaluating-generated-content | HTTP 200 | chars=3578 | hits=4 | suitable=false
+  - Reuters standards and values | https://reutersagency.com/about/standards-values/ | HTTP 200 | chars=49120 | hits=1 | suitable=false
+
+ai-youtube:3 | AI-Assisted Scripting
+  Objective: Create scripts through research, structure, fact-checking, editing, and a clear viewer promise.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Evaluating AI generated content | https://libguides.library.qut.edu.au/library-guidance-for-ai/evaluating-generated-content | HTTP 200 | chars=3578 | hits=3 | suitable=false
+  - Reuters standards and values | https://reutersagency.com/about/standards-values/ | HTTP 200 | chars=49120 | hits=0 | suitable=false
+
+ai-youtube:5 | AI Visual Production
+  Objective: Use AI and licensed sources to create coherent B-roll, images and screen recordings that support the story without misrepresenting reality.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - YouTube Help — Recognize originality, reused-content, and inauthentic mass-production risks in YouTube publishing | https://support.google.com/youtube/answer/1311392 | HTTP 200 | chars=24245 | hits=3 | suitable=false
+  - Making Audio and Video Media Accessible | https://www.w3.org/WAI/media/av/ | HTTP 200 | chars=2541 | hits=3 | suitable=false
+  - Node.js Learn | https://nodejs.org/en/learn | HTTP 200 | chars=792 | hits=0 | suitable=false
+  - What is B-roll and how to shoot usable supporting footage | https://www.techsmith.com/blog/b-roll/ | HTTP 200 | chars=13376 | hits=6 | suitable=false
+  - Generate videos with the Google Cloud video generation model | https://cloud.google.com/vertex-ai/generative-ai/docs/video/generate-videos | HTTP 200 | chars=1593 | hits=5 | suitable=false
+
+ai:1 | Understanding AI Tools
+  Objective: Choose AI tools based on what they can and cannot do.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Prompt engineering best practices for ChatGPT | https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt | HTTP 200 | chars=1816 | hits=3 | suitable=false
+  - People + AI Guidebook | https://pair.withgoogle.com/ | HTTP 200 | chars=1408 | hits=1 | suitable=false
+
+ai:3 | AI for Your Field
+  Objective: Apply AI effectively within your own field.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - Prompt engineering best practices for ChatGPT | https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt | HTTP 200 | chars=1816 | hits=1 | suitable=false
+  - People + AI Guidebook | https://pair.withgoogle.com/ | HTTP 200 | chars=1408 | hits=2 | suitable=false
+  - Generative AI Profile | https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence | HTTP 200 | chars=507 | hits=0 | suitable=false
+
+ai:4 | AI Ethics & Verification
+  Objective: Use AI responsibly with verification and privacy in mind.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Evaluating AI generated content | https://libguides.library.qut.edu.au/library-guidance-for-ai/evaluating-generated-content | HTTP 200 | chars=3578 | hits=1 | suitable=false
+  - Reuters standards and values | https://reutersagency.com/about/standards-values/ | HTTP 200 | chars=49120 | hits=0 | suitable=false
+
+backend:1 | Foundations
+  Objective: Explain how the web works and run a first backend program with HTTP and version control.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - Tutorial - User Guide | https://fastapi.tiangolo.com/tutorial/ | HTTP 200 | chars=7602 | hits=3 | suitable=false
+  - Node.js Learn | https://nodejs.org/en/learn | HTTP 200 | chars=792 | hits=5 | suitable=false
+  - API Security Project | https://owasp.org/www-project-api-security/ | HTTP 404 | chars=0 | hits=0 | suitable=false
+  - Express/Node introduction: server-side web frameworks, HTTP and routes | https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction | HTTP 200 | chars=32946 | hits=6 | suitable=false
+
+backend:4 | Advanced Backend
+  Objective: Apply advanced backend patterns: caching, background work, real-time transport and rate limiting.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Tutorial - User Guide | https://fastapi.tiangolo.com/tutorial/ | HTTP 200 | chars=7602 | hits=3 | suitable=false
+  - Node.js Learn | https://nodejs.org/en/learn | HTTP 200 | chars=792 | hits=4 | suitable=false
+
+crypto:10 | Auditing Tools & Practice
+  Objective: Apply auditing tools and write professional findings.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - Technical intro to Ethereum | https://ethereum.org/developers/docs/intro-to-ethereum/ | HTTP 200 | chars=9759 | hits=0 | suitable=false
+  - Solidity documentation | https://docs.solidity.org/en/latest/ | HTTP 200 | chars=9230 | hits=0 | suitable=false
+  - OpenZeppelin Contracts documentation | https://docs.openzeppelin.com/contracts/ | HTTP 200 | chars=2413 | hits=1 | suitable=false
+
+crypto:8 | dApp Data & Storage
+  Objective: Use indexing and decentralised storage in a dApp.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - Technical intro to Ethereum | https://ethereum.org/developers/docs/intro-to-ethereum/ | HTTP 200 | chars=9759 | hits=2 | suitable=false
+  - Solidity documentation | https://docs.solidity.org/en/latest/ | HTTP 200 | chars=9230 | hits=1 | suitable=false
+  - OpenZeppelin Contracts documentation | https://docs.openzeppelin.com/contracts/ | HTTP 200 | chars=2413 | hits=2 | suitable=false
+
+cyber:3 | Ethical Hacking
+  Objective: Perform authorised security testing using standard tools.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - PortSwigger Web Security Academy | https://portswigger.net/web-security | HTTP 200 | chars=4564 | hits=5 | suitable=false
+  - OWASP Top 10 | https://owasp.org/www-project-top-ten/ | HTTP 200 | chars=2452 | hits=2 | suitable=false
+  - Cybersecurity resources | https://www.cisa.gov/resources-tools | HTTP 200 | chars=3274 | hits=2 | suitable=false
+
+cyber:4 | Defensive Security
+  Objective: Investigate incidents and harden systems defensively.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - OWASP Top 10 | https://owasp.org/www-project-top-ten/ | HTTP 200 | chars=2452 | hits=1 | suitable=false
+  - Web Security Academy | https://portswigger.net/web-security | HTTP 200 | chars=4564 | hits=1 | suitable=false
+  - Cybersecurity resources | https://www.cisa.gov/resources-tools | HTTP 200 | chars=3274 | hits=4 | suitable=false
+
+dart:4 | Dart for Flutter
+  Objective: Connect Dart knowledge to Flutter development.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - pub.dev | https://pub.dev | HTTP 200 | chars=3247 | hits=5 | suitable=false
+  - Introduction to Dart | https://dart.dev/language | HTTP 200 | chars=14775 | hits=2 | suitable=false
+  - State management | https://docs.flutter.dev/data-and-backend/state-mgmt/intro | HTTP 200 | chars=664 | hits=1 | suitable=false
+  - Flutter Official Docs | https://flutter.dev/docs | HTTP 200 | chars=2203 | hits=2 | suitable=false
+
+data:1 | Spreadsheets & Excel
+  Objective: Clean, analyse and visualise tabular data in spreadsheets with formulas and pivot tables.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - User Guide | https://pandas.pydata.org/docs/user_guide/ | HTTP 200 | chars=6830 | hits=5 | suitable=false
+  - PostgreSQL Tutorial | https://www.postgresql.org/docs/current/tutorial.html | HTTP 200 | chars=1952 | hits=2 | suitable=false
+
+data:2 | SQL Fundamentals
+  Objective: Query relational data with SQL: filtering, aggregation, joins, subqueries and window functions.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - PostgreSQL Tutorial | https://www.postgresql.org/docs/current/tutorial.html | HTTP 200 | chars=1952 | hits=2 | suitable=false
+  - User Guide | https://pandas.pydata.org/docs/user_guide/ | HTTP 200 | chars=6830 | hits=3 | suitable=false
+  - Select Star SQL | https://selectstarsql.com | HTTP 200 | chars=1703 | hits=2 | suitable=false
+
+datascience:1 | Prerequisite: Data Analysis
+  Objective: Be able to clean, query and visualise a dataset before studying statistics and modelling.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Machine Learning Crash Course | https://developers.google.com/machine-learning/crash-course/ | HTTP 200 | chars=2426 | hits=0 | suitable=false
+  - Model selection and evaluation | https://scikit-learn.org/stable/model_selection.html | HTTP 200 | chars=1191 | hits=0 | suitable=false
+
+datascience:2 | Statistics & Math
+  Objective: Understand the statistics and maths that underpin machine learning.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Machine Learning Crash Course | https://developers.google.com/machine-learning/crash-course/ | HTTP 200 | chars=2426 | hits=2 | suitable=false
+  - Model selection and evaluation | https://scikit-learn.org/stable/model_selection.html | HTTP 200 | chars=1191 | hits=1 | suitable=false
+  - Seeing Theory: a visual introduction to probability, inference and regression | https://seeing-theory.brown.edu/ | HTTP 200 | chars=1980 | hits=4 | suitable=false
+
+devops:1 | Linux & Networking
+  Objective: Operate confidently on a Linux server and reason about networking.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - Get started | https://docs.docker.com/get-started/ | HTTP 200 | chars=1458 | hits=1 | suitable=false
+  - GitHub Actions documentation | https://docs.github.com/en/actions | HTTP 200 | chars=1941 | hits=1 | suitable=false
+  - Tutorials | https://kubernetes.io/docs/tutorials/ | HTTP 200 | chars=1873 | hits=0 | suitable=false
+  - Making Servers Work: Linux terminal, permissions, server setup and networking | https://assets.digitalocean.com/books/making-servers-work-a-practical-guide-to-system-administration.pdf | HTTP 200 | chars=0 | hits=0 | suitable=false
+
+devops:2 | Version Control & CI/CD
+  Objective: Use version control and build CI/CD pipelines.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - GitHub Actions documentation | https://docs.github.com/en/actions | HTTP 200 | chars=1941 | hits=5 | suitable=false
+  - Tutorials | https://kubernetes.io/docs/tutorials/ | HTTP 200 | chars=1873 | hits=1 | suitable=false
+  - Quickstart for GitHub Actions: workflows, tests and deployment | https://docs.github.com/en/actions/get-started/quickstart | HTTP 200 | chars=7093 | hits=6 | suitable=false
+
+devops:4 | Cloud & Orchestration
+  Objective: Understand cloud infrastructure and orchestration.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Get started | https://docs.docker.com/get-started/ | HTTP 200 | chars=1458 | hits=0 | suitable=false
+  - GitHub Actions documentation | https://docs.github.com/en/actions | HTTP 200 | chars=1941 | hits=2 | suitable=false
+
+frontend:1 | Foundations
+  Objective: Build and style a real web page with semantic HTML, CSS layout, and responsive behaviour.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Learn web development | https://web.dev/learn | HTTP 200 | chars=744 | hits=2 | suitable=false
+  - Learn web development | https://developer.mozilla.org/en-US/docs/Learn_web_development | HTTP 200 | chars=5164 | hits=4 | suitable=false
+
+frontend:2 | Core JavaScript
+  Objective: Manipulate the DOM and handle asynchronous data with modern JavaScript.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Eloquent JavaScript | https://eloquentjavascript.net | HTTP 200 | chars=1800 | hits=4 | suitable=false
+  - Learn web development | https://web.dev/learn | HTTP 200 | chars=744 | hits=1 | suitable=false
+  - Learn web development | https://developer.mozilla.org/en-US/docs/Learn_web_development | HTTP 200 | chars=5164 | hits=1 | suitable=false
+
+frontend:4 | Professional Skills
+  Objective: Apply the professional practices that make frontend work maintainable: version control, testing, performance, accessibility and deployment.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Learn Next.js | https://nextjs.org/learn | HTTP 200 | chars=4135 | hits=2 | suitable=false
+  - Learn web development | https://web.dev/learn | HTTP 200 | chars=744 | hits=0 | suitable=false
+  - Web Performance Optimization | https://web.dev/learn-core-web-vitals/ | HTTP 200 | chars=1229 | hits=2 | suitable=false
+
+marketing:1 | Marketing Foundations
+  Objective: Frame marketing work around the customer journey and a target audience.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - SEO Starter Guide | https://developers.google.com/search/docs/fundamentals/seo-starter-guide | HTTP 200 | chars=23681 | hits=0 | suitable=false
+  - Model selection and evaluation | https://scikit-learn.org/stable/model_selection.html | HTTP 200 | chars=1191 | hits=2 | suitable=false
+
+mobile:1 | Prerequisites
+  Objective: Confirm the prerequisites for mobile development and understand mobile UI constraints.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Flutter documentation | https://docs.flutter.dev/ | HTTP 200 | chars=2203 | hits=3 | suitable=false
+  - Firebase documentation | https://firebase.google.com/docs | HTTP 200 | chars=2524 | hits=1 | suitable=false
+
+mobile:2 | Core Mobile Development
+  Objective: Build screens with navigation, state and device APIs.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Flutter documentation | https://docs.flutter.dev/ | HTTP 200 | chars=2203 | hits=1 | suitable=false
+  - Firebase documentation | https://firebase.google.com/docs | HTTP 200 | chars=2524 | hits=2 | suitable=false
+
+nocode:1 | Website Building
+  Objective: Build a responsive, content-driven website without code.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Bubble manual | https://manual.bubble.io/ | HTTP 200 | chars=4747 | hits=2 | suitable=false
+  - Zapier Free plan | https://help.zapier.com/hc/en-us/articles/32337438839565-What-s-included-in-Zapier-s-Free-plan | HTTP 200 | chars=2992 | hits=0 | suitable=false
+  - Framer Learn | https://framer.com/learn | HTTP 200 | chars=2477 | hits=5 | suitable=false
+
+nocode:2 | App Building
+  Objective: Build a functional app with data, auth and logic.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - Webflow University courses | https://university.webflow.com/courses | HTTP 200 | chars=4154 | hits=2 | suitable=false
+  - Bubble manual | https://manual.bubble.io/ | HTTP 200 | chars=4747 | hits=7 | suitable=false
+
+productmgmt:3 | Strategy & Prioritisation
+  Objective: Set strategy and prioritise with clear frameworks.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - User research in discovery | https://www.gov.uk/service-manual/user-research/user-research-in-discovery | HTTP 200 | chars=2881 | hits=0 | suitable=false
+  - Project management guides | https://www.atlassian.com/project-management | HTTP 200 | chars=7129 | hits=0 | suitable=false
+
+productmgmt:8 | PM Career & Portfolio
+  Objective: Build a credible PM portfolio and interview well.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - User research in discovery | https://www.gov.uk/service-manual/user-research/user-research-in-discovery | HTTP 200 | chars=2881 | hits=4 | suitable=false
+  - Project management guides | https://www.atlassian.com/project-management | HTTP 200 | chars=7129 | hits=0 | suitable=false
+  - Product School Free Resources | https://productschool.com/resources | HTTP 200 | chars=743 | hits=1 | suitable=false
+  - Product manager portfolio tips and ten worked examples | https://productschool.com/blog/career-development/product-management-portfolio-examples | HTTP 200 | chars=9467 | hits=5 | suitable=false
+
+python:1 | Python Basics
+  Objective: Write clear Python programs using core data types, control flow, functions and file handling.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Tutorial - User Guide | https://fastapi.tiangolo.com/tutorial/ | HTTP 200 | chars=7602 | hits=4 | suitable=false
+  - pytest documentation | https://docs.pytest.org/en/stable/ | HTTP 200 | chars=2920 | hits=2 | suitable=false
+
+python:4 | Automation & Scripting
+  Objective: Automate repetitive tasks with Python: files, scraping, documents and scheduling.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - The Python Tutorial | https://docs.python.org/3/tutorial/ | HTTP 200 | chars=6982 | hits=3 | suitable=false
+  - Tutorial - User Guide | https://fastapi.tiangolo.com/tutorial/ | HTTP 200 | chars=7602 | hits=3 | suitable=false
+
+qa:4 | Advanced QA
+  Objective: Cover performance, security and CI for test suites.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - pytest documentation | https://docs.pytest.org/en/stable/ | HTTP 200 | chars=2920 | hits=4 | suitable=false
+  - Testing | https://fastapi.tiangolo.com/tutorial/testing/ | HTTP 200 | chars=12206 | hits=3 | suitable=false
+
+sonic:3 | Solidity Fundamentals (HackQuest Phases 3–4)
+  Objective: Write and deploy basic Solidity contracts to Sonic.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Foundry Book | https://book.getfoundry.sh/ | HTTP 200 | chars=549 | hits=4 | suitable=false
+  - Solidity documentation | https://docs.solidity.org/en/latest/ | HTTP 200 | chars=9230 | hits=8 | suitable=false
+
+sonic:5 | Security & Ecosystem (HackQuest Phases 7–8)
+  Objective: Recognise smart contract security risks and the Sonic ecosystem.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Solidity documentation | https://docs.solidity.org/en/latest/ | HTTP 200 | chars=9230 | hits=5 | suitable=false
+  - Foundry Book | https://book.getfoundry.sh/ | HTTP 200 | chars=549 | hits=2 | suitable=false
+
+sonic:6 | FeeM Strategy & Mainnet
+  Objective: Design contracts for FeeM and deploy to mainnet safely.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Foundry Book | https://book.getfoundry.sh/ | HTTP 200 | chars=549 | hits=3 | suitable=false
+  - Solidity documentation | https://docs.solidity.org/en/latest/ | HTTP 200 | chars=9230 | hits=3 | suitable=false
+
+uiux:2 | UX Foundations
+  Objective: Ground design decisions in user needs through research, personas, information architecture and wireframes.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Prototyping fundamentals | https://help.figma.com/hc/en-us/articles/31010011820311-FD4B-Prototyping-fundamentals | HTTP 200 | chars=4063 | hits=2 | suitable=false
+  - WCAG 2 Overview | https://www.w3.org/WAI/standards-guidelines/wcag/ | HTTP 200 | chars=6672 | hits=3 | suitable=false
+
+video:3 | Visual Effects & Graphics
+  Objective: Add professional colour, graphics and sound.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - Making Audio and Video Media Accessible | https://www.w3.org/WAI/media/av/ | HTTP 200 | chars=2541 | hits=1 | suitable=false
+  - YouTube Creator Academy / Help | https://creatoracademy.youtube.com/ | HTTP 200 | chars=177 | hits=0 | suitable=false
+
+video:4 | Platform-Specific Editing
+  Objective: Adapt edits to each platform's format and audience.
+  Reason: No candidate passed the required fresh content, free-access and objective-relevance check. Keep the primary optional pending human review.
+  Preflight: false
+  - DaVinci Resolve training | https://www.blackmagicdesign.com/products/davinciresolve/training | HTTP 200 | chars=18537 | hits=3 | suitable=false
+  - Making Audio and Video Media Accessible | https://www.w3.org/WAI/media/av/ | HTTP 200 | chars=2541 | hits=4 | suitable=false
+
+youtube:2 | Content Production
+  Objective: Produce content efficiently while keeping quality and originality.
+  Reason: No candidate passed a fresh content, free-access and objective-relevance check. Keep the stage resource-blocked and external links optional.
+  Preflight: true
+  - ElevenLabs | https://elevenlabs.io | HTTP 200 | chars=10012 | hits=3 | suitable=false
+  - YouTube Creator Academy / Help | https://creatoracademy.youtube.com/ | HTTP 200 | chars=177 | hits=0 | suitable=false
+  - Channel monetization policies | https://support.google.com/youtube/answer/1311392 | HTTP 200 | chars=24245 | hits=2 | suitable=false

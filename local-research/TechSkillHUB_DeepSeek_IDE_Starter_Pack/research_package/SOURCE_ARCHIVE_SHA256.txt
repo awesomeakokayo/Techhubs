@@ -1,0 +1,4 @@
+Original uploaded research deliverables ZIP SHA-256:
+1da422ca9a0f4a91da1e4194a0a3ead1230b2ae729251bcf537cf1e7b42a5a2d  source-deliverables.zip
+
+The provenance SHA-256 recorded inside the research package refers to the earlier source resource-verification archive, not this deliverables ZIP. Keep those two hashes distinct.
