@@ -16,6 +16,7 @@ interface RecommendationTrack {
   slug: string
   name: string
   tagline: string
+  colorHex: string
 }
 
 interface Option {
