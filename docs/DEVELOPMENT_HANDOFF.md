@@ -310,6 +310,18 @@ E2E_DATABASE_URL="postgresql://..." npm run test:e2e
 
 ## 10. Publishing record
 
-At the time of writing, the 12 commits listed in §2 plus this handoff and the environment
-reference are **local only**. Production (`main`) is unchanged. Update this section after
-the push and PR are created with the branch URL, PR number, and CI result.
+Published on 2026-10-24:
+
+- `feat/retention-v3` pushed from `8c1a115` to `7c2d5e8` — 15 commits (the 12 work
+  commits listed in §2 plus three documentation commits).
+- Pull request: [#4 — Retention v3, curriculum package and launch readiness](https://github.com/awesomeakokayo/Techhubs/pull/4)
+  (`feat/retention-v3` → `main`), mergeable at the time of opening.
+- Vercel **preview** deployment for `7c2d5e8`: succeeded.
+- GitHub Actions `validate`: **did not run**. GitHub reported: *"The job was not started
+  because your account is locked due to a billing issue."* This is an account-level
+  blocker, not a code failure; it must be resolved in GitHub billing before CI can run.
+- `main` is unchanged. No merge, production deployment, migration or payment activation
+  was performed.
+
+Subsequent documentation commits on this branch update this record and are pushed to the
+same branch; the PR updates automatically.
