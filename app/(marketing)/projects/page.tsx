@@ -1,13 +1,15 @@
 import Link from 'next/link'
 import { ArrowRight, Compass } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
-import { PROJECT_LEVELS, getProjectCount } from '@/lib/seo/projects'
+import { getAIEnrichedTrack } from '@/lib/ai-track'
+import { PROJECT_LEVELS } from '@/lib/seo/projects'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 import { ProjectsExplorer, type ProjectItem } from '@/components/projects/ProjectsExplorer'
 
 export default function ProjectsPage() {
-  const projects: ProjectItem[] = TRACKS.flatMap((track) =>
+  const enrichedTracks = TRACKS.map(getAIEnrichedTrack)
+  const projects: ProjectItem[] = enrichedTracks.flatMap((track) =>
     track.projects.map((project) => ({
       id: project.id,
       title: project.title,
@@ -20,8 +22,8 @@ export default function ProjectsPage() {
     })),
   )
 
-  const counts = getProjectCount()
-  const countFor = (slug: string) => (counts as Record<string, number>)[slug] ?? 0
+  // Count the same project list shown below, including the current AI projects.
+  const countFor = (slug: string) => projects.filter((project) => project.level === slug).length
 
   return (
     <div className="section pt-16">
