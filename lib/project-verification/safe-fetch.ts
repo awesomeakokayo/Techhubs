@@ -98,11 +98,9 @@ export function isPrivateIp(ip: string): boolean {
   const address = parseIPv6(value)
   if (address === null) return true
 
-  // IPv4-mapped IPv6 uses the final 32 bits as the IPv4 address.
-  if ((address >> 32n) === 0xffffn) {
-    const v4 = Number(address & 0xffffffffn)
-    return isPrivateIp([v4 >>> 24, (v4 >>> 16) & 255, (v4 >>> 8) & 255, v4 & 255].join('.'))
-  }
+  // IPv4-mapped IPv6 is not a globally routable IPv6 destination. Block these
+  // literals entirely rather than depending on platform-specific mapped routing.
+  if ((address >> 32n) === 0xffffn) return true
 
   // Permit globally-unicast 2000::/3 only. Exclude the documentation prefix,
   // special-use 2001::/23 block, and deprecated 6to4 transition prefix.
