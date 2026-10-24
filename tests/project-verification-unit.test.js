@@ -14,7 +14,7 @@ const {
   scanForSecrets,
   looksLikePlaceholder,
 } = require('../.test-dist/project-verification/validation.js')
-const { isPrivateIp, createPinnedLookup } = require('../.test-dist/project-verification/safe-fetch.js')
+const { isPrivateIp, createPinnedLookup, safeFetchText } = require('../.test-dist/project-verification/safe-fetch.js')
 const { parseGithubUrl } = require('../.test-dist/project-verification/github.js')
 const { computeRubricVersion, deriveContract, disciplineForTrack, toPublicContract } = require('../.test-dist/project-verification/contract.js')
 const { parseAssessmentResponse, decideAssessment, normalizeStatus } = require('../.test-dist/project-verification/schema.js')

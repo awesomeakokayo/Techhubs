@@ -58,7 +58,8 @@ test('access probe fails closed for unknown tracks even while commercial gating 
 test('artifact fetching pins DNS to the validated address and validates redirect hops', () => {
   const source = read('lib/project-verification/safe-fetch.ts')
   assert.match(source, /await pinnedRequest\(current, addresses\[0\]/)
-  assert.match(source, /lookup: lookup/)
+  assert.match(source, /const lookup = createPinnedLookup\(address\)/)
+  assert.match(source, /\n      lookup,\n/)
   assert.match(source, /addresses\.some\(isPrivateIp\)/)
   assert.match(source, /const timer = setTimeout\(\(\) => controller\.abort\(\), timeoutMs\)/)
 })
