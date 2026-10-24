@@ -1,0 +1,2 @@
+ALTER TABLE "LearnerProfile"
+  ADD COLUMN "plannedStudyDays" INTEGER[] NOT NULL DEFAULT ARRAY[1, 2, 3, 4, 5]::INTEGER[];

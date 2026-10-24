@@ -10,6 +10,7 @@ const config: Config = {
         editorial: ['var(--font-editorial)', 'Instrument Serif', 'Georgia', 'serif'],
         body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
         sans: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Instrument Serif', 'Georgia', 'serif'],
         mono: ['var(--font-mono)', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
@@ -18,6 +19,20 @@ const config: Config = {
         surface: 'var(--bg-surface)',
         elevated: 'var(--bg-elevated)',
         overlay: 'var(--bg-overlay)',
+        ink: 'rgb(var(--color-carbon-black-rgb) / <alpha-value>)',
+        paper: 'rgb(var(--bg-void-rgb) / <alpha-value>)',
+        paperdeep: 'var(--paper-deep)',
+        brand: {
+          DEFAULT: 'rgb(var(--color-dusty-grape-rgb) / <alpha-value>)',
+          deep: 'var(--accent-primary-dim)',
+          soft: 'var(--brand-soft)',
+        },
+        aqua: {
+          DEFAULT: 'rgb(var(--color-pearl-aqua-rgb) / <alpha-value>)',
+          soft: 'var(--aqua-soft)',
+        },
+        steel: 'rgb(var(--color-cool-steel-rgb) / <alpha-value>)',
+        hairline: 'var(--hairline)',
         teal: {
           DEFAULT: 'var(--accent-primary)',
           dim: 'var(--accent-primary-dim)',

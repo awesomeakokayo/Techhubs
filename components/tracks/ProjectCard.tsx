@@ -1,9 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { Check, ChevronDown, ChevronUp } from 'lucide-react'
+import { useState } from 'react'
+import { Check, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 import { Project } from '@/lib/tracks'
-import { toggleProject, getTrackProgress, syncTrackProgressToServer } from '@/lib/progress'
 import { trackEvent } from '@/lib/analytics'
 import { AI_PROJECT_BRIEFS } from '@/lib/ai-project-briefs'
 
@@ -12,63 +11,48 @@ interface ProjectCardProps {
   trackSlug?: string
   project: Project
   index: number
-  onProgressChange?: () => void
+  done: boolean
+  pending: boolean
+  ready: boolean
+  onToggle: () => void
 }
 
-export function ProjectCard({ trackId, trackSlug, project, index, onProgressChange }: ProjectCardProps) {
-  const done = getTrackProgress(trackId).completedProjects.includes(project.id)
-  const togglingRef = useRef(false)
+export function ProjectCard({ trackId, trackSlug, project, index, done, pending, ready, onToggle }: ProjectCardProps) {
   const [briefOpen, setBriefOpen] = useState(false)
-  const [confirmed, setConfirmed] = useState(done)
+  const [confirmed, setConfirmed] = useState(false)
   const brief = trackId.startsWith('ai-') ? AI_PROJECT_BRIEFS[project.id] : undefined
 
-  const syncCompletion = async () => {
-    await syncTrackProgressToServer(trackId)
-  }
-
-  const completeProject = () => {
-    if (togglingRef.current || !confirmed) return
-    togglingRef.current = true
-    toggleProject(trackId, project.id)
-    void syncCompletion()
+  const handleClick = () => {
+    if (!ready || pending) return
+    if (done) {
+      onToggle()
+      return
+    }
+    if (brief && !confirmed) return
+    onToggle()
     trackEvent({
       event_name: 'project_mark_complete',
       track_slug: trackSlug ?? trackId,
       project_name: project.title,
     })
-    onProgressChange?.()
-    setTimeout(() => { togglingRef.current = false }, 300)
   }
 
   return (
-    <article className={`card ${done ? 'bg-green-500/5 border-green-500/30' : ''}`}>
+    <article className="card" style={done ? { borderColor: 'var(--color-success)', backgroundColor: 'rgba(30, 124, 71, 0.05)' } : undefined}>
       <div className="flex items-start justify-between gap-3">
         <span className="font-mono text-xs text-text-muted">#{String(index + 1).padStart(2, '0')}</span>
         <button
           type="button"
-          onClick={() => {
-            if (done) {
-              if (togglingRef.current) return
-              togglingRef.current = true
-              toggleProject(trackId, project.id)
-              void syncCompletion()
-              setConfirmed(false)
-              onProgressChange?.()
-              setTimeout(() => { togglingRef.current = false }, 300)
-              return
-            }
-            completeProject()
-          }}
-          disabled={!done && brief ? !confirmed : false}
+          onClick={handleClick}
+          disabled={pending || !ready || (!done && brief ? !confirmed : false)}
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
-            done
-              ? 'border-green-500 bg-green-500/20 text-green-500'
-              : 'border-border-default text-text-muted hover:border-teal hover:text-teal'
+            done ? '' : 'border-border-default text-text-muted hover:border-grape hover:text-grape'
           }`}
+          style={done ? { borderColor: 'var(--color-success)', color: 'var(--color-success)', backgroundColor: 'rgba(30, 124, 71, 0.15)' } : undefined}
           aria-label={done ? 'Mark as not built' : confirmed ? 'Mark as built' : 'Confirm requirements before marking as built'}
           aria-pressed={done}
         >
-          {done && <Check size={16} strokeWidth={3} />}
+          {pending ? <Loader2 size={15} className="animate-spin" aria-hidden /> : done ? <Check size={16} strokeWidth={3} /> : null}
         </button>
       </div>
 

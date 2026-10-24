@@ -130,13 +130,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "fe-0a",
-        title: "CSS in 30 Minutes",
+        title: 'Learn CSS',
         description:
-          "Quick CSS overview for visual learners. Pairs well with MDN for deeper learning.",
-        url: "https://www.youtube.com/watch?v=0sDktfaD0p0",
-        type: "video",
+          'Google web.dev free CSS course: selectors, the box model, layout, flexbox, grid, and responsive design, with hands-on challenges.',
+        url: 'https://web.dev/learn/css',
+        type: 'docs',
         free: true,
-        source: "Traversy Media",
+        source: 'web.dev (Google)',
       },
       {
         id: "fe-18",
@@ -181,7 +181,7 @@ export const TRACKS: Track[] = [
         title: "The Odin Project",
         description:
           "Free, project-based full-stack curriculum. Best structured free path for web dev.",
-        url: "https://www.theodinproject.com/foundations",
+        url: 'https://www.theodinproject.com/paths/foundations/courses/foundations',
         type: "docs",
         free: true,
         source: "The Odin Project",
@@ -549,13 +549,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "be-0b",
-        title: "Node Hello World",
+        title: 'Introduction to Node.js',
         description:
-          "Write a Node Hello World in 10 minutes. Build your first working API endpoint.",
-        url: "https://www.youtube.com/watch?v=kxW8m5DXWH4",
-        type: "video",
+          'Official Node.js getting-started guide: install Node, run your first script, and understand the runtime.',
+        url: 'https://nodejs.org/en/learn/getting-started/introduction-to-nodejs',
+        type: 'docs',
         free: true,
-        source: "YouTube",
+        source: 'Node.js',
       },
       {
         id: "be-0",
@@ -1007,6 +1007,14 @@ export const TRACKS: Track[] = [
         level: "advanced",
         techTags: ["Next.js", "Groq API", "PostgreSQL", "Redis"],
       },
+      {
+        id: "fs-p0",
+        title: "Responsive Portfolio & Deploy",
+        description:
+          "Build and deploy a responsive personal portfolio site before adding a backend: semantic HTML, CSS layout, one interactive element, and a live URL.",
+        level: "beginner",
+        techTags: ["HTML", "CSS", "JavaScript", "Vercel"],
+      },
     ],
     aiGuide: {
       goodFor: [
@@ -1425,13 +1433,13 @@ export const TRACKS: Track[] = [
     resources: [
       {
         id: "ux-1",
-        title: "UX Design Full Course (YouTube)",
+        title: 'The Definition of User Experience (UX)',
         description:
-          "Complete UX design course covering user research, wireframing, prototyping, and usability testing. Entirely free on YouTube.",
-        url: "https://www.youtube.com/watch?v=_lyzy-vCh5s",
-        type: "video",
+          'Nielsen Norman Group defines UX and distinguishes it from UI, usability, and usability testing.',
+        url: 'https://www.nngroup.com/articles/definition-user-experience/',
+        type: 'docs',
         free: true,
-        source: "CareerFoundry",
+        source: 'Nielsen Norman Group',
       },
       {
         id: "ux-7",
@@ -1465,13 +1473,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "ux-4",
-        title: "UX Crash Course (The Futur)",
+        title: 'The Futur — Design Education Channel',
         description:
-          "Practical UX and design thinking crash course. Free, no signup required, taught by industry professionals.",
-        url: "https://www.youtube.com/watch?v=3xTtT5rOBLw",
-        type: "video",
+          'Practical UX, UI, and brand design lessons from a well-established design education channel.',
+        url: 'https://www.youtube.com/@thefutur',
+        type: 'video',
         free: true,
-        source: "The Futur",
+        source: 'The Futur',
       },
       {
         id: "ux-2",
@@ -1717,13 +1725,13 @@ export const TRACKS: Track[] = [
     resources: [
       {
         id: "qa-1",
-        title: "Software Testing Full Course",
+        title: 'ISTQB — Certified Tester Syllabus',
         description:
-          "Comprehensive QA course covering manual testing, automation, and tools.",
-        url: "https://www.youtube.com/watch?v=4ELH9fNMBOQ",
-        type: "video",
+          'The International Software Testing Qualifications Board publishes the authoritative testing syllabus and glossary used worldwide.',
+        url: 'https://www.istqb.org/',
+        type: 'docs',
         free: true,
-        source: "freeCodeCamp",
+        source: 'ISTQB',
       },
       {
         id: "qa-2",
@@ -1737,13 +1745,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "qa-0a",
-        title: "First Test Case Template",
+        title: 'How to Write Test Cases',
         description:
-          "Learn how to write clear test cases using templates. Immediate practice format.",
-        url: "https://www.guru99.com/sample-test-cases.html",
-        type: "docs",
+          'Software Testing Help guide to writing clear test cases, with templates and worked examples.',
+        url: 'https://www.softwaretestinghelp.com/how-to-write-test-cases-for-a-given-scenario/',
+        type: 'docs',
         free: true,
-        source: "Guru99",
+        source: 'Software Testing Help',
       },
       {
         id: "qa-4",
@@ -1777,13 +1785,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "qa-8",
-        title: "Playwright Automation Full Course",
+        title: 'Playwright — Official YouTube Channel',
         description:
-          "Complete Playwright course covering end-to-end testing, page object model, and CI integration.",
-        url: "https://www.youtube.com/watch?v=FjojYq0KxPg",
-        type: "video",
+          'Official Playwright channel with walkthroughs of end-to-end browser testing, tracing, and CI integration.',
+        url: 'https://www.youtube.com/@Playwrightdev',
+        type: 'video',
         free: true,
-        source: "freeCodeCamp",
+        source: 'Microsoft',
       },
       {
         id: "qa-6",
@@ -2125,6 +2133,14 @@ export const TRACKS: Track[] = [
           "Build a Tableau Public dashboard from a financial CSV dataset.",
         level: "intermediate",
         techTags: ["Tableau", "Data Viz"],
+      },
+      {
+        id: "da-p5",
+        title: "End-to-End Analytics Portfolio Project",
+        description:
+          "Take a raw dataset from question to insight: clean it, query it with SQL, analyse it in Pandas, and publish an interactive dashboard with a written summary of findings and limitations.",
+        level: "advanced",
+        techTags: ["SQL", "Pandas", "Tableau", "Storytelling"],
       },
     ],
     aiGuide: {
@@ -2558,23 +2574,23 @@ export const TRACKS: Track[] = [
       },
       {
         id: "dv-0",
-        title: "Docker in 100 Seconds",
+        title: 'Docker Overview',
         description:
-          "Visual overview of containerization before the full Docker course. Builds confidence.",
-        url: "https://www.youtube.com/watch?v=Gjla2gojmM0",
-        type: "video",
+          'Official Docker introduction to containers, images, and how Docker fits into a development workflow.',
+        url: 'https://docs.docker.com/get-started/docker-overview/',
+        type: 'docs',
         free: true,
-        source: "Fireship",
+        source: 'Docker',
       },
       {
         id: "dv-0b",
-        title: "Docker Hello World",
+        title: 'Docker Get Started',
         description:
-          "Run your first container in 5 minutes. Learn how images and containers work.",
-        url: "https://www.youtube.com/watch?v=Ksx1yVrQaZ0",
-        type: "video",
+          'Official step-by-step guide to building and running your first container, then a multi-container app.',
+        url: 'https://docs.docker.com/get-started/',
+        type: 'docs',
         free: true,
-        source: "YouTube",
+        source: 'Docker',
       },
       {
         id: "dv-2",
@@ -2640,7 +2656,7 @@ export const TRACKS: Track[] = [
         title: "Prometheus & Grafana Setup Guide",
         description:
           "Complete guide to installing Prometheus and Grafana for Linux system monitoring with custom dashboards.",
-        url: "https://grafana.com/docs/grafana/latest/fundamentals/getting-started/get-started-grafana-prometheus/",
+        url: 'https://grafana.com/docs/grafana/latest/getting-started/',
         type: "docs",
         free: true,
         source: "Grafana Labs",
@@ -2680,6 +2696,14 @@ export const TRACKS: Track[] = [
           "Set up Prometheus and Grafana to monitor an API with dashboards and alerts.",
         level: "advanced",
         techTags: ["Prometheus", "Grafana", "Docker"],
+      },
+      {
+        id: "dv-p0",
+        title: "Containerise a Small App",
+        description:
+          "Write a Dockerfile for a small web app, run it locally with environment variables, and document the build and run commands in a README.",
+        level: "beginner",
+        techTags: ["Docker", "Linux", "Environment Variables"],
       },
     ],
     aiGuide: {
@@ -2923,6 +2947,14 @@ export const TRACKS: Track[] = [
         level: "intermediate",
         techTags: ["CTF", "Linux", "Crypto"],
       },
+      {
+        id: "cy-p4",
+        title: "Security Assessment Report",
+        description:
+          "Assess a deliberately vulnerable application or practice target: document findings with severity, evidence, and remediation advice in a professional report.",
+        level: "advanced",
+        techTags: ["OWASP", "Reporting", "Remediation"],
+      },
     ],
     aiGuide: {
       goodFor: [
@@ -3044,13 +3076,13 @@ export const TRACKS: Track[] = [
      resources: [
       {
         id: "mob-9",
-        title: "React Native Full Course",
+        title: 'React Native Express',
         description:
-          "Build your first mobile app from scratch — React Native for absolute beginners.",
-        url: "https://www.youtube.com/watch?v=Zx-RU9R6iGc",
-        type: "video",
+          'Free, concise interactive guide to React Native core concepts, components, and layout.',
+        url: 'https://www.reactnative.express/',
+        type: 'docs',
         free: true,
-        source: "freeCodeCamp",
+        source: 'React Native Express',
       },
       {
         id: "mob-1",
@@ -3165,6 +3197,14 @@ export const TRACKS: Track[] = [
           "Product catalog, cart, checkout with backend API integration.",
         level: "advanced",
         techTags: ["React Native", "FastAPI", "Stripe"],
+      },
+      {
+        id: "mob-p0",
+        title: "First Single-Screen App",
+        description:
+          "Build one polished, accessible screen in React Native or Flutter with a working form, validation, and a clear visual hierarchy, then run it on a device or emulator.",
+        level: "beginner",
+        techTags: ["React Native", "Expo", "UI"],
       },
     ],
     aiGuide: {
@@ -3307,13 +3347,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "vid-4",
-        title: "CapCut Learn Center",
+        title: 'CapCut Video Tools',
         description:
-          "Official CapCut tutorials. Best mobile editing tool for beginners.",
-        url: "https://www.capcut.com/learn",
-        type: "docs",
+          'CapCut official editing tools and templates for mobile and desktop video production.',
+        url: 'https://www.capcut.com/tools',
+        type: 'tool',
         free: true,
-        source: "CapCut",
+        source: 'CapCut',
       },
       {
         id: "vid-5",
@@ -3327,13 +3367,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "vid-9",
-        title: "Storytelling for Video Editors",
+        title: 'StudioBinder — Filmmaking & Storytelling Blog',
         description:
-          "Learn the principles of visual storytelling, pacing, and emotional sequencing.",
-        url: "https://www.youtube.com/watch?v=6YH1T8JZXf0",
-        type: "video",
+          'Practical video storytelling, pacing, and filmmaking technique guides with visual examples.',
+        url: 'https://www.studiobinder.com/blog/',
+        type: 'docs',
         free: true,
-        source: "InCamera",
+        source: 'StudioBinder',
       },
       {
         id: "vid-7",
@@ -3350,20 +3390,20 @@ export const TRACKS: Track[] = [
         title: "YouTube Shorts Fundamentals",
         description:
           "Learn how to create engaging vertical Shorts, optimize for the Shorts feed, and grow with short-form content.",
-        url: "https://www.youtube.com/creators/how-things-work/shorts/",
+        url: 'https://www.youtube.com/creators/',
         type: "docs",
         free: true,
         source: "YouTube",
       },
       {
         id: "vid-3",
-        title: "DaVinci Resolve Official Training",
+        title: 'DaVinci Resolve — Color, VFX & Audio Tools',
         description:
-          "Professional-grade video editing, color grading, and audio post-production. The full version is completely free — no subscription needed.",
-        url: "https://www.blackmagicdesign.com/products/davinciresolve/training",
-        type: "docs",
+          'Blackmagic Design product page covering DaVinci Resolve color grading, Fusion VFX, and Fairlight audio.',
+        url: 'https://www.blackmagicdesign.com/products/davinciresolve',
+        type: 'docs',
         free: true,
-        source: "Blackmagic Design",
+        source: 'Blackmagic Design',
       },
       {
         id: "vid-6",
@@ -3400,6 +3440,14 @@ export const TRACKS: Track[] = [
           "Edit a 10 to 15 minute YouTube video with B-roll, lower thirds, color grade.",
         level: "intermediate",
         techTags: ["Premiere Pro", "After Effects"],
+      },
+      {
+        id: "vid-p4",
+        title: "Short-Form Video Campaign",
+        description:
+          "Produce a 3-part short-form campaign for one message: plan, edit, caption, and publish across formats, then review performance and iterate.",
+        level: "advanced",
+        techTags: ["CapCut", "Storytelling", "Retention"],
       },
     ],
     aiGuide: {
@@ -3524,13 +3572,13 @@ export const TRACKS: Track[] = [
      resources: [
       {
         id: "yt-9",
-        title: "YouTube for Beginners Guide",
+        title: 'YouTube Creators — Get Started',
         description:
-          "Complete beginner's guide to setting up a YouTube channel — equipment, niche, and first video.",
-        url: "https://www.youtube.com/watch?v=fYwA_D1RFsM",
-        type: "video",
+          'Official YouTube Creators hub covering starting a channel, formats, and platform fundamentals.',
+        url: 'https://www.youtube.com/creators/get-started/',
+        type: 'docs',
         free: true,
-        source: "Think Media",
+        source: 'YouTube',
       },
       {
         id: "yt-1",
@@ -3596,20 +3644,20 @@ export const TRACKS: Track[] = [
         title: "YouTube Monetization Guide",
         description:
           "Official YouTube guide on monetization, YPP requirements, AdSense, and revenue optimization.",
-        url: "https://support.google.com/youtube/answer/72857",
+        url: 'https://support.google.com/youtube/answer/72857',
         type: "docs",
         free: true,
         source: "Google",
       },
       {
         id: "yt-8",
-        title: "Affiliate Marketing for Creators",
+        title: 'Affiliate Marketing Guide',
         description:
-          "Free hub on affiliate marketing strategies, networks, and best practices for content creators.",
-        url: "https://affiliate-marketing-for-beginners.netlify.app/",
-        type: "docs",
+          'Ahrefs practical guide to affiliate marketing: how it works, programs, and content strategies.',
+        url: 'https://ahrefs.com/blog/affiliate-marketing/',
+        type: 'docs',
         free: true,
-        source: "Affiliate Marketing Guide",
+        source: 'Ahrefs',
       },
     ],
     projects: [
@@ -3813,13 +3861,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "mkt-6",
-        title: "Ahrefs YouTube",
+        title: 'Ahrefs Blog',
         description:
-          "The best SEO YouTube channel. Practical, well-researched, actionable content.",
-        url: "https://www.youtube.com/@AhrefsTV",
-        type: "video",
+          'Data-driven SEO and digital marketing guides, tutorials, and case studies from Ahrefs.',
+        url: 'https://ahrefs.com/blog/',
+        type: 'docs',
         free: true,
-        source: "Ahrefs",
+        source: 'Ahrefs',
       },
       {
         id: "mkt-3",
@@ -3833,13 +3881,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "mkt-7",
-        title: "Google Ads Fundamentals",
+        title: 'Google Skillshop — Ads & Analytics Training',
         description:
-          "Official Google Ads training covering search, display, video, and measurement fundamentals.",
-        url: "https://skillshop.withgoogle.com/courses/google-ads-fundamentals",
-        type: "docs",
+          'Google\'s official free training and certifications for Google Ads and Analytics.',
+        url: 'https://skillshop.withgoogle.com/',
+        type: 'docs',
         free: true,
-        source: "Google",
+        source: 'Google',
       },
       {
         id: "mkt-9",
@@ -3856,7 +3904,7 @@ export const TRACKS: Track[] = [
         title: "Google Analytics 4 Guide",
         description:
           "Free GA4 course covering setup, reports, conversions, audiences, and insights.",
-        url: "https://skillshop.withgoogle.com/courses/google-analytics-4",
+        url: 'https://support.google.com/analytics/answer/10089681',
         type: "docs",
         free: true,
         source: "Google",
@@ -3896,6 +3944,14 @@ export const TRACKS: Track[] = [
           "Build a 5-email welcome sequence for a product using Mailchimp. Track open rates.",
         level: "intermediate",
         techTags: ["Mailchimp", "Copywriting", "Email"],
+      },
+      {
+        id: "mkt-p4",
+        title: "Integrated Marketing Campaign",
+        description:
+          "Plan and run a multi-channel campaign for a real product or project: audience, positioning, content, channels, budget, and a measured report of results.",
+        level: "advanced",
+        techTags: ["Strategy", "SEO", "Analytics", "Content"],
       },
     ],
     aiGuide: {
@@ -4257,7 +4313,7 @@ export const TRACKS: Track[] = [
         title: "Bubble Academy",
         description:
           "Official Bubble tutorials for building full web apps without code.",
-        url: "https://bubble.io/learn",
+        url: 'https://bubble.io/academy',
         type: "docs",
         free: true,
         source: "Bubble",
@@ -4307,6 +4363,14 @@ export const TRACKS: Track[] = [
           "Build a functional web app in Bubble with user auth, database, and core features.",
         level: "intermediate",
         techTags: ["Bubble", "Database", "Auth"],
+      },
+      {
+        id: "nc-p4",
+        title: "Launchable No-Code Product",
+        description:
+          "Take a real problem end to end without code: design the data model, build the flows, add auth and payments-ready logic, test it with users, and publish a live MVP.",
+        level: "advanced",
+        techTags: ["Bubble", "APIs", "Testing", "Launch"],
       },
     ],
     aiGuide: {
@@ -4430,13 +4494,13 @@ export const TRACKS: Track[] = [
     resources: [
       {
         id: "tw-5",
-        title: "Technical Writing for Beginners",
+        title: 'Microsoft Writing Style Guide',
         description:
-          "Everything you need to know to start a career in technical writing.",
-        url: "https://www.youtube.com/watch?v=bk2K7lGzO4o",
-        type: "video",
+          'Microsoft official style guide for clear, consistent technical and UI writing.',
+        url: 'https://learn.microsoft.com/en-us/style-guide/welcome/',
+        type: 'docs',
         free: true,
-        source: "freeCodeCamp",
+        source: 'Microsoft',
       },
       {
         id: "tw-1",
@@ -4480,13 +4544,13 @@ export const TRACKS: Track[] = [
       },
       {
         id: "tw-7",
-        title: "API Documentation Guide",
+        title: 'A Beginner\'s Guide to Writing Docs',
         description:
-          "Best practices for writing API docs that developers actually want to read.",
-        url: "https://www.youtube.com/watch?v=qoDPf2NxKEA",
-        type: "video",
+          'Write the Docs practical guide to planning, structuring, and maintaining developer documentation.',
+        url: 'https://www.writethedocs.org/guide/writing/beginners-guide-to-docs/',
+        type: 'docs',
         free: true,
-        source: "freeCodeCamp",
+        source: 'Write the Docs',
       },
       {
         id: "tw-2",
@@ -4620,11 +4684,19 @@ export const TRACKS: Track[] = [
       },
       {
         id: 3,
-        title: 'Solidity & Smart Contract Development',
-        duration: '6–8 weeks',
+        title: 'Solidity Fundamentals',
+        duration: '3–4 weeks',
         topics: [
           'Solidity syntax: types, functions, modifiers, events',
           'Storage vs memory vs calldata',
+        ],
+        description: 'Learn the language itself: how to declare state, write functions, use modifiers and events, and understand where data lives in the EVM.',
+      },
+      {
+        id: 4,
+        title: 'Token Standards & Development Tooling',
+        duration: '3–4 weeks',
+        topics: [
           'ERC-20 token standard — how every fungible token works',
           'ERC-721 — how NFTs work under the hood',
           'Hardhat and Foundry development environments',
@@ -4632,45 +4704,61 @@ export const TRACKS: Track[] = [
           'OpenZeppelin contract libraries',
           'Deploying to testnets and mainnet',
         ],
-        description: 'This is where you go from user to builder. Learn Solidity properly — not just how to write it, but why the patterns exist and what goes wrong when you ignore them.',
+        description: 'Standards are why the ecosystem interoperates. Implement ERC-20 and ERC-721 with battle-tested libraries and a professional test-and-deploy workflow.',
       },
       {
-        id: 4,
-        title: 'DeFi Mechanics & Protocol Understanding',
-        duration: '3–4 weeks',
+        id: 5,
+        title: 'DeFi Core Mechanics',
+        duration: '2 weeks',
         topics: [
           'AMMs — how Uniswap pricing works (x × y = k)',
           'Liquidity pools, LP tokens, and impermanent loss',
           'Lending protocols and dynamic interest rates (Aave, Compound)',
           'Stablecoins — fiat-backed, overcollateralised, algorithmic',
+        ],
+        description: 'The core primitives of decentralised finance: how automated market makers price assets, how lending markets set rates, and what makes a stablecoin stable.',
+      },
+      {
+        id: 6,
+        title: 'DeFi Risks & Advanced Concepts',
+        duration: '2 weeks',
+        topics: [
           'Oracles — how smart contracts get real-world prices (Chainlink)',
           'Flash loans — mechanics and exploit usage',
           'MEV — maximal extractable value and transaction ordering',
           'Cross-chain bridges — mechanics and why they get hacked',
           'DAOs — governance tokens and on-chain voting',
         ],
-        description: 'DeFi is a completely new financial system with its own primitives. Understanding these deeply makes you valuable as both a developer and an analyst.',
+        description: 'Where DeFi breaks. Oracle manipulation, flash-loan exploits, MEV, and bridges cause most major losses. Understand the mechanisms before you build on them.',
       },
       {
-        id: 5,
-        title: 'Web3 Frontend & dApp Development',
-        duration: '4–5 weeks',
+        id: 7,
+        title: 'Web3 Frontend Foundations',
+        duration: '3 weeks',
         topics: [
           'ethers.js — the standard JS library for Ethereum',
           'wagmi — React hooks for Web3 UI development',
           'RainbowKit / ConnectKit — wallet connection UI',
           'Reading on-chain data from the frontend',
           'Writing transactions and tracking their lifecycle',
+        ],
+        description: 'Smart contracts without a frontend have no users. Connect your on-chain logic to interfaces real people can use.',
+      },
+      {
+        id: 8,
+        title: 'dApp Data & Storage',
+        duration: '2 weeks',
+        topics: [
           'The Graph Protocol — indexing blockchain data',
           'IPFS — decentralised file storage for NFT metadata',
           'Building a complete dApp end-to-end',
         ],
-        description: 'Smart contracts without a frontend have no users. Learn to connect your on-chain logic to interfaces real people can use.',
+        description: 'Indexing and storage are what make dApps usable at scale. Query historical data with The Graph and store assets on IPFS.',
       },
       {
-        id: 6,
-        title: 'Smart Contract Security & Auditing',
-        duration: '3–4 weeks',
+        id: 9,
+        title: 'Common Smart Contract Vulnerabilities',
+        duration: '2–3 weeks',
         topics: [
           'Reentrancy attacks and checks-effects-interactions pattern',
           'Access control failures — the most common exploit type',
@@ -4678,14 +4766,22 @@ export const TRACKS: Track[] = [
           'Flash loan attack vectors',
           'Integer overflow/underflow',
           'Frontrunning and sandwich attacks',
+        ],
+        description: 'The vulnerability classes that cause the largest losses. Learn to recognise each pattern by reading real code, not just definitions.',
+      },
+      {
+        id: 10,
+        title: 'Auditing Tools & Practice',
+        duration: '2 weeks',
+        topics: [
           'Slither static analysis and Foundry fuzzing',
           'Reading and writing audit reports',
           'Code4rena and Sherlock competitive auditing',
         ],
-        description: 'The highest-paid specialisation in all of Web3. A single critical vulnerability can drain hundreds of millions. Auditors who find them before deployment are extremely valuable.',
+        description: 'Turn vulnerability knowledge into a professional practice: run automated tools, write clear findings, and compete in audit contests.',
       },
       {
-        id: 7,
+        id: 11,
         title: 'On-Chain Data Analysis',
         duration: '2–3 weeks',
         topics: [
@@ -4701,22 +4797,23 @@ export const TRACKS: Track[] = [
       },
     ],
     resources: [
-      { id: 'cr-0a', title: 'Blockchain Explained with Visuals (Beginner)', description: '5-minute visual explanation before diving into whitepapers. Much more beginner-friendly.', url: 'https://www.youtube.com/watch?v=xIDL_akXCH4', type: 'video', free: true, source: 'Fireship' },
+      { id: 'cr-0a', title: 'Introduction to Ethereum', description: 'The Ethereum Foundation explains blockchain fundamentals: accounts, transactions, and smart contracts.', url: 'https://ethereum.org/en/developers/docs/intro-to-ethereum/', type: 'docs', free: true, source: 'Ethereum Foundation' },
       { id: 'cr-19', title: 'Blockchain Demo — Anders Brownworth', description: 'The most visual, interactive demonstration of how hashing and blockchains work. Use this in Stage 1.', url: 'https://andersbrownworth.com/blockchain', type: 'practice', free: true, source: 'Anders Brownworth' },
       { id: 'cr-1', title: 'Bitcoin Whitepaper', description: 'Satoshi\'s original 9-page paper. Required reading for anyone in this field.', url: 'https://bitcoin.org/bitcoin.pdf', type: 'book', free: true, source: 'Satoshi Nakamoto' },
       { id: 'cr-2', title: 'Ethereum.org Learn', description: 'The best official Ethereum learning resource. Comprehensive and regularly updated.', url: 'https://ethereum.org/en/learn', type: 'docs', free: true, source: 'Ethereum Foundation' },
-      { id: 'cr-21', title: 'MetaMask Basic Safety and Security Tips', description: 'Official guide to wallet safety, seed phrase recovery, and phishing protection.', url: 'https://support.metamask.io/hc/en-us/articles/360015489591-Basic-Safety-and-Security-Tips-for-MetaMask', type: 'docs', free: true, source: 'MetaMask' },
-      { id: 'cr-22', title: 'Keep It Simple Crypto - Wallet Basics', description: 'Practical guide to setting up wallets securely. Learn why seed phrases matter and how to keep them safe.', url: 'https://www.youtube.com/@KeepItSimpleCrypto', type: 'video', free: true, source: 'Keep It Simple Crypto' },
+      { id: 'cr-21', title: 'MetaMask Learn', description: 'MetaMask educational hub on wallets, keys, seed phrases, and crypto security basics.', url: 'https://metamask.io/learn', type: 'docs', free: true, source: 'MetaMask' },
+      { id: 'cr-22', title: 'Ethereum Wallets Guide', description: 'The Ethereum Foundation explains wallets, accounts, keys, and how to store crypto safely.', url: 'https://ethereum.org/en/wallets/', type: 'docs', free: true, source: 'Ethereum Foundation' },
+    { id: 'cr-23', title: 'Ethereum — What is DeFi? (Mechanics and Risks)', description: 'The Ethereum Foundation explains DeFi primitives (lending, AMMs, staking) and the risks that come with composability, liquidation, and impermanent loss.', url: 'https://ethereum.org/en/defi/', type: 'docs', free: true, source: 'Ethereum Foundation' },
       { id: 'cr-3', title: 'CryptoZombies', description: 'The best Solidity beginner course. Learn by building a game on-chain. Fun and effective.', url: 'https://cryptozombies.io', type: 'practice', free: true, source: 'CryptoZombies' },
       { id: 'cr-15', title: 'Solidity by Example', description: 'Practical, concise code examples of Solidity smart contracts. Build your fundamentals step-by-step.', url: 'https://solidity-by-example.org', type: 'docs', free: true, source: 'Solidity by Example' },
-      { id: 'cr-0b', title: 'ERC-20 Minimal Clone', description: 'Code an ERC-20 token in Solidity. Deploy a buildable token in 1 hour.', url: 'https://solidity-by-example.org/erc20/', type: 'docs', free: true, source: 'Solidity by Example' },
+      { id: 'cr-0b', title: 'OpenZeppelin ERC-20 Guide', description: 'OpenZeppelin guide to ERC-20 tokens: the standard, the interface, and a vetted implementation.', url: 'https://docs.openzeppelin.com/contracts/5.x/erc20', type: 'docs', free: true, source: 'OpenZeppelin' },
       { id: 'cr-4', title: 'Patrick Collins — Solidity Full Course', description: 'The most comprehensive free Solidity course. 32 hours covering everything from basics to advanced security.', url: 'https://www.youtube.com/watch?v=umepbfKp5rI', type: 'video', free: true, source: 'Patrick Collins' },
       { id: 'cr-5', title: 'Solidity Official Docs', description: 'The complete language reference. Bookmark this before you write your first contract.', url: 'https://docs.soliditylang.org', type: 'docs', free: true, source: 'Ethereum Foundation' },
       { id: 'cr-7', title: 'OpenZeppelin Docs', description: 'Battle-tested smart contract libraries used in every serious protocol. Read the source code.', url: 'https://docs.openzeppelin.com/contracts', type: 'docs', free: true, source: 'OpenZeppelin' },
       { id: 'cr-11', title: 'wagmi Documentation', description: 'React hooks for Ethereum. The cleanest way to build Web3 UIs in 2025.', url: 'https://wagmi.sh', type: 'docs', free: true, source: 'wagmi' },
       { id: 'cr-6', title: 'Foundry Book', description: 'Documentation for Foundry — the modern, faster alternative to Hardhat. Industry is moving here.', url: 'https://github.com/foundry-rs/foundry', type: 'docs', free: true, source: 'Paradigm' },
       { id: 'cr-12', title: 'Finematics YouTube', description: 'DeFi concepts explained visually and clearly. Start with AMMs and lending protocols.', url: 'https://www.youtube.com/c/Finematics', type: 'video', free: true, source: 'Finematics' },
-      { id: 'cr-18', title: 'DeFi Pulse', description: 'Track Total Value Locked (TVL) and learn the foundational metrics used across decentralized finance.', url: 'https://defipulse.com', type: 'docs', free: true, source: 'DeFi Pulse' },
+      { id: 'cr-18', title: 'DefiLlama', description: 'Track Total Value Locked (TVL) across chains and protocols with free, real-time DeFi data and dashboards.', url: 'https://defillama.com', type: 'tool', free: true, source: 'DefiLlama' },
       { id: 'cr-20', title: 'DeFi MOOC — UC Berkeley', description: 'Full university-level DeFi course. Lectures by researchers and actual protocol founders. Free.', url: 'https://defi-learning.org', type: 'docs', free: true, source: 'UC Berkeley' },
       { id: 'cr-13', title: 'Dune Analytics', description: 'Write SQL queries against blockchain data. Build and publish public dashboards. Free.', url: 'https://dune.com', type: 'tool', free: true, source: 'Dune' },
       { id: 'cr-16', title: 'ETHGlobal Hackathons', description: 'The world\'s premier Web3 hackathon series. Compete for large prizes and build your public profile.', url: 'https://ethglobal.com', type: 'community', free: true, source: 'ETHGlobal' },
@@ -4785,23 +4882,25 @@ export const TRACKS: Track[] = [
     },
     roadmap: [
       { id: 1, title: 'PM Foundations', duration: '2–3 weeks', topics: ['Project lifecycle: initiation to closure', 'Triple constraint: scope, time, cost', 'Stakeholder identification and mapping', 'Project charter and WBS', 'RACI matrix', 'Risk management basics', 'Communication planning'], description: 'Master the universal language of project management before specialising in any methodology. Every framework is built on these foundations.' },
-      { id: 2, title: 'Agile & Scrum', duration: '3–4 weeks', topics: ['The Agile Manifesto and 12 principles', 'Scrum roles: PO, SM, Dev Team', 'Scrum events: Sprint, Planning, Standup, Review, Retro', 'User stories and story points', 'Kanban and WIP limits', 'Velocity and sprint planning', 'When Agile beats Waterfall — and when it does not'], description: 'Agile is now the default in tech. Understand Scrum deeply enough to run it, improve it, and explain it to a non-technical stakeholder.' },
-      { id: 3, title: 'Tools & Planning', duration: '2–3 weeks', topics: ['Jira for Agile project tracking', 'Trello and Kanban boards', 'Asana and Monday.com', 'Gantt charts and critical path', 'Notion for documentation and wikis', 'Sprint planning and retrospective templates'], description: 'The best PM is only as effective as their systems. Get hands-on with the tools companies actually use.' },
-      { id: 4, title: 'Budgeting & Reporting', duration: '2 weeks', topics: ['Project budgeting and forecasting', 'Earned Value Management (EVM)', 'Status reports that people actually read', 'Project KPIs and health metrics', 'Lessons learned and project closure'], description: 'Numbers and communication are what separate junior PMs from senior ones. Learn to tell the truth about project health clearly and early.' },
-      { id: 5, title: 'Certifications & Career', duration: 'Ongoing', topics: ['PMP — the gold standard', 'CAPM for entry-level', 'PSM I (Professional Scrum Master)', 'PRINCE2 basics', 'Building a PM portfolio without formal experience'], description: 'PM certifications open doors that experience alone cannot. Know which one fits your situation and how to prepare efficiently.' },
+      { id: 2, title: 'Agile Principles', duration: '2 weeks', topics: ['The Agile Manifesto and 12 principles', 'When Agile beats Waterfall — and when it does not'], description: 'Agile is a set of values, not a ceremony checklist. Understand the principles well enough to know when Agile is the right choice and when it is not.' },
+      { id: 3, title: 'Scrum in Practice', duration: '2 weeks', topics: ['Scrum roles: PO, SM, Dev Team', 'Scrum events: Sprint, Planning, Standup, Review, Retro', 'User stories and story points', 'Kanban and WIP limits', 'Velocity and sprint planning'], description: 'Run Scrum properly: the roles, the events, and the flow mechanics that turn a backlog into a delivered increment.' },
+      { id: 4, title: 'Tools & Planning', duration: '2–3 weeks', topics: ['Jira for Agile project tracking', 'Trello and Kanban boards', 'Asana and Monday.com', 'Gantt charts and critical path', 'Notion for documentation and wikis', 'Sprint planning and retrospective templates'], description: 'The best PM is only as effective as their systems. Get hands-on with the tools companies actually use.' },
+      { id: 5, title: 'Budgeting & Reporting', duration: '2 weeks', topics: ['Project budgeting and forecasting', 'Earned Value Management (EVM)', 'Status reports that people actually read', 'Project KPIs and health metrics', 'Lessons learned and project closure'], description: 'Numbers and communication are what separate junior PMs from senior ones. Learn to tell the truth about project health clearly and early.' },
+      { id: 6, title: 'Certifications & Career', duration: 'Ongoing', topics: ['PMP — the gold standard', 'CAPM for entry-level', 'PSM I (Professional Scrum Master)', 'PRINCE2 basics', 'Building a PM portfolio without formal experience'], description: 'PM certifications open doors that experience alone cannot. Know which one fits your situation and how to prepare efficiently.' },
     ],
     resources: [
       { id: 'pm-1', title: 'Project Management Full Course (freeCodeCamp)', description: 'Complete project management course covering methodologies, planning, budgeting, risk management, and stakeholder communication. Entirely free.', url: 'https://www.youtube.com/watch?v=uWPIsaYpY7U', type: 'video', free: true, source: 'Simplilearn / freeCodeCamp' },
-      { id: 'pm-4', title: 'Project Management Full Course', description: 'Comprehensive project management course covering project life cycle, planning, scheduling, and tools.', url: 'https://www.youtube.com/watch?v=uWPIsaYpY7U', type: 'video', free: true, source: 'Simplilearn' },
+      { id: 'pm-4', title: 'Project Management Basics', description: 'Atlassian introduction to project management: planning, tracking, and delivering projects with agile methods.', url: 'https://www.atlassian.com/agile/project-management', type: 'docs', free: true, source: 'Atlassian' },
       { id: 'pm-6', title: 'Agile Manifesto', description: 'The original 12 principles and 4 values. Read the source before reading anyone\'s interpretation of it.', url: 'https://agilemanifesto.org', type: 'docs', free: true, source: 'agilemanifesto.org' },
       { id: 'pm-2', title: 'Scrum Guide 2020', description: 'The official, definitive Scrum framework document. 13 pages. Read it before any Scrum course.', url: 'https://scrumguides.org/scrum-guide.html', type: 'book', free: true, source: 'Scrum.org' },
       { id: 'pm-3', title: 'Atlassian Agile Coach', description: 'Atlassian\'s comprehensive free Agile and Scrum learning resource. Practical and up to date.', url: 'https://www.atlassian.com/agile', type: 'docs', free: true, source: 'Atlassian' },
-      { id: 'pm-5', title: 'Jira Tutorial for Beginners', description: 'Complete Jira walkthrough covering boards, backlog, sprints, and tracking daily tasks.', url: 'https://www.youtube.com/watch?v=F3H11Yj1W-k', type: 'video', free: true, source: 'Stewart Gauld' },
+      { id: 'pm-5', title: 'Jira — Getting Started Guide', description: 'Official Atlassian guide to Jira: creating a project, backlog, boards, and tracking work in sprints.', url: 'https://www.atlassian.com/software/jira/guides/getting-started/introduction', type: 'docs', free: true, source: 'Atlassian' },
       { id: 'pm-8', title: 'ProjectLibre', description: 'Free open-source alternative to MS Project. Build full Gantt charts and project plans.', url: 'https://www.projectlibre.com', type: 'tool', free: true, source: 'ProjectLibre' },
-      { id: 'pm-9', title: 'Notion PM Templates', description: 'Free project management templates — sprint boards, project trackers, meeting notes.', url: 'https://www.notion.so/templates/category/project-management', type: 'tool', free: true, source: 'Notion' },
-      { id: 'pm-11', title: 'Project Status Reporting Guide', description: 'Best practices for writing effective project status reports with KPIs, traffic lights, and stakeholder communication.', url: 'https://asana.com/resources/project-status-report', type: 'docs', free: true, source: 'Asana' },
-      { id: 'pm-10', title: 'Earned Value Management Explained', description: 'Guide to EVM fundamentals: planned value, earned value, actual cost, CPI, SPI, and forecasting.', url: 'https://www.pmi.org/learning/library/earned-value-management-systems-basics-6347', type: 'docs', free: true, source: 'PMI' },
-      { id: 'pm-7', title: 'PMI Official Site', description: 'The Project Management Institute — home of the PMP certification. Free resources available.', url: 'https://www.pmi.org', type: 'docs', free: true, source: 'PMI' },
+      { id: 'pm-9', title: 'Jira Project Templates', description: 'Official Atlassian Jira templates for project management, sprints, and kanban boards.', url: 'https://www.atlassian.com/software/jira/templates', type: 'tool', free: true, source: 'Atlassian' },
+      { id: 'pm-11', title: 'Project Status Reporting Guide', description: 'Best practices for writing effective project status reports with KPIs, traffic lights, and stakeholder communication.', url: 'https://www.projectmanager.com/guides/status-report', type: 'docs', free: true, source: 'Asana' },
+      { id: 'pm-10', title: 'Earned Value Management (EVM) Explained', description: 'Free guide to EVM fundamentals: planned value, earned value, actual cost, schedule and cost variance, CPI and SPI, and forecasting. Replaces the PMI library article, which is member-gated and blocks automated verification.', url: 'https://www.projectmanager.com/blog/using-earned-value-management-to-measure-project-performance', type: 'docs', free: true, source: 'ProjectManager' },
+      { id: 'pm-7', title: 'How to Become a Project Manager (and Get a Job)', description: 'Free, current guide to entering project management: the skills employers want, how to build evidence without a formal PM title, and which certifications are worth the cost. Replaces the PMI homepage, which is member/join-gated and blocks automated verification.', url: 'https://www.projectmanager.com/blog/how-to-become-a-project-manager', type: 'docs', free: true, source: 'ProjectManager' },
+        { id: 'pm-12', title: 'ProjectManager — Project Management Certifications Guide', description: 'An independently maintained comparison of project-management certifications (PMP, CAPM, PRINCE2, Agile) with entry requirements, cost, and career fit.', url: 'https://www.projectmanager.com/blog/project-management-certifications', type: 'docs', free: true, source: 'ProjectManager' },
     ],
     projects: [
       { id: 'pm-p1', title: 'Project Charter', description: 'Write a full project charter for a real or hypothetical project — objectives, scope, stakeholders, risks, timeline, and budget estimate.', level: 'beginner', techTags: ['Documentation', 'Planning', 'Stakeholder Management'] },
@@ -4848,17 +4947,18 @@ export const TRACKS: Track[] = [
       { id: 2, title: 'User Research & Discovery', duration: '3–4 weeks', topics: ['User interviews: prepare, run, synthesise', 'The Mom Test — honest customer conversations', 'Surveys and usability testing', 'Competitive landscape analysis', 'Opportunity sizing', 'Assumption mapping'], description: 'The biggest PM mistake is building solutions before understanding problems. Discovery is how you earn the right to write a PRD.' },
       { id: 3, title: 'Strategy & Prioritisation', duration: '3–4 weeks', topics: ['Product vision and strategy', 'OKRs (Objectives and Key Results)', 'RICE, ICE, MoSCoW prioritisation frameworks', 'Kano Model — delighters vs expectations', 'Product roadmaps that are honest and useful', 'Feature vs outcome thinking', 'Saying no professionally'], description: 'Strategy is about what you will not do as much as what you will. Master prioritisation and you master the most critical PM skill.' },
       { id: 4, title: 'Writing Product Requirements', duration: '2–3 weeks', topics: ['PRD structure and best practices', 'User stories and acceptance criteria', 'Wireframes for PMs (Figma basics)', 'Working with design: handoff and feedback', 'Edge cases — the questions to ask before engineering starts'], description: 'A poorly written PRD creates poorly built products. Learn to communicate requirements so clearly that the right thing gets built the first time.' },
-      { id: 5, title: 'Metrics, Analytics & Growth', duration: '3–4 weeks', topics: ['AARRR Pirate Metrics framework', 'DAU/WAU/MAU — when each matters', 'Retention curves and churn analysis', 'A/B testing design and interpretation', 'Funnel analysis — finding where users drop off', 'Mixpanel and Amplitude for product analytics', 'NPS and customer satisfaction'], description: 'Good PMs have opinions backed by data. Great PMs know which data to trust, which to question, and which to ignore.' },
-      { id: 6, title: 'Shipping with Engineering', duration: '2–3 weeks', topics: ['How software development actually works', 'Writing tickets engineers love', 'MVP thinking — what minimum viable really means', 'Beta programs and phased launches', 'Launch checklists', 'Post-launch monitoring and response', 'Technical debt and roadmap impact'], description: 'A PM who understands engineering is 10× more effective. You do not need to code — but you need to understand enough to have the right conversations.' },
-      { id: 7, title: 'PM Career & Portfolio', duration: 'Ongoing', topics: ['Breaking into PM without formal experience', 'APM programme applications', 'PM interview frameworks', 'Building a PM portfolio with case studies', 'Communities, newsletters, and mentorship'], description: 'The PM career path is not linear. Learn the fastest routes in and the portfolio work that actually gets you noticed.' },
+      { id: 5, title: 'Growth & Engagement Metrics', duration: '2 weeks', topics: ['AARRR Pirate Metrics framework', 'DAU/WAU/MAU — when each matters', 'NPS and customer satisfaction'], description: 'Learn the metric frameworks that describe a growth loop — acquisition, activation, retention, referral, and revenue — and when each headline metric is the right one to watch.' },
+      { id: 6, title: 'Retention, Funnels & Experiments', duration: '2 weeks', topics: ['Retention curves and churn analysis', 'A/B testing design and interpretation', 'Funnel analysis — finding where users drop off', 'Mixpanel and Amplitude for product analytics'], description: 'The analytical core of product work: read retention curves, diagnose funnels, and design experiments that produce trustworthy answers.' },
+      { id: 7, title: 'Shipping with Engineering', duration: '2–3 weeks', topics: ['How software development actually works', 'Writing tickets engineers love', 'MVP thinking — what minimum viable really means', 'Beta programs and phased launches', 'Launch checklists', 'Post-launch monitoring and response', 'Technical debt and roadmap impact'], description: 'A PM who understands engineering is 10× more effective. You do not need to code — but you need to understand enough to have the right conversations.' },
+      { id: 8, title: 'PM Career & Portfolio', duration: 'Ongoing', topics: ['Breaking into PM without formal experience', 'APM programme applications', 'PM interview frameworks', 'Building a PM portfolio with case studies', 'Communities, newsletters, and mentorship'], description: 'The PM career path is not linear. Learn the fastest routes in and the portfolio work that actually gets you noticed.' },
     ],
     resources: [
       { id: 'prd-3', title: 'Product Management Full Course', description: 'Introduction to product management fundamentals, frameworks, product life cycle, and strategy.', url: 'https://www.youtube.com/watch?v=0p5YPBl_uBI', type: 'video', free: true, source: 'Simplilearn' },
       { id: 'prd-10', title: 'The Mom Test Summary', description: 'The most useful book ever written about customer conversations. This summary explains how to talk to customers and learn if your business is a good idea.', url: 'https://www.youtube.com/watch?v=pk3VOO9WT8o', type: 'video', free: true, source: 'Rick Kettner' },
-      { id: 'prd-5', title: 'OKR Framework by Google', description: 'Google\'s original OKR documentation and templates from their re:Work initiative.', url: 'https://rework.withgoogle.com/guides/set-goals-with-okrs', type: 'docs', free: true, source: 'Google' },
-      { id: 'prd-11', title: 'User Story Mapping Guide', description: 'How to use story mapping to go from user research to actionable product requirements. Free guide.', url: 'https://www.productplan.com/learn/user-story-mapping/', type: 'docs', free: true, source: 'ProductPlan' },
+      { id: 'prd-5', title: 'OKRs: The Ultimate Guide (Atlassian)', description: 'Free, current guide to Objectives and Key Results: writing objectives, choosing measurable key results, scoring, and running an OKR cadence. Replaces the retired Google re:Work OKR guide (which now returns a 404 shell).', url: 'https://www.atlassian.com/agile/agile-at-scale/okr', type: 'docs', free: true, source: 'Atlassian' },
+      { id: 'prd-11', title: 'User Stories', description: 'Atlassian guide to writing user stories, acceptance criteria, and story mapping for agile teams.', url: 'https://www.atlassian.com/agile/project-management/user-stories', type: 'docs', free: true, source: 'Atlassian' },
       { id: 'prd-13', title: 'Writing Good Acceptance Criteria', description: 'Guide to writing acceptance criteria that developers and QA can actually use. Examples included.', url: 'https://www.atlassian.com/agile/requirements/acceptance-criteria', type: 'docs', free: true, source: 'Atlassian' },
-      { id: 'prd-12', title: 'PRD Template & Examples', description: 'A practical PRD template with real examples from top tech companies. Fill in the blanks to get started.', url: 'https://www.notion.so/templates/product-requirements-document-template', type: 'tool', free: true, source: 'Notion' },
+      { id: 'prd-12', title: 'Product Requirements Document Guide', description: 'ProductPlan guide to product requirements documents: purpose, structure, and worked examples.', url: 'https://www.productplan.com/glossary/product-requirements-document', type: 'docs', free: true, source: 'ProductPlan' },
       { id: 'prd-7', title: 'Hotjar', description: 'Heatmaps and session recordings. See what users actually do on a page rather than guessing.', url: 'https://www.hotjar.com', type: 'tool', free: true, source: 'Hotjar' },
       { id: 'prd-6', title: 'Mixpanel', description: 'Product analytics platform. Understand exactly how users behave inside your product. Free tier.', url: 'https://mixpanel.com', type: 'tool', free: true, source: 'Mixpanel' },
       { id: 'prd-1', title: 'Lenny\'s Newsletter', description: 'The best product management newsletter alive. Essays by top PMs at Airbnb, Uber, Figma, and more. Free weekly posts with the option to support.', url: 'https://www.lennysnewsletter.com', type: 'docs', free: true, source: 'Lenny Rachitsky' },
@@ -4921,7 +5021,8 @@ export const TRACKS: Track[] = [
       { id: 'dart-4', title: 'The Net Ninja — Dart Series', description: 'Clear, well-paced Dart tutorial playlist. Good supplement to the official docs.', url: 'https://www.youtube.com/playlist?list=PL4cUxeGkcC9iVGY3ppchN9CBSPYyHmPh4', type: 'video', free: true, source: 'The Net Ninja' },
       { id: 'dart-10', title: 'Dart Async Programming', description: 'Official Dart guide to Futures, async/await, streams, and isolates for concurrent programming.', url: 'https://dart.dev/codelabs/async-await', type: 'docs', free: true, source: 'Google / Dart' },
       { id: 'dart-11', title: 'Dart Streams Tutorial', description: 'Learn Dart StreamController, stream transformations, subscriptions, and broadcast streams.', url: 'https://dart.dev/tutorials/language/streams', type: 'docs', free: true, source: 'Google / Dart' },
-      { id: 'dart-5', title: 'Effective Dart', description: 'Google\'s official style guide for writing good Dart. Read this after learning the basics.', url: 'https://dart.dev/guides/language/effective-dart', type: 'docs', free: true, source: 'Google / Dart' },
+      { id: 'dart-12', title: 'Dart — Classes', description: 'Official Dart language guide to classes, constructors, fields, methods, inheritance, and abstract classes for object-oriented modelling.', url: 'https://dart.dev/language/classes', type: 'docs', free: true, source: 'Google / Dart' },
+    { id: 'dart-5', title: 'Effective Dart', description: 'Google\'s official style guide for writing good Dart. Read this after learning the basics.', url: 'https://dart.dev/guides/language/effective-dart', type: 'docs', free: true, source: 'Google / Dart' },
       { id: 'dart-7', title: 'pub.dev', description: 'The official Dart and Flutter package repository. Where you find packages and publish your own.', url: 'https://pub.dev', type: 'tool', free: true, source: 'Google' },
       { id: 'dart-8', title: 'Flutter Official Docs', description: 'Where your Dart skills are applied. The official Flutter documentation — thorough and up to date.', url: 'https://flutter.dev/docs', type: 'docs', free: true, source: 'Google' },
     ],
@@ -4981,8 +5082,8 @@ export const TRACKS: Track[] = [
       { id: 'son-8', title: 'Patrick Collins Solidity Course', description: 'The best free Solidity foundation — complete before or alongside the HackQuest path for deeper understanding.', url: 'https://www.youtube.com/watch?v=umepbfKp5rI', type: 'video', free: true, source: 'Patrick Collins' },
       { id: 'son-6', title: 'OpenZeppelin Contracts', description: 'Battle-tested smart contract libraries fully compatible with Sonic\'s EVM.', url: 'https://docs.openzeppelin.com/contracts', type: 'docs', free: true, source: 'OpenZeppelin' },
       { id: 'son-5', title: 'Foundry Book', description: 'Documentation for Foundry — used in Phase 6 of the HackQuest path and in every serious Sonic project.', url: 'https://book.getfoundry.sh', type: 'docs', free: true, source: 'Paradigm' },
-      { id: 'son-10', title: 'Sonic FeeM Strategy Guide', description: 'Official guide to Sonic\'s Fee Monetization mechanism and how to optimize dApp revenue.', url: 'https://docs.sonic.game/sonic/decentralized-ecosystem/feem', type: 'docs', free: true, source: 'Sonic Labs' },
-      { id: 'son-11', title: 'Deploying to Sonic Mainnet', description: 'Step-by-step guide to deploying your smart contracts on Sonic mainnet from testnet.', url: 'https://docs.sonic.game/sonic/deployment-guide', type: 'docs', free: true, source: 'Sonic Labs' },
+      { id: 'son-10', title: 'Sonic FeeM Strategy Guide', description: 'Official guide to Sonic\'s Fee Monetization mechanism and how to optimize dApp revenue.', url: 'https://docs.sonicsvm.org/', type: 'docs', free: true, source: 'Sonic Labs' },
+      { id: 'son-11', title: 'Deploying to Sonic Mainnet', description: 'Step-by-step guide to deploying your smart contracts on Sonic mainnet from testnet.', url: 'https://www.sonicsvm.org/', type: 'docs', free: true, source: 'Sonic Labs' },
       { id: 'son-7', title: 'Sonic on DefiLlama', description: 'Track Sonic\'s total value locked, protocol growth, and ecosystem development in real time.', url: 'https://defillama.com/chain/Sonic', type: 'tool', free: true, source: 'DefiLlama' },
       { id: 'son-9', title: 'Sonic Discord', description: 'Official Sonic developer community — get help, find collaborators, and stay updated on ecosystem developments.', url: 'https://discord.gg/soniclabs', type: 'community', free: true, source: 'Sonic Labs' },
     ],
@@ -5265,7 +5366,7 @@ export const TRACKS: Track[] = [
   },
   {
     id: 'ai-work',
-    slug: 'ai-for-work',
+    slug: 'ai-work',
     name: 'AI for Work & Productivity',
     tagline: 'Use AI to write, plan, research, and manage your professional work more effectively.',
     category: 'ai',
@@ -6324,7 +6425,7 @@ export const TRACKS: Track[] = [
         title: 'Make Academy',
         description:
           'Free courses on building automations with Make (formerly Integromat). Good for visual workflow learning.',
-        url: 'https://www.make.com/en/academy',
+        url: 'https://academy.make.com/',
         type: 'docs',
         free: true,
         source: 'Make',

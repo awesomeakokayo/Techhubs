@@ -1,6 +1,13 @@
 import { TRACKS, Resource, Project } from './tracks'
+import { getStageLearningPlan, getProjectBrief, STAGE_PROJECT_MAP, PORTFOLIO_PROJECT, type ProjectBrief } from './curriculum'
+import { getExtraProjects, getExtraProject } from './curriculum-extended-projects'
+import { getExtendedStageResourcesForStage } from './curriculum-extended-resources'
+import { getStageWorkedExample } from './stage-worked-examples'
+import { getPackageStageContent } from './curriculum-package/stage-content.generated'
+import type { PublicSubmissionContract } from './project-verification/contract'
+import { questionIdFor } from './quiz-attempts'
 
-export type GuidedStepType = 'concept' | 'resource' | 'project' | 'checkpoint' | 'quiz'
+export type GuidedStepType = 'concept' | 'resource' | 'practice' | 'project' | 'checkpoint' | 'quiz'
 
 export interface GuidedStep {
   index: number
@@ -11,6 +18,9 @@ export interface GuidedStep {
   resourceUrl?: string
   resourceId?: string
   projectId?: string
+  projectLevel?: 'beginner' | 'intermediate' | 'advanced'
+  projectBrief?: ProjectBrief
+  isPortfolio?: boolean
   stageId: number
   quizQuestions?: QuizQuestion[]
   topics?: string[]
@@ -18,22 +28,94 @@ export interface GuidedStep {
   resourceType?: string
   resourceSource?: string
   resourceFree?: boolean
+  /** Imported content is explicitly labelled until a named review is recorded. */
+  contentReviewStatus?: 'needs_human_review'
+  contentProvenance?: Record<string, unknown>
+  /** A historical completion is preserved, but was not scored on this quiz version. */
+  legacyGrandfathered?: boolean
 }
 
 export type QuizCognitiveLevel = 'recall' | 'understand' | 'apply' | 'analyze' | 'evaluate'
 
 export interface QuizQuestion {
+  /** Stable package question id; legacy authored questions may omit it. */
+  id?: string
   question: string
   options: string[]
   correctIndex: number
   explanation: string
+  /** Weight out of 100. If any question supplies points, every question must. */
+  points?: number
+  /** A missed critical question fails the attempt regardless of the total score. */
+  critical?: boolean
+  /** Objective the question assesses, used for remediation without revealing the key. */
+  objective?: string
+  /** Optional remediation note retained server-side for a missed question. */
+  feedbackOnIncorrect?: string | null
+  difficulty?: string | null
   /** Curriculum provenance. AI assessments populate these explicitly in Phase 6. */
   teachingSource?: string
   teachingStageId?: number
   cognitiveLevel?: QuizCognitiveLevel
+  /** Imported content remains explicitly unapproved until a named review is recorded. */
+  reviewStatus?: 'needs_human_review' | 'reviewed'
+  provenance?: Record<string, unknown>
 }
 
-const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
+/** A quiz question as sent to the client: never includes the answer or rationale. */
+export type PublicQuizQuestion = Pick<
+  QuizQuestion,
+  'id' | 'question' | 'options' | 'points' | 'objective' | 'difficulty' | 'teachingSource' | 'teachingStageId' | 'cognitiveLevel' | 'reviewStatus'
+>
+
+/** Public submission-assessment state attached to a project step. */
+export interface PublicSubmissionState {
+  status: string
+  code?: string | null
+  reviewSummary?: string | null
+  criteria?: { criterionId: string; status: string; evidence: string; feedback: string; suggestedFix?: string; confidence: number }[] | null
+  decision?: { outcome: string; score: number; decisionReason: string } | null
+  warnings?: string[]
+  reason?: string | null
+  helpGuideId?: string | null
+  evidenceFingerprint?: string | null
+  attemptCount?: number
+  minWords?: number | null
+  wordCount?: number | null
+  artifacts?: { kind: string; url: string }[]
+  explanation?: string
+}
+
+/** A guided step as sent to the client: quiz answers are stripped. */
+export type PublicGuidedStep = Omit<GuidedStep, 'quizQuestions'> & {
+  quizQuestions?: PublicQuizQuestion[]
+  submissionContract?: PublicSubmissionContract
+  submission?: PublicSubmissionState | null
+}
+
+/** Remove answers and explanations before a step leaves the server. */
+export function toPublicStep(step: GuidedStep): PublicGuidedStep {
+  if (step.type !== 'quiz' || !step.quizQuestions) return step
+  return {
+    ...step,
+    quizQuestions: step.quizQuestions.map((question, index) => ({
+      // Legacy authored questions have no stored id. Derive the same stable id
+      // the grader uses so the client can submit an answer to every question.
+      id: questionIdFor(question, index, step.stageId),
+      question: question.question,
+      options: question.options,
+      points: question.points,
+      objective: question.objective,
+      difficulty: question.difficulty,
+      teachingSource: question.teachingSource,
+      teachingStageId: question.teachingStageId,
+      cognitiveLevel: question.cognitiveLevel,
+      reviewStatus: question.reviewStatus,
+    })),
+  }
+}
+
+export const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
   frontend: {
     'fe-0a': 1,
     'fe-1': 1, 'fe-2': 1, 'fe-5': 1, 'fe-9': 1, 'fe-10': 1,
@@ -166,32 +248,42 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'tw-5': 1, 'tw-6': 2, 'tw-7': 3,
   },
   crypto: {
-    'cr-0a': 1, 'cr-0b': 3,
-    'cr-1': 1, 'cr-2': 1, 'cr-3': 3,
-    'cr-4': 3, 'cr-5': 3, 'cr-6': 4,
-    'cr-7': 3, 'cr-8': 6, 'cr-9': 6,
-    'cr-10': 6, 'cr-11': 5, 'cr-12': 4,
-    'cr-13': 7, 'cr-14': 6, 'cr-15': 3,
-    'cr-16': 5, 'cr-17': 6, 'cr-18': 4,
-    'cr-19': 1, 'cr-20': 4,
+    'cr-0a': 1, 'cr-1': 1, 'cr-2': 1, 'cr-19': 1,
     'cr-21': 2, 'cr-22': 2,
+    'cr-3': 3, 'cr-4': 3, 'cr-5': 3, 'cr-15': 3,
+    'cr-6': 4, 'cr-7': 4, 'cr-0b': 4,
+    'cr-12': 5, 'cr-18': 5, 'cr-20': 5,
+    'cr-11': 7, 'cr-16': 8,
+    'cr-8': 9, 'cr-9': 9, 'cr-10': 9, 'cr-14': 9,
+    'cr-17': 10,
+    'cr-13': 11,
+    'cr-23': 6,
   },
   projectmgmt: {
-    'pm-1': 1, 'pm-2': 2, 'pm-3': 2, 'pm-4': 1,
-    'pm-5': 3, 'pm-6': 2, 'pm-7': 5, 'pm-8': 3, 'pm-9': 3,
-    'pm-10': 4, 'pm-11': 4,
+    'pm-1': 1, 'pm-4': 1,
+    'pm-6': 2,
+    'pm-2': 3, 'pm-3': 3,
+    'pm-5': 4, 'pm-8': 4, 'pm-9': 4,
+    'pm-10': 5, 'pm-11': 5,
+    'pm-7': 6,
+    'pm-12': 6,
   },
   productmgmt: {
-    'prd-1': 1, 'prd-2': 7, 'prd-3': 1,
-    'prd-4': 7, 'prd-5': 3, 'prd-6': 5,
-    'prd-7': 5, 'prd-8': 7, 'prd-9': 6,
-    'prd-10': 2, 'prd-11': 2, 'prd-12': 4, 'prd-13': 4,
+    'prd-1': 1, 'prd-3': 1,
+    'prd-10': 2,
+    'prd-5': 3,
+    'prd-11': 4, 'prd-12': 4, 'prd-13': 4,
+    'prd-6': 5,
+    'prd-7': 6,
+    'prd-9': 7,
+    'prd-2': 8, 'prd-4': 8, 'prd-8': 8,
   },
   dart: {
     'dart-1': 1, 'dart-2': 1, 'dart-3': 1,
     'dart-4': 1, 'dart-5': 4, 'dart-6': 1,
     'dart-7': 4, 'dart-8': 4,
-    'dart-9': 2, 'dart-10': 3, 'dart-11': 3,
+    'dart-10': 3, 'dart-11': 3,
+    'dart-12': 2,
   },
   sonic: {
     'son-1': 1, 'son-2': 2, 'son-3': 3,
@@ -199,6 +291,26 @@ const RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
     'son-7': 2, 'son-8': 3, 'son-9': 5,
     'son-10': 6, 'son-11': 6,
   },
+}
+
+function formatBrief(brief: ProjectBrief): string {
+  const list = (items: string[]) => items.map((item) => `• ${item}`).join('\n')
+  const sections = [
+    'THE PROBLEM\n' + brief.problem,
+    'WHO IT IS FOR\n' + brief.audience,
+    'OBJECTIVE\n' + brief.objective,
+  ]
+  if (brief.prerequisites?.length) sections.push('PREREQUISITES\n' + list(brief.prerequisites))
+  sections.push(
+    'FUNCTIONAL REQUIREMENTS\n' + list(brief.functionalRequirements),
+    'CONSTRAINTS\n' + list(brief.constraints),
+    'MILESTONES\n' + list(brief.milestones),
+    'ACCEPTANCE CRITERIA\n' + list(brief.acceptanceCriteria),
+    'EVIDENCE TO SUBMIT\n' + list(brief.evidence),
+  )
+  if (brief.commonFailureCases?.length) sections.push('COMMON FAILURE CASES\n' + list(brief.commonFailureCases))
+  sections.push('STRETCH GOAL\n' + brief.stretchGoal)
+  return sections.join('\n\n')
 }
 
 export function buildGuidedPath(trackId: string): GuidedStep[] {
@@ -209,21 +321,65 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
   let index = 0
 
   for (const stage of track.roadmap) {
+    const plan = getStageLearningPlan(trackId, stage.id)
+    const packageStage = getPackageStageContent(trackId, stage.id)
+    const workedExample = getStageWorkedExample(trackId, stage.id) ?? packageStage?.workedExample ?? null
+    const objective = packageStage?.objective ?? plan?.objective
+    const successCriteria =
+      packageStage?.targetOutcomes?.length ? packageStage.targetOutcomes : (plan?.successCriteria ?? [])
+    const commonMistakes =
+      packageStage?.commonMistakes?.length ? packageStage.commonMistakes : (plan?.commonMistakes ?? [])
+    const concepts = packageStage?.topics?.length ? packageStage.topics : stage.topics
+    const conceptDescription = objective
+      ? [
+          stage.description,
+          `OBJECTIVE\n${objective}`,
+          concepts.length ? `CORE TOPICS\n${concepts.map((item) => `- ${item}`).join('\n')}` : '',
+          successCriteria.length ? `SUCCESS CRITERIA\n${successCriteria.map((item) => `- ${item}`).join('\n')}` : '',
+          packageStage?.prerequisites?.length
+            ? `BEFORE YOU START\n${packageStage.prerequisites.map((item) => `- ${item}`).join('\n')}`
+            : '',
+          workedExample ? `WORKED EXAMPLE\n${workedExample}` : '',
+          commonMistakes.length ? `COMMON MISTAKES\n${commonMistakes.map((item) => `- ${item}`).join('\n')}` : '',
+          'Before the knowledge check, complete the guided practice and be able to explain each decision you made.',
+        ]
+          .filter(Boolean)
+          .join('\n\n')
+      : stage.description
+
     steps.push({
       index: index++,
       type: 'concept',
       title: stage.title,
-      description: stage.description,
+      description: conceptDescription,
       estimatedTime: stage.duration,
       stageId: stage.id,
-      topics: stage.topics,
+      topics: concepts,
+      ...(packageStage
+        ? {
+            contentReviewStatus: 'needs_human_review' as const,
+            contentProvenance: {
+              package: packageStage.packageProvenance.package,
+              sourcePackageHash: packageStage.packageProvenance.sourcePackageHash,
+              instructionNote: packageStage.instructionNote,
+              resourceStatus: packageStage.resourceDisposition.status,
+              resourceRequired: packageStage.resourceDisposition.required,
+              resourceReason: packageStage.resourceDisposition.reason,
+            },
+          }
+        : {}),
     })
 
-    const stageResources = track.resources.filter((resource) => {
-      const map = RESOURCE_STAGE_MAP[trackId]
-      if (!map) return false
-      return map[resource.id] === stage.id
-    })
+    const stageResources = [
+      // Researched, content-verified resources first, then the base catalogue
+      // resources. De-duplicated by URL so the learner never sees a repeat.
+      ...getExtendedStageResourcesForStage(trackId, stage.id),
+      ...track.resources.filter((resource) => {
+        const map = RESOURCE_STAGE_MAP[trackId]
+        if (!map) return false
+        return map[resource.id] === stage.id
+      }),
+    ].filter((resource, position, all) => all.findIndex((other) => other.url === resource.url) === position)
 
     for (const resource of stageResources) {
       steps.push({
@@ -240,9 +396,119 @@ export function buildGuidedPath(trackId: string): GuidedStep[] {
         resourceFree: resource.free,
       })
     }
+
+    const practiceInstructions = packageStage?.practice?.instructions ?? plan?.exercise ?? null
+    if (practiceInstructions) {
+      const practiceBody = [
+        practiceInstructions,
+        packageStage?.practice?.expectedOutput ? `WHAT TO PRODUCE\n${packageStage.practice.expectedOutput}` : '',
+        packageStage?.practice?.hints?.length
+          ? `HINTS\n${packageStage.practice.hints.map((item) => `- ${item}`).join('\n')}`
+          : '',
+        /This is ungraded practice/i.test(practiceInstructions)
+          ? ''
+          : 'This is ungraded practice. Complete it before the knowledge check so you can answer from experience, not memory.',
+      ]
+        .filter(Boolean)
+        .join('\n\n')
+      steps.push({
+        index: index++,
+        type: 'practice',
+        title: `Practice: ${stage.title}`,
+        description: `DO THIS NOW\n${practiceBody}`,
+        estimatedTime: packageStage?.practice ? '20-45 min' : '20-45 min',
+        stageId: stage.id,
+        resourceType: 'practice',
+        resourceSource: 'TechSkillHub Guided Practice',
+        resourceFree: true,
+        ...(packageStage?.practice
+          ? {
+              contentReviewStatus: 'needs_human_review' as const,
+              contentProvenance: {
+                package: '06_STAGE_MASTERY_AND_PRACTICE.json',
+                stageId: stage.id,
+                resourceStatus: packageStage.resourceDisposition.status,
+                resourceRequired: packageStage.resourceDisposition.required,
+                resourceReason: packageStage.resourceDisposition.reason,
+              },
+            }
+          : {}),
+      })
+    }
+
+    const quizQuestions: QuizQuestion[] | undefined = packageStage?.quiz?.length
+      ? packageStage.quiz.map((question) => ({
+          ...question,
+          reviewStatus: 'needs_human_review' as const,
+          provenance: question.provenance as unknown as Record<string, unknown>,
+        }))
+      : plan?.knowledgeCheck
+
+    if (quizQuestions?.length) {
+      steps.push({
+        index: index++,
+        type: 'quiz',
+        title: `Knowledge check: ${stage.title}`,
+        description: 'Answer from what you learned in this stage. Your answers are validated on the server and you can retry freely.',
+        estimatedTime: '5-10 min',
+        stageId: stage.id,
+        quizQuestions,
+        ...(packageStage
+          ? {
+              contentReviewStatus: 'needs_human_review' as const,
+              contentProvenance: {
+                package: '05_QUIZ_BANK.jsonl',
+                sourcePackageHash: packageStage.packageProvenance.sourcePackageHash,
+                quizVersion: 'computed server-side',
+                resourceStatus: packageStage.resourceDisposition.status,
+                resourceRequired: packageStage.resourceDisposition.required,
+                resourceReason: packageStage.resourceDisposition.reason,
+              },
+            }
+          : {}),
+      })
+    }
+
+    const stageProjectId = STAGE_PROJECT_MAP[trackId]?.[stage.id]
+    const catalogueProjects = [...track.projects, ...getExtraProjects(trackId)]
+    const stageProject = catalogueProjects.find((project) => project.id === stageProjectId)
+    if (stageProject) {
+      steps.push(makeProjectStep(index++, stageProject, stage.id, false))
+    }
+  }
+
+  const portfolioId = PORTFOLIO_PROJECT[trackId]
+  const portfolioProject = [...track.projects, ...getExtraProjects(trackId)].find((project) => project.id === portfolioId)
+  if (portfolioProject) {
+    steps.push(makeProjectStep(index++, portfolioProject, track.roadmap.length, true))
   }
 
   return steps
+}
+
+function makeProjectStep(
+  index: number,
+  project: Project,
+  stageId: number,
+  isPortfolio: boolean,
+): GuidedStep {
+  const brief = getProjectBrief(project.id, project.level, project.title)
+  return {
+    index,
+    type: 'project',
+    title: `${isPortfolio ? 'Portfolio project' : 'Build'}: ${project.title}`,
+    description: `${project.description}\n\n${formatBrief(brief)}`,
+    estimatedTime: isPortfolio ? '3–10 days' : '1–3 days',
+    projectId: project.id,
+    projectLevel: project.level,
+    projectBrief: brief,
+    isPortfolio,
+    stageId,
+    techTags: project.techTags,
+    resourceType: 'build',
+    resourceSource: 'TechSkillHub Project Brief',
+    resourceFree: true,
+  }
 }
 
 export function getProject(projectId: string): Project | undefined {
@@ -250,5 +516,70 @@ export function getProject(projectId: string): Project | undefined {
     const project = track.projects?.find((item) => item.id === projectId)
     if (project) return project
   }
-  return undefined
+  return getExtraProject(projectId)
 }
+
+/**
+ * Minimum number of correct answers required to pass a knowledge check.
+ *
+ * AI stages keep the 80% mastery bar. Authored non-AI checks are short (three
+ * questions), so they allow a single mistake rather than demanding a perfect
+ * score. Used by both the server route and the client so they never disagree.
+ */
+export function requiredCorrectFor(trackId: string, total: number): number {
+  if (total <= 0) return 0
+  if (trackId.startsWith('ai-')) return Math.ceil(total * 0.8)
+  return Math.max(1, total - 1)
+}
+
+/* --------------------------------------------------------------------------
+ * Guided-path versioning
+ *
+ * A guided path's step indices are meaningful only for the path version that
+ * produced them, so every track whose step list changes carries a bumped
+ * version and its enrollments are remapped on load.
+ *
+ * The remap is NOT a restart: `lib/path-compat.ts` reconstructs the learner's
+ * completed steps from their stable activity records and preserves their
+ * position, adopting steps that were added after they passed them and never
+ * skipping a mandatory assessment. See `lib/path-enrollment.ts` for the
+ * database-facing migration. `expectedPathVersion` below is the pure,
+ * dependency-light part (which version a track is on), so it stays here.
+ * ------------------------------------------------------------------------ */
+
+export const GUIDED_PATH_VERSION = 2
+export const AI_GUIDED_PATH_VERSION = 6
+/** Applied only to tracks whose path gained authored steps or was restructured. */
+export const EXTENDED_PATH_VERSION = 3
+/**
+ * Applied to tracks whose step shape changed in the curriculum-excellence and
+ * evidence-verification passes: embedded stage projects
+ * (`lib/curriculum-extended-projects.ts`) and/or researched, content-verified
+ * stage resources (`lib/curriculum-extended-resources.ts`). Old step indices
+ * cannot be translated safely across those changes.
+ */
+export const CONTENT_STEP_PATH_VERSION = 6
+export const CONTENT_STEP_TRACK_IDS = new Set([
+  'fullstack',
+  'datascience',
+  'devops',
+  'youtube',
+  'ai',
+  'writing',
+  'projectmgmt',
+  'dart',
+  'productmgmt',
+  'sonic',
+  'crypto',
+  'python',
+  'uiux',
+  'data',
+  'cyber',
+])
+
+export function expectedPathVersion(trackId: string, isExtended: boolean): number {
+  if (trackId.startsWith('ai-')) return AI_GUIDED_PATH_VERSION
+  if (CONTENT_STEP_TRACK_IDS.has(trackId)) return CONTENT_STEP_PATH_VERSION
+  return isExtended ? EXTENDED_PATH_VERSION : GUIDED_PATH_VERSION
+}
+

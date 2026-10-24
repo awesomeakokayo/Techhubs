@@ -1,4 +1,8 @@
 import { prisma } from '@/lib/prisma'
+import { entitlementsEnforcedForUser, shadowEvaluationEnabled } from '@/lib/commercial/rollout'
+import { premiumTrackIds } from '@/lib/commercial/plans'
+import { decideTrackAccess, logShadowDecision } from '@/lib/commercial/shadow'
+import { getEntitlementSnapshot } from '@/lib/commercial/service'
 import type {
   AccessSource,
   PaymentProvider,
@@ -16,14 +20,38 @@ export interface GrantInput {
 }
 
 /**
- * TechSkillHub learning is now fully free and open-source.
+ * Server-side access check for a track.
  *
- * The existing purchase/subscription tables remain available for historical
- * compatibility, but access to tracks and guided paths no longer depends on
- * payment state.
+ * Enforcement is DISABLED by default: neither `COMMERCE_ENTITLEMENTS_ENFORCED`
+ * nor a pilot cohort is set, so this returns `true` and every learner keeps
+ * exactly the access they have today. When (and only when) the commercial
+ * transition and grandfathering rules are approved and enforcement is enabled —
+ * globally or for a server-side pilot cohort — Premium tracks require a verified
+ * Track Pass or Pro entitlement, derived server-side from provider-verified
+ * state.
+ *
+ * When shadow evaluation is enabled (`COMMERCE_SHADOW_EVAL=true`) while
+ * enforcement is off, the proposed premium decision is computed and a redacted
+ * diagnostic is logged, but the returned value is still `true`: shadow mode can
+ * never change access.
+ *
+ * A client-provided flag, badge or query parameter can never influence this.
  */
-export async function hasTrackAccess(_userId: string, _trackId: string): Promise<boolean> {
-  return true
+export async function hasTrackAccess(userId: string, trackId: string): Promise<boolean> {
+  const enforced = entitlementsEnforcedForUser(userId)
+  const shadow = !enforced && shadowEvaluationEnabled()
+  if (!enforced && !shadow) return true
+
+  const snapshot = await getEntitlementSnapshot(prisma, userId)
+  const decision = decideTrackAccess({
+    enforced,
+    shadow,
+    snapshot,
+    trackId,
+    premiumIds: premiumTrackIds(),
+  })
+  if (shadow) logShadowDecision(decision, { userId, trackId })
+  return decision.allowed
 }
 
 /** Grant or extend per-course access for legacy compatibility. New learning

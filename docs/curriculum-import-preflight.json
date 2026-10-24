@@ -1,0 +1,3089 @@
+{
+  "schema": "tsh-curriculum-import-preflight/v1",
+  "generatedAt": "2026-10-21",
+  "mode": "read-only",
+  "repository": {
+    "root": "C:/Tech Skill Hub",
+    "branch": "feat/retention-v3",
+    "head": "8c1a1154a45c735c3d418b2fa9b8cc7d385a6641",
+    "headCommitDate": "2026-10-09T12:44:41+01:00",
+    "dirtyTree": {
+      "total": 236,
+      "modified": 46,
+      "deleted": 49,
+      "untracked": 141
+    },
+    "stashes": 0,
+    "extraWorktrees": 0,
+    "localBackupFound": false
+  },
+  "package": {
+    "location": "local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/research_package/TechSkillHUB_Curriculum_Research_Deliverables/",
+    "fileCount": 19,
+    "zipSha256Prefix": "1da422ca",
+    "internalProvenanceSha256": "ec2ff32e9f7c805cc9c6db1972426fdbe412a31ec3487ace1993867ae3cf6266",
+    "provenanceNote": "The two hashes identify different objects: the extracted deliverables ZIP and the source resource archive recorded in research-progress.json. They are not expected to match."
+  },
+  "verdict": {
+    "code": "conditional_go_pilot_only",
+    "implementationMayStart": true,
+    "implementationScope": "Branch-confined, feature-flagged, internal staging plus P0 runtime contracts. No learner-facing wiring, no paid activation, no launch claims.",
+    "learnerFacingLaunchSafe": false,
+    "paidActivationSafe": false,
+    "headline": "Mechanical reconciliation passes, but assessment integrity, project contracts, AI discipline routing, and current resource verification do not. Start only as a gated pilot.",
+    "conditions": [
+      "Fix quiz answer-key exposure and attempt/version persistence before any learner sees a quiz.",
+      "Fix artifact-kind validation, AI discipline routing, and rubric provenance before any project is assessed.",
+      "Keep all 143 provisional resources provisional and all 43 blocked stages optional-only.",
+      "Do not claim current URL, free-access, content-match, or playback verification; none exists.",
+      "Do not change commercial gates, entitlements, credits, pricing, or deployment."
+    ]
+  },
+  "baseline": {
+    "packagePresentBeforePreflight": true,
+    "localResearchDirectoryCreated": true,
+    "applicationFilesModifiedByPreflight": 0,
+    "outputs": [
+      "docs/curriculum-import-preflight.md",
+      "docs/curriculum-import-preflight.json"
+    ]
+  },
+  "reconciled": {
+    "tracks": 32,
+    "stages": 186,
+    "stageTitleMismatches": 0,
+    "stageIdMismatches": 0,
+    "quizQuestions": 930,
+    "quizQuestionsPerStage": 5,
+    "quizPointsPerStage": 100,
+    "uniqueQuizIds": 930,
+    "answerKeyIntegrity": "pass",
+    "masteryRecords": 186,
+    "masteryWeightTotalsValid": true,
+    "projects": 125,
+    "uniqueProjectIds": 125,
+    "projectsResolvable": 125,
+    "projectsResolvableBeforeLoadingAiModules": 115,
+    "aiCapstonesConfirmed": [
+      "ai-f-p3",
+      "ai-w-p4",
+      "ai-r-p2",
+      "ai-c-p4",
+      "ai-y-p3",
+      "ai-s-p4",
+      "ai-a-p2",
+      "ai-ag-p2",
+      "ai-e-p2",
+      "ai-d-p2"
+    ],
+    "projectNote": "All 10 AI capstones exist in lib/ai-curriculum.ts, lib/ai-projects.ts, and lib/ai-project-briefs.ts. The package open-issue rows claiming 10 missing normalized briefs are stale against the current repository.",
+    "resourceCandidates": 610,
+    "resourceCandidatesL3": 208,
+    "resourceCandidatesL2": 402,
+    "resourceMapRows": 584,
+    "resourceMapTracks": 32,
+    "resourceMapStages": 186,
+    "verificationLogRows": 1021,
+    "openIssues": 268,
+    "openIssuesCritical": 19,
+    "openIssuesBlocker": 2,
+    "openIssuesSmeReview": 186,
+    "openIssuesResourceGate": 43,
+    "liveReverifiedStages": 0,
+    "playbackVerified": 0,
+    "liveSearchResultInspections": 10,
+    "failedDirectFetches": 3,
+    "projectCountNote": "125 phase/capstone projects plus 66 synthetic section-mastery contracts. The 191 project/assessment records are 125 + 66, not 191 projects."
+  },
+  "resourceMap": {
+    "filename": "04_APPROVED_RESOURCE_MAP.csv",
+    "status": "provisional_not_approved",
+    "decisions": {
+      "provisional_primary_pending_current_access_and_sme": 143,
+      "blocked_primary_not_instructional_or_no_objective_match": 43,
+      "keep_candidate_pending_fresh_check_and_sme": 207,
+      "hold_not_required_until_content_and_free_access_verified": 95,
+      "human_objective_match_review_required": 57,
+      "keep_as_optional_practice_tool_not_primary_instruction": 29,
+      "remove_from_required_path_access_or_destination_blocked": 9,
+      "hold_as_optional_deep_dive_until_segment_and_runtime_checked": 1
+    },
+    "freeAccessLabels": {
+      "public_free": 156,
+      "public_free_at_archive_probe": 52,
+      "unverified_for_required_portion": 402
+    },
+    "duplicateCandidateUrls": 82,
+    "duplicateMapUrlRows": 178,
+    "runtimeMinimumVerificationLevel": 3,
+    "promotionRule": "No resource becomes a required primary without a current page check, exact-portion check, access/account/paywall check, objective match, and named human sign-off.",
+    "accessCheckedByVerificationPredicate": false
+  },
+  "repositoryResources": {
+    "rows": 398,
+    "distinctStageCount": 186,
+    "stagesWithL3": 186,
+    "levels": {
+      "L2": 100,
+      "L3": 298
+    },
+    "access": {
+      "free": 398
+    },
+    "roles": {
+      "required": 398
+    },
+    "duplicateUrlRows": 44,
+    "probeDate": "2026-10-17",
+    "evidenceEra": "archive",
+    "warning": "All 398 rows are archive-era evidence. They do not prove current availability, free access, or objective match."
+  },
+  "perTrack": [
+    {
+      "trackId": "frontend",
+      "trackTitle": "Frontend Development",
+      "stageCount": 5,
+      "blockedCount": 1,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        5
+      ],
+      "stages": [
+        {
+          "key": "frontend:1",
+          "stageId": 1,
+          "title": "Foundations",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "frontend:2",
+          "stageId": 2,
+          "title": "Core JavaScript",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "frontend:3",
+          "stageId": 3,
+          "title": "React Framework",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "frontend:4",
+          "stageId": 4,
+          "title": "Professional Skills",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "frontend:5",
+          "stageId": 5,
+          "title": "AI-Assisted Workflow",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "backend",
+      "trackTitle": "Backend Development",
+      "stageCount": 5,
+      "blockedCount": 1,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        1
+      ],
+      "stages": [
+        {
+          "key": "backend:1",
+          "stageId": 1,
+          "title": "Foundations",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "backend:2",
+          "stageId": 2,
+          "title": "Core Backend",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "backend:3",
+          "stageId": 3,
+          "title": "Databases",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "backend:4",
+          "stageId": 4,
+          "title": "Advanced Backend",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "backend:5",
+          "stageId": 5,
+          "title": "Deployment",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "fullstack",
+      "trackTitle": "Full-Stack Development",
+      "stageCount": 5,
+      "blockedCount": 3,
+      "provisionalCount": 2,
+      "blockedStageIds": [
+        1,
+        2,
+        4
+      ],
+      "stages": [
+        {
+          "key": "fullstack:1",
+          "stageId": 1,
+          "title": "Complete Frontend Track",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "fullstack:2",
+          "stageId": 2,
+          "title": "Complete Backend Track",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "fullstack:3",
+          "stageId": 3,
+          "title": "Integration",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "fullstack:4",
+          "stageId": 4,
+          "title": "Full Deployment",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "fullstack:5",
+          "stageId": 5,
+          "title": "Production Patterns",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "python",
+      "trackTitle": "Python Development",
+      "stageCount": 5,
+      "blockedCount": 1,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        5
+      ],
+      "stages": [
+        {
+          "key": "python:1",
+          "stageId": 1,
+          "title": "Python Basics",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "python:2",
+          "stageId": 2,
+          "title": "Intermediate Python",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "python:3",
+          "stageId": 3,
+          "title": "Python for the Web",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "python:4",
+          "stageId": 4,
+          "title": "Automation & Scripting",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "python:5",
+          "stageId": 5,
+          "title": "Python + AI",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "uiux",
+      "trackTitle": "UI/UX Design",
+      "stageCount": 5,
+      "blockedCount": 1,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        4
+      ],
+      "stages": [
+        {
+          "key": "uiux:1",
+          "stageId": 1,
+          "title": "Design Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "uiux:2",
+          "stageId": 2,
+          "title": "UX Foundations",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "uiux:3",
+          "stageId": 3,
+          "title": "Figma Mastery",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "uiux:4",
+          "stageId": 4,
+          "title": "Advanced UX",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "uiux:5",
+          "stageId": 5,
+          "title": "Portfolio & Case Studies",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "qa",
+      "trackTitle": "QA Engineering",
+      "stageCount": 4,
+      "blockedCount": 0,
+      "provisionalCount": 4,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "qa:1",
+          "stageId": 1,
+          "title": "Testing Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "qa:2",
+          "stageId": 2,
+          "title": "Tools & API Testing",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "qa:3",
+          "stageId": 3,
+          "title": "Test Automation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "qa:4",
+          "stageId": 4,
+          "title": "Advanced QA",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "data",
+      "trackTitle": "Data Analysis",
+      "stageCount": 5,
+      "blockedCount": 0,
+      "provisionalCount": 5,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "data:1",
+          "stageId": 1,
+          "title": "Spreadsheets & Excel",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "data:2",
+          "stageId": 2,
+          "title": "SQL Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "data:3",
+          "stageId": 3,
+          "title": "Python for Data",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "data:4",
+          "stageId": 4,
+          "title": "BI & Visualization Tools",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "data:5",
+          "stageId": 5,
+          "title": "Statistics Basics",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "datascience",
+      "trackTitle": "Data Science",
+      "stageCount": 5,
+      "blockedCount": 0,
+      "provisionalCount": 5,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "datascience:1",
+          "stageId": 1,
+          "title": "Prerequisite: Data Analysis",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "datascience:2",
+          "stageId": 2,
+          "title": "Statistics & Math",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "datascience:3",
+          "stageId": 3,
+          "title": "Machine Learning",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "datascience:4",
+          "stageId": 4,
+          "title": "Deep Learning Basics",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "datascience:5",
+          "stageId": 5,
+          "title": "MLOps & Deployment",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "devops",
+      "trackTitle": "DevOps Engineering",
+      "stageCount": 5,
+      "blockedCount": 3,
+      "provisionalCount": 2,
+      "blockedStageIds": [
+        1,
+        2,
+        5
+      ],
+      "stages": [
+        {
+          "key": "devops:1",
+          "stageId": 1,
+          "title": "Linux & Networking",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "devops:2",
+          "stageId": 2,
+          "title": "Version Control & CI/CD",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "devops:3",
+          "stageId": 3,
+          "title": "Containers & Docker",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "devops:4",
+          "stageId": 4,
+          "title": "Cloud & Orchestration",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "devops:5",
+          "stageId": 5,
+          "title": "Monitoring & Security",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "cyber",
+      "trackTitle": "Cybersecurity",
+      "stageCount": 4,
+      "blockedCount": 1,
+      "provisionalCount": 3,
+      "blockedStageIds": [
+        4
+      ],
+      "stages": [
+        {
+          "key": "cyber:1",
+          "stageId": 1,
+          "title": "Networking Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "cyber:2",
+          "stageId": 2,
+          "title": "Security Concepts",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "cyber:3",
+          "stageId": 3,
+          "title": "Ethical Hacking",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "cyber:4",
+          "stageId": 4,
+          "title": "Defensive Security",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "mobile",
+      "trackTitle": "Mobile Development",
+      "stageCount": 4,
+      "blockedCount": 1,
+      "provisionalCount": 3,
+      "blockedStageIds": [
+        4
+      ],
+      "stages": [
+        {
+          "key": "mobile:1",
+          "stageId": 1,
+          "title": "Prerequisites",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "mobile:2",
+          "stageId": 2,
+          "title": "Core Mobile Development",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "mobile:3",
+          "stageId": 3,
+          "title": "Firebase & Backend",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "mobile:4",
+          "stageId": 4,
+          "title": "Publishing & Polish",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "video",
+      "trackTitle": "Video Editing",
+      "stageCount": 4,
+      "blockedCount": 1,
+      "provisionalCount": 3,
+      "blockedStageIds": [
+        2
+      ],
+      "stages": [
+        {
+          "key": "video:1",
+          "stageId": 1,
+          "title": "Editing Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "video:2",
+          "stageId": 2,
+          "title": "Storytelling & Pacing",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "video:3",
+          "stageId": 3,
+          "title": "Visual Effects & Graphics",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "video:4",
+          "stageId": 4,
+          "title": "Platform-Specific Editing",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "youtube",
+      "trackTitle": "YouTube Automation",
+      "stageCount": 4,
+      "blockedCount": 3,
+      "provisionalCount": 1,
+      "blockedStageIds": [
+        2,
+        3,
+        4
+      ],
+      "stages": [
+        {
+          "key": "youtube:1",
+          "stageId": 1,
+          "title": "Channel Strategy",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "youtube:2",
+          "stageId": 2,
+          "title": "Content Production",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "youtube:3",
+          "stageId": 3,
+          "title": "Growth & SEO",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "youtube:4",
+          "stageId": 4,
+          "title": "Monetization",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "marketing",
+      "trackTitle": "Digital Marketing",
+      "stageCount": 4,
+      "blockedCount": 0,
+      "provisionalCount": 4,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "marketing:1",
+          "stageId": 1,
+          "title": "Marketing Foundations",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "marketing:2",
+          "stageId": 2,
+          "title": "Core Channels",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "marketing:3",
+          "stageId": 3,
+          "title": "Paid Advertising",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "marketing:4",
+          "stageId": 4,
+          "title": "Analytics & Optimization",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai",
+      "trackTitle": "AI for Work & Productivity",
+      "stageCount": 4,
+      "blockedCount": 2,
+      "provisionalCount": 2,
+      "blockedStageIds": [
+        2,
+        3
+      ],
+      "stages": [
+        {
+          "key": "ai:1",
+          "stageId": 1,
+          "title": "Understanding AI Tools",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai:2",
+          "stageId": 2,
+          "title": "Prompt Engineering",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai:3",
+          "stageId": 3,
+          "title": "AI for Your Field",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai:4",
+          "stageId": 4,
+          "title": "AI Ethics & Verification",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "nocode",
+      "trackTitle": "No-Code Development",
+      "stageCount": 3,
+      "blockedCount": 1,
+      "provisionalCount": 2,
+      "blockedStageIds": [
+        2
+      ],
+      "stages": [
+        {
+          "key": "nocode:1",
+          "stageId": 1,
+          "title": "Website Building",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "nocode:2",
+          "stageId": 2,
+          "title": "App Building",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "nocode:3",
+          "stageId": 3,
+          "title": "Automation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "writing",
+      "trackTitle": "Technical Writing",
+      "stageCount": 4,
+      "blockedCount": 1,
+      "provisionalCount": 3,
+      "blockedStageIds": [
+        4
+      ],
+      "stages": [
+        {
+          "key": "writing:1",
+          "stageId": 1,
+          "title": "Writing Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "writing:2",
+          "stageId": 2,
+          "title": "Tools & Formats",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "writing:3",
+          "stageId": 3,
+          "title": "Documentation Types",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "writing:4",
+          "stageId": 4,
+          "title": "Portfolio & Specialization",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "crypto",
+      "trackTitle": "Crypto & Web3",
+      "stageCount": 11,
+      "blockedCount": 6,
+      "provisionalCount": 5,
+      "blockedStageIds": [
+        5,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "stages": [
+        {
+          "key": "crypto:1",
+          "stageId": 1,
+          "title": "How Blockchain Actually Works",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "crypto:2",
+          "stageId": 2,
+          "title": "Wallets, Keys & On-Chain Security",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "crypto:3",
+          "stageId": 3,
+          "title": "Solidity Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "crypto:4",
+          "stageId": 4,
+          "title": "Token Standards & Development Tooling",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "crypto:5",
+          "stageId": 5,
+          "title": "DeFi Core Mechanics",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "crypto:6",
+          "stageId": 6,
+          "title": "DeFi Risks & Advanced Concepts",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "crypto:7",
+          "stageId": 7,
+          "title": "Web3 Frontend Foundations",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "crypto:8",
+          "stageId": 8,
+          "title": "dApp Data & Storage",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "crypto:9",
+          "stageId": 9,
+          "title": "Common Smart Contract Vulnerabilities",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "crypto:10",
+          "stageId": 10,
+          "title": "Auditing Tools & Practice",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "crypto:11",
+          "stageId": 11,
+          "title": "On-Chain Data Analysis",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "projectmgmt",
+      "trackTitle": "Project Management",
+      "stageCount": 6,
+      "blockedCount": 0,
+      "provisionalCount": 6,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "projectmgmt:1",
+          "stageId": 1,
+          "title": "PM Foundations",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "projectmgmt:2",
+          "stageId": 2,
+          "title": "Agile Principles",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "projectmgmt:3",
+          "stageId": 3,
+          "title": "Scrum in Practice",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "projectmgmt:4",
+          "stageId": 4,
+          "title": "Tools & Planning",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "projectmgmt:5",
+          "stageId": 5,
+          "title": "Budgeting & Reporting",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "projectmgmt:6",
+          "stageId": 6,
+          "title": "Certifications & Career",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "productmgmt",
+      "trackTitle": "Product Management",
+      "stageCount": 8,
+      "blockedCount": 4,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "stages": [
+        {
+          "key": "productmgmt:1",
+          "stageId": 1,
+          "title": "Product Thinking Foundations",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "productmgmt:2",
+          "stageId": 2,
+          "title": "User Research & Discovery",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "productmgmt:3",
+          "stageId": 3,
+          "title": "Strategy & Prioritisation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "productmgmt:4",
+          "stageId": 4,
+          "title": "Writing Product Requirements",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "productmgmt:5",
+          "stageId": 5,
+          "title": "Growth & Engagement Metrics",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "productmgmt:6",
+          "stageId": 6,
+          "title": "Retention, Funnels & Experiments",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "productmgmt:7",
+          "stageId": 7,
+          "title": "Shipping with Engineering",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "productmgmt:8",
+          "stageId": 8,
+          "title": "PM Career & Portfolio",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "dart",
+      "trackTitle": "Dart Programming",
+      "stageCount": 4,
+      "blockedCount": 0,
+      "provisionalCount": 4,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "dart:1",
+          "stageId": 1,
+          "title": "Dart Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "dart:2",
+          "stageId": 2,
+          "title": "Object-Oriented Dart",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "dart:3",
+          "stageId": 3,
+          "title": "Async Dart",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "dart:4",
+          "stageId": 4,
+          "title": "Dart for Flutter",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "sonic",
+      "trackTitle": "Sonic Blockchain Development",
+      "stageCount": 6,
+      "blockedCount": 0,
+      "provisionalCount": 6,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "sonic:1",
+          "stageId": 1,
+          "title": "Web3 Basics (HackQuest Phase 1)",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "sonic:2",
+          "stageId": 2,
+          "title": "Sonic Ecosystem (HackQuest Phase 2)",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "sonic:3",
+          "stageId": 3,
+          "title": "Solidity Fundamentals (HackQuest Phases 3–4)",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "sonic:4",
+          "stageId": 4,
+          "title": "Build & Frameworks (HackQuest Phases 5–6)",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "sonic:5",
+          "stageId": 5,
+          "title": "Security & Ecosystem (HackQuest Phases 7–8)",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "sonic:6",
+          "stageId": 6,
+          "title": "FeeM Strategy & Mainnet",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-foundations",
+      "trackTitle": "AI Foundations & Fluency",
+      "stageCount": 6,
+      "blockedCount": 0,
+      "provisionalCount": 6,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "ai-foundations:1",
+          "stageId": 1,
+          "title": "Understanding AI",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-foundations:2",
+          "stageId": 2,
+          "title": "The Modern AI Landscape",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-foundations:3",
+          "stageId": 3,
+          "title": "Communicating With AI",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-foundations:4",
+          "stageId": 4,
+          "title": "Thinking With AI",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-foundations:5",
+          "stageId": 5,
+          "title": "AI Reliability",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-foundations:6",
+          "stageId": 6,
+          "title": "Building Repeatable AI Workflows",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-work",
+      "trackTitle": "AI for Work & Productivity",
+      "stageCount": 5,
+      "blockedCount": 1,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        4
+      ],
+      "stages": [
+        {
+          "key": "ai-work:1",
+          "stageId": 1,
+          "title": "AI for Communication",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-work:2",
+          "stageId": 2,
+          "title": "AI for Documents",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-work:3",
+          "stageId": 3,
+          "title": "AI for Learning",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-work:4",
+          "stageId": 4,
+          "title": "AI for Planning",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-work:5",
+          "stageId": 5,
+          "title": "AI for Professional Workflows",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-research",
+      "trackTitle": "AI Research, Search & Verification",
+      "stageCount": 5,
+      "blockedCount": 1,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        2
+      ],
+      "stages": [
+        {
+          "key": "ai-research:1",
+          "stageId": 1,
+          "title": "Search vs AI",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-research:2",
+          "stageId": 2,
+          "title": "AI-Assisted Research",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-research:3",
+          "stageId": 3,
+          "title": "Sources & Evidence",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-research:4",
+          "stageId": 4,
+          "title": "Verification & Fact Checking",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-research:5",
+          "stageId": 5,
+          "title": "Research Workflows",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-content",
+      "trackTitle": "AI Content Creation",
+      "stageCount": 6,
+      "blockedCount": 2,
+      "provisionalCount": 4,
+      "blockedStageIds": [
+        2,
+        3
+      ],
+      "stages": [
+        {
+          "key": "ai-content:1",
+          "stageId": 1,
+          "title": "Content Strategy",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-content:2",
+          "stageId": 2,
+          "title": "AI-Assisted Research",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-content:3",
+          "stageId": 3,
+          "title": "Writing & Scripting",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-content:4",
+          "stageId": 4,
+          "title": "AI Visual Creation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-content:5",
+          "stageId": 5,
+          "title": "Content Production",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-content:6",
+          "stageId": 6,
+          "title": "Repurposing",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-youtube",
+      "trackTitle": "AI Video & YouTube",
+      "stageCount": 10,
+      "blockedCount": 0,
+      "provisionalCount": 10,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "ai-youtube:1",
+          "stageId": 1,
+          "title": "YouTube Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:2",
+          "stageId": 2,
+          "title": "Topic Research",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:3",
+          "stageId": 3,
+          "title": "AI-Assisted Scripting",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:4",
+          "stageId": 4,
+          "title": "AI Voice & Audio",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:5",
+          "stageId": 5,
+          "title": "AI Visual Production",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:6",
+          "stageId": 6,
+          "title": "Editing",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:7",
+          "stageId": 7,
+          "title": "Thumbnails & Packaging",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:8",
+          "stageId": 8,
+          "title": "Publishing",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:9",
+          "stageId": 9,
+          "title": "Analytics",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-youtube:10",
+          "stageId": 10,
+          "title": "Responsible Automation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-software-development",
+      "trackTitle": "AI-Assisted Software Development",
+      "stageCount": 8,
+      "blockedCount": 2,
+      "provisionalCount": 6,
+      "blockedStageIds": [
+        6,
+        8
+      ],
+      "stages": [
+        {
+          "key": "ai-software-development:1",
+          "stageId": 1,
+          "title": "AI Coding Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-software-development:2",
+          "stageId": 2,
+          "title": "Code Generation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-software-development:3",
+          "stageId": 3,
+          "title": "Debugging With AI",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-software-development:4",
+          "stageId": 4,
+          "title": "AI Coding Tools",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-software-development:5",
+          "stageId": 5,
+          "title": "Coding Agents",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-software-development:6",
+          "stageId": 6,
+          "title": "Testing & Verification",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-software-development:7",
+          "stageId": 7,
+          "title": "Building With AI",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-software-development:8",
+          "stageId": 8,
+          "title": "Professional AI-Assisted Development",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "ai-automation",
+      "trackTitle": "AI Automation",
+      "stageCount": 8,
+      "blockedCount": 3,
+      "provisionalCount": 5,
+      "blockedStageIds": [
+        3,
+        7,
+        8
+      ],
+      "stages": [
+        {
+          "key": "ai-automation:1",
+          "stageId": 1,
+          "title": "Automation Fundamentals",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-automation:2",
+          "stageId": 2,
+          "title": "Workflows",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-automation:3",
+          "stageId": 3,
+          "title": "APIs",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-automation:4",
+          "stageId": 4,
+          "title": "Webhooks",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-automation:5",
+          "stageId": 5,
+          "title": "AI in Workflows",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-automation:6",
+          "stageId": 6,
+          "title": "Structured Data",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-automation:7",
+          "stageId": 7,
+          "title": "Human Approval",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-automation:8",
+          "stageId": 8,
+          "title": "Reliable Automation",
+          "manifestStatus": "blocked",
+          "blocked": true
+        }
+      ]
+    },
+    {
+      "trackId": "ai-agents",
+      "trackTitle": "AI Agents",
+      "stageCount": 10,
+      "blockedCount": 0,
+      "provisionalCount": 10,
+      "blockedStageIds": [],
+      "stages": [
+        {
+          "key": "ai-agents:1",
+          "stageId": 1,
+          "title": "What AI Agents Are",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:2",
+          "stageId": 2,
+          "title": "Agents vs Chatbots",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:3",
+          "stageId": 3,
+          "title": "Agents vs Workflows",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:4",
+          "stageId": 4,
+          "title": "Tools",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:5",
+          "stageId": 5,
+          "title": "Context & Memory",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:6",
+          "stageId": 6,
+          "title": "Planning",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:7",
+          "stageId": 7,
+          "title": "Tool Use",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:8",
+          "stageId": 8,
+          "title": "Human Oversight",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:9",
+          "stageId": 9,
+          "title": "Reliability",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-agents:10",
+          "stageId": 10,
+          "title": "Agent Workflow Design",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-engineering",
+      "trackTitle": "AI Data, APIs & Engineering",
+      "stageCount": 10,
+      "blockedCount": 2,
+      "provisionalCount": 8,
+      "blockedStageIds": [
+        6,
+        7
+      ],
+      "stages": [
+        {
+          "key": "ai-engineering:1",
+          "stageId": 1,
+          "title": "AI APIs",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:2",
+          "stageId": 2,
+          "title": "Model Selection",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:3",
+          "stageId": 3,
+          "title": "Structured Outputs",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:4",
+          "stageId": 4,
+          "title": "Embeddings",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:5",
+          "stageId": 5,
+          "title": "Retrieval",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:6",
+          "stageId": 6,
+          "title": "RAG",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-engineering:7",
+          "stageId": 7,
+          "title": "Vector Search",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-engineering:8",
+          "stageId": 8,
+          "title": "AI Evaluation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:9",
+          "stageId": 9,
+          "title": "Cost & Latency",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-engineering:10",
+          "stageId": 10,
+          "title": "Deployment",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    },
+    {
+      "trackId": "ai-design",
+      "trackTitle": "AI Design & Creative Work",
+      "stageCount": 8,
+      "blockedCount": 2,
+      "provisionalCount": 6,
+      "blockedStageIds": [
+        2,
+        5
+      ],
+      "stages": [
+        {
+          "key": "ai-design:1",
+          "stageId": 1,
+          "title": "AI in Design",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-design:2",
+          "stageId": 2,
+          "title": "UI Ideation",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-design:3",
+          "stageId": 3,
+          "title": "Image Generation",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-design:4",
+          "stageId": 4,
+          "title": "Visual Exploration",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-design:5",
+          "stageId": 5,
+          "title": "Design Refinement",
+          "manifestStatus": "blocked",
+          "blocked": true
+        },
+        {
+          "key": "ai-design:6",
+          "stageId": 6,
+          "title": "Prototyping",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-design:7",
+          "stageId": 7,
+          "title": "Brand Consistency",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        },
+        {
+          "key": "ai-design:8",
+          "stageId": 8,
+          "title": "Human Design Judgment",
+          "manifestStatus": "needs_human_review",
+          "blocked": false
+        }
+      ]
+    }
+  ],
+  "blockedStages": [
+    {
+      "key": "frontend:5",
+      "trackId": "frontend",
+      "stageId": 5,
+      "title": "AI-Assisted Workflow",
+      "rejectedCandidate": "v0.dev by Vercel (Vercel)",
+      "rejectedCandidateUrl": "https://v0.dev",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "backend:1",
+      "trackId": "backend",
+      "stageId": 1,
+      "title": "Foundations",
+      "rejectedCandidate": "CS50 Web Programming (Harvard)",
+      "rejectedCandidateUrl": "https://cs50.harvard.edu/web",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "fullstack:1",
+      "trackId": "fullstack",
+      "stageId": 1,
+      "title": "Complete Frontend Track",
+      "rejectedCandidate": "Full Stack Open (Univ. of Helsinki)",
+      "rejectedCandidateUrl": "https://fullstackopen.com/en",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "fullstack:2",
+      "trackId": "fullstack",
+      "stageId": 2,
+      "title": "Complete Backend Track",
+      "rejectedCandidate": "Next.js Official Docs (Vercel)",
+      "rejectedCandidateUrl": "https://nextjs.org/docs",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "fullstack:4",
+      "trackId": "fullstack",
+      "stageId": 4,
+      "title": "Full Deployment",
+      "rejectedCandidate": "Stripe Documentation (Stripe)",
+      "rejectedCandidateUrl": "https://stripe.com/docs",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "python:5",
+      "trackId": "python",
+      "stageId": 5,
+      "title": "Python + AI",
+      "rejectedCandidate": "LangChain Python Docs (LangChain)",
+      "rejectedCandidateUrl": "https://python.langchain.com/docs/get_started/introduction",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "uiux:4",
+      "trackId": "uiux",
+      "stageId": 4,
+      "title": "Advanced UX",
+      "rejectedCandidate": "Mobbin (Mobbin)",
+      "rejectedCandidateUrl": "https://mobbin.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "devops:1",
+      "trackId": "devops",
+      "stageId": 1,
+      "title": "Linux & Networking",
+      "rejectedCandidate": "Docker Overview (Docker)",
+      "rejectedCandidateUrl": "https://docs.docker.com/get-started/docker-overview/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "devops:2",
+      "trackId": "devops",
+      "stageId": 2,
+      "title": "Version Control & CI/CD",
+      "rejectedCandidate": "GitHub Actions Docs (GitHub)",
+      "rejectedCandidateUrl": "https://docs.github.com/en/actions",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "devops:5",
+      "trackId": "devops",
+      "stageId": 5,
+      "title": "Monitoring & Security",
+      "rejectedCandidate": "Linux Monitoring with Prometheus & Grafana (DevOpsNess)",
+      "rejectedCandidateUrl": "https://www.devopsness.com/blog/linux-system-monitoring-prometheus-grafana",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "cyber:4",
+      "trackId": "cyber",
+      "stageId": 4,
+      "title": "Defensive Security",
+      "rejectedCandidate": "Splunk SIEM Home Lab (Rajneesh)",
+      "rejectedCandidateUrl": "https://github.com/0xrajneesh/Splunk-SIEM-Home-Lab",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "mobile:4",
+      "trackId": "mobile",
+      "stageId": 4,
+      "title": "Publishing & Polish",
+      "rejectedCandidate": "Publish to Google Play Guide (Google)",
+      "rejectedCandidateUrl": "https://developer.android.com/studio/publish",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "video:2",
+      "trackId": "video",
+      "stageId": 2,
+      "title": "Storytelling & Pacing",
+      "rejectedCandidate": "StudioBinder — Filmmaking & Storytelling Blog (StudioBinder)",
+      "rejectedCandidateUrl": "https://www.studiobinder.com/blog/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "youtube:2",
+      "trackId": "youtube",
+      "stageId": 2,
+      "title": "Content Production",
+      "rejectedCandidate": "ElevenLabs (ElevenLabs)",
+      "rejectedCandidateUrl": "https://elevenlabs.io",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "youtube:3",
+      "trackId": "youtube",
+      "stageId": 3,
+      "title": "Growth & SEO",
+      "rejectedCandidate": "vidIQ (vidIQ)",
+      "rejectedCandidateUrl": "https://vidiq.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "youtube:4",
+      "trackId": "youtube",
+      "stageId": 4,
+      "title": "Monetization",
+      "rejectedCandidate": "YouTube Monetization Guide (Google)",
+      "rejectedCandidateUrl": "https://support.google.com/youtube/answer/72857",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai:2",
+      "trackId": "ai",
+      "stageId": 2,
+      "title": "Prompt Engineering",
+      "rejectedCandidate": "Prompt Engineering Guide (DAIR.AI)",
+      "rejectedCandidateUrl": "https://www.promptingguide.ai",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai:3",
+      "trackId": "ai",
+      "stageId": 3,
+      "title": "AI for Your Field",
+      "rejectedCandidate": "DeepLearning.AI Short Courses (DeepLearning.AI)",
+      "rejectedCandidateUrl": "https://www.deeplearning.ai/short-courses",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "nocode:2",
+      "trackId": "nocode",
+      "stageId": 2,
+      "title": "App Building",
+      "rejectedCandidate": "Glide Apps (Glide)",
+      "rejectedCandidateUrl": "https://www.glideapps.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "writing:4",
+      "trackId": "writing",
+      "stageId": 4,
+      "title": "Portfolio & Specialization",
+      "rejectedCandidate": "Write the Docs Guide (Write the Docs)",
+      "rejectedCandidateUrl": "https://www.writethedocs.org/guide",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "crypto:5",
+      "trackId": "crypto",
+      "stageId": 5,
+      "title": "DeFi Core Mechanics",
+      "rejectedCandidate": "DefiLlama (DefiLlama)",
+      "rejectedCandidateUrl": "https://defillama.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "crypto:7",
+      "trackId": "crypto",
+      "stageId": 7,
+      "title": "Web3 Frontend Foundations",
+      "rejectedCandidate": "ethers — Getting Started (ethers)",
+      "rejectedCandidateUrl": "https://docs.ethers.org/v6/getting-started/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "crypto:8",
+      "trackId": "crypto",
+      "stageId": 8,
+      "title": "dApp Data & Storage",
+      "rejectedCandidate": "ETHGlobal Hackathons (ETHGlobal)",
+      "rejectedCandidateUrl": "https://ethglobal.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "crypto:9",
+      "trackId": "crypto",
+      "stageId": 9,
+      "title": "Common Smart Contract Vulnerabilities",
+      "rejectedCandidate": "OpenZeppelin Security Blog (OpenZeppelin)",
+      "rejectedCandidateUrl": "https://blog.openzeppelin.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "crypto:10",
+      "trackId": "crypto",
+      "stageId": 10,
+      "title": "Auditing Tools & Practice",
+      "rejectedCandidate": "Code4rena (Code4rena)",
+      "rejectedCandidateUrl": "https://code4rena.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "crypto:11",
+      "trackId": "crypto",
+      "stageId": 11,
+      "title": "On-Chain Data Analysis",
+      "rejectedCandidate": "Dune Analytics (Dune)",
+      "rejectedCandidateUrl": "https://dune.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "productmgmt:5",
+      "trackId": "productmgmt",
+      "stageId": 5,
+      "title": "Growth & Engagement Metrics",
+      "rejectedCandidate": "Mixpanel (Mixpanel)",
+      "rejectedCandidateUrl": "https://mixpanel.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "productmgmt:6",
+      "trackId": "productmgmt",
+      "stageId": 6,
+      "title": "Retention, Funnels & Experiments",
+      "rejectedCandidate": "Hotjar (Hotjar)",
+      "rejectedCandidateUrl": "https://www.hotjar.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "productmgmt:7",
+      "trackId": "productmgmt",
+      "stageId": 7,
+      "title": "Shipping with Engineering",
+      "rejectedCandidate": "ProductHunt (Product Hunt)",
+      "rejectedCandidateUrl": "https://www.producthunt.com",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "productmgmt:8",
+      "trackId": "productmgmt",
+      "stageId": 8,
+      "title": "PM Career & Portfolio",
+      "rejectedCandidate": "Product School Free Resources (Product School)",
+      "rejectedCandidateUrl": "https://productschool.com/resources",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-work:4",
+      "trackId": "ai-work",
+      "stageId": 4,
+      "title": "AI for Planning",
+      "rejectedCandidate": "Microsoft Learn — Draft, Analyze, and Present with Microsoft Copilot (MS-4018)",
+      "rejectedCandidateUrl": "https://learn.microsoft.com/en-us/training/paths/draft-analyze-present-microsoft-365-copilot",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-research:2",
+      "trackId": "ai-research",
+      "stageId": 2,
+      "title": "AI-Assisted Research",
+      "rejectedCandidate": "Google Scholar (Google Scholar)",
+      "rejectedCandidateUrl": "https://scholar.google.com/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-content:2",
+      "trackId": "ai-content",
+      "stageId": 2,
+      "title": "AI-Assisted Research",
+      "rejectedCandidate": "OpenAI Academy — Prompting (OpenAI Academy)",
+      "rejectedCandidateUrl": "https://academy.openai.com/en/public/clubs/work-users-ynjqu/resources/prompting",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-content:3",
+      "trackId": "ai-content",
+      "stageId": 3,
+      "title": "Writing & Scripting",
+      "rejectedCandidate": "Anthropic — Build With Claude (Anthropic)",
+      "rejectedCandidateUrl": "https://www.anthropic.com/learn/build-with-claude",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-software-development:6",
+      "trackId": "ai-software-development",
+      "stageId": 6,
+      "title": "Testing & Verification",
+      "rejectedCandidate": "GitHub Copilot — Code Review (GitHub Docs)",
+      "rejectedCandidateUrl": "https://docs.github.com/en/copilot/concepts/agents/code-review",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-software-development:8",
+      "trackId": "ai-software-development",
+      "stageId": 8,
+      "title": "Professional AI-Assisted Development",
+      "rejectedCandidate": "GitHub Docs — Responsible Use of GitHub Copilot Features (GitHub Docs)",
+      "rejectedCandidateUrl": "https://docs.github.com/en/copilot/responsible-use",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-automation:3",
+      "trackId": "ai-automation",
+      "stageId": 3,
+      "title": "APIs",
+      "rejectedCandidate": "n8n Documentation (n8n)",
+      "rejectedCandidateUrl": "https://docs.n8n.io/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-automation:7",
+      "trackId": "ai-automation",
+      "stageId": 7,
+      "title": "Human Approval",
+      "rejectedCandidate": "n8n Docs — Wait (Human-in-the-Loop) (n8n Docs)",
+      "rejectedCandidateUrl": "https://docs.n8n.io/flow-logic/waiting/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-automation:8",
+      "trackId": "ai-automation",
+      "stageId": 8,
+      "title": "Reliable Automation",
+      "rejectedCandidate": "n8n Docs — Hosting, Logging and Monitoring (n8n Docs)",
+      "rejectedCandidateUrl": "https://docs.n8n.io/hosting/logging-monitoring/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-engineering:6",
+      "trackId": "ai-engineering",
+      "stageId": 6,
+      "title": "RAG",
+      "rejectedCandidate": "LangChain Python Docs (LangChain)",
+      "rejectedCandidateUrl": "https://python.langchain.com/docs/get_started/introduction",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-engineering:7",
+      "trackId": "ai-engineering",
+      "stageId": 7,
+      "title": "Vector Search",
+      "rejectedCandidate": "OpenAI — Vector Embeddings (OpenAI)",
+      "rejectedCandidateUrl": "https://platform.openai.com/docs/guides/embeddings",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-design:2",
+      "trackId": "ai-design",
+      "stageId": 2,
+      "title": "UI Ideation",
+      "rejectedCandidate": "Figma AI Features (Figma)",
+      "rejectedCandidateUrl": "https://help.figma.com/hc/en-us/categories/360002051613",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    },
+    {
+      "key": "ai-design:5",
+      "trackId": "ai-design",
+      "stageId": 5,
+      "title": "Design Refinement",
+      "rejectedCandidate": "OpenAI Academy — Applied AI Foundations (OpenAI Academy)",
+      "rejectedCandidateUrl": "https://academy.openai.com/",
+      "packageDecision": "blocked_primary_not_instructional_or_no_objective_match",
+      "requiredTreatment": "Optional only. Keep existing in-product material, do not gate progression on this link, do not badge as verified, and require a documented replacement before removing the block."
+    }
+  ],
+  "runtimeFacts": {
+    "quizTypeFile": "lib/guided-path.ts",
+    "quizFields": [
+      "question",
+      "options",
+      "correctIndex",
+      "explanation",
+      "teachingSource?",
+      "teachingStageId?",
+      "cognitiveLevel?"
+    ],
+    "unsupportedPackageFields": [
+      "points",
+      "critical",
+      "correctAnswer",
+      "answerRationale",
+      "feedbackOnIncorrect",
+      "difficulty",
+      "distractorAnalysis"
+    ],
+    "grading": {
+      "nonAiWithFiveQuestions": "4 of 5 required",
+      "aiWithFiveQuestions": "4 of 5 required",
+      "aiWithFourQuestions": "4 of 4 required",
+      "weightedScoring": false,
+      "criticalQuestionGate": false
+    },
+    "answerKeyExposure": {
+      "file": "app/api/guided-path/[trackId]/route.ts",
+      "lines": "204-218",
+      "behavior": "Every submission, including validateOnly and failed submissions, returns correctIndex and explanation for every question.",
+      "impact": "Any learner can submit arbitrary answers, learn every key, and retry to pass."
+    },
+    "persistence": {
+      "quizAttemptTable": false,
+      "quizVersionTable": false,
+      "resourceVerificationTable": false,
+      "projectSubmissionTable": false,
+      "completionKey": "UserProgress q:<stage>",
+      "legacyPassSurvivesNewQuiz": true
+    },
+    "projects": {
+      "contractFile": "lib/project-verification/contract.ts",
+      "artifactKinds": [
+        "github_repo",
+        "code_sandbox",
+        "live_url",
+        "notebook",
+        "dataset",
+        "design_file",
+        "design_export",
+        "video_url",
+        "document_url",
+        "document_file",
+        "dashboard_url",
+        "presentation",
+        "image",
+        "text"
+      ],
+      "unsupportedPackageKinds": [
+        "code_or_repo",
+        "test_evidence",
+        "readme",
+        "screenshots",
+        "rationale",
+        "analysis_artifact",
+        "sample_data",
+        "interpretation",
+        "authorized_lab_report",
+        "redacted_evidence",
+        "remediation",
+        "creative_output",
+        "script_or_storyboard",
+        "review_evidence",
+        "campaign_artifact",
+        "measurement_plan",
+        "evidence_note",
+        "workflow_artifact",
+        "evaluation_evidence",
+        "guardrails",
+        "document",
+        "example_or_test",
+        "editorial_notes",
+        "contract_or_analysis",
+        "tests",
+        "security_notes",
+        "planning_artifact",
+        "evidence_appendix",
+        "success_measures"
+      ],
+      "artifactValidation": "parseArtifacts casts arbitrary strings to ArtifactKind without enum validation",
+      "rubricSource": "runtime derives from mandatory discipline criteria plus project acceptanceCriteria; package effectiveRubric is ignored"
+    },
+    "aiDisciplineRouting": {
+      "file": "lib/project-verification/contract.ts",
+      "behavior": "No ai-* track is in any discipline set; fallback is the software contract (public inspectable source artifact, README, source inspection).",
+      "affectedTracks": [
+        "ai-foundations",
+        "ai-work",
+        "ai-research",
+        "ai-content",
+        "ai-youtube",
+        "ai-software-development",
+        "ai-automation",
+        "ai-agents",
+        "ai-engineering",
+        "ai-design"
+      ],
+      "legacyAiTrack": "ai"
+    },
+    "commercial": {
+      "projectAssessmentRequiresTrackAccess": true,
+      "projectAssessmentConsumesCredits": true,
+      "provider": "DeepSeek",
+      "commercialFilesChanged": 0,
+      "warning": "More assessments change unit economics and provider load even without pricing edits."
+    },
+    "progressionAuthorization": {
+      "serverSide": true,
+      "quizCursorCheck": "stepIndex must equal GuidedPathEnrollment.currentStepIndex; advancement is transactional",
+      "projectChecks": [
+        "enrollment cursor",
+        "evidence",
+        "deterministic decision",
+        "assessment credits"
+      ],
+      "aiGrantsProgression": false
+    }
+  },
+  "findings": [
+    {
+      "id": "P0-1",
+      "severity": "P0",
+      "area": "quiz-security",
+      "title": "Answer keys are disclosed on every submission, enabling retry farming",
+      "evidence": "app/api/guided-path/[trackId]/route.ts:204-218 returns correctIndex and explanation for every question, including validateOnly and failed submissions.",
+      "impact": "A learner can submit arbitrary integers, receive every key, and resubmit to pass. Quizzes that gate progression or paid content are effectively open-book.",
+      "requiredChange": "Choose a graded, formative, or hybrid policy. Never return correctIndex in a graded flow; add server-side attempts and rate limiting; do not let validateOnly act as a free key oracle.",
+      "exitTest": "Failed/validateOnly responses contain no key material; repeated immediate submissions are blocked or served a different variant; attempts are recorded."
+    },
+    {
+      "id": "P0-2",
+      "severity": "P0",
+      "area": "quiz-persistence",
+      "title": "No quiz attempt, score, or version persistence; prior passes survive harder quizzes",
+      "evidence": "prisma/schema.prisma has no quiz tables; LearningEvent records quiz_failed metadata but not a durable attempt. Completion is a UserProgress row keyed q:<stage>; path-compat remaps positions but does not invalidate passes.",
+      "impact": "A learner who passed the old 3-question quiz keeps completion after a 5-question quiz is imported. There is no audit trail, retry control, or version invalidation.",
+      "requiredChange": "Persist attempts with pathVersion and quizVersion; require a current-version pass or an explicit grandfather policy; never silently treat legacy completion as current.",
+      "exitTest": "A new quiz version forces a new attempt or an explicit legacy flag; attempts are queryable; a path-version bump preserves position without marking the new quiz complete."
+    },
+    {
+      "id": "P0-3",
+      "severity": "P0",
+      "area": "quiz-schema",
+      "title": "Bundle quiz fields are silently discarded by the runtime",
+      "evidence": "QuizQuestion supports only question/options/correctIndex/explanation plus optional teaching metadata; the grader counts correct answers and ignores points, critical, correctAnswer, rationales, and distractor analysis.",
+      "impact": "Critical gates and 20-point weights are illusory; the 100-point score is only a percentage of correct count; rich feedback never reaches learners.",
+      "requiredChange": "Either normalize to the four-field contract at import and report dropped fields, or extend the type and grader with weighted/critical support. Do not import extra fields silently.",
+      "exitTest": "Import report lists every dropped field; critical/weighted behavior matches the chosen policy; score semantics are asserted."
+    },
+    {
+      "id": "P0-4",
+      "severity": "P0",
+      "area": "project-contract",
+      "title": "Project artifact kinds and rubrics do not match the evaluator",
+      "evidence": "Runtime supports 14 ArtifactKind values; the package uses at least 29 more. parseArtifacts casts arbitrary strings. The evaluator derives rubrics from acceptanceCriteria, not the package effectiveRubric.",
+      "impact": "Learners are asked for different evidence than the package specifies; unknown kinds can reach the pipeline; package weights and mandatory flags never reach the evaluator. cyber and qa both map to security, whose base contract requires github_repo; manual report deliverables need explicit overrides.",
+      "requiredChange": "Add strict kind validation with 422, publish an explicit kind mapping, carry artifact labels, and decide per project whether package rubrics are imported or replaced by runtime derivation.",
+      "exitTest": "All 125 projects resolve; required kinds are in the enum; unknown kinds return 422; missing required evidence cannot pass."
+    },
+    {
+      "id": "P0-5",
+      "severity": "P0",
+      "area": "ai-discipline-routing",
+      "title": "All AI tracks default to the software discipline",
+      "evidence": "disciplineForTrack has no ai-* entries and falls back to software; the legacy ai track is explicitly in SOFTWARE_TRACKS.",
+      "impact": "AI Foundations, Work, Research, Content, YouTube, Automation, Engineering, and Design inherit the software default (public inspectable source, README, source inspection), conflicting with their non-code evidence formats.",
+      "requiredChange": "Add explicit AI discipline routing or per-project overrides; resolve all 125 projects to a discipline and artifact set; test the 10 capstones.",
+      "exitTest": "No AI project requires github_repo unless its brief asks for code; each capstone has discipline-appropriate artifacts."
+    },
+    {
+      "id": "P0-6",
+      "severity": "P0",
+      "area": "resources",
+      "title": "The external-resource gate is unmet and the runtime would overstate it",
+      "evidence": "143 provisional primaries, 43 blocked stages, 0 current live reverifications, 0 playback checks. isResourceVerified checks level >= 3 plus 600+ characters of content evidence but does not check access at all, so a paid resource can pass.",
+      "impact": "Wiring these as required would create false verified claims, dead/paid links, and the appearance that blocked stages are solved.",
+      "requiredChange": "Do not import any package resource as a required primary. Stage them as archive evidence with role optional; promote only after a fresh check; keep blocked stages optional-only.",
+      "exitTest": "No required primary has only archive evidence; all 43 blocked stages have no required external primary; archive vs current is distinguishable."
+    },
+    {
+      "id": "P0-7",
+      "severity": "P0",
+      "area": "instruction",
+      "title": "authoredInstruction is an outline, not a complete in-product lesson",
+      "evidence": "Stage specs contain outlines/worked examples, not full lesson prose with explanations and practice. Blocked stages have no verified external primary.",
+      "impact": "Demoting the external primary for a blocked stage leaves an outline and a project, not a teachable lesson; claiming otherwise would be inaccurate.",
+      "requiredChange": "For each of the 43 blocked stages: author and review complete lesson content, keep a verified primary, or mark the stage project-only/supplementary.",
+      "exitTest": "Each blocked stage has reviewed lesson content or a verified primary; objective coverage is checked; no outline-only stage is presented as complete."
+    },
+    {
+      "id": "P0-8",
+      "severity": "P0",
+      "area": "persistence",
+      "title": "Attempt and verification persistence does not exist",
+      "evidence": "No quiz attempts, quiz versions, resource verification, or normalized project submissions in Prisma; project history is JSON in UserTrackProgress.data.",
+      "impact": "P0-1 and P0-2 cannot be fixed reliably; resource promotion cannot be audited; rubric invalidation and evidence reuse are hard to query.",
+      "requiredChange": "Add additive QuizAttempt, StageQuizVersion, ResourceVerificationRecord tables; optionally normalize ProjectSubmission later. Proposal only; no migration in this phase.",
+      "exitTest": "Migration is additive, backfills no fabricated attempts, preserves progress, and is gated by a flag with rollback."
+    },
+    {
+      "id": "P1-1",
+      "severity": "P1",
+      "area": "rubric-versioning",
+      "title": "Static bundle rubric version conflicts with runtime-derived version",
+      "evidence": "All package mastery records use tsh-stage-rubric-v1; runtime computes a hash from criteria via computeRubricVersion and uses it in the evidence fingerprint.",
+      "impact": "Importing the static version can reuse passes across different criteria; using the runtime version invalidates correctly but diverges from package provenance.",
+      "requiredChange": "Derive the runtime version from criteria and store the package version as provenance only; test that criteria changes invalidate reuse.",
+      "exitTest": "Any criteria change produces a new version and blocks reuse; provenance still records the package version."
+    },
+    {
+      "id": "P1-2",
+      "severity": "P1",
+      "area": "rubric-mandatory",
+      "title": "Mandatory flags contradict the progression gate",
+      "evidence": "Many package rubric items are mandatory:false while progressionGate.criticalCriteriaMustPass is true; runtime adds discipline mandatory criteria.",
+      "impact": "A learner can meet the weighted threshold while failing a criterion the package calls critical, or face stricter runtime criteria than intended.",
+      "requiredChange": "Reconcile each project: map criteria to runtime mandatory flags or correct the gate text. Do not ship contradictory specs.",
+      "exitTest": "Every project has an explicit mandatory set; failing a mandatory criterion blocks progression."
+    },
+    {
+      "id": "P1-3",
+      "severity": "P1",
+      "area": "quiz-quality",
+      "title": "AI quiz repetition and cross-domain contamination",
+      "evidence": "lib/ai-assessment-bank.ts reuses generic supplemental questions; six QUIZ-CROSS leakage issues (crypto-6, fullstack-2/3/4, mobile-4, qa-4); AI-QUIZ-REPEATS reports 70/76 AI stages had only one topic-specific old question and ai-content:6 had zero, though the package replaces them with five stage-scoped items pending SME review.",
+      "impact": "Learners see repeated questions, wrong-domain items, and weak validity.",
+      "requiredChange": "Review all 930 for stage specificity and objective match; replace generic bank reuse; close the six leakage issues before those tracks ship.",
+      "exitTest": "No duplicate stems across stages; each question maps to the stage objective; leakage issues closed."
+    },
+    {
+      "id": "P1-4",
+      "severity": "P1",
+      "area": "qa-integrity",
+      "title": "QA audit is internally stale",
+      "evidence": "QUIZ-QA-001 claims 67 duplicate stem groups while the QA summary reports zero; the repair log and specificity audit disagree.",
+      "impact": "Reviewers cannot trust duplicate counts; repair may be repeated or skipped.",
+      "requiredChange": "Recompute duplicates from the current 930-row bank, record the algorithm and output hash, and retire the stale row.",
+      "exitTest": "One reproducible duplicate report, referenced by the package."
+    },
+    {
+      "id": "P1-5",
+      "severity": "P1",
+      "area": "video",
+      "title": "Video evidence is not playback-verified",
+      "evidence": "VIDEO-RUNTIME reports 60 video rows with no runtime/segment evidence; none is L4 playback-verified; the package says not to expose 30-90 minute estimates as verified.",
+      "impact": "Required video portions cannot be timed or checked; learners may be sent to the wrong segment.",
+      "requiredChange": "Keep video optional until playback and timestamps are captured; prefer text/interactive resources for required learning.",
+      "exitTest": "Every required video has playback evidence, start/end timestamps, and a checked segment."
+    },
+    {
+      "id": "P1-6",
+      "severity": "P1",
+      "area": "duplication",
+      "title": "Duplicate URLs and cross-stage reuse",
+      "evidence": "82 duplicate candidate URLs, 178 duplicate map URL rows, 44 duplicate rows in the repository probe.",
+      "impact": "The same source may be primary for stages with different objectives; a single failure affects multiple stages.",
+      "requiredChange": "Dedupe per stage, require exact portion/segment for reuse, and cap shared required primaries.",
+      "exitTest": "No required primary is reused without an explicit portion and objective justification."
+    },
+    {
+      "id": "P1-7",
+      "severity": "P1",
+      "area": "commercial",
+      "title": "Commercial and provider-cost consequences are real",
+      "evidence": "Project assessment requires track access, consumes assessment credits, and calls the DeepSeek provider; 125 projects increase assessment volume.",
+      "impact": "Content import can change unit economics and provider load without pricing edits.",
+      "requiredChange": "Keep commercial gates untouched; model assessment volume; set pilot budgets/quotas; require approval before paid exposure.",
+      "exitTest": "Pilot stays within a defined assessment budget; no entitlement or price change is bundled with content."
+    },
+    {
+      "id": "P1-8",
+      "severity": "P1",
+      "area": "legal-accessibility",
+      "title": "Licensing, attribution, and accessibility are not evidenced",
+      "evidence": "Resource records have publisher/URL/content excerpt but no license/attribution field; no accessibility review is present.",
+      "impact": "Required third-party use may exceed permitted terms; learners may face inaccessible resources.",
+      "requiredChange": "Add license/attribution and accessibility fields; treat both as human/legal gates.",
+      "exitTest": "Every required resource has a recorded license/attribution decision and accessibility note."
+    },
+    {
+      "id": "P2-1",
+      "severity": "P2",
+      "area": "issue-hygiene",
+      "title": "Stale missing-normalized-brief issues",
+      "evidence": "The open-issue file has 10 missing_normalized_project_brief rows, one per AI capstone. They describe the package source export, not the current repo: all ten capstones have briefs in lib/ai-project-briefs.ts and definitions in ai-curriculum/ai-projects.",
+      "impact": "Reviewers may treat the capstones as missing, or import the package draft without comparing it to the existing brief.",
+      "requiredChange": "Compare each package draft with the existing repo brief and contract, reconcile differences, close the row, and do not report the capstones as missing.",
+      "exitTest": "Open-issue file has no stale missing-brief rows."
+    },
+    {
+      "id": "P2-2",
+      "severity": "P2",
+      "area": "implementation-prompt",
+      "title": "The package implementation prompt does not match this repository",
+      "evidence": "11_IDE_IMPLEMENTATION_PROMPT.md does not reflect the curriculum/extended/AI module split or the project-verification contract.",
+      "impact": "Following it literally would create parallel sources of truth.",
+      "requiredChange": "Replace it with this repo-specific plan before implementation.",
+      "exitTest": "Implementation prompt names the actual target modules and gates."
+    }
+  ],
+  "importPlan": {
+    "stagingModule": "lib/curriculum-imports/tsh-2026-10.ts",
+    "stagingModuleRules": [
+      "Data-only and unreferenced by runtime until a gate passes.",
+      "Every record carries package filename, row key, package hash, and status.",
+      "No runtime module imports it during the pilot; assert this in a test."
+    ],
+    "targetModules": {
+      "baseStagePlans": "lib/curriculum.ts",
+      "extendedStagePlans": "lib/curriculum-extended.ts",
+      "aiStageCheckpoints": "lib/ai-curriculum.ts",
+      "aiSupplementalQuestions": "lib/ai-assessment-bank.ts",
+      "aiQuizAssembly": "lib/ai-guided-path.ts",
+      "baseProjectBriefs": "lib/curriculum.ts",
+      "extendedProjectIds": "lib/curriculum-extended-projects.ts",
+      "aiProjectDefinitions": "lib/ai-projects.ts",
+      "aiProjectBriefs": "lib/ai-project-briefs.ts",
+      "projectContract": "lib/project-verification/contract.ts",
+      "projectEvidence": "lib/project-verification/evidence.ts",
+      "projectDecision": "lib/project-verification/schema.ts",
+      "projectAssessment": "lib/project-verification/assessment.ts",
+      "mastery": "lib/section-mastery.ts",
+      "stageResources": "lib/stage-resources.ts",
+      "resourceVerification": "lib/resource-verification.ts",
+      "quizTypes": "lib/guided-path.ts",
+      "quizGrading": "app/api/guided-path/[trackId]/route.ts",
+      "projectApi": "app/api/project-verification/[trackId]/route.ts",
+      "pathCompat": "lib/path-compat.ts",
+      "persistence": "prisma/schema.prisma"
+    },
+    "waves": [
+      {
+        "wave": "W1",
+        "tracks": [
+          "qa",
+          "data",
+          "datascience",
+          "marketing",
+          "projectmgmt"
+        ],
+        "stages": 24
+      },
+      {
+        "wave": "W2",
+        "tracks": [
+          "frontend",
+          "backend",
+          "fullstack",
+          "python",
+          "uiux",
+          "mobile",
+          "dart"
+        ],
+        "stages": 33
+      },
+      {
+        "wave": "W3",
+        "tracks": [
+          "devops",
+          "cyber",
+          "crypto",
+          "sonic"
+        ],
+        "stages": 26
+      },
+      {
+        "wave": "W4",
+        "tracks": [
+          "ai-foundations",
+          "ai-work",
+          "ai-research",
+          "ai-content",
+          "ai-youtube"
+        ],
+        "stages": 32
+      },
+      {
+        "wave": "W5",
+        "tracks": [
+          "ai-software-development",
+          "ai-automation",
+          "ai-agents",
+          "ai-engineering",
+          "ai-design"
+        ],
+        "stages": 44
+      },
+      {
+        "wave": "W6",
+        "tracks": [
+          "writing",
+          "video",
+          "youtube",
+          "nocode",
+          "ai",
+          "productmgmt"
+        ],
+        "stages": 27
+      }
+    ],
+    "batches": [
+      {
+        "batch": "B0",
+        "scope": "Guardrails: artifact validation, key policy, quiz types, discipline routing, rubric versioning",
+        "gate": "P0-1/P0-3/P0-4/P0-5/P0-6 tests"
+      },
+      {
+        "batch": "B1",
+        "scope": "Staging module and parity tests; no runtime wiring",
+        "gate": "32/186 parity; no runtime import"
+      },
+      {
+        "batch": "B2",
+        "scope": "Quiz waves W1-W2",
+        "gate": "SME answer-key review; key-exposure test"
+      },
+      {
+        "batch": "B3",
+        "scope": "Project waves W1-W2",
+        "gate": "125-contract matrix; unknown-kind 422"
+      },
+      {
+        "batch": "B4",
+        "scope": "AI content waves W4-W5",
+        "gate": "AI discipline matrix; no forced GitHub for non-code"
+      },
+      {
+        "batch": "B5",
+        "scope": "Mastery and rubrics",
+        "gate": "Per-discipline version; mandatory criteria reconciled"
+      },
+      {
+        "batch": "B6",
+        "scope": "Resources: provisional first, blocked last",
+        "gate": "Fresh check per required primary; 43 stay optional"
+      },
+      {
+        "batch": "B7",
+        "scope": "Internal pilot behind flag",
+        "gate": "Canary account; no paid activation"
+      },
+      {
+        "batch": "B8",
+        "scope": "Public launch decision",
+        "gate": "Fresh verification + human sign-off + commercial review"
+      }
+    ]
+  },
+  "tests": {
+    "contract": [
+      "32 tracks and 186 stages resolve; every package key maps to exactly one repo stage.",
+      "No duplicate stage titles or IDs within a track.",
+      "All 125 project IDs resolve across the five project modules.",
+      "All 186 mastery records resolve; weights and rubric IDs present.",
+      "All 584 map rows have a decision; 143 provisional and 43 blocked are asserted."
+    ],
+    "quiz": [
+      "Every question has 4-5 options, one valid correctIndex, and an explanation.",
+      "Public payloads contain no key material before submission.",
+      "validateOnly and failed responses contain no key material under the chosen policy.",
+      "Non-AI 5q passes at 4/5; AI 5q passes at 4/5; AI 4q requires 4/4 or the chosen policy.",
+      "Critical-question behavior matches the chosen policy.",
+      "Scores are 0-100 integers; partial/non-numeric answers are rejected.",
+      "A new quiz version invalidates a legacy pass unless explicitly grandfathered.",
+      "A path-version bump preserves position and does not mark a new quiz complete."
+    ],
+    "project": [
+      "Every project resolves to discipline, artifacts, rubric, and version.",
+      "Every required kind is in the enum; unknown kinds return 422.",
+      "AI capstones do not require github_repo unless the brief asks for code.",
+      "Weights are positive; score normalized against total weight; passThreshold and mandatory criteria enforced; unable cannot pass.",
+      "Missing/unsupported/mismatched evidence yields the documented failure code.",
+      "Fingerprint changes with artifacts or rubric version; reuse only on exact match.",
+      "Credits reserve once per logical request; duplicate requests do not double-consume.",
+      "Progression denied unless unlocked and passed."
+    ],
+    "resources": [
+      "No required resource has only archive evidence.",
+      "No L2 resource satisfies the level-3 threshold.",
+      "A resource with access other than free/free-with-account cannot be a required primary under the required-primary policy proposed here.",
+      "All 43 blocked stages have no required external primary.",
+      "Duplicate URLs deduped per stage; reuse requires a portion/segment.",
+      "Fresh verification updates level/access/method/time/evidence atomically.",
+      "Archive evidence is labeled as not current."
+    ],
+    "security": [
+      "401 unauthenticated; 403 without access; 409 before unlocked step.",
+      "Learner cannot submit for another learner.",
+      "Answer keys and provider prompts are not logged.",
+      "Assessment credit idempotency/concurrency tests still pass.",
+      "No package data is exposed while the flag is off."
+    ],
+    "e2e": [
+      "Complete one non-AI and one AI stage: lesson, quiz, project, progression.",
+      "Locked-stage submission is rejected server-side.",
+      "Progress persists after reload.",
+      "Double import is idempotent.",
+      "All 32 tracks/186 stages build; no staging import in runtime.",
+      "The 236 pre-existing dirty entries remain untouched except intended files."
+    ],
+    "performance": [
+      "No 8 MB JSON parsed at request time.",
+      "Public quiz payload includes only current-step questions.",
+      "Artifact limit (8) enforced.",
+      "Staging module stays out of the client bundle while the flag is off."
+    ]
+  },
+  "migrationProposal": {
+    "executed": false,
+    "note": "Proposal only. No migration file was created, no database was touched, no backfill was run. Requires separate approval, staging rehearsal, and backup.",
+    "tables": [
+      {
+        "name": "QuizAttempt",
+        "columns": [
+          "id",
+          "userId",
+          "trackId",
+          "stageId",
+          "pathVersion",
+          "quizVersion",
+          "score",
+          "passed",
+          "correctCount",
+          "totalQuestions",
+          "results (Json, correctness only)",
+          "createdAt"
+        ],
+        "indexes": [
+          "(userId, trackId, stageId, createdAt)",
+          "(userId, createdAt)"
+        ],
+        "policyNote": "Do not store correct answers in the attempt row. Raw answers are optional and privacy-sensitive."
+      },
+      {
+        "name": "StageQuizVersion",
+        "columns": [
+          "id",
+          "trackId",
+          "stageId",
+          "version",
+          "questionCount",
+          "publishedAt",
+          "retiredAt"
+        ],
+        "unique": "(trackId, stageId, version)",
+        "policyNote": "Progression requires a pass for the current version or an explicit grandfather marker."
+      },
+      {
+        "name": "ResourceVerificationRecord",
+        "columns": [
+          "id",
+          "resourceKey",
+          "url",
+          "level",
+          "method",
+          "access",
+          "accountRequired",
+          "paymentRequired",
+          "role",
+          "verificationEra",
+          "checkedAt",
+          "contentHash",
+          "reviewer",
+          "limitations"
+        ],
+        "policyNote": "Keep history; do not overwrite evidence. verificationEra distinguishes archive from current."
+      },
+      {
+        "name": "ProjectSubmission (optional later)",
+        "columns": [
+          "id",
+          "userId",
+          "trackId",
+          "projectId",
+          "evidenceFingerprint",
+          "rubricVersion",
+          "decision",
+          "score",
+          "artifacts (Json)",
+          "createdAt"
+        ],
+        "unique": "(userId, trackId, projectId, evidenceFingerprint)",
+        "policyNote": "Dual-write and backfill with verification; do not destructively migrate JSON blobs."
+      }
+    ],
+    "rollout": [
+      "Additive tables/nullable columns only; no destructive drops in the first migration.",
+      "Do not fabricate attempts for historical completions; mark legacy_unversioned or grandfather explicitly.",
+      "Preserve GuidedPathEnrollment.currentStepIndex and all q:/j:/r: keys.",
+      "Dual-write during pilot; read new tables behind a flag with legacy fallback.",
+      "Rollback by disabling the flag; keep additive tables and learner data."
+    ]
+  },
+  "limitations": [
+    "0 stage primaries live-reverified; no resource is current, free, or unchanged.",
+    "0 L4 playback checks; no video runtime/segment is trusted.",
+    "Only 10 live search-result inspections; most evidence is archive-derived.",
+    "3 direct fetches failed before HTTP response; unconfirmed is not dead.",
+    "7 x 403 and 1 x 429 recorded; access may be blocked or rate-limited.",
+    "0 human approvals; 186 SME review rows remain open.",
+    "930 quiz rows need answer-key and objective review.",
+    "125 project briefs need discipline review.",
+    "60 video rows lack runtime/segment evidence.",
+    "No license/attribution fields; legal review required.",
+    "No accessibility review.",
+    "No provider calls exercised in this phase; behavior and cost unproven.",
+    "No commercial review; pricing, credits, and entitlements unchanged."
+  ],
+  "gates": [
+    {
+      "gate": "G0",
+      "question": "Package reconciled to repo?",
+      "status": "pass",
+      "exitCriteria": "32 tracks, 186 stages, 0 title/ID mismatches, counts re-derived"
+    },
+    {
+      "gate": "G1",
+      "question": "Runtime safe for learners?",
+      "status": "not_met",
+      "exitCriteria": "P0-1/P0-2/P0-3/P0-4/P0-5 fixed and tested"
+    },
+    {
+      "gate": "G2",
+      "question": "Quizzes trustworthy?",
+      "status": "not_met",
+      "exitCriteria": "930 SME-reviewed; duplicate/leakage closed; key policy enforced"
+    },
+    {
+      "gate": "G3",
+      "question": "Projects assessable?",
+      "status": "not_met",
+      "exitCriteria": "125 contracts; artifact matrix; AI routing; mandatory criteria reconciled"
+    },
+    {
+      "gate": "G4",
+      "question": "Resources current?",
+      "status": "not_met",
+      "exitCriteria": "143 checked; 43 resolved or optional; playback for required video"
+    },
+    {
+      "gate": "G5",
+      "question": "Pilot safe?",
+      "status": "not_met",
+      "exitCriteria": "Flag, canaries, no paid exposure, monitoring, rollback tested"
+    },
+    {
+      "gate": "G6",
+      "question": "Launch safe?",
+      "status": "not_met",
+      "exitCriteria": "G1-G5 + legal/accessibility + commercial approval + fresh evidence"
+    }
+  ],
+  "finalAnswer": "Implementation is safe to start only as a branch-confined, feature-flagged staging and guardrail effort. It is not safe to import the package into learner-facing paths, enable paid access, or claim verification. Fix the P0 runtime contracts, keep 143 provisional resources provisional and all 43 blocked stages optional-only, obtain SME review for the first wave, and promote resources only after fresh live checks.",
+  "outOfScope": [
+    "Editing app source, records, commercial gates, entitlements, credits, pricing, or deployment",
+    "Creating or applying a Prisma migration",
+    "Backfilling, seeding, resetting, or cleaning a database",
+    "Live URL or video reverification",
+    "Approving content on behalf of a human reviewer",
+    "Changing the 236 pre-existing uncommitted entries",
+    "Committing, pushing, or opening a PR"
+  ],
+  "sampleAudit": [
+    {
+      "trackId": "frontend",
+      "discipline": "software",
+      "sample": "quiz and project sample",
+      "result": "structurally consistent; software contract is a reasonable fit"
+    },
+    {
+      "trackId": "uiux",
+      "discipline": "design",
+      "sample": "quiz and design project sample",
+      "result": "structurally consistent; design artifact fits; uiux:4 blocked"
+    },
+    {
+      "trackId": "cyber",
+      "discipline": "security",
+      "sample": "stage 4 quiz/project with blocked primary",
+      "result": "mismatch risk: security requires github_repo/source inspection; lab-report evidence needs an override"
+    },
+    {
+      "trackId": "ai-foundations",
+      "discipline": "software",
+      "sample": "quiz sample and capstone",
+      "result": "mismatch: q3 off-objective; non-code capstone falls into software contract"
+    },
+    {
+      "trackId": "writing",
+      "discipline": "writing",
+      "sample": "stage 4 quiz and portfolio with blocked primary",
+      "result": "document artifact fits; q4/q5 generic; writing:4 blocked"
+    },
+    {
+      "trackId": "projectmgmt",
+      "discipline": "management",
+      "sample": "quiz/project and document evidence",
+      "result": "document artifact fits; no blocked stages; resources provisional"
+    },
+    {
+      "trackId": "productmgmt",
+      "discipline": "management",
+      "sample": "stages 5-8 resource gate",
+      "result": "document artifact fits; stages 5-8 blocked"
+    },
+    {
+      "trackId": "qa",
+      "discipline": "security",
+      "sample": "contract audit",
+      "result": "qa maps to security, requiring github_repo; manual QA evidence needs overrides"
+    }
+  ],
+  "qa": {
+    "pass": 29,
+    "warn": 3,
+    "fail": 0,
+    "checks": 32,
+    "warnings": [
+      "0/186 stage primary pages fully live-reverified",
+      "no qualified SME review or human sign-off",
+      "143 provisional archived candidates and 43 blocked stages; current free/account/paywall states unverified"
+    ],
+    "note": "Mechanical passes do not imply approval or readiness."
+  },
+  "sourceFiles": [
+    {
+      "file": "00_EXECUTIVE_PLAN.md",
+      "shape": "markdown",
+      "check": "reviewed; scope consistent"
+    },
+    {
+      "file": "01_STAGE_MANIFEST.csv",
+      "shape": "csv, 12 columns",
+      "check": "186 data rows across 32 tracks"
+    },
+    {
+      "file": "02_STAGE_LEARNING_SPECS.json",
+      "shape": "json object",
+      "check": "186 stages"
+    },
+    {
+      "file": "03_RESOURCE_CANDIDATES.csv",
+      "shape": "csv with multiline fields",
+      "check": "610 parsed candidate rows (824 physical lines)"
+    },
+    {
+      "file": "04_APPROVED_RESOURCE_MAP.csv",
+      "shape": "csv",
+      "check": "584 parsed rows (585 physical lines)"
+    },
+    {
+      "file": "05_QUIZ_BANK.jsonl",
+      "shape": "jsonl",
+      "check": "930 objects; 5 per stage"
+    },
+    {
+      "file": "06_STAGE_MASTERY_AND_PRACTICE.json",
+      "shape": "json object",
+      "check": "186 stages"
+    },
+    {
+      "file": "07_PHASE_PROJECTS.json",
+      "shape": "json object",
+      "check": "125 projects"
+    },
+    {
+      "file": "08_REVIEW_AND_OPEN_ISSUES.csv",
+      "shape": "csv",
+      "check": "268 issue rows"
+    },
+    {
+      "file": "09_RESOURCE_VERIFICATION_LOG.csv",
+      "shape": "csv",
+      "check": "1021 rows"
+    },
+    {
+      "file": "10_TECHSKILLHUB_HUMAN_REVIEW_GUIDE.docx",
+      "shape": "docx",
+      "check": "present; process input, not parsed as data"
+    },
+    {
+      "file": "11_IDE_IMPLEMENTATION_PROMPT.md",
+      "shape": "markdown",
+      "check": "present; does not match repo module split"
+    },
+    {
+      "file": "12_FINAL_COVERAGE_REPORT.md",
+      "shape": "markdown",
+      "check": "191 records = 125 projects + 66 synthetic contracts"
+    },
+    {
+      "file": "QA_VALIDATION.csv/.txt",
+      "shape": "csv/text",
+      "check": "32 checks: 29 PASS, 3 WARN, 0 FAIL"
+    },
+    {
+      "file": "QUIZ_DUPLICATE_REPAIR_LOG.csv",
+      "shape": "csv",
+      "check": "3 aggregate audit rows; no item-level diff"
+    },
+    {
+      "file": "QUIZ_SPECIFICITY_AUDIT.csv",
+      "shape": "csv",
+      "check": "186 stage rows"
+    },
+    {
+      "file": "research-progress.json",
+      "shape": "json object",
+      "check": "186 stage entries; 0 fully live-reverified"
+    },
+    {
+      "file": "SOURCE_PROVENANCE.md",
+      "shape": "markdown",
+      "check": "source archive hash and access limits"
+    }
+  ]
+}

@@ -211,3 +211,8 @@ export function trackProjectStart(data: { path: string; project_name?: string })
     project_name: data.project_name,
   })
 }
+
+/** Standardized retention/activation event emitted alongside the DB event log. */
+export function trackRetentionEvent(data: Omit<AnalyticsEvent, 'timestamp'>) {
+  trackEvent(data)
+}

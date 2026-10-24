@@ -27,11 +27,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { name, email, subject, body: message } = body
+  const name = typeof body.name === 'string' ? body.name.trim() : ''
+  const email = typeof body.email === 'string' ? body.email.trim() : ''
+  const subject = typeof body.subject === 'string' ? body.subject.trim() : ''
+  const message = typeof body.body === 'string' ? body.body.trim() : ''
 
   if (!email || !subject || !message) {
     return NextResponse.json(
       { error: 'Email, subject, and message are required.' },
+      { status: 400 }
+    )
+  }
+
+  if (email.length > 254 || subject.length > 200 || message.length > 5000 || name.length > 120) {
+    return NextResponse.json(
+      { error: 'Your message is too long. Please shorten it and try again.' },
       { status: 400 }
     )
   }

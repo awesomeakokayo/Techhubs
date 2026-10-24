@@ -1,0 +1,707 @@
+{
+  "schema": "tsh-curriculum-package-adapter-v1",
+  "sourcePackageHash": "ec2ff32e9f7c805cc9c6db1972426fdbe412a31ec3487ace1993867ae3cf6266",
+  "packageDirectory": "local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/research_package/TechSkillHUB_Curriculum_Research_Deliverables",
+  "counts": {
+    "canonicalTracks": 32,
+    "canonicalStages": 186,
+    "stageSpecs": 186,
+    "quizzes": 930,
+    "masteryRecords": 186,
+    "phaseProjects": 125,
+    "syntheticMasteryContracts": 66,
+    "resourceCandidates": 610,
+    "resourceMapRows": 584,
+    "verificationLogRows": 1021,
+    "openIssues": 268
+  },
+  "pilot": {
+    "stages": [
+      "ai-foundations:1",
+      "ai-foundations:2",
+      "ai-foundations:3",
+      "ai-foundations:4",
+      "ai-foundations:5",
+      "ai-foundations:6",
+      "cyber:1",
+      "cyber:2",
+      "cyber:3",
+      "cyber:4",
+      "frontend:1",
+      "frontend:2",
+      "frontend:3",
+      "frontend:4",
+      "frontend:5",
+      "uiux:1",
+      "uiux:2",
+      "uiux:3",
+      "uiux:4",
+      "uiux:5"
+    ],
+    "stageCount": 20,
+    "projectOverrides": [
+      "ai-f-p3",
+      "cy-p1",
+      "cy-p2",
+      "cy-p3",
+      "cy-p4",
+      "fe-p3",
+      "fe-p4",
+      "fe-p5",
+      "fe-p6",
+      "fe-p7",
+      "fe-p8",
+      "ux-p1",
+      "ux-p2",
+      "ux-p3",
+      "ux-p4",
+      "ux-p5"
+    ],
+    "projectOverrideCount": 16
+  },
+  "resources": {
+    "blockedCount": 39,
+    "provisionalCount": 103,
+    "currentVerifiedCount": 44,
+    "stageReadyCount": 141,
+    "selectedPackagePrimaryCount": 44,
+    "selectedAlternativeCount": 97,
+    "preflightBlockedCount": 43,
+    "blockedStages": [
+      "ai-automation:3",
+      "ai-automation:7",
+      "ai-automation:8",
+      "ai-content:2",
+      "ai-content:3",
+      "ai-design:2",
+      "ai-design:5",
+      "ai-engineering:6",
+      "ai-research:2",
+      "ai-software-development:6",
+      "ai-software-development:8",
+      "ai-work:4",
+      "ai:2",
+      "ai:3",
+      "backend:1",
+      "crypto:10",
+      "crypto:11",
+      "crypto:5",
+      "crypto:7",
+      "crypto:8",
+      "crypto:9",
+      "cyber:4",
+      "devops:1",
+      "devops:2",
+      "frontend:5",
+      "fullstack:1",
+      "fullstack:2",
+      "fullstack:4",
+      "nocode:2",
+      "productmgmt:5",
+      "productmgmt:6",
+      "productmgmt:7",
+      "productmgmt:8",
+      "python:5",
+      "uiux:4",
+      "video:2",
+      "writing:4",
+      "youtube:2",
+      "youtube:3"
+    ],
+    "provisionalStages": [
+      "ai-agents:1",
+      "ai-agents:10",
+      "ai-agents:3",
+      "ai-agents:4",
+      "ai-agents:6",
+      "ai-agents:7",
+      "ai-automation:1",
+      "ai-automation:2",
+      "ai-automation:4",
+      "ai-automation:5",
+      "ai-content:1",
+      "ai-content:4",
+      "ai-content:5",
+      "ai-content:6",
+      "ai-design:1",
+      "ai-design:3",
+      "ai-design:7",
+      "ai-engineering:1",
+      "ai-engineering:10",
+      "ai-engineering:2",
+      "ai-engineering:3",
+      "ai-engineering:4",
+      "ai-engineering:8",
+      "ai-engineering:9",
+      "ai-foundations:2",
+      "ai-foundations:3",
+      "ai-foundations:4",
+      "ai-foundations:6",
+      "ai-research:1",
+      "ai-research:3",
+      "ai-research:4",
+      "ai-research:5",
+      "ai-software-development:1",
+      "ai-software-development:2",
+      "ai-software-development:3",
+      "ai-software-development:4",
+      "ai-software-development:5",
+      "ai-software-development:7",
+      "ai-work:1",
+      "ai-work:2",
+      "ai-work:3",
+      "ai-work:5",
+      "ai-youtube:10",
+      "ai-youtube:2",
+      "ai-youtube:3",
+      "ai-youtube:4",
+      "ai-youtube:5",
+      "ai-youtube:6",
+      "ai-youtube:7",
+      "ai-youtube:9",
+      "ai:1",
+      "ai:4",
+      "backend:3",
+      "backend:4",
+      "crypto:2",
+      "crypto:3",
+      "cyber:2",
+      "cyber:3",
+      "dart:1",
+      "dart:4",
+      "data:1",
+      "data:2",
+      "data:5",
+      "datascience:1",
+      "datascience:2",
+      "datascience:4",
+      "devops:4",
+      "frontend:1",
+      "frontend:2",
+      "frontend:3",
+      "frontend:4",
+      "fullstack:3",
+      "marketing:1",
+      "marketing:3",
+      "marketing:4",
+      "mobile:1",
+      "mobile:2",
+      "mobile:3",
+      "nocode:1",
+      "nocode:3",
+      "productmgmt:1",
+      "productmgmt:3",
+      "projectmgmt:1",
+      "projectmgmt:2",
+      "projectmgmt:3",
+      "python:1",
+      "python:2",
+      "python:3",
+      "python:4",
+      "qa:1",
+      "qa:4",
+      "sonic:1",
+      "sonic:2",
+      "sonic:3",
+      "sonic:5",
+      "sonic:6",
+      "uiux:1",
+      "uiux:2",
+      "uiux:5",
+      "video:3",
+      "video:4",
+      "writing:3",
+      "youtube:1"
+    ],
+    "selectedStages": [
+      "ai-agents:1",
+      "ai-agents:10",
+      "ai-agents:2",
+      "ai-agents:3",
+      "ai-agents:4",
+      "ai-agents:5",
+      "ai-agents:6",
+      "ai-agents:7",
+      "ai-agents:8",
+      "ai-agents:9",
+      "ai-automation:1",
+      "ai-automation:2",
+      "ai-automation:3",
+      "ai-automation:4",
+      "ai-automation:5",
+      "ai-automation:6",
+      "ai-automation:7",
+      "ai-automation:8",
+      "ai-content:1",
+      "ai-content:2",
+      "ai-content:3",
+      "ai-content:5",
+      "ai-content:6",
+      "ai-design:1",
+      "ai-design:2",
+      "ai-design:3",
+      "ai-design:4",
+      "ai-design:5",
+      "ai-design:6",
+      "ai-design:8",
+      "ai-engineering:1",
+      "ai-engineering:10",
+      "ai-engineering:2",
+      "ai-engineering:3",
+      "ai-engineering:4",
+      "ai-engineering:5",
+      "ai-engineering:6",
+      "ai-engineering:7",
+      "ai-engineering:8",
+      "ai-engineering:9",
+      "ai-foundations:1",
+      "ai-foundations:3",
+      "ai-foundations:4",
+      "ai-foundations:5",
+      "ai-foundations:6",
+      "ai-research:1",
+      "ai-research:2",
+      "ai-research:3",
+      "ai-research:4",
+      "ai-software-development:1",
+      "ai-software-development:2",
+      "ai-software-development:3",
+      "ai-software-development:4",
+      "ai-software-development:5",
+      "ai-software-development:6",
+      "ai-software-development:7",
+      "ai-software-development:8",
+      "ai-work:1",
+      "ai-work:2",
+      "ai-work:3",
+      "ai-work:4",
+      "ai-work:5",
+      "ai-youtube:1",
+      "ai-youtube:4",
+      "ai-youtube:6",
+      "ai-youtube:7",
+      "ai-youtube:8",
+      "ai-youtube:9",
+      "ai:2",
+      "backend:2",
+      "backend:3",
+      "backend:5",
+      "crypto:1",
+      "crypto:11",
+      "crypto:2",
+      "crypto:3",
+      "crypto:4",
+      "crypto:5",
+      "crypto:6",
+      "crypto:7",
+      "crypto:9",
+      "cyber:1",
+      "cyber:2",
+      "dart:1",
+      "dart:2",
+      "dart:3",
+      "data:3",
+      "data:4",
+      "data:5",
+      "datascience:3",
+      "datascience:4",
+      "datascience:5",
+      "devops:3",
+      "devops:5",
+      "frontend:3",
+      "frontend:5",
+      "fullstack:1",
+      "fullstack:2",
+      "fullstack:3",
+      "fullstack:4",
+      "fullstack:5",
+      "marketing:2",
+      "marketing:3",
+      "marketing:4",
+      "mobile:3",
+      "mobile:4",
+      "nocode:3",
+      "productmgmt:1",
+      "productmgmt:2",
+      "productmgmt:4",
+      "productmgmt:5",
+      "productmgmt:6",
+      "productmgmt:7",
+      "projectmgmt:1",
+      "projectmgmt:2",
+      "projectmgmt:3",
+      "projectmgmt:4",
+      "projectmgmt:5",
+      "projectmgmt:6",
+      "python:2",
+      "python:3",
+      "python:5",
+      "qa:1",
+      "qa:2",
+      "qa:3",
+      "sonic:1",
+      "sonic:2",
+      "sonic:4",
+      "uiux:1",
+      "uiux:3",
+      "uiux:4",
+      "uiux:5",
+      "video:1",
+      "video:2",
+      "writing:1",
+      "writing:2",
+      "writing:3",
+      "writing:4",
+      "youtube:1",
+      "youtube:3",
+      "youtube:4"
+    ],
+    "productManagementStages5to8": [
+      {
+        "trackId": "productmgmt",
+        "stageId": 5,
+        "status": "blocked",
+        "candidates": [
+          {
+            "title": "Mixpanel",
+            "publisher": "Mixpanel",
+            "url": "https://mixpanel.com",
+            "recordedFreeAccess": "True",
+            "recordedVerificationLevel": "3",
+            "decision": "keep_as_optional_practice_tool_not_primary_instruction",
+            "nextAction": "Keep only as optional hands-on practice/support after access and accessibility check; provide instructional resource separately."
+          },
+          {
+            "title": "Mixpanel",
+            "publisher": "Mixpanel",
+            "url": "https://mixpanel.com",
+            "recordedFreeAccess": "public_free_at_archive_probe",
+            "recordedVerificationLevel": "3",
+            "decision": "blocked_primary_not_instructional_or_no_objective_match",
+            "nextAction": "Main content (7403 chars) extracted and compared with the mapped objective on 2026-10-17. Factual accuracy, currency, accessibility and pedagogical fit still require human review."
+          }
+        ],
+        "conclusion": "No candidate is currently verified as free, relevant and content-inspected. Keep the stage blocked from a required external primary."
+      },
+      {
+        "trackId": "productmgmt",
+        "stageId": 6,
+        "status": "blocked",
+        "candidates": [
+          {
+            "title": "Hotjar",
+            "publisher": "Hotjar",
+            "url": "https://www.hotjar.com",
+            "recordedFreeAccess": "True",
+            "recordedVerificationLevel": "3",
+            "decision": "keep_as_optional_practice_tool_not_primary_instruction",
+            "nextAction": "Keep only as optional hands-on practice/support after access and accessibility check; provide instructional resource separately."
+          },
+          {
+            "title": "Hotjar",
+            "publisher": "Hotjar",
+            "url": "https://www.hotjar.com",
+            "recordedFreeAccess": "public_free_at_archive_probe",
+            "recordedVerificationLevel": "3",
+            "decision": "blocked_primary_not_instructional_or_no_objective_match",
+            "nextAction": "Main content (3788 chars) extracted and compared with the mapped objective on 2026-10-17. Factual accuracy, currency, accessibility and pedagogical fit still require human review."
+          }
+        ],
+        "conclusion": "No candidate is currently verified as free, relevant and content-inspected. Keep the stage blocked from a required external primary."
+      },
+      {
+        "trackId": "productmgmt",
+        "stageId": 7,
+        "status": "blocked",
+        "candidates": [
+          {
+            "title": "ProductHunt",
+            "publisher": "Product Hunt",
+            "url": "https://www.producthunt.com",
+            "recordedFreeAccess": "True",
+            "recordedVerificationLevel": "3",
+            "decision": "human_objective_match_review_required",
+            "nextAction": "Review the extracted main content against objective/success criteria; replace or deep-link if the current page is broad or mismatched."
+          },
+          {
+            "title": "ProductHunt",
+            "publisher": "Product Hunt",
+            "url": "https://www.producthunt.com",
+            "recordedFreeAccess": "public_free_at_archive_probe",
+            "recordedVerificationLevel": "3",
+            "decision": "blocked_primary_not_instructional_or_no_objective_match",
+            "nextAction": "Main content (2016 chars) extracted and compared with the mapped objective on 2026-10-17. Factual accuracy, currency, accessibility and pedagogical fit still require human review."
+          }
+        ],
+        "conclusion": "No candidate is currently verified as free, relevant and content-inspected. Keep the stage blocked from a required external primary."
+      },
+      {
+        "trackId": "productmgmt",
+        "stageId": 8,
+        "status": "blocked",
+        "candidates": [
+          {
+            "title": "Product School Free Resources",
+            "publisher": "Product School",
+            "url": "https://productschool.com/resources",
+            "recordedFreeAccess": "True",
+            "recordedVerificationLevel": "3",
+            "decision": "human_objective_match_review_required",
+            "nextAction": "Review the extracted main content against objective/success criteria; replace or deep-link if the current page is broad or mismatched."
+          },
+          {
+            "title": "Mind the Product",
+            "publisher": "Mind the Product",
+            "url": "https://www.mindtheproduct.com",
+            "recordedFreeAccess": "True",
+            "recordedVerificationLevel": "3",
+            "decision": "keep_candidate_pending_fresh_check_and_sme",
+            "nextAction": "Candidate has archived L3 content and positive objective-term match; confirm current access, precise section and learning fit."
+          },
+          {
+            "title": "Shreyas Doshi on Twitter/X",
+            "publisher": "Shreyas Doshi",
+            "url": "https://twitter.com/shreyas",
+            "recordedFreeAccess": "True",
+            "recordedVerificationLevel": "2",
+            "decision": "hold_not_required_until_content_and_free_access_verified",
+            "nextAction": "Inspect main content and verify free access for the full required portion; do not require yet."
+          },
+          {
+            "title": "Product School Free Resources",
+            "publisher": "Product School",
+            "url": "https://productschool.com/resources",
+            "recordedFreeAccess": "public_free_at_archive_probe",
+            "recordedVerificationLevel": "3",
+            "decision": "blocked_primary_not_instructional_or_no_objective_match",
+            "nextAction": "Main content (743 chars) extracted and compared with the mapped objective on 2026-10-17. Factual accuracy, currency, accessibility and pedagogical fit still require human review."
+          }
+        ],
+        "conclusion": "No candidate is currently verified as free, relevant and content-inspected. Keep the stage blocked from a required external primary."
+      }
+    ]
+  },
+  "fieldMappings": {
+    "quiz": [
+      [
+        "questionId",
+        "QuizQuestion.id",
+        "preserved"
+      ],
+      [
+        "trackId/stageId",
+        "canonical track/stage",
+        "validated against lib/tracks.ts"
+      ],
+      [
+        "question",
+        "QuizQuestion.question",
+        "preserved"
+      ],
+      [
+        "options",
+        "QuizQuestion.options",
+        "preserved"
+      ],
+      [
+        "correctIndex",
+        "QuizQuestion.correctIndex",
+        "server-only; never serialized before submission"
+      ],
+      [
+        "answerRationale",
+        "QuizQuestion.explanation",
+        "server-only until feedback policy allows release"
+      ],
+      [
+        "feedbackOnIncorrect",
+        "QuizQuestion.feedbackOnIncorrect",
+        "preserved as remediation metadata; not returned on a failed attempt"
+      ],
+      [
+        "points",
+        "QuizQuestion.points",
+        "preserved; stage total must be 100"
+      ],
+      [
+        "critical",
+        "QuizQuestion.critical",
+        "preserved; a missed critical question fails the attempt"
+      ],
+      [
+        "learningObjectiveId/learningObjective",
+        "QuizQuestion.objective",
+        "preserved for audit/remediation"
+      ],
+      [
+        "difficulty/difficultyRationale",
+        "QuizQuestion.difficulty",
+        "difficulty preserved; rationale retained in staging provenance"
+      ],
+      [
+        "correctAnswer",
+        "validation only",
+        "checked against options[correctIndex]; not a runtime field"
+      ],
+      [
+        "distractorMisconception/distractorAnalysis",
+        "staging provenance",
+        "preserved in validation report; not exposed before submission"
+      ],
+      [
+        "rationaleSourceKeys",
+        "QuizQuestion.provenance",
+        "preserved"
+      ],
+      [
+        "assessmentSourceStatus",
+        "QuizQuestion.reviewStatus",
+        "needshuman_review"
+      ],
+      [
+        "type",
+        "validation only",
+        "must be mcq"
+      ]
+    ],
+    "stage": [
+      [
+        "currentObjective",
+        "StageLearningPlan.objective / pilot objective",
+        "preserved"
+      ],
+      [
+        "targetOutcomes",
+        "success criteria",
+        "preserved"
+      ],
+      [
+        "prerequisites",
+        "stage prerequisites",
+        "preserved"
+      ],
+      [
+        "topics",
+        "stage topics",
+        "preserved"
+      ],
+      [
+        "misconceptions/commonMistakes",
+        "commonMistakes",
+        "preserved"
+      ],
+      [
+        "authoredInstruction.lessonOutline",
+        "staging only",
+        "not imported: outline, not complete lesson prose"
+      ],
+      [
+        "authoredInstruction.workedExample",
+        "concept worked example",
+        "preserved as an additional example"
+      ],
+      [
+        "practice",
+        "StageLearningPlan.exercise",
+        "preserved when the existing authored exercise does not already cover it"
+      ],
+      [
+        "aiMastery",
+        "section/project contract criteria",
+        "preserved as objective-anchored criteria"
+      ],
+      [
+        "phaseProjectRef/phaseProjectChanges",
+        "staging provenance",
+        "project mapping resolved from canonical project registry"
+      ],
+      [
+        "readiness/humanReviewItems",
+        "review ledger",
+        "preserved; never treated as approval"
+      ]
+    ],
+    "project": [
+      [
+        "brief",
+        "ProjectBrief",
+        "preserved/merged"
+      ],
+      [
+        "acceptanceCriteria",
+        "contract.acceptanceCriteria + rubric",
+        "preserved"
+      ],
+      [
+        "effectiveRubric.criterion/weight/mandatory",
+        "RubricCriterion",
+        "preserved for pilot project overrides"
+      ],
+      [
+        "effectiveRubric.scoringGuide",
+        "staging provenance",
+        "not sent to the model as a separate requirement"
+      ],
+      [
+        "criticalGates",
+        "mandatory criterion/gate note",
+        "preserved as mandatory gate"
+      ],
+      [
+        "evaluationRoute.requiredArtifacts.kind",
+        "ArtifactKind",
+        "mapped explicitly; unknown kinds are rejected"
+      ],
+      [
+        "evaluationRoute.optionalArtifacts",
+        "optionalArtifacts",
+        "mapped explicitly"
+      ],
+      [
+        "deliverables",
+        "writtenExplanation prompts/artifact labels",
+        "preserved in labels"
+      ],
+      [
+        "rubricVersion",
+        "provenance only",
+        "runtime hash remains authoritative"
+      ]
+    ],
+    "resource": [
+      [
+        "url/title/publisher/type",
+        "staging resource metadata",
+        "preserved in validation report"
+      ],
+      [
+        "current_role/new_selected_role/decision",
+        "disposition",
+        "package-primary status; archive evidence never promotes itself to required"
+      ],
+      [
+        "free_access_status/account_requirement",
+        "review evidence",
+        "archive-era only; current access is a separate fresh check"
+      ],
+      [
+        "verification_level/archive_http_status",
+        "review evidence",
+        "not current verification"
+      ],
+      [
+        "exact_portion/duration/segment",
+        "staging provenance",
+        "not a verified playback/required segment; fresh content evidence is recorded separately"
+      ]
+    ]
+  },
+  "findings": [],
+  "findingsBySeverity": {},
+  "status": "validated_needs_human_review",
+  "humanReview": {
+    "status": "pending",
+    "namedReviewers": [],
+    "premiumApproved": false
+  }
+}

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Navbar } from '@/components/layout/Navbar'
-import { Footer } from '@/components/layout/Footer'
 import { SessionProvider } from '@/components/providers/SessionProvider'
 import { ToastProvider } from '@/components/ui/toast'
 import { StructuredData } from '@/components/seo/StructuredData'
+import { QuizResultSync } from '@/components/progress/QuizResultSync'
+import { CommercialAnnouncement } from '@/components/commercial/CommercialAnnouncement'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { getSiteMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo/utils'
@@ -23,11 +23,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <CommercialAnnouncement enabled={process.env.COMMERCE_ANNOUNCEMENT !== 'false'} />
         <SessionProvider>
           <ToastProvider>
-            <Navbar />
-            <main id="main-content">{children}</main>
-            <Footer />
+            <QuizResultSync />
+            {children}
           </ToastProvider>
         </SessionProvider>
         <Analytics />

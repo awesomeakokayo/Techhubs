@@ -1,0 +1,331 @@
+{
+  "_schema": {
+    "description": "Canonical human sign-off record. Copy to docs/curriculum-quality-signoff.json and fill ONLY with genuine, named human reviews. The audit counts a track approved when it has a truthy reviewedBy. Automated evidence is NOT a sign-off.",
+    "countedAsApprovedWhen": "value.reviewedBy is truthy (or value.signedOff === true)",
+    "requiredFields": [
+      "reviewedBy",
+      "reviewedAt",
+      "notes"
+    ]
+  },
+  "frontend": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.3,
+    "worthiness": 98.7,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "backend": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.2,
+    "worthiness": 98.4,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "fullstack": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.3,
+    "worthiness": 98.5,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "python": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.1,
+    "worthiness": 98.3,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "uiux": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.5,
+    "worthiness": 99.1,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "qa": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.7,
+    "worthiness": 99.4,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "data": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.1,
+    "worthiness": 98.2,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "datascience": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.6,
+    "worthiness": 99.2,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "devops": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.1,
+    "worthiness": 98.2,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "cyber": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.3,
+    "worthiness": 98.6,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "mobile": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.4,
+    "worthiness": 98.8,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "video": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.3,
+    "worthiness": 98.5,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "youtube": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 98.8,
+    "worthiness": 97.7,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "marketing": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.7,
+    "worthiness": 99.4,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.1,
+    "worthiness": 98.1,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "nocode": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.7,
+    "worthiness": 99.4,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "writing": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.8,
+    "worthiness": 99.5,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "crypto": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.2,
+    "worthiness": 98,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "projectmgmt": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.9,
+    "worthiness": 99.2,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "productmgmt": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.5,
+    "worthiness": 98.9,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "dart": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.6,
+    "worthiness": 99.2,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "sonic": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.4,
+    "worthiness": 98.8,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-foundations": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.3,
+    "worthiness": 98.7,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-work": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.6,
+    "worthiness": 99.3,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-research": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.7,
+    "worthiness": 99.3,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-content": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99,
+    "worthiness": 98,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-youtube": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.9,
+    "worthiness": 99.8,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-software-development": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.5,
+    "worthiness": 99.1,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-automation": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.5,
+    "worthiness": 99,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-agents": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 100,
+    "worthiness": 100,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-engineering": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.7,
+    "worthiness": 99.4,
+    "gatesPassed": true,
+    "notes": ""
+  },
+  "ai-design": {
+    "reviewedBy": null,
+    "reviewedAt": null,
+    "signedOff": false,
+    "status": "awaiting",
+    "readiness": 99.3,
+    "worthiness": 98.6,
+    "gatesPassed": true,
+    "notes": ""
+  }
+}

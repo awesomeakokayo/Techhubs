@@ -50,7 +50,7 @@ test('every canonical AI resource has the required Phase 7 fields', () => {
 
 test('the registry covers every AI track', () => {
   for (const trackId of requiredTracks) {
-    assert.match(registry, new RegExp(`trackId:\s*'${trackId}'`), `${trackId} has no canonical resource`) 
+    assert.match(registry, new RegExp(`trackId: *'${trackId}'`), `${trackId} has no canonical resource`) 
   }
 })
 
