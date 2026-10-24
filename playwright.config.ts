@@ -27,7 +27,9 @@ function readEnvValue(fileName: string, key: string): string | undefined {
 
 const e2eDatabaseUrl = resolveE2EDatabaseUrl(process.env.E2E_DATABASE_URL, [
   process.env.DATABASE_URL,
+  readEnvValue('.env.development.local', 'DATABASE_URL'),
   readEnvValue('.env.local', 'DATABASE_URL'),
+  readEnvValue('.env.development', 'DATABASE_URL'),
   readEnvValue('.env', 'DATABASE_URL'),
 ])
 

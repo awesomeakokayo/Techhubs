@@ -29,6 +29,26 @@ test('rejects a test URL with the same database target even when credentials dif
   )
 })
 
+test('rejects the same host and database even when connection ports differ', () => {
+  assert.throws(
+    () => resolveE2EDatabaseUrl(
+      'postgresql://test:secret@db.example.com:6543/app',
+      ['postgresql://prod:secret@db.example.com:5432/app'],
+    ),
+    /same PostgreSQL database/,
+  )
+})
+
+test('normalizes the common managed-postgres pooler host alias', () => {
+  assert.throws(
+    () => resolveE2EDatabaseUrl(
+      'postgresql://test:secret@ep-example-pooler.region.aws.neon.tech:5432/app',
+      ['postgresql://prod:secret@ep-example.region.aws.neon.tech:5432/app'],
+    ),
+    /same PostgreSQL database/,
+  )
+})
+
 test('allows an explicitly configured separate disposable database', () => {
   assert.equal(
     resolveE2EDatabaseUrl(disposable, ['postgresql://app:secret@db.example.com:5432/app']),

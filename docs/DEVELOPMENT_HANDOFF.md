@@ -177,7 +177,7 @@ Playwright or a database-backed test job.
 ## 6. Known issues, debt and blockers
 
 1. **GitHub Actions billing lock.** The feature branch is pushed and PR #4 is open, but the validation job did not start because the GitHub account is locked due to a billing issue. Re-run CI after the billing blocker is resolved.
-2. **Playwright requires an isolated database.** The configuration now refuses to start unless `E2E_DATABASE_URL` is explicitly set to PostgreSQL and does not resolve to the same host/port/database as any configured shared `DATABASE_URL` in the process environment, `.env.local`, or `.env`. E2E was not run in this inspection.
+2. **Playwright requires an isolated database.** The configuration now refuses to start unless `E2E_DATABASE_URL` is explicitly set to PostgreSQL and does not resolve to the same normalized host/database target as any configured shared `DATABASE_URL` in the process environment or Next.js dotenv files. The guard ignores port and credentials and normalizes a common managed-PostgreSQL pooler hostname suffix. E2E was not run in this inspection.
 3. **No rate limiting** on public/authenticated write endpoints (Vercel serverless;
    needs Upstash/Vercel KV or edge WAF).
 4. **Live migration history not reconciled.** 10 migrations are tracked; `0_init`
