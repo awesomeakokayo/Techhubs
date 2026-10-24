@@ -27,7 +27,8 @@ export function aggregateQuizAnswers(
       if (typeof value !== 'number' || !Number.isFinite(value) || value === 0) continue
 
       scores[trackId] = (scores[trackId] ?? 0) + value
-      ;(reasons[trackId] ??= []).push(answer.label)
+      if (!reasons[trackId]) reasons[trackId] = []
+      reasons[trackId].push(answer.label)
     }
   }
 
