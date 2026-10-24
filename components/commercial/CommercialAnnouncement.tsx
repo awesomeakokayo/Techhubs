@@ -69,7 +69,7 @@ export function CommercialAnnouncement({ enabled = true }: { enabled?: boolean }
             Optional <span className="font-medium text-text-primary">Pro</span> plan in preparation. No changes today.{' '}
           </span>
           <span className="hidden lg:inline">
-            We&apos;re preparing an optional <span className="font-medium text-text-primary">Pro</span> plan and Track Passes to help cover the cost of AI project assessments. A small number of popular tracks are planned to become premium over time; a Track Pass will give <span className="font-medium text-text-primary">six months of access to one track</span> (one-time, no auto-renewal).{' '}
+            We&apos;re preparing an optional <span className="font-medium text-text-primary">Pro</span> plan and Track Passes to help cover the cost of AI project assessments. A small number of popular tracks are planned to become premium over time; a Track Pass will give <span className="font-medium text-text-primary">three months of access to one track</span> (one-time, no auto-renewal).{' '}
             <span className="text-text-primary">Nothing changes for you today</span> and you&apos;ll never be charged unless you choose a plan yourself.{' '}
           </span>
           <Link href="/pricing" className="text-teal underline underline-offset-2 hover:text-teal-bright">See pricing</Link>

@@ -1,70 +1,85 @@
 /**
- * TechSkillHub — commercial pricing configuration (server-controlled).
+ * TechSkillHub — provider/currency keyed prices with per-product approval.
  *
- * Prices are kept completely separate from internal plan identifiers and from
- * entitlement logic, so a currency or provider change never touches access rules.
- *
- * IMPORTANT: the values below are PROVISIONAL configuration values that have NOT
- * been approved for publication. They are never rendered publicly unless
- * `pricesApprovedForPublication(env)` is explicitly enabled by an operator.
- *
- * No Nigerian naira prices are defined here: none have been calculated or
- * approved, and inventing them is prohibited.
+ * COMMERCE_PRICES_APPROVED is the publication/checkout master switch. It does
+ * not approve every catalogue entry: each price must also be marked approved.
+ * This lets the owner launch a confirmed Nigerian Track Pass without silently
+ * publishing provisional international Pro prices.
  */
-
 import type { PlanId } from './plans'
 import type { ProviderId } from './providers'
 
-/** Stamped on every internal order so transactions trace to a price set. */
-export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10'
+export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000'
 
 export interface PlanPrice {
   planId: PlanId
   provider: ProviderId
   /** ISO 4217 currency code. */
   currency: string
-  /** Minor units (cents). */
+  /** Integer minor units: kobo for NGN, cents for USD. */
   amountMinor: number
   /** ISO 8601 duration for subscriptions, if applicable. */
   interval: 'P1M' | 'P1Y' | null
+  /** Owner-confirmed for this specific plan/provider/currency. */
+  approved: boolean
 }
 
 /**
- * Provisional international prices (USD). These are configuration placeholders
- * only — do not publish, advertise or charge without explicit approval.
+ * Internal price catalogue. The existing USD values remain provisional. The
+ * only owner-approved price here is ₦6,000 for a three-calendar-month Track Pass
+ * through Paystack. Publication and checkout still require their master flags.
  */
-export const PROVISIONAL_PRICES: Partial<Record<ProviderId, Partial<Record<PlanId, PlanPrice>>>> = {
+export const PRICE_CATALOGUE: Partial<Record<ProviderId, Partial<Record<PlanId, PlanPrice>>>> = {
   lemonsqueezy: {
-    TRACK_PASS: { planId: 'TRACK_PASS', provider: 'lemonsqueezy', currency: 'USD', amountMinor: 900, interval: null },
-    PRO_MONTHLY: { planId: 'PRO_MONTHLY', provider: 'lemonsqueezy', currency: 'USD', amountMinor: 1200, interval: 'P1M' },
-    PRO_ANNUAL: { planId: 'PRO_ANNUAL', provider: 'lemonsqueezy', currency: 'USD', amountMinor: 9600, interval: 'P1Y' },
+    TRACK_PASS: { planId: 'TRACK_PASS', provider: 'lemonsqueezy', currency: 'USD', amountMinor: 900, interval: null, approved: false },
+    PRO_MONTHLY: { planId: 'PRO_MONTHLY', provider: 'lemonsqueezy', currency: 'USD', amountMinor: 1200, interval: 'P1M', approved: false },
+    PRO_ANNUAL: { planId: 'PRO_ANNUAL', provider: 'lemonsqueezy', currency: 'USD', amountMinor: 9600, interval: 'P1Y', approved: false },
   },
-  // Paystack (Nigerian) prices are intentionally undefined until the merchant is
-  // approved and the owner supplies approved NGN values. Do NOT compute these.
-  paystack: {},
+  paystack: {
+    TRACK_PASS: { planId: 'TRACK_PASS', provider: 'paystack', currency: 'NGN', amountMinor: 600000, interval: null, approved: true },
+  },
 }
 
-/** Whether prices may be shown to the public. Default: false (unapproved). */
+/** Backwards-compatible name used by earlier tests and internal tooling. */
+export const PROVISIONAL_PRICES = PRICE_CATALOGUE
+
+/** Master switch for publishing prices. Default: false. */
 export function pricesApprovedForPublication(env: Record<string, string | undefined> = process.env): boolean {
   return env.COMMERCE_PRICES_APPROVED === 'true'
 }
 
-/** Resolve the configured price for a provider + plan, or null if not configured. */
+/** Both the master switch and the individual price approval must pass. */
+export function isPriceApproved(
+  price: PlanPrice | null | undefined,
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  return Boolean(price?.approved && pricesApprovedForPublication(env))
+}
+
+/** Resolve the configured price for a provider + plan, approved or not. */
 export function resolveProviderPrice(provider: ProviderId, planId: PlanId): PlanPrice | null {
-  return PROVISIONAL_PRICES[provider]?.[planId] ?? null
+  return PRICE_CATALOGUE[provider]?.[planId] ?? null
 }
 
-/** True when any price exists for the given plan on any provider. */
+/** True when any provider has a configured price for the plan. */
 export function hasAnyPrice(planId: PlanId): boolean {
-  return Object.values(PROVISIONAL_PRICES).some((byPlan) => Boolean(byPlan?.[planId]))
+  return Object.values(PRICE_CATALOGUE).some((byPlan) => Boolean(byPlan?.[planId]))
 }
 
-/**
- * Format a price for display from minor units. Returns e.g. "$9.00".
- * Used only when publication has been approved.
- */
+/** True when at least one price for the plan is owner-approved and published. */
+export function hasApprovedPrice(
+  planId: PlanId,
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  return Object.values(PRICE_CATALOGUE).some((byPlan) => isPriceApproved(byPlan?.[planId], env))
+}
+
+/** Format minor units without assuming every currency has two decimal places. */
 export function formatPrice(price: PlanPrice): string {
   const major = price.amountMinor / 100
+  if (price.currency === 'NGN') {
+    return `₦${new Intl.NumberFormat('en-NG', { maximumFractionDigits: 0 }).format(major)}`
+  }
   const formatted = major.toFixed(2)
   const symbol: Record<string, string> = { USD: '$', GBP: '£', EUR: '€' }
   return `${symbol[price.currency] ?? `${price.currency} `}${formatted}`

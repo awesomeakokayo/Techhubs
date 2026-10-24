@@ -40,7 +40,7 @@ tested to never deny access off-enforcement.
 ### Phase 2 — informational
 
 The dismissible `CommercialAnnouncement` explains that a few tracks are planned to
-become premium, that a Track Pass gives six months of access to one track, and
+become premium, that a Track Pass gives three months of access to one track, and
 that nothing changes today. It makes no price or launch-date claims, does not
 block the learning flow, and hiding it changes nothing about entitlement. The
 premium track pages show the same non-blocking notice; the checkout button is not
@@ -94,7 +94,7 @@ enabled automatically as a consequence of Phase 3.
   is retained.
 * After the window, a learner is retained if they have **any** recorded activity
   (enrolment, progress, submissions, completion, certificate) **or** a legacy
-  `TrackAccess` record — a legacy record is explicitly *not* treated as a six-month
+  `TrackAccess` record — a legacy record is explicitly *not* treated as a three-month
   Track Pass.
 * An **ambiguous** pre-cutover account with no activity (or an untrusted creation
   date) is retained and reported as `uncertain` — never silently revoked.

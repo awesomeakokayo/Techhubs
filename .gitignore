@@ -44,3 +44,10 @@ next-env.d.ts
 
 # dev server logs
 dev.log
+
+# Generated curriculum/research expansions are distributed as checked ZIP bundles.
+# Keep the portable archives and the exporter source; do not track exploded output.
+/artifacts/resource-verification-package/*
+!/artifacts/resource-verification-package/tools/
+!/artifacts/resource-verification-package/tools/generate.mjs
+/local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/research_package/TechSkillHUB_Curriculum_Research_Deliverables/

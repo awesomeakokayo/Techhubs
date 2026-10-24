@@ -2,15 +2,14 @@
  * TechSkillHub — Track Pass term arithmetic (pure).
  *
  * A Track Pass is a ONE-TIME payment that grants access to one premium track for
- * SIX CALENDAR MONTHS. The period is computed in UTC from the authoritative
+ * three calendar months. The period is computed in UTC from the authoritative
  * verified-payment instant and is deliberately deterministic: it must not depend
  * on the server's or the learner's local timezone, and it must handle month-end
  * and leap-year boundaries predictably.
  *
- * "Six calendar months" is not 180 days. 2026-08-31 + 6 months is 2027-02-28
- * (clamped to the last day of a shorter target month); 2027-02-28 + 6 months is
- * 2027-08-28. Month-overflow rollover (e.g. JS Date's 2026-08-31 -> 2027-03-03)
- * is explicitly prevented.
+ * Three calendar months is not a fixed 90 days. Month-end dates are clamped to
+ * the final valid day of the target month (e.g. 2026-08-31 + 3 months ->
+ * 2026-11-30). Month-overflow rollover is explicitly prevented.
  *
  * No database or provider coupling lives here: the rules are exhaustively
  * unit-testable.
@@ -61,11 +60,11 @@ export function addCalendarMonthsUtc(from: Date, months: number): Date {
 export interface TrackPassPeriod {
   /** Authoritative period start: the verified payment instant. */
   startedAt: Date
-  /** startedAt + six calendar months, computed in UTC. */
+  /** startedAt + three calendar months, computed in UTC. */
   expiresAt: Date
 }
 
-/** Compute the six-month access period for a verified payment instant. */
+/** Compute the three-month access period for a verified payment instant. */
 export function computeTrackPassPeriod(
   paymentAt: Date,
   months: number = TRACK_PASS_TERM_MONTHS,

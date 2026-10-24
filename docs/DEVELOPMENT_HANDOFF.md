@@ -1,7 +1,8 @@
 # TechSkillHub — Development Handoff
 
 **Last verified:** 2026-10-24
-**Active branch:** `feat/retention-v3`
+**Feature branch:** `feat/retention-v3`
+**Security/cleanup branch under review:** `audit/techskillhub-security-cleanup` (PR #5, stacked on PR #4)
 **HEAD at inspection:** `bed93f1` (`docs: record branch publication and pull request status`)
 **Comparison:** 61 commits ahead of `origin/main`, 0 behind at the inspected branch head.
 **Working tree at inspection:** clean, no stashes
@@ -15,6 +16,8 @@ communication. Prior evidence records remain in `docs/LAUNCH_READINESS.md`,
 ---
 
 ## 1. Verification scope
+
+This handoff predates the final review of PR #5. Do not interpret the earlier local validation results as validation of subsequent security-cleanup or Paystack pricing changes. The latest release checks remain open until PR #5's updated diff is validated.
 
 Performed in this session:
 

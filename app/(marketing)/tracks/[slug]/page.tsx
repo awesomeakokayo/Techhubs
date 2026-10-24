@@ -67,13 +67,13 @@ export default async function TrackPage({ params }: Props) {
               <h2 className="font-display text-lg font-semibold text-text-primary">Premium track</h2>
               <p className="text-sm text-text-secondary">
                 {canCheckout
-                  ? 'Get six months of access to this track with a Track Pass (one-time, no auto-renewal), or unlock every premium track with Pro.'
-                  : 'This track is planned to be part of the premium offering. When it opens, a Track Pass will give six months of access to this track (one-time, no auto-renewal). Your access to what you are learning now, and your progress, are unchanged.'}
+                  ? 'Get three months of access to this track with a Track Pass (one-time, no auto-renewal), or unlock every premium track with Pro.'
+                  : 'This track is planned to be part of the premium offering. When it opens, a Track Pass will give three months of access to this track (one-time, no auto-renewal). Your access to what you are learning now, and your progress, are unchanged.'}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               {canCheckout && (
-                <CheckoutButton planId="TRACK_PASS" trackId={enrichedTrack.id} label="Get Track Pass" />
+                <CheckoutButton planId="TRACK_PASS" trackId={enrichedTrack.id} label="Get 3-Month Track Pass" />
               )}
               <a href="/pricing" className="btn btn-secondary text-sm">See plans</a>
             </div>

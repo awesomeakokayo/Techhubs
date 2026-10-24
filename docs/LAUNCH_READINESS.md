@@ -6,6 +6,12 @@ audit summary, and the release-readiness checklist.
 
 ## 1. Security hardening applied
 
+- **Pricing decision (2026-10-24):** the code catalogue contains an individually approved
+  ₦6,000 Paystack Track Pass for three calendar months. Lemon Squeezy USD prices remain
+  individually unapproved. The checkout master switch, price-publication switch and
+  entitlement enforcement must not be enabled in production until the provider sandbox,
+  existing-learner transition, and database migration-history checks are complete.
+
 - **`/api/debug`**: returns `404` in production. Development/preview diagnostics now report only session presence and forwarded-host metadata; they do not return session identifiers or cookie names/values.
 - **Legacy commerce APIs**: unused `POST /api/payments/initialize` and `GET /api/payments/pricing` are retired with `410 Gone`; current checkout is handled by the launch-guarded `/api/billing/checkout` route.
 - **`app/robots.ts`**: removed the stale `/purchase/` disallow entry.

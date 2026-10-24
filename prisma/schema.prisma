@@ -213,7 +213,7 @@ enum AccessStatus {
   EXPIRED
 }
 
-/// Lifecycle of one six-month Track Pass purchase period.
+/// Lifecycle of one three-month Track Pass purchase period.
 enum TrackPassStatus {
   ACTIVE
   EXPIRED
@@ -273,16 +273,16 @@ model PaymentOrder {
   @@index([reference])
 }
 
-/// Auditable record of one verified six-month Track Pass purchase period.
+/// Auditable record of one verified three-month Track Pass purchase period.
 ///
 /// A Track Pass is a ONE-TIME payment that grants access to a single premium
-/// track for six calendar months. Each verified purchase writes exactly one row
+/// track for three calendar months. Each verified purchase writes exactly one row
 /// here (keyed by the internal order reference, so webhook retries and duplicate
 /// deliveries cannot create a second period). Historical rows are retained after
 /// expiry: repurchasing appends a new period rather than overwriting history.
 ///
 /// This table is DISTINCT from legacy `TrackAccess` rows, which predate the
-/// commercial model and are not assumed to represent six-month purchases.
+/// commercial model and are not assumed to represent three-month purchases.
 model TrackPassPurchase {
   id                String          @id @default(cuid())
   userId            String
@@ -291,7 +291,7 @@ model TrackPassPurchase {
   status            TrackPassStatus @default(ACTIVE)
   /// Authoritative period start: the verified successful-payment instant (UTC).
   startedAt         DateTime
-  /// startedAt + six calendar months (UTC), stored and enforced server-side.
+  /// startedAt + three calendar months (UTC), stored and enforced server-side.
   expiresAt         DateTime
   /// Verified amount in minor units, retained for reconciliation.
   amount            Int

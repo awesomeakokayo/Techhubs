@@ -8,7 +8,7 @@ live billing. No credentials, store ids or variant ids are invented here.
 
 - Internal catalogue: `lib/commercial/plans.ts` (`TRACK_PASS`, `PRO_MONTHLY`,
   `PRO_ANNUAL`; plus the implicit Free tier). Prices: `lib/commercial/pricing.ts`.
-- Track Pass term arithmetic (six calendar months, UTC): `lib/commercial/track-pass.ts`.
+- Track Pass term arithmetic (three calendar months, UTC): `lib/commercial/track-pass.ts`.
 - Provider capabilities / product mapping: `lib/commercial/providers.ts`.
 - Webhook verification + normalization: `lib/commercial/webhooks.ts`.
 - Entitlement service (the single source of truth): `lib/commercial/service.ts`.
@@ -23,7 +23,7 @@ live billing. No credentials, store ids or variant ids are invented here.
 | `COMMERCE_CHECKOUT_ENABLED` | Master switch for creating checkout sessions | `false` |
 | `COMMERCE_ENTITLEMENTS_ENFORCED` | Enforce Premium **track access** (global) | `false` |
 | `COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCED` | Enforce the monthly AI-assessment allowance | `true` |
-| `COMMERCE_PRICES_APPROVED` | Allow prices to be shown publicly | `false` |
+| `COMMERCE_PRICES_APPROVED` | Master switch; each price also needs its individual approval flag | `false` |
 | `COMMERCE_ANNOUNCEMENT` | Set to `false` to hide the in-app announcement | shown |
 | `COMMERCE_PREMIUM_TRACK_IDS` | Override the premium track set (validated, comma-separated) | unset → first-wave manifest |
 | `COMMERCE_SHADOW_EVAL` | Log proposed access decisions without changing access | `false` |
@@ -42,7 +42,7 @@ live billing. No credentials, store ids or variant ids are invented here.
 | `LEMONSQUEEZY_VARIANT_TRACK_PASS` | Variant id for the Track Pass product | unset |
 | `LEMONSQUEEZY_VARIANT_PRO_MONTHLY` | Variant id for Pro Monthly | unset |
 | `LEMONSQUEEZY_VARIANT_PRO_ANNUAL` | Variant id for Pro Annual | unset |
-| `PAYSTACK_SECRET_KEY` | Enables the Paystack (Nigeria) branch | unset |
+| `PAYSTACK_SECRET_KEY` | Enables Paystack for the Nigerian Track Pass only (NGN) | unset |
 
 A provider is only considered available when its variables are present. This is
 detected as booleans only; secret values are never read into logs or responses.
@@ -109,9 +109,9 @@ Staged rollout and the existing-user transition are documented in
   credit is consumed only when the model produced a usable decision.
 - Checkout, entitlement enforcement and price publication all default to OFF.
 
-## 7. Track Pass — six-month, non-recurring model
+## 7. Track Pass — three-month, non-recurring model
 
-A Track Pass is a **one-time payment for six calendar months of access to one
+A Track Pass is a **one-time payment for three calendar months of access to one
 selected premium track**. It is not a subscription and never auto-renews.
 
 - **Term arithmetic** (`lib/commercial/track-pass.ts`): the period starts at the
@@ -161,8 +161,8 @@ monthly allowance is enforced by default (`COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCE
   altered.
 - Apply to a **disposable** database first (`prisma migrate deploy`) — never to a
   shared/production database as part of this work.
-- **Legacy vs six-month**: `TrackAccess` rows predate the commercial model and are
-  **not** assumed to represent six-month purchases. New periods are recorded in
+- **Legacy vs three-month**: `TrackAccess` rows predate the commercial model and are
+  **not** assumed to represent three-month purchases. New periods are recorded in
   `TrackPassPurchase`; a purchase is identified by its unique `orderReference`.
 - **Rollback** (Track Pass): `DROP TABLE "TrackPassPurchase"; DROP TYPE "TrackPassStatus";`.
   **Rollback** (assessment credits):

@@ -82,3 +82,10 @@ test('assessment allowances are finite and tiered (never unlimited)', () => {
   assert.equal(allowanceForTier('FREE'), ASSESSMENT_ALLOWANCES.FREE)
   assert.equal(allowanceForTier('unknown'), ASSESSMENT_ALLOWANCES.FREE)
 })
+
+
+test('Track Pass copy clearly states a three-calendar-month one-time term', () => {
+  const pass = getPlan('TRACK_PASS')
+  assert.match(pass.summary, /three calendar months/i)
+  assert.ok(pass.features.some((feature) => /three months/i.test(feature)))
+})

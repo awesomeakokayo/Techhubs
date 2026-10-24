@@ -2,7 +2,7 @@
 
 ## What this pack is
 
-This pack contains the 19-file curriculum research deliverables package, its original ZIP for provenance, a preflight-only prompt, a staged implementation prompt, and a short operator guide. Use it with the local TechSkillHUB repository, not as a replacement repository.
+This pack contains the original curriculum research deliverables ZIP, a preflight-only prompt, a staged implementation prompt, and an operator guide. The expanded CSV/JSON/Markdown folder is intentionally not tracked in the public app repository; the complete source bundle remains in research_package/source-deliverables.zip. Extract that ZIP locally when you need to inspect individual deliverables. Use this pack with the TechSkillHUB repository, not as a replacement repository.
 
 ## Important status
 
@@ -21,10 +21,10 @@ The file `04_APPROVED_RESOURCE_MAP.csv` is misleadingly named for workflow conve
 
 ## Recommended order
 
-1. Extract this pack into the repository's **local-research** directory as described in `TechSkillHUB_DeepSeek_IDE_Guide.docx`.
-2. Run `01_PREFLIGHT_PROMPT.md` first. It is read-only; no application changes yet.
+1. Keep the ZIP archive intact, verify its SHA-256 against research_package/SOURCE_ARCHIVE_SHA256.txt, and extract it into a local working folder outside the tracked app tree when inspecting individual deliverables.
+2. Run 01_PREFLIGHT_PROMPT.md first. It is read-only; no application changes yet.
 3. Review the preflight report for schema mismatches and dangerous assumptions.
-4. Then run `02_IMPLEMENTATION_MASTER_PROMPT.md`. It implements in batches, pilots a mix of disciplines, tests, then continues only where validation passes.
+4. Then run 02_IMPLEMENTATION_MASTER_PROMPT.md. It implements in batches, pilots a mix of disciplines, tests, then continues only where validation passes.
 5. Review the final report and remaining blockers. Do not deploy or activate commercial gates.
 
 ## Model name

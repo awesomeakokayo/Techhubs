@@ -16,6 +16,7 @@ Use this page to find the current operating instructions and supporting evidence
 - [Transition operator guide](./transition-operator-guide.md)
 - [Content protection audit](./content-protection-audit.md)
 - [Assessment credit concurrency](./assessment-credit-concurrency.md)
+- [Neon migration runbook](./database/NEON_MIGRATION_GUIDE.md) — read-only preflight and safe Prisma migration sequence
 - [Assessment economics](./assessment-economics.md)
 
 ## Billing and release readiness
@@ -43,7 +44,7 @@ Paid checkout must remain disabled until the owner approves prices, provider con
 
 ## Generated evidence and research
 
-- [Resource verification package](../artifacts/resource-verification-package/README.md) — portable reviewer bundle.
+- [Resource verification export](../artifacts/README.md) — portable verified ZIP, checksum and regeneration instructions.
 - [DeepSeek IDE research pack](../local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/00_READ_ME_FIRST.md) — prompts and source deliverables used during curriculum research.
 
 These materials can be large and include generated snapshots. Check their generation date and integrity manifest before relying on them as current state.

@@ -98,7 +98,7 @@ the model. **[confirmed for measurement; estimate for the allowance]**
 
 ### 3.5 Explicitly "not yet ready for monetization" (N)
 
-- The existing (dormant) Paystack checkout UI/plan — settlement unverified.
+- Paystack live transaction path — sandbox webhook fulfilment and release gates remain unverified.
 - Email reminders / lifecycle messaging — no sender is implemented for learner
   notifications (only `/api/contact` sends mail). **[confirmed]**
 - Any gating of content that is currently free.
@@ -145,14 +145,15 @@ Those figures are **legacy internal values, not approved**. For planning only:
 | 3 months | ₦5,145 *(legacy value)* | $9.99 *(legacy value)* |
 | Yearly | ₦14,700 *(legacy value)* | $29.99 *(legacy value)* |
 
-> **Update — canonical commercial model.** The single source of truth is now
-> `lib/commercial/plans.ts` / `lib/commercial/pricing.ts`. A **Track Pass** is a
-> one-time **USD $9** payment for **six calendar months** of access to one selected
-> premium track: non-recurring, no auto-renewal, expiry computed and enforced
-> server-side (see `docs/commercial-billing-setup.md` §7). Pro Monthly ($12) and
-> Pro Annual ($96) are the subscription tiers. The legacy table above is retained
-> only as historical context; it does **not** describe Track Pass, and none of
-> these figures may be published until approved (`COMMERCE_PRICES_APPROVED`).
+> **Update — canonical commercial model.** The single source of truth is
+> `lib/commercial/plans.ts` / `lib/commercial/pricing.ts`. The approved Nigerian
+> Track Pass is a one-time **₦6,000 Paystack payment** for **three calendar months**
+> of access to one selected premium track. It does not renew automatically; expiry
+> is calculated server-side from the verified payment instant. Pro Monthly ($12)
+> and Pro Annual ($96) remain provisional, unapproved subscription prices for the
+> international Lemon Squeezy path. The legacy table above is retained only as
+> historical context. Price publication and checkout remain disabled until all
+> release gates and sandbox tests pass.
 
 At the typical assessment cost, a Pro user at the 150/month cap costs roughly
 **$0.45–$1.20/month**, leaving healthy margin at $4.99 — **but this is only valid

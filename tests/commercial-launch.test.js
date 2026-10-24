@@ -1,17 +1,18 @@
 'use strict'
-/**
- * Fail-closed launch readiness: paid checkout must not be startable unless every
- * prerequisite is satisfied.
- */
+/** Fail-closed launch readiness is evaluated for the selected plan/provider. */
 const test = require('node:test')
 const assert = require('node:assert/strict')
 
 const { launchReadiness, checkoutAllowedToStart } = require('../.test-dist/commercial/launch.js')
 
-const FULL = {
+const BASE = {
   COMMERCE_ENTITLEMENTS_ENFORCED: 'true',
   COMMERCE_PRICES_APPROVED: 'true',
   COMMERCE_PREMIUM_TRACK_IDS: 'frontend',
+}
+const PAYSTACK_TRACK_PASS = { ...BASE, PAYSTACK_SECRET_KEY: 'sk_test_example' }
+const FULL_LS = {
+  ...BASE,
   LEMONSQUEEZY_API_KEY: 'k',
   LEMONSQUEEZY_STORE_ID: '1',
   LEMONSQUEEZY_WEBHOOK_SECRET: 's',
@@ -20,45 +21,55 @@ const FULL = {
   LEMONSQUEEZY_VARIANT_PRO_ANNUAL: '13',
 }
 
-test('with no configuration, checkout is not ready and lists every blocker', () => {
+test('no configuration fails closed with actionable blockers', () => {
   const { ready, blockers } = launchReadiness({})
   assert.equal(ready, false)
   assert.ok(blockers.includes('entitlements_not_enforced'))
   assert.ok(blockers.includes('prices_not_approved'))
   assert.ok(blockers.includes('no_provider_configured'))
-  // The tracked manifest supplies premium tracks, so the allowlist blocker is
-  // raised only when the allowlist is explicitly emptied.
   assert.equal(blockers.includes('no_premium_tracks_selected'), false)
   assert.ok(launchReadiness({ COMMERCE_PREMIUM_TRACK_IDS: '' }).blockers.includes('no_premium_tracks_selected'))
   assert.equal(checkoutAllowedToStart({}), false)
 })
 
-test('an invalid premium allowlist blocks checkout', () => {
-  const { blockers } = launchReadiness({ ...FULL, COMMERCE_PREMIUM_TRACK_IDS: 'frontend,not-a-real-track' })
+test('an invalid premium allowlist blocks a course purchase', () => {
+  const { blockers } = launchReadiness(
+    { ...PAYSTACK_TRACK_PASS, COMMERCE_PREMIUM_TRACK_IDS: 'frontend,not-a-real-track' },
+    'TRACK_PASS',
+    'paystack',
+  )
   assert.ok(blockers.includes('premium_allowlist_invalid'))
-  assert.equal(checkoutAllowedToStart({ ...FULL, COMMERCE_PREMIUM_TRACK_IDS: 'not-a-real-track' }), false)
+  assert.equal(checkoutAllowedToStart(
+    { ...PAYSTACK_TRACK_PASS, COMMERCE_PREMIUM_TRACK_IDS: 'not-a-real-track' },
+    'TRACK_PASS',
+    'paystack',
+  ), false)
 })
 
-test('with full configuration, checkout is ready', () => {
-  const { ready, blockers } = launchReadiness(FULL)
+test('the approved Nigerian Track Pass can be ready independently of provisional Pro prices', () => {
+  const { ready, blockers } = launchReadiness(PAYSTACK_TRACK_PASS, 'TRACK_PASS', 'paystack')
   assert.deepEqual(blockers, [])
   assert.equal(ready, true)
-  assert.equal(checkoutAllowedToStart(FULL), true)
+  assert.equal(checkoutAllowedToStart(PAYSTACK_TRACK_PASS, 'TRACK_PASS', 'paystack'), true)
 })
 
-test('each missing prerequisite is reported individually', () => {
+test('provisional Lemon Squeezy prices cannot be charged', () => {
+  const { ready, blockers } = launchReadiness(FULL_LS, 'PRO_MONTHLY', 'lemonsqueezy')
+  assert.equal(ready, false)
+  assert.ok(blockers.includes('price_not_approved:lemonsqueezy:PRO_MONTHLY'))
+  assert.equal(checkoutAllowedToStart(FULL_LS, 'PRO_MONTHLY', 'lemonsqueezy'), false)
+})
+
+test('every master prerequisite is enforced for the selected plan', () => {
   const cases = [
     ['COMMERCE_ENTITLEMENTS_ENFORCED', 'entitlements_not_enforced'],
     ['COMMERCE_PRICES_APPROVED', 'prices_not_approved'],
-    ['LEMONSQUEEZY_API_KEY', 'no_provider_configured'],
+    ['PAYSTACK_SECRET_KEY', 'no_provider_configured'],
   ]
   for (const [key, blocker] of cases) {
-    const env = { ...FULL }
+    const env = { ...PAYSTACK_TRACK_PASS }
     delete env[key]
-    const { blockers } = launchReadiness(env)
-    assert.ok(blockers.includes(blocker), `expected ${blocker} when ${key} removed, got ${blockers.join(',')}`)
+    const { blockers } = launchReadiness(env, 'TRACK_PASS', 'paystack')
+    assert.ok(blockers.includes(blocker), `expected ${blocker} when ${key} removed; got ${blockers.join(',')}`)
   }
-  // Explicitly emptying the allowlist is reported as no premium tracks.
-  const emptied = launchReadiness({ ...FULL, COMMERCE_PREMIUM_TRACK_IDS: '' })
-  assert.ok(emptied.blockers.includes('no_premium_tracks_selected'))
 })
