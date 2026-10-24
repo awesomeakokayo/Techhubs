@@ -13,18 +13,15 @@ export async function GET() {
   const session = await auth()
   const h = await headers()
   const c = await cookies()
-  const allCookies = c.getAll()
-  const sessionCookie = allCookies.find((ck) => ck.name.includes('session-token'))
+  const hasSessionCookie = c.getAll().some((cookie) => cookie.name.includes('session-token'))
 
+  // Never return identifiers, cookie names, cookie values or session material.
   return Response.json({
     hasSession: !!session,
     hasUser: !!session?.user,
-    sessionId: session?.user?.id ?? null,
-    sessionCookieName: sessionCookie?.name ?? null,
-    sessionCookieValue: sessionCookie ? sessionCookie.value.substring(0, 20) + '...' : null,
-    allCookieNames: allCookies.map((ck) => ck.name),
+    hasSessionCookie,
     host: h.get('host'),
-    nexthost: h.get('x-forwarded-host'),
-    nextproto: h.get('x-forwarded-proto'),
+    forwardedHost: h.get('x-forwarded-host'),
+    forwardedProto: h.get('x-forwarded-proto'),
   })
 }
