@@ -26,8 +26,25 @@ export function planKeyToEnum(planKey: PlanKey): 'MONTHLY' | 'THREE_MONTHS' | 'Y
   return planKey === 'yearly' ? 'YEARLY' : planKey === 'threeMonths' ? 'THREE_MONTHS' : 'MONTHLY'
 }
 
-export function planEnumToDays(plan: 'MONTHLY' | 'THREE_MONTHS' | 'YEARLY'): number {
+export type LegacyPlanEnum = 'MONTHLY' | 'THREE_MONTHS' | 'YEARLY'
+
+/**
+ * Days granted for a LEGACY subscription plan. This day-count path predates the
+ * commercial model and must never be used for a Track Pass: a Track Pass is a
+ * six-calendar-month, one-time purchase fulfilled exclusively by the canonical
+ * commercial service (`applyBillingEvent` → `grantTrackPass`).
+ */
+export function planEnumToDays(plan: LegacyPlanEnum): number {
   return plan === 'YEARLY' ? PLAN_DAYS.yearly : plan === 'THREE_MONTHS' ? PLAN_DAYS.threeMonths : PLAN_DAYS.monthly
+}
+
+/**
+ * True for plan values that must be fulfilled by the canonical commercial
+ * service rather than the legacy day-count path. Guards against a Track Pass
+ * being granted permanent, non-expiring access through the legacy route.
+ */
+export function requiresCanonicalBilling(plan: string): plan is 'TRACK_PASS' {
+  return plan === 'TRACK_PASS'
 }
 
 /** Trusted IP-country signal provided by the hosting platform (Vercel). */
@@ -120,6 +137,19 @@ export async function fulfillOrder(reference: string): Promise<FulfillResult> {
       userId: order.userId,
     })
     return { status: 'already_fulfilled', trackId: order.trackId }
+  }
+
+  // A Track Pass is a six-month, one-time purchase handled by the canonical
+  // commercial service. Fulfilling it through the legacy day-count path would
+  // grant permanent (never-expiring) access, so refuse and let the verified
+  // webhook grant the correct six-month period.
+  if (requiresCanonicalBilling(order.plan)) {
+    paymentLogError('payment_rejected', 'track pass requires canonical billing service', {
+      reference,
+      orderId: order.id,
+      userId: order.userId,
+    })
+    return { status: 'mismatch', reason: 'track_pass_requires_canonical_service' }
   }
 
   const verified = await verifyPaystackTransaction(reference)

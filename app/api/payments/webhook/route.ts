@@ -3,6 +3,9 @@ import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { fulfillOrder } from '@/lib/payments'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
+import { isPlanId } from '@/lib/commercial/plans'
+import { normalizePaystackEvent, webhookContentHash } from '@/lib/commercial/webhooks'
+import { applyBillingEvent } from '@/lib/commercial/service'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,7 +50,14 @@ export async function POST(req: Request) {
       // Per-course purchase: reference-based fulfillment, idempotent and replay-safe.
       // Unknown/legacy references resolve to no order and are safely rejected.
       if (reference && metadata?.track_id) {
-        await fulfillOrder(reference)
+        if (isPlanId(metadata?.plan_id)) {
+          // New commercial catalogue (Track Pass / Pro): one canonical path.
+          const normalized = normalizePaystackEvent(event)
+          await applyBillingEvent(prisma, normalized, `paystack:${webhookContentHash(body)}`)
+        } else {
+          // Legacy per-course purchase path (unchanged).
+          await fulfillOrder(reference)
+        }
         break
       }
 

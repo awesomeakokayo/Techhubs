@@ -6,6 +6,7 @@ const {
   transactionMatchesOrder,
   planKeyToEnum,
   planEnumToDays,
+  requiresCanonicalBilling,
   getIpCountryFromHeaders,
   friendlyPaystackInitError,
 } = require('../.test-dist/payments.js')
@@ -80,6 +81,15 @@ test('plan key/enum mapping', () => {
   assert.equal(planEnumToDays('MONTHLY'), 30)
   assert.equal(planEnumToDays('THREE_MONTHS'), 90)
   assert.equal(planEnumToDays('YEARLY'), 365)
+})
+
+test('a Track Pass is never fulfilled through the legacy day-count path', () => {
+  // The legacy path would grant permanent (never-expiring) access; Track Pass
+  // purchases must go through the canonical six-month billing service instead.
+  assert.equal(requiresCanonicalBilling('TRACK_PASS'), true)
+  assert.equal(requiresCanonicalBilling('MONTHLY'), false)
+  assert.equal(requiresCanonicalBilling('THREE_MONTHS'), false)
+  assert.equal(requiresCanonicalBilling('YEARLY'), false)
 })
 
 test('IP country read from trusted header only', () => {

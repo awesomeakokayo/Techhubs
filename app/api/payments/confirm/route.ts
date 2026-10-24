@@ -61,6 +61,15 @@ export async function POST(req: Request) {
         { status: 502 }
       )
     case 'mismatch':
+      // A Track Pass is granted only by the canonical billing service (six-month
+      // period), never the legacy day-count path. Its webhook verification grants
+      // access; the browser confirm step just reports "verifying".
+      if (result.reason === 'track_pass_requires_canonical_service') {
+        return NextResponse.json(
+          { ok: false, status: 'verifying', error: 'We are confirming your payment. Access appears as soon as verification completes.' },
+          { status: 202 }
+        )
+      }
       trackEvent({ event_name: 'payment_rejected', path: '/account' })
       return NextResponse.json(
         { ok: false, status: 'mismatch', error: 'Payment details did not match. Please contact support.' },
