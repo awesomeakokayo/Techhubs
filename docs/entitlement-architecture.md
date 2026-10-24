@@ -31,7 +31,7 @@ Related, as-built documents:
 | --- | --- |
 | Subscription record | `Subscription` model (status, plan, `currentPeriodEnd`, provider codes) |
 | Per-course access (legacy) | `TrackAccess` + `grantTrackAccess` / `getTrackEntitlements` (`lib/access.ts`) |
-| Six-month one-time Track Pass | `TrackPassPurchase` (`lib/commercial/track-pass.ts`, `service.ts`) |
+| Three-month one-time Track Pass | `TrackPassPurchase` (`lib/commercial/track-pass.ts`, `service.ts`) |
 | Access gate seam | `hasTrackAccess(userId, trackId)` — the single choke point |
 | AI assessment budget (hourly abuse) | `checkAssessmentBudget` (`lib/project-verification/store.ts`), DB-backed hourly caps |
 | Monthly assessment allowance | `AssessmentCreditBucket` + `AssessmentCreditReservation` (`lib/commercial/assessment-credits.ts`) |
@@ -126,7 +126,7 @@ cost. Track access itself remains open by default.
   retained and reported `uncertain` for human review; only an unambiguously
   post-cutover account with no activity is a transition candidate.
 - Completed courses and certificates are immutable; progress is never deleted or
-  reset; a legacy `TrackAccess` row is **not** treated as a six-month Track Pass.
+  reset; a legacy `TrackAccess` row is **not** treated as a three-month Track Pass.
 - No learner is moved to a reduced state while policy is undecided — guaranteed
   today because enforcement is off. A read-only dry run
   (`scripts/transition-dry-run.mjs`) reports aggregate counts before any change.

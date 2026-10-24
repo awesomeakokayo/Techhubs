@@ -61,9 +61,12 @@ SELECT
 FROM expected
 LEFT JOIN pg_type AS types
   ON types.typname = expected.type_name
-LEFT JOIN pg_namespace AS namespaces
-  ON namespaces.oid = types.typnamespace
- AND namespaces.nspname = 'public'
+ AND EXISTS (
+   SELECT 1
+   FROM pg_namespace AS public_namespace
+   WHERE public_namespace.oid = types.typnamespace
+     AND public_namespace.nspname = 'public'
+ )
 LEFT JOIN pg_enum AS enum_values
   ON enum_values.enumtypid = types.oid
 GROUP BY expected.type_name, types.oid
