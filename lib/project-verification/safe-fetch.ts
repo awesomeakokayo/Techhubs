@@ -86,8 +86,9 @@ export function isPrivateIp(ip: string): boolean {
       (a === 100 && b >= 64 && b <= 127) ||
       (a === 169 && b === 254) ||
       (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && (b === 0 || (b === 88 && c === 99) || (b === 168))) ||
-      (a === 192 && b === 0 && c === 2) ||
+      (a === 192 && b === 0 && (c === 0 || c === 2)) ||
+      (a === 192 && b === 88 && c === 99) ||
+      (a === 192 && b === 168) ||
       (a === 198 && (b === 18 || b === 19 || (b === 51 && c === 100)) ) ||
       (a === 203 && b === 0 && c === 113) ||
       a >= 224
@@ -170,7 +171,9 @@ function pinnedRequest(
       // bytes without exposing them, while retaining the timeout until the
       // underlying message is drained/closed.
       if (status === 204 || status === 205 || status === 304) {
-        incoming.resume()
+        // No connection reuse is needed (agent:false); close immediately so a
+        // malformed upstream cannot stream an ignored body indefinitely.
+        incoming.destroy()
         resolve(new Response(null, { status, headers }))
         return
       }

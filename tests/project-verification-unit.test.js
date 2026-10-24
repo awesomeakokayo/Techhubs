@@ -94,7 +94,7 @@ test('blocks private, special-use, documentation, multicast and non-global addre
   ]) {
     assert.equal(isPrivateIp(ip), true, `${ip} should be blocked`)
   }
-  for (const ip of ['93.184.216.34', '8.8.8.8', '1.1.1.1', '2001:4860:4860::8888']) {
+  for (const ip of ['93.184.216.34', '8.8.8.8', '1.1.1.1', '192.0.1.1', '2001:4860:4860::8888']) {
     assert.equal(isPrivateIp(ip), false, `${ip} should be allowed`)
   }
 })
