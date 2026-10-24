@@ -14,7 +14,13 @@ Examples include authentication bypasses, authorization/access-control flaws, ex
 
 ## Secrets
 
-Never commit API keys, database credentials, authentication secrets, payment keys, private tokens, or production environment files. Local configuration belongs in `.env.local` or another ignored environment file.
+Never commit API keys, database credentials, authentication secrets, payment keys, private tokens, or production environment files.
+
+See [docs/ENVIRONMENT.md](./docs/ENVIRONMENT.md) for the current configuration surface and secret-handling rules. That document intentionally contains configuration names and purposes, never real secret values.
+
+## Operational security
+
+Production payment, authentication, and database changes should follow the procedures in [docs/OPERATIONS.md](./docs/OPERATIONS.md).
 
 ## Scope
 
