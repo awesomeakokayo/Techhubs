@@ -54,7 +54,7 @@ export function ResourcesClient({
       return trackOk && typeOk
     })
     return filterByQuery(byFilters, query)
-  }, [query, trackFilter, typeFilter])
+  }, [allResources, query, trackFilter, typeFilter])
 
   useEffect(() => {
     if (!query.trim()) return
