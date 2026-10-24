@@ -42,3 +42,15 @@ test('guided-path API validates track IDs before enrollment or progression write
   assert.match(source, /import \{ getTrackById \} from '@\/lib\/tracks'/)
   assert.equal((source.match(/if \(!getTrackById\(params\.trackId\)\).*status: 404/g) ?? []).length, 2)
 })
+
+test('legacy progress sync rejects an unknown track before access checks or writes', () => {
+  const source = read('app/api/progress/route.ts')
+  assert.match(source, /import \{ getTrackById \} from '@\/lib\/tracks'/)
+  assert.match(source, /!trackId \|\| trackId\.length > 120 \|\| !getTrackById\(trackId\)/)
+  assert.match(source, /error: 'Unknown track\.'/)
+})
+test('access probe fails closed for unknown tracks even while commercial gating is disabled', () => {
+  const source = read('app/api/access/[trackId]/route.ts')
+  assert.match(source, /if \(!getTrackById\(params\.trackId\)\)/)
+  assert.match(source, /status: 404/)
+})
