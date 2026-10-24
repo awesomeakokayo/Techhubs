@@ -1,8 +1,8 @@
 # TechSkillHUB — Launch Readiness Notes
 
 Internal working document. Covers security hardening applied, the rate-limiting
-requirement, the live migration-recovery plan (not executed), the curriculum
-audit summary, and the release-readiness checklist.
+requirement, production Neon migration recovery completed on 2026-10-24, the curriculum
+audit summary, and the remaining release-readiness gates.
 
 ## 1. Security hardening applied
 
@@ -137,7 +137,7 @@ content rewrite was out of scope).
 
 ## 5. Release-readiness checklist
 
-Local, verifiable now (all currently passing):
+Baseline local checks recorded on the PR #4 code before the latest PR #5 changes (not a current-commit CI verdict):
 - [x] `npm test` green (unit; 3 DB integration tests skipped without a DB).
 - [x] `npm run lint` clean.
 - [x] `npx tsc --noEmit -p tsconfig.json` clean.
@@ -150,8 +150,9 @@ Local, verifiable now (all currently passing):
 
 Requires credentials / access / authorization (blockers):
 - [ ] Rate limiting provider credentials (Upstash/Vercel KV) — §2.
-- [ ] Live migration-history recovery: environment inventory, unpooled URL fix,
-      snapshot, clone rehearsal, rollback verification — §3.
+- [x] Production migration-history reconciliation completed 2026-10-24: ten migrations
+      applied, final status up to date, schema diff empty, and learner counts preserved — §3.
+- [ ] Correct `DATABASE_URL_UNPOOLED` in `.env.local`; it still duplicates the pooled URL.
 - [ ] Google OAuth production verification (real client + callback) — not covered
       by automated tests (test auth was used).
 - [ ] Content work for P1–P4 (above).
@@ -175,7 +176,7 @@ Requires credentials / access / authorization (blockers):
   Total migrations: 10.
 - **Still blocked (unchanged):** Lemon Squeezy / Paystack merchant, product,
   variant, currency/settlement and approved-pricing verification; rate-limiting
-  credentials; live migration-history recovery; Google OAuth production.
+  credentials; GitHub Actions billing lock; disposable-database E2E; Google OAuth production.
 
 The release decision remains tiered: code-level complete and
 local/disposable-verified, but **not** provider-of-record verified and **not**
@@ -230,7 +231,8 @@ A track may be considered individually once signed off; an awaiting track is **n
 
 ### 7.6 Database migration/recovery readiness
 - [x] `prisma validate` valid; `migrate diff` reports no drift; migrations not rewritten.
-- [ ] Live migration-history recovery: **not executed** — approval-gated (§3).
+- [x] Live migration-history reconciliation completed 2026-10-24: 10 finished ledger rows,
+      clean `migrate status`, no schema diff, no learner-row changes; restore branch retained.
 
 ### 7.7 Existing-user transition approval
 - [x] Transition policy implemented and dry-runnable (`lib/commercial/transition.ts`,
