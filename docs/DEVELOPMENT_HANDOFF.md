@@ -2,8 +2,8 @@
 
 **Last verified:** 2026-10-24
 **Active branch:** `feat/retention-v3`
-**HEAD at inspection:** `76da929` (`chore: stop tracking local workspace files and dev logs`)
-**Comparison:** 57 commits ahead of `origin/main`, 0 behind (before the documentation commits added with this handoff)
+**HEAD at inspection:** `bed93f1` (`docs: record branch publication and pull request status`)
+**Comparison:** 61 commits ahead of `origin/main`, 0 behind at the inspected branch head.
 **Working tree at inspection:** clean, no stashes
 **Production:** `main` = `a4dc39c`; Vercel production status `success`. This branch is **not merged**, so production is unchanged.
 
@@ -32,7 +32,7 @@ Performed in this session:
 
 | Check | Reason |
 | --- | --- |
-| Playwright E2E | `playwright.config.ts` falls back to `DATABASE_URL`, which in `.env.local` points at the shared/production database. Running it would create `@example.test` users and progress rows in that database. It was not run. |
+| Playwright E2E | Not run in this inspection because a disposable database was not supplied. `playwright.config.ts` now fails closed unless `E2E_DATABASE_URL` is explicit and different from configured shared `DATABASE_URL` values. |
 | Resource link probe (`scripts/verify-resource-links.mjs`) | Probes ~326 external URLs; not re-run in this session. Prior result is recorded below. |
 | `prisma migrate diff` | Needs a shadow database. Prior evidence reports "No difference detected"; not re-run here. |
 | DB integration tests | 29 tests skip unless `TSH_CHECKLIST_IMPORT_TEST_DB` points at a disposable database. |
@@ -48,7 +48,7 @@ No production database, deployment, billing setting, or credential was read or m
 | Ref | Purpose | State |
 | --- | --- | --- |
 | `main` | Production branch; Vercel deploys it | `a4dc39c` — includes the certificate download fix and founder analytics |
-| `feat/retention-v3` | Active development: retention v1–v3 plus the launch/curriculum/commercial work | `76da929`; 57 ahead of `origin/main`, 12 commits not yet on `origin/feat/retention-v3` |
+| `feat/retention-v3` | Active development: retention v1–v3 plus the launch/curriculum/commercial work | `bed93f1`; 61 commits ahead of `origin/main`; PR #4 open |
 | `feat/retention-v1` | Historical retention work | Fully contained in v3 |
 | `feat/retention-v2` | Historical retention work | Fully contained in v3 |
 | `phase-3-ai-world-class-rebuild` | Earlier AI rebuild | Merged via PR #1 |
@@ -60,24 +60,12 @@ No production database, deployment, billing setting, or credential was read or m
 **Note:** the 12 unpushed commits are all authored by `Awesome Akokayo <awesomeakokayo@gmail.com>`.
 No AI agent, bot, or co-author trailer was added.
 
-### Commits awaiting push (at inspection)
+### Publication and CI status at inspection
 
-| Commit | Subject |
-| --- | --- |
-| `3fb75ad` | feat: restructure site into route groups with redesigned shell and marketing pages |
-| `3dcf29c` | fix: apply pre-launch security hardening |
-| `faa5d8f` | feat: extend prisma schema and track the baseline migration |
-| `1193dc0` | feat: add commercial billing, entitlements and staged rollout |
-| `221e23b` | feat: land the authored curriculum package with quality audits |
-| `3903171` | feat: rebuild guided path progression with quizzes and enrollment versioning |
-| `12cee7a` | feat: add AI project verification with reserved assessment credits |
-| `e463b0d` | feat: add importable checklist progress tracking |
-| `c655226` | feat: add retention events, re-engagement and safe progress sync |
-| `b091c9b` | test: add playwright e2e journeys and widen test typecheck coverage |
-| `a4dd6a8` | docs: add launch readiness, product specification and review packets |
-| `76da929` | chore: stop tracking local workspace files and dev logs |
-
----
+- `feat/retention-v3` is pushed and PR #4 targets `main`.
+- The Vercel preview for commit `7c2d5e8` succeeded at the time of the publication record.
+- GitHub Actions validation could not start because GitHub reported an account billing lock. This is a CI availability blocker, not evidence that the current changes passed CI.
+- `main` remains unchanged. Merging, production deployment, live migrations, and payment activation remain separate owner-approved actions.
 
 ## 3. Architecture
 
@@ -188,13 +176,8 @@ Playwright or a database-backed test job.
 
 ## 6. Known issues, debt and blockers
 
-1. **Publishing credential (current blocker).** The local GitHub CLI session is
-   `taskboro`, which has read-only access to `awesomeakokayo/Techhubs`. The stored
-   `awesomeakokayo` token is expired (401). No SSH key is configured. The 12 commits and
-   this handoff cannot be pushed until the owner authenticates.
-2. **Playwright can hit the production database.** `playwright.config.ts` uses
-   `process.env.E2E_DATABASE_URL ?? process.env.DATABASE_URL`, and `.env.local` sets the
-   shared database. Set `E2E_DATABASE_URL` to a disposable database before running E2E.
+1. **GitHub Actions billing lock.** The feature branch is pushed and PR #4 is open, but the validation job did not start because the GitHub account is locked due to a billing issue. Re-run CI after the billing blocker is resolved.
+2. **Playwright requires an isolated database.** The configuration now refuses to start unless `E2E_DATABASE_URL` is explicitly set to PostgreSQL and does not resolve to the same host/port/database as any configured shared `DATABASE_URL` in the process environment, `.env.local`, or `.env`. E2E was not run in this inspection.
 3. **No rate limiting** on public/authenticated write endpoints (Vercel serverless;
    needs Upstash/Vercel KV or edge WAF).
 4. **Live migration history not reconciled.** 10 migrations are tracked; `0_init`
@@ -251,12 +234,11 @@ Requirements and guardrails:
 
 ## 8. Next tasks, in priority order
 
-**P0 — publish and review**
+**P0 — review and validate**
 
-1. Authenticate as the repository owner (or a collaborator with write access).
-2. Push `feat/retention-v3` (the 12 commits plus this handoff).
-3. Open a PR to `main` with the verification results and outstanding risks; wait for CI.
-4. Merge only with owner approval; merging deploys production via Vercel.
+1. Resolve the GitHub Actions billing lock and re-run lint, unit/contract tests, type-check, Prisma validation, production build, and curriculum audit.
+2. Run Playwright only against a disposable PostgreSQL database supplied through `E2E_DATABASE_URL`.
+3. Review PR #4 and the follow-up hardening/cleanup changes together; merge to `main` only with owner approval, because the merge triggers Vercel production deployment.
 
 **P1 — safety before any launch**
 
@@ -312,14 +294,11 @@ E2E_DATABASE_URL="postgresql://..." npm run test:e2e
 
 Published on 2026-10-24:
 
-- `feat/retention-v3` pushed from `8c1a115` to `7c2d5e8` — 15 commits (the 12 work
-  commits listed in §2 plus three documentation commits).
+- `feat/retention-v3` is pushed at `bed93f1` (61 commits ahead of `main` at inspection).
 - Pull request: [#4 — Retention v3, curriculum package and launch readiness](https://github.com/awesomeakokayo/Techhubs/pull/4)
   (`feat/retention-v3` → `main`), mergeable at the time of opening.
 - Vercel **preview** deployment for `7c2d5e8`: succeeded.
-- GitHub Actions `validate`: **did not run**. GitHub reported: *"The job was not started
-  because your account is locked due to a billing issue."* This is an account-level
-  blocker, not a code failure; it must be resolved in GitHub billing before CI can run.
+- GitHub Actions `validate`: **did not start** because GitHub reported an account billing lock. This is not a code result; resolve billing before treating CI as available.
 - `main` is unchanged. No merge, production deployment, migration or payment activation
   was performed.
 

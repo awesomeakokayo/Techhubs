@@ -6,10 +6,8 @@ audit summary, and the release-readiness checklist.
 
 ## 1. Security hardening applied
 
-- **`/api/debug`**: now returns `404` in production (was exposing session id,
-  session-cookie name/prefix and cookie names). Retained for local diagnostics.
-- **`components/ui/PremiumModal.tsx`**: deleted. It was unused dead code that
-  linked to the non-existent `/purchase/:id` route.
+- **`/api/debug`**: returns `404` in production. Development/preview diagnostics now report only session presence and forwarded-host metadata; they do not return session identifiers or cookie names/values.
+- **Legacy commerce APIs**: unused `POST /api/payments/initialize` and `GET /api/payments/pricing` are retired with `410 Gone`; current checkout is handled by the launch-guarded `/api/billing/checkout` route.
 - **`app/robots.ts`**: removed the stale `/purchase/` disallow entry.
 - **`app/api/contact/route.ts`**: strict type checks and length caps
   (name ≤120, email ≤254, subject ≤200, message ≤5000) before sending mail.
@@ -41,10 +39,7 @@ code defect that can be fixed locally.
 
 ## 3. Live migration recovery (NOT executed — approval-gated)
 
-Current state: **7 migrations** (`0_init`, `20261008_retention_profile`,
-`20261009_retention_plan`, `20261009_retention_rhythm`, `20261010_learning_events`,
-`20261010_notifications`, `20261011_checklist_progress`) replay cleanly on a fresh
-disposable PostgreSQL. All SQL is unchanged (`0_init` sha256
+Current state: **10 tracked migrations** (from `0_init` through `20261015_assessment_credit_reservation`) replay cleanly on a fresh disposable PostgreSQL. The live migration-history recovery remains approval-gated. All SQL is unchanged (`0_init` sha256
 `44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`).
 
 Remaining requirements before recording live history (do not run yet):
@@ -236,7 +231,7 @@ A track may be considered individually once signed off; an awaiting track is **n
 
 ### Technical verification (supporting evidence for 7.1–7.3)
 - [x] Unit/integration tests: **472 pass / 0 fail / 0 skip** on disposable PostgreSQL.
-- [x] Playwright E2E: **40 passed** (incl. returning-learner continuity and new-learner path).
+- [x] Historical Playwright record: **40 passed** (returning-learner continuity and new-learner path). This is prior evidence, not a result from the current inspection. The current Playwright config now refuses to run without an explicit isolated `E2E_DATABASE_URL`; the suite must be rerun against a disposable database.
 - [x] `tsc --noEmit` clean; lint clean; `prisma validate` valid; `migrate diff` empty.
 - [x] Production build succeeds.
 

@@ -2,7 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { TRACKS, ResourceType, getProductStats } from '@/lib/tracks'
+import type { ResourceType } from '@/lib/tracks'
+import { getAIEnrichedTracks } from '@/lib/ai-track'
 import { FEATURED_RESOURCES } from '@/lib/site-content'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { CategoryFilter } from '@/components/ui/CategoryFilter'
@@ -35,13 +36,15 @@ const TYPE_OPTIONS = [
   { id: 'community', label: 'Community' },
 ]
 
-const allResources = TRACKS.flatMap((track) =>
+const ENRICHED_TRACKS = getAIEnrichedTracks()
+
+const allResources = ENRICHED_TRACKS.flatMap((track) =>
   track.resources.map((r) => ({ ...r, trackName: track.name, trackId: track.id }))
 )
 
 const trackOptions = [
   { id: 'all', label: 'All Tracks' },
-  ...TRACKS.map((t) => ({ id: t.id, label: t.name })),
+  ...ENRICHED_TRACKS.map((t) => ({ id: t.id, label: t.name })),
 ]
 
 export function ResourcesClient() {
@@ -77,7 +80,7 @@ export function ResourcesClient() {
       <div className="container">
         <PageHeader
           title="Resource Index"
-          subtitle={`${getProductStats().resourceCount} curated free links across every path — docs, videos, practice tools, books and communities.`}
+          subtitle={`${allResources.length} curated resources across every path — docs, videos, practice tools, books and communities.`}
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Resources' }]}
         />
 
@@ -115,7 +118,18 @@ export function ResourcesClient() {
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-          <CategoryFilter options={trackOptions.slice(0, 6)} active={trackFilter} onChange={setTrackFilter} />
+          <label className="block min-w-[240px]">
+            <span className="sr-only">Filter resources by learning path</span>
+            <select
+              value={trackFilter}
+              onChange={(e) => setTrackFilter(e.target.value)}
+              className="min-h-[44px] w-full rounded-md border border-border-default bg-surface px-4 text-sm text-text-primary outline-none focus:border-teal"
+            >
+              {trackOptions.map((option) => (
+                <option key={option.id} value={option.id}>{option.label}</option>
+              ))}
+            </select>
+          </label>
           <div className="flex gap-2">
             <button
               type="button"
