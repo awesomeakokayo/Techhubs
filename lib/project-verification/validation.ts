@@ -52,21 +52,21 @@ export function classifyProvider(raw: string): { provider: Provider; url?: URL; 
   const host = hostOf(url)
   if (host === 'github.com' || host.endsWith('.github.com')) return { provider: 'github', url }
   if (host === 'gitlab.com') return { provider: 'gitlab', url }
-  if (host.endsWith('codesandbox.io')) return { provider: 'codesandbox', url }
-  if (host.endsWith('stackblitz.com')) return { provider: 'stackblitz', url }
-  if (host.endsWith('replit.com') || host.endsWith('repl.it')) return { provider: 'replit', url }
-  if (host.endsWith('figma.com')) return { provider: 'figma', url }
+  if (host === 'codesandbox.io' || host.endsWith('.codesandbox.io')) return { provider: 'codesandbox', url }
+  if (host === 'stackblitz.com' || host.endsWith('.stackblitz.com')) return { provider: 'stackblitz', url }
+  if (host === 'replit.com' || host.endsWith('.replit.com') || host === 'repl.it' || host.endsWith('.repl.it')) return { provider: 'replit', url }
+  if (host === 'figma.com' || host.endsWith('.figma.com')) return { provider: 'figma', url }
   if (host === 'youtube.com' || host === 'youtu.be' || host.endsWith('.youtube.com')) return { provider: 'youtube', url }
-  if (host.endsWith('vimeo.com')) return { provider: 'vimeo', url }
-  if (host.endsWith('loom.com')) return { provider: 'loom', url }
+  if (host === 'vimeo.com' || host.endsWith('.vimeo.com')) return { provider: 'vimeo', url }
+  if (host === 'loom.com' || host.endsWith('.loom.com')) return { provider: 'loom', url }
   if (host === 'drive.google.com' || host === 'docs.google.com') {
     if (url.pathname.startsWith('/document')) return { provider: 'google_docs', url }
     if (url.pathname.startsWith('/spreadsheets')) return { provider: 'google_sheets', url }
     return { provider: 'google_drive', url }
   }
   if (host === 'colab.research.google.com') return { provider: 'colab', url }
-  if (host.endsWith('kaggle.com')) return { provider: 'kaggle', url }
-  if (host.endsWith('notion.site') || host.endsWith('notion.so')) return { provider: 'notion', url }
+  if (host === 'kaggle.com' || host.endsWith('.kaggle.com')) return { provider: 'kaggle', url }
+  if (host === 'notion.site' || host.endsWith('.notion.site') || host === 'notion.so' || host.endsWith('.notion.so')) return { provider: 'notion', url }
   return { provider: 'web', url }
 }
 

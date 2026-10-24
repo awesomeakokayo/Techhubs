@@ -33,6 +33,11 @@ test('classifies provider hosts correctly', () => {
   assert.equal(classifyProvider('https://docs.google.com/document/d/abc/edit').provider, 'google_docs')
   assert.equal(classifyProvider('https://drive.google.com/file/d/abc/view').provider, 'google_drive')
   assert.equal(classifyProvider('https://example.com/page').provider, 'web')
+  // Provider classification must match domain boundaries, not an attacker-controlled suffix.
+  assert.equal(classifyProvider('https://notfigma.com/file/abc').provider, 'web')
+  assert.equal(classifyProvider('https://fakecodesandbox.io/s/demo').provider, 'web')
+  assert.equal(classifyProvider('https://maliciousrepl.it/@user/demo').provider, 'web')
+  assert.equal(classifyProvider('https://evil-notion.so/page').provider, 'web')
   assert.equal(classifyProvider('mailto:x@y.com').provider, 'unknown')
   assert.equal(classifyProvider('not a url').provider, 'unknown')
 })
