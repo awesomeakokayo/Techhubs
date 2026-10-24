@@ -16,7 +16,7 @@
  */
 
 /** Length of a Track Pass in whole calendar months. */
-export const TRACK_PASS_TERM_MONTHS = 6
+export const TRACK_PASS_TERM_MONTHS = 3
 
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
