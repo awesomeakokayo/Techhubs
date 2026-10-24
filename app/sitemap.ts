@@ -8,6 +8,7 @@ import { RESOURCE_PAGE_CONTENT } from '@/lib/seo/resource-pages'
 import { EXTRA_ROADMAPS } from '@/lib/seo/roadmaps'
 import { AI_ROADMAPS } from '@/lib/seo/ai-roadmaps'
 import { PROJECT_LEVELS } from '@/lib/seo/projects'
+import { SUBMISSION_GUIDE_CONTENT } from '@/lib/seo/submission-guides'
 
 interface SitemapEntry {
   url: string
@@ -69,6 +70,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const level of PROJECT_LEVELS) {
     entries.push({ url: `/projects/${level.slug}`, changeFrequency: 'monthly', priority: 0.7 })
+  }
+
+  entries.push({ url: '/submit-help', changeFrequency: 'monthly', priority: 0.7 })
+  for (const guide of Object.values(SUBMISSION_GUIDE_CONTENT)) {
+    entries.push({ url: `/submit-help/${guide.slug}`, lastModified: guide.modifiedTime, changeFrequency: 'monthly', priority: 0.7 })
   }
 
   return entries.map((e) => ({

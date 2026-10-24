@@ -14,8 +14,9 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
   return (
     <Link
       href={`/tracks/${track.slug}`}
-      className="card card-track group flex flex-col gap-4 no-underline"
+      className="card card-track group flex h-full flex-col gap-4 no-underline"
       style={{ borderLeftColor: track.colorHex }}
+      aria-label={`${track.name} — ${track.difficultyLabel} learning path`}
     >
       <div className="flex items-start gap-4">
         <div
@@ -28,7 +29,9 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
           <p className="font-mono text-[0.65rem] font-medium uppercase tracking-widest text-text-muted">
             {track.category}
           </p>
-          <h2 className="font-display text-lg font-bold text-text-primary">{track.name}</h2>
+          <h2 className="font-display text-lg font-semibold text-text-primary group-hover:text-grape">
+            {track.name}
+          </h2>
           <p className="mt-1 text-sm text-text-secondary">{track.tagline}</p>
         </div>
       </div>
@@ -36,7 +39,7 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
       <div className="flex flex-wrap items-center gap-3">
         <DifficultyBadge difficulty={track.difficulty} label={track.difficultyLabel} />
         <span className="inline-flex items-center gap-1.5 text-xs text-text-secondary">
-          <Clock size={11} className="text-text-muted animate-fade-in" aria-hidden />
+          <Clock size={11} className="text-text-muted" aria-hidden />
           <span>{track.timeEstimate}</span>
         </span>
       </div>
@@ -52,9 +55,9 @@ export function TrackCardLarge({ track }: TrackCardLargeProps) {
         ))}
       </div>
 
-      <div className="flex justify-end border-t border-border-subtle pt-3">
-        <span className="inline-flex items-center gap-1 text-sm font-medium text-teal group-hover:gap-2 transition-all">
-          Explore <ArrowRight size={16} aria-hidden />
+      <div className="mt-auto flex justify-end border-t border-border-subtle pt-3">
+        <span className="inline-flex items-center gap-1 text-sm font-medium text-grape transition-all group-hover:gap-2">
+          Explore path <ArrowRight size={16} aria-hidden />
         </span>
       </div>
     </Link>

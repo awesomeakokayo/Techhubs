@@ -1,40 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ============================================================
-   TECH SKILLS HUB — DESIGN SYSTEM v1
-   Identity: editorial headlines + technical sans + restrained
-   signal-green. The PATH is the recurring visual language.
+   TECH SKILLS HUB — DESIGN SYSTEM v3
+   Identity: dusty grape + pearl aqua on warm paper. Carbon ink.
+   DM Sans for reading, Instrument Serif for editorial accents,
+   JetBrains Mono for indices and interface metadata.
+   The PATH is the recurring visual language.
    ============================================================ */
 
 :root {
-  /* === FOUNDATION — warm paper + ink === */
-  --bg-void: #FBFAF8;            /* deepest page base */
-  --bg-deep: #F8F7F4;            /* main content background */
+  /* ============================================================
+     BRAND TOKENS — canonical, from the brand palette.
+     Dusty grape is the brand. Pearl aqua is progress/highlight only.
+     Carbon black is text & hierarchy. Cool steel is decorative only.
+     ============================================================ */
+  --color-carbon-black: #222222;
+  --color-white: #FFFFFF;
+  --color-dusty-grape: #4B4E6D;
+  --color-pearl-aqua: #84DCC6;
+  --color-cool-steel: #95A3B3;
+
+  /* RGB channels so Tailwind opacity modifiers work on the brand tokens. */
+  --color-carbon-black-rgb: 34 34 34;
+  --color-dusty-grape-rgb: 75 78 109;
+  --color-pearl-aqua-rgb: 132 220 198;
+  --color-cool-steel-rgb: 149 163 179;
+  --bg-void-rgb: 246 244 239;
+
+  /* === FOUNDATION — paper white + warm off-white, light-first === */
+  --bg-void: #F6F4EF;            /* warm paper page base (hero, footer, feature areas) */
+  --bg-deep: #FFFFFF;            /* main reading / content background */
   --bg-surface: #FFFFFF;         /* card surfaces */
-  --bg-elevated: #F1EFEA;        /* hover / tinted surfaces */
-  --bg-overlay: #E9E7E1;         /* chips, code, controls */
+  --bg-elevated: #F1EFE9;        /* pale grape-tinted hover / tinted surfaces */
+  --bg-overlay: #ECE9E1;         /* chips, code, controls */
 
-  --border-subtle: #EBE8E1;
-  --border-default: #DCD8CF;
-  --border-active: #0E7A5D;
+  --border-subtle: #ECE9E1;
+  --border-default: #DDD9CF;
+  --border-active: var(--accent-primary);
 
-  --text-primary: #171B22;
-  --text-secondary: #3E4855;
-  --text-muted: #6A7480;
+  --text-primary: #222222;       /* carbon black */
+  --text-secondary: #4A4A4A;     /* darker readable neutral (never cool steel on white) */
+  --text-muted: #6B6B6B;
   --text-inverse: #FFFFFF;
 
-  /* === BRAND — signal green (works on light + dark) === */
-  --accent-primary: #0E7A5D;
-  --accent-primary-dim: #0B624A;
-  --accent-primary-bright: #0C8F6B;
-  --accent-primary-glow: rgba(14, 122, 93, 0.12);
-  --accent-primary-bg: rgba(14, 122, 93, 0.06);
-  --accent-primary-border: rgba(14, 122, 93, 0.26);
+  /* === BENTO SURFACE TINTS — pale brand derivatives for editorial cards === */
+  --surface-grape-tint: #EDEEF3;
+  --surface-aqua-tint: #DFF7F0;
+  --paper-deep: #EFECE5;
+  --brand-soft: #EDEEF3;
+  --aqua-soft: #DFF7F0;
+  --hairline: #DDD9CF;
 
+  /* === BRAND GREEN — retained for growth/success semantics only === */
+  --brand-green-deep: #0B4A44;
+  --brand-green-mid: #12B981;
+  --brand-green-light: #22C55E;
+
+  /* === BRAND — dusty grape drives buttons, links, active nav and focus === */
+  --accent-primary: var(--color-dusty-grape);
+  --accent-primary-dim: #35384F;
+  --accent-primary-bright: #5E6288;
+  --accent-primary-glow: rgba(75, 78, 109, 0.12);
+  --accent-primary-bg: rgba(75, 78, 109, 0.08);
+  --accent-primary-border: rgba(75, 78, 109, 0.30);
+
+  /* progress fills — dusty grape (white foreground) */
+  --accent-progress: var(--color-dusty-grape);
+  --accent-progress-on: #FFFFFF;
+
+  /* Secondary / tertiary accents — kept as semantic step & badge markers. */
   --accent-secondary: #8A5A00;   /* muted amber */
   --accent-secondary-dim: #6E4800;
   --accent-secondary-bg: rgba(138, 90, 0, 0.06);
@@ -43,13 +81,13 @@
   --accent-tertiary-dim: #4A3C73;
   --accent-tertiary-bg: rgba(91, 75, 138, 0.06);
 
-  /* === CATEGORY MARKERS (restrained semantic colors) === */
+  /* === CATEGORY MARKERS (restrained semantic colors — unchanged) === */
   --cat-build: #0E7A5D;
   --cat-design: #B25D4E;
   --cat-analyze: #47709E;
   --cat-grow: #A8701A;
 
-  /* === TRACK COLORS (per-learning-track accents) === */
+  /* === TRACK COLORS (per-learning-track accents — unchanged) === */
   --track-frontend: #0E7490; --track-backend: #15803D; --track-fullstack: #C2540A;
   --track-python: #A16207;  --track-uiux: #BE4B77;    --track-qa: #0E7490;
   --track-data: #6D5BC0;    --track-datascience: #7C6AD0; --track-devops: #B03A30;
@@ -57,24 +95,21 @@
   --track-youtube: #B03A30; --track-marketing: #15803D; --track-ai: #0E7A5D;
   --track-nocode: #5B4B8A;  --track-writing: #8A5A00;
 
-  /* === SEMANTIC === */
+  /* === SEMANTIC (success / warning / error / info — distinct from brand) === */
   --color-success: #1E7C47;
   --color-warning: #8A5A00;
   --color-error: #B23B2F;
   --color-info: #3B6FA0;
 
-  /* === GRADIENTS (used only where brand-intentional) === */
-  --gradient-accent: linear-gradient(90deg, #0E7A5D 0%, #0C8F6B 100%);
-  --gradient-ink: linear-gradient(180deg, #171B22 0%, #3E4855 100%);
-
-  /* === SHADOWS — restrained === */
-  --shadow-card: 0 1px 2px rgba(20, 24, 31, 0.04), 0 1px 1px rgba(20, 24, 31, 0.03);
-  --shadow-raised: 0 1px 2px rgba(20, 24, 31, 0.04), 0 10px 24px rgba(20, 24, 31, 0.08);
+  /* === SHADOWS — restrained, warm, grape-tinted === */
+  --shadow-card: 0 1px 2px rgba(53, 56, 79, 0.04), 0 1px 1px rgba(53, 56, 79, 0.03);
+  --shadow-raised: 0 1px 2px rgba(53, 56, 79, 0.04), 0 12px 28px rgba(53, 56, 79, 0.09);
   --shadow-glow-teal: none;
 
   /* === TYPE === */
-  --font-editorial: 'Instrument Serif', Georgia, serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-editorial: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* === TYPOGRAPHY SCALE === */
@@ -111,64 +146,6 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Same brand, darker environment. Never a different brand. */
-    --bg-void: #0B0D11;
-    --bg-deep: #0E1115;
-    --bg-surface: #14181D;
-    --bg-elevated: #1A1F26;
-    --bg-overlay: #232A33;
-
-    --border-subtle: #1A1F26;
-    --border-default: #2B333D;
-    --border-active: #2BD3A3;
-
-    --text-primary: #EDF0F2;
-    --text-secondary: #A3ADB7;
-    --text-muted: #6C7581;
-    --text-inverse: #08100D;
-
-    --accent-primary: #2BD3A3;
-    --accent-primary-dim: #22B88E;
-    --accent-primary-bright: #52E0B8;
-    --accent-primary-glow: rgba(43, 211, 163, 0.14);
-    --accent-primary-bg: rgba(43, 211, 163, 0.1);
-    --accent-primary-border: rgba(43, 211, 163, 0.32);
-
-    --accent-secondary: #D2A24A;
-    --accent-secondary-dim: #B4893A;
-    --accent-secondary-bg: rgba(210, 162, 74, 0.1);
-
-    --accent-tertiary: #9D8AE0;
-    --accent-tertiary-dim: #8572C9;
-    --accent-tertiary-bg: rgba(157, 138, 224, 0.1);
-
-    --cat-build: #2BD3A3;
-    --cat-design: #E08D7B;
-    --cat-analyze: #7FA7D6;
-    --cat-grow: #D9B25E;
-
-    --track-frontend: #38BDF8; --track-backend: #4ADE80; --track-fullstack: #FB923C;
-    --track-python: #FACC15;  --track-uiux: #F472B6;    --track-qa: #22D3EE;
-    --track-data: #C084FC;    --track-datascience: #B798F0; --track-devops: #F87171;
-    --track-cyber: #34D399;   --track-mobile: #60A5FA;   --track-video: #FB923C;
-    --track-youtube: #F87171; --track-marketing: #4ADE80; --track-ai: #2BD3A3;
-    --track-nocode: #A78BFA;  --track-writing: #D9B25E;
-
-    --color-success: #3DD68C;
-    --color-warning: #D9B25E;
-    --color-error: #F0786B;
-    --color-info: #7FA7D6;
-
-    --gradient-accent: linear-gradient(90deg, #2BD3A3 0%, #52E0B8 100%);
-    --gradient-ink: linear-gradient(180deg, #EDF0F2 0%, #A3ADB7 100%);
-
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.3);
-    --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.45);
-  }
-}
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
@@ -186,13 +163,13 @@ body {
   overflow-x: hidden;
 }
 
-/* Editorial level-1 / level-2 statements use the serif display. */
+/* Editorial level-1 / level-2 statements use tight, confident sans. */
 h1, h2 {
-  font-family: var(--font-editorial);
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-weight: 600;
   line-height: 1.12;
   color: var(--text-primary);
-  letter-spacing: -0.015em;
+  letter-spacing: -0.035em;
 }
 h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); }
 h2 { font-size: clamp(1.75rem, 3.25vw, 2.75rem); }
@@ -253,6 +230,16 @@ strong { font-weight: 600; color: var(--text-primary); }
   outline: 2px solid var(--accent-primary);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
+}
+/* Keep the focus ring visible on the dark brand surfaces as well. */
+.landing .bg-brand :focus-visible,
+.landing .bg-ink :focus-visible,
+.landing-module-grape:focus-visible,
+.landing-module-grape :focus-visible,
+.landing-module-ink:focus-visible,
+.landing-module-ink :focus-visible,
+.landing-tab[aria-selected='true']:focus-visible {
+  outline-color: var(--aqua);
 }
 
 /* ============================================================
@@ -316,6 +303,13 @@ strong { font-weight: 600; color: var(--text-primary); }
 .btn-secondary:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 .btn-ghost { background: transparent; color: var(--accent-primary); }
 .btn-ghost:hover { background: var(--accent-primary-bg); }
+.btn-light { background: #FFFFFF; color: var(--color-carbon-black); }
+.btn-light:hover { background: var(--color-pearl-aqua); color: var(--color-carbon-black); }
+.btn-outline-light { background: transparent; color: #FFFFFF; border-color: rgba(255, 255, 255, 0.38); }
+.btn-outline-light:hover { background: rgba(255, 255, 255, 0.09); border-color: #FFFFFF; color: #FFFFFF; }
+.btn-brand { background: var(--color-dusty-grape); color: #FFFFFF; }
+.btn-brand:hover { background: #35384F; color: #FFFFFF; }
+.btn-sm { min-height: 38px; padding: 0.45rem 0.85rem; font-size: 0.8125rem; }
 
 /* Badges — mono uppercase technical labels */
 .badge {
@@ -389,7 +383,7 @@ strong { font-weight: 600; color: var(--text-primary); }
 }
 .progress-bar-fill {
   height: 100%;
-  background: var(--accent-primary);
+  background: var(--accent-progress);
   border-radius: var(--radius-full);
   transition: width 0.6s var(--ease-spring);
 }
@@ -474,11 +468,284 @@ strong { font-weight: 600; color: var(--text-primary); }
   mix-blend-mode: multiply;
   opacity: 0.85;
 }
-@media (prefers-color-scheme: dark) {
-  .art-photo {
-    mix-blend-mode: screen;
-    opacity: 0.5;
+
+/* ============================================================
+   LANDING v3 — "The Path Index"
+   Paper, hairlines, oversized type, mono indices, bento modules.
+   Scoped to .landing so product surfaces are unaffected.
+   Aqua is never used for small text on white.
+   ============================================================ */
+
+.landing {
+  --paper: #F6F4EF;
+  --paper-2: #EFECE5;
+  --ink: #222222;
+  --ink-soft: #4A4A4A;
+  --hairline: #DDD9CF;
+  --grape: #4B4E6D;
+  --grape-deep: #35384F;
+  --aqua: #84DCC6;
+  --aqua-soft: #DFF7F0;
+  --steel: #95A3B3;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.landing-container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) { .landing-container { padding-inline: 2.5rem; } }
+@media (min-width: 1280px) { .landing-container { padding-inline: 3rem; } }
+
+.landing-display {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+.landing-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.landing-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grape);
+}
+.landing-eyebrow::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--aqua);
+  border-radius: 1px;
+}
+.landing-eyebrow-light { color: rgba(255, 255, 255, 0.7); }
+.landing-eyebrow-light::before { background: var(--aqua); }
+
+.landing-index {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.landing-index-light { color: rgba(255, 255, 255, 0.72); }
+
+.landing-hairline { border-color: var(--hairline); }
+
+.landing-module {
+  background: #FFFFFF;
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+}
+.landing-module-grape {
+  background: var(--grape);
+  border-color: var(--grape);
+  color: #FFFFFF;
+}
+.landing-module-ink {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #FFFFFF;
+}
+.landing-module-aqua {
+  background: var(--aqua-soft);
+  border-color: #C9EDE4;
+}
+.landing-module-paper {
+  background: var(--paper-2);
+  border-color: var(--hairline);
+}
+
+
+.landing-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 0.28rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: #FFFFFF;
+}
+.landing-chip-aqua {
+  background: var(--aqua-soft);
+  border-color: #C9EDE4;
+  color: #1F5C50;
+}
+.landing-chip-light {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
+}
+
+.landing-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--grape);
+}
+.landing-arrow svg { transition: transform 0.2s var(--ease-out); }
+.landing-arrow:hover svg { transform: translateX(3px); }
+.landing-arrow-light { color: var(--aqua); }
+
+.landing-hero-title { font-size: clamp(2.35rem, 7.6vw, 7rem); }
+@media (min-width: 768px) {
+  .landing-hero-title .line-2 { padding-left: 6%; }
+}
+.landing-underline {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.landing-underline svg {
+  position: absolute;
+  left: -2%;
+  bottom: -0.08em;
+  width: 104%;
+  height: 0.16em;
+  overflow: visible;
+}
+
+@keyframes landing-hero-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.landing-hero-in { animation: landing-hero-in 0.8s var(--ease-out) both; }
+
+@keyframes landing-rise {
+  from { transform: translateY(20px); }
+  to { transform: translateY(0); }
+}
+@supports (animation-timeline: view()) {
+  .landing-reveal {
+    animation: landing-rise 0.7s linear both;
+    animation-timeline: view();
+    animation-range: entry 4% entry 30%;
   }
+}
+
+.landing-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.landing-strip .sep {
+  width: 4px;
+  height: 4px;
+  background: var(--aqua);
+  border-radius: 1px;
+}
+
+.landing-stage-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.9rem;
+  padding-block: 0.85rem;
+}
+.landing-stage-row::before {
+  content: '';
+  position: absolute;
+  left: 1.22rem;
+  top: 2.35rem;
+  bottom: -0.85rem;
+  width: 1px;
+  background: var(--hairline);
+}
+.landing-stage-row:last-child::before { display: none; }
+
+.landing-node {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  background: #FFFFFF;
+  color: var(--ink-soft);
+}
+.landing-node-grape { background: var(--grape); border-color: var(--grape); color: #FFFFFF; }
+.landing-node-aqua { background: var(--aqua); border-color: var(--aqua); color: var(--ink); }
+
+.landing-nav-link { position: relative; }
+.landing-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 2px;
+  background: var(--aqua);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s var(--ease-out);
+}
+.landing-nav-link:hover::after,
+.landing-nav-link[aria-current='page']::after { transform: scaleX(1); }
+
+.landing-tab {
+  border: 1px solid var(--hairline);
+  background: transparent;
+  color: var(--ink-soft);
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+.landing-tab:hover { background: #FFFFFF; border-color: var(--steel); color: var(--ink); }
+.landing-tab[aria-selected='true'] {
+  background: var(--grape);
+  border-color: var(--grape);
+  color: #FFFFFF;
+}
+.landing-tab[aria-selected='true'] .landing-tab-index { color: var(--aqua); }
+
+.landing-faq summary { list-style: none; cursor: pointer; }
+.landing-faq summary::-webkit-details-marker { display: none; }
+
+.search-modal-input::-webkit-search-cancel-button,
+.search-modal-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.landing-faq[open] summary .landing-faq-icon { transform: rotate(45deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-in,
+  .landing-reveal { animation: none !important; }
 }
 
 @property --path-draw {
