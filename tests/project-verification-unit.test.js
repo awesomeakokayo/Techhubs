@@ -90,7 +90,7 @@ test('blocks private, special-use, documentation, multicast and non-global addre
     '100.64.0.1', '0.0.0.0', '192.0.2.1', '198.51.100.1', '203.0.113.1',
     '198.18.0.1', '224.0.0.1', '255.255.255.255', '::', '::1',
     'fe80::1', 'fe90::1', 'fc00::1', 'fd00::1', 'ff02::1',
-    '2001:db8::1', '2001::1', '2002::1', '::ffff:192.168.1.1', 'not-an-ip',
+    '2001:db8::1', '2001::1', '2002::1', '3fff::1', '::ffff:192.168.1.1', 'not-an-ip',
   ]) {
     assert.equal(isPrivateIp(ip), true, `${ip} should be blocked`)
   }

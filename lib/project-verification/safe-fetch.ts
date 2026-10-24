@@ -111,6 +111,7 @@ export function isPrivateIp(ip: string): boolean {
   if (inIPv6Range(address, 0x20010000000000000000000000000000n, 23)) return true
   if (inIPv6Range(address, 0x20010db8000000000000000000000000n, 32)) return true
   if (inIPv6Range(address, 0x20020000000000000000000000000000n, 16)) return true
+  if (inIPv6Range(address, 0x3fff0000000000000000000000000000n, 20)) return true
   return false
 }
 
@@ -163,9 +164,19 @@ function pinnedRequest(
       incoming.once('end', cleanup)
       incoming.once('error', cleanup)
 
-      const stream = Readable.toWeb(incoming) as ReadableStream<Uint8Array>
+      const status = incoming.statusCode ?? 502
       resolved = true
-      resolve(new Response(stream, { status: incoming.statusCode ?? 502, headers }))
+      // Fetch Response forbids bodies on these statuses. Consume any unexpected
+      // bytes without exposing them, while retaining the timeout until the
+      // underlying message is drained/closed.
+      if (status === 204 || status === 205 || status === 304) {
+        incoming.resume()
+        resolve(new Response(null, { status, headers }))
+        return
+      }
+
+      const stream = Readable.toWeb(incoming) as ReadableStream<Uint8Array>
+      resolve(new Response(stream, { status, headers }))
     }
 
     const lookup = createPinnedLookup(address)
