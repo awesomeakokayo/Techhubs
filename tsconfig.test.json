@@ -46,6 +46,7 @@
     "lib/roadmaps.ts",
     "lib/ai-curriculum.ts",
     "lib/quiz-pace.ts",
+    "lib/quiz-recommendations.ts",
     "lib/project-verification/contract.ts",
     "lib/project-verification/validation.ts",
     "lib/project-verification/safe-fetch.ts",
