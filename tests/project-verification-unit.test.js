@@ -14,7 +14,7 @@ const {
   scanForSecrets,
   looksLikePlaceholder,
 } = require('../.test-dist/project-verification/validation.js')
-const { isPrivateIp } = require('../.test-dist/project-verification/safe-fetch.js')
+const { isPrivateIp, createPinnedLookup } = require('../.test-dist/project-verification/safe-fetch.js')
 const { parseGithubUrl } = require('../.test-dist/project-verification/github.js')
 const { computeRubricVersion, deriveContract, disciplineForTrack, toPublicContract } = require('../.test-dist/project-verification/contract.js')
 const { parseAssessmentResponse, decideAssessment, normalizeStatus } = require('../.test-dist/project-verification/schema.js')
@@ -84,13 +84,33 @@ test('placeholder detection flags empty and boilerplate READMEs', () => {
 
 /* ---------------- SSRF address filtering ---------------- */
 
-test('blocks private, loopback, link-local and metadata addresses', () => {
-  for (const ip of ['127.0.0.1', '10.0.0.5', '192.168.1.1', '172.16.0.1', '169.254.169.254', '100.64.0.1', '::1', 'fe80::1', 'fc00::1']) {
+test('blocks private, special-use, documentation, multicast and non-global addresses', () => {
+  for (const ip of [
+    '127.0.0.1', '10.0.0.5', '192.168.1.1', '172.16.0.1', '169.254.169.254',
+    '100.64.0.1', '0.0.0.0', '192.0.2.1', '198.51.100.1', '203.0.113.1',
+    '198.18.0.1', '224.0.0.1', '255.255.255.255', '::', '::1',
+    'fe80::1', 'fe90::1', 'fc00::1', 'fd00::1', 'ff02::1',
+    '2001:db8::1', '2001::1', '2002::1', '::ffff:192.168.1.1', 'not-an-ip',
+  ]) {
     assert.equal(isPrivateIp(ip), true, `${ip} should be blocked`)
   }
-  for (const ip of ['93.184.216.34', '8.8.8.8', '1.1.1.1']) {
+  for (const ip of ['93.184.216.34', '8.8.8.8', '1.1.1.1', '2001:4860:4860::8888']) {
     assert.equal(isPrivateIp(ip), false, `${ip} should be allowed`)
   }
+})
+
+test('pins socket DNS lookups to the already-validated address', () => {
+  const lookup = createPinnedLookup('93.184.216.34')
+  lookup('attacker.example', {}, (error, address, family) => {
+    assert.equal(error, null)
+    assert.equal(address, '93.184.216.34')
+    assert.equal(family, 4)
+  })
+  lookup('attacker.example', { all: true }, (error, addresses) => {
+    assert.equal(error, null)
+    assert.deepEqual(addresses, [{ address: '93.184.216.34', family: 4 }])
+  })
+  assert.throws(() => createPinnedLookup('not-an-ip'), /valid resolved IP/)
 })
 
 /* ---------------- GitHub URL parsing ---------------- */
