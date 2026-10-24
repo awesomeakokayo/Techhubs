@@ -24,9 +24,12 @@ to Phase 0 (safest).
 
 ### Phase 0 — internal preparation (current baseline)
 
-Billing/entitlement code is present, prices are not approved, checkout is
-disabled, and existing access is unchanged. This is the live state and must remain
-safe — verified by tests that `hasTrackAccess` returns `true` with no flags.
+Billing/entitlement code is present, the global price-publication flag and checkout
+are disabled, and existing access is unchanged. The ₦6,000 Nigerian Track Pass is
+individually approved in code but has not passed the provider sandbox/release gates;
+the international USD prices remain unapproved. This safe state must remain until
+the migration history, sandbox fulfilment, and existing-learner transition are
+verified.
 
 ### Phase 1 — shadow evaluation
 

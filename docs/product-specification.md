@@ -251,10 +251,9 @@ makes a genuine sandbox run impossible. It is now config-gated
 (`COMMERCE_PROVIDER_TEST_MODE`, default `false`) via `providerTestMode()`; test-mode
 deliveries still never grant entitlement. See `docs/provider-sandbox-test-matrix.md`.
 
-## 11. Draft approval checklists (status: PENDING — none approved)
+## 11. Draft approval checklists (status: PENDING — full product launch is not approved)
 
-Each checklist is complete for decision-making but **not approved**. Approval must be
-recorded by a named human owner; nothing here renders prices or enables checkout.
+These checklists remain **not approved for launch**. The Nigerian Track Pass amount is individually approved in code, but price publication, payment fulfilment, settlement, policy and deployment checks remain open. Approval must be recorded by a named human owner; this document does not enable checkout.
 
 **A. Product descriptions**
 - [ ] Track Pass description ("three months, one track, no auto-renewal") approved.

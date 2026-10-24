@@ -1,8 +1,11 @@
 # TechSkillHUB — Monetization Plan (Free vs Pro)
 
-Status: **proposal for approval.** No billing is active and no learner access is
-changed by this document. All prices, allowances and dates below are
-**recommendations**, not commitments, and must be approved before any rollout.
+Status: **billing remains inactive; release approval is pending.** The Nigerian
+Track Pass price of ₦6,000 for three calendar months is individually approved in
+the code catalogue, but it is not published or chargeable while the global gates
+remain off and provider/database checks are incomplete. The international USD
+prices, assessment allowances, transition dates and remaining launch policies below
+remain proposals unless explicitly marked otherwise.
 
 Evidence basis: inspection of the working tree on `feat/retention-v3`
 (32 tracks, 180 roadmap stages, 271 resources, 114 projects; guided paths are

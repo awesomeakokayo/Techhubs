@@ -80,7 +80,7 @@ No AI agent, bot, or co-author trailer was added.
 | Auth | NextAuth v5 beta, Google OAuth, JWT sessions, Prisma adapter; fail-closed test credentials only outside production |
 | Hosting | Vercel (production on `main`, previews on branches) |
 | AI assessment | DeepSeek provider by default; public GitHub repository inspection; atomically reserved monthly credits |
-| Payments | Lemon Squeezy (primary) and Paystack (legacy), webhook-driven entitlements; checkout fail-closed |
+| Payments | Paystack for Nigerian Track Pass (₦6,000 / three calendar months); Lemon Squeezy for potential international plans whose USD prices remain unapproved; signed-webhook-driven entitlements and fail-closed checkout |
 | Email | Nodemailer/SMTP for the contact form |
 | Analytics | `@vercel/analytics`, `@vercel/speed-insights`, first-party learning events |
 
