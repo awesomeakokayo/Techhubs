@@ -25,7 +25,7 @@ function databaseIdentity(connectionString: string, label: string): string {
   // Ignore credentials, ports, and query parameters: a pooler/direct connection
   // can still point to the same database. Normalize the common "-pooler" host
   // suffix used by managed PostgreSQL services as an additional safety measure.
-  const hostname = parsed.hostname.toLowerCase().replace(/-pooler(?=\\.)/i, '')
+  const hostname = parsed.hostname.toLowerCase().replace(/-pooler(?=\.)/i, '')
   return `${hostname}/${database}`
 }
 
