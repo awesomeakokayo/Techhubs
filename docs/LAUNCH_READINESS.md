@@ -39,7 +39,7 @@ code defect that can be fixed locally.
 
 ## 3. Live migration recovery (NOT executed — approval-gated)
 
-Current state: **10 tracked migrations** (from `0_init` through `20261015_assessment_credit_reservation`) replay cleanly on a fresh disposable PostgreSQL. The live migration-history recovery remains approval-gated. All SQL is unchanged (`0_init` sha256
+Current state: **10 tracked migrations** (from `0_init` through `20261015_assessment_credit_reservation`). The previous fresh-database replay record covered the first seven migrations; revalidate the three newer commercial/assessment-credit migrations on a fresh disposable PostgreSQL before release. The live migration-history recovery remains approval-gated. All SQL is unchanged (`0_init` sha256
 `44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`).
 
 Remaining requirements before recording live history (do not run yet):
