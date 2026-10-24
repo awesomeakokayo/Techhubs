@@ -113,6 +113,58 @@ test('pins socket DNS lookups to the already-validated address', () => {
   assert.throws(() => createPinnedLookup('not-an-ip'), /valid resolved IP/)
 })
 
+test('rejects redirects whose destination resolves to a private address', async () => {
+  const lookups = []
+  const requests = []
+  const result = await safeFetchText('https://example.com/start', {
+    resolveImpl: async (hostname) => {
+      lookups.push(hostname)
+      return hostname === 'example.com' ? ['93.184.216.34'] : ['127.0.0.1']
+    },
+    fetchImpl: async (url) => {
+      requests.push(String(url))
+      return new Response(null, {
+        status: 302,
+        headers: { location: 'http://internal.example/admin' },
+      })
+    },
+  })
+  assert.equal(result.ok, false)
+  assert.equal(result.kind, 'blocked')
+  assert.deepEqual(lookups, ['example.com', 'internal.example'])
+  assert.equal(requests.length, 1)
+})
+
+test('follows a redirect only after resolving and checking the new host', async () => {
+  const lookups = []
+  const requests = []
+  const result = await safeFetchText('https://example.com/start', {
+    resolveImpl: async (hostname) => {
+      lookups.push(hostname)
+      return ['93.184.216.34']
+    },
+    fetchImpl: async (url) => {
+      requests.push(String(url))
+      if (requests.length === 1) {
+        return new Response(null, {
+          status: 302,
+          headers: { location: 'https://docs.example.com/guide' },
+        })
+      }
+      return new Response('public learning document', {
+        status: 200,
+        headers: { 'content-type': 'text/plain; charset=utf-8' },
+      })
+    },
+  })
+  assert.equal(result.ok, true)
+  assert.equal(result.finalUrl, 'https://docs.example.com/guide')
+  assert.equal(result.body, 'public learning document')
+  assert.deepEqual(lookups, ['example.com', 'docs.example.com'])
+  assert.equal(requests.length, 2)
+})
+
+
 /* ---------------- GitHub URL parsing ---------------- */
 
 test('parses valid GitHub repository URLs and rejects others', () => {
