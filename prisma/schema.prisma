@@ -23,8 +23,16 @@ model User {
   trackProgress   UserTrackProgress[]
   guidedPaths     GuidedPathEnrollment[]
   trackAccess     TrackAccess[]
+  trackPassPurchases TrackPassPurchase[]
   completions     CourseCompletion[]
   paymentOrders   PaymentOrder[]
+  learningEvents  LearningEvent[]
+  entitlementEvents EntitlementEvent[]
+  notificationPreference NotificationPreference?
+  notificationLogs       NotificationLog[]
+  checklistProgress      ChecklistProgress[]
+  assessmentBuckets      AssessmentCreditBucket[]
+  assessmentReservations AssessmentCreditReservation[]
 }
 
 model LearnerProfile {
@@ -94,6 +102,7 @@ enum SubscriptionPlan {
   MONTHLY
   THREE_MONTHS
   YEARLY
+  TRACK_PASS
 }
 
 model Subscription {
@@ -104,6 +113,12 @@ model Subscription {
   paystackCustomerCode     String?
   paystackSubscriptionCode String?
   paystackPlanCode         String?
+  provider                 PaymentProvider?
+  providerCustomerId       String?
+  providerSubscriptionId   String?
+  productCode              String?
+  cancelAtPeriodEnd        Boolean             @default(false)
+  providerUpdatedAt        DateTime?
   currentPeriodEnd        DateTime?
   createdAt                DateTime            @default(now())
   updatedAt                DateTime            @updatedAt
@@ -153,6 +168,28 @@ model UserTrackProgress {
   @@index([userId])
 }
 
+enum ChecklistKind {
+  STAGE
+  PROJECT
+}
+
+model ChecklistProgress {
+  id          String        @id @default(cuid())
+  userId      String
+  trackId     String
+  kind        ChecklistKind
+  itemKey     String
+  isCompleted Boolean       @default(false)
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, trackId, kind, itemKey])
+  @@index([userId, trackId])
+}
+
 model GuidedPathEnrollment {
   id               String   @id @default(cuid())
   userId           String
@@ -176,9 +213,17 @@ enum AccessStatus {
   EXPIRED
 }
 
+/// Lifecycle of one six-month Track Pass purchase period.
+enum TrackPassStatus {
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
 enum PaymentProvider {
   PAYSTACK
   STRIPE
+  LEMON_SQUEEZY
 }
 
 enum PaymentStatus {
@@ -211,8 +256,14 @@ model PaymentOrder {
   cardCountry        String?
   riskOutcome        String?
   paystackVerifiedAt DateTime?
+  provider           PaymentProvider?
+  productCode        String?
+  providerCheckoutId String?
+  providerPaymentId  String?
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
+
+  trackPassPurchase TrackPassPurchase?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -220,6 +271,44 @@ model PaymentOrder {
   @@index([status])
   @@index([createdAt])
   @@index([reference])
+}
+
+/// Auditable record of one verified six-month Track Pass purchase period.
+///
+/// A Track Pass is a ONE-TIME payment that grants access to a single premium
+/// track for six calendar months. Each verified purchase writes exactly one row
+/// here (keyed by the internal order reference, so webhook retries and duplicate
+/// deliveries cannot create a second period). Historical rows are retained after
+/// expiry: repurchasing appends a new period rather than overwriting history.
+///
+/// This table is DISTINCT from legacy `TrackAccess` rows, which predate the
+/// commercial model and are not assumed to represent six-month purchases.
+model TrackPassPurchase {
+  id                String          @id @default(cuid())
+  userId            String
+  trackId           String
+  provider          PaymentProvider
+  status            TrackPassStatus @default(ACTIVE)
+  /// Authoritative period start: the verified successful-payment instant (UTC).
+  startedAt         DateTime
+  /// startedAt + six calendar months (UTC), stored and enforced server-side.
+  expiresAt         DateTime
+  /// Verified amount in minor units, retained for reconciliation.
+  amount            Int
+  currency          String
+  pricingVersion    String?
+  providerPaymentId String?
+  /// Internal order reference; unique so one payment yields one period.
+  orderReference    String          @unique
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  user  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  order PaymentOrder @relation(fields: [orderReference], references: [reference], onDelete: Cascade)
+
+  @@index([userId, trackId])
+  @@index([userId, expiresAt])
+  @@index([status, expiresAt])
 }
 
 model TrackAccess {
@@ -252,4 +341,140 @@ model CourseCompletion {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, trackId])
+}
+
+model LearningEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  eventName String
+  trackId   String?
+  stepId    String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([userId, eventName])
+}
+
+/// Lifecycle of one monthly AI-assessment credit reservation.
+enum AssessmentReservationStatus {
+  /// Held: the learner has been granted capacity for one billable assessment.
+  RESERVED
+  /// The model produced a usable decision; the credit is spent.
+  CONSUMED
+  /// The outcome was non-billable (deterministic rejection, reuse, provider
+  /// error, timeout); the credit is returned.
+  RELEASED
+  /// A reservation that outlived its TTL was reclaimed (see reconciliation).
+  EXPIRED
+}
+
+/// One locked per-user, per-calendar-month accounting bucket.
+///
+/// The row exists purely to serialize capacity decisions for a single
+/// user+month: `reserveAssessmentCredit` takes a `SELECT ... FOR UPDATE` lock on
+/// it inside a transaction, so two concurrent workers cannot both observe spare
+/// capacity and overbook it. The authoritative counts live in
+/// `AssessmentCreditReservation`; the bucket also snapshots the tier/allowance
+/// that applied for the period so accounting is auditable.
+model AssessmentCreditBucket {
+  id          String   @id @default(cuid())
+  userId      String
+  /// First instant of the UTC calendar month this bucket accounts for.
+  periodStart DateTime
+  tier        String
+  allowance   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, periodStart])
+}
+
+/// Durable reservation record for one logical billable assessment request.
+///
+/// `requestId` is a stable, server-derived (or client-supplied) identifier for
+/// the logical request, so duplicate HTTP requests and retries cannot reserve or
+/// consume more than one credit for the same assessment. Invariant enforced
+/// under concurrency (with the bucket lock):
+///
+///   consumed + active(unexpired) reservations <= applicable monthly limit
+model AssessmentCreditReservation {
+  id            String                      @id @default(cuid())
+  userId        String
+  /// Stable idempotency key for the logical assessment request.
+  requestId     String
+  periodStart   DateTime
+  status        AssessmentReservationStatus @default(RESERVED)
+  /// Credits reserved (always 1 today; kept explicit for capacity math).
+  credits       Int                         @default(1)
+  tier          String
+  allowance     Int
+  trackId       String?
+  stepId        String?
+  /// After this instant an un-resolved reservation no longer blocks capacity.
+  expiresAt     DateTime
+  consumedAt    DateTime?
+  releasedAt    DateTime?
+  releaseReason String?
+  createdAt     DateTime                    @default(now())
+  updatedAt     DateTime                    @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, requestId])
+  @@index([userId, periodStart, status])
+  @@index([status, expiresAt])
+}
+
+model NotificationPreference {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  email          Boolean  @default(true)
+  inApp          Boolean  @default(true)
+  reminderWindow String   @default("evening")
+  quietStartHour Int?
+  quietEndHour   Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model NotificationLog {
+  id       String   @id @default(cuid())
+  userId   String
+  type     String
+  channel  String
+  sentAt   DateTime @default(now())
+  metadata Json?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, sentAt])
+  @@index([userId, type])
+}
+
+/// Auditable record of every entitlement-affecting provider event. The unique
+/// providerEventId makes webhook processing idempotent (duplicate deliveries are
+/// rejected by the constraint, not by fragile read-then-write logic).
+model EntitlementEvent {
+  id              String   @id @default(cuid())
+  userId          String
+  provider        String?
+  providerEventId String?  @unique
+  type            String
+  planId          String?
+  trackId         String?
+  source          String
+  metadata        Json?
+  createdAt       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([type])
 }
