@@ -189,15 +189,11 @@ Playwright or a database-backed test job.
 5. **Four unresolved supplementary resources** and unverifiable video playback (see §4).
 6. **Human curriculum sign-off absent** — `docs/curriculum-quality-signoff.json` does
    not exist; automated scores are not approval.
-7. **Commercial approvals absent** — prices unapproved, NGN undefined, provider sandbox
-   and payout unverified, refund/legal copy unapproved.
+7. **Commercial release gates remain open** — the ₦6,000 / three-month Paystack Track Pass is individually approved in code, but global price publication, checkout and enforcement flags remain off; USD prices, provider sandbox, payout, refund/legal copy and existing-user transition are not yet cleared.
 8. **Google OAuth production flow unverified.**
 9. **`.env.example` was incomplete** — now extended with Google, Lemon Squeezy, SMTP and
    E2E variables (names and placeholders only).
-10. **Large generated artifacts are committed** — the generated curriculum modules
-    (~91k-line resource registry), audit JSON, reviewer packets, and two ZIPs. The repo's
-    loose object store is ~19 MB. Do not rewrite history to shrink it; consider Git LFS or
-    excluding future generated bundles.
+10. **Research bundle organization** — the security-cleanup PR removes the exploded generated curriculum/reviewer output and duplicate extracted research folder from the tracked tree while preserving the source-deliverables ZIP, the resource-verification ZIP, checksums, and the generator source. Verify that PR #5's Vercel preview and code checks pass before merging.
 11. **Stacked branch history** — v1/v2/v3 are sequential; v3 contains all prior work.
     Open one PR from v3 to `main`; do not merge v1/v2 separately.
 12. **PR #3 (`docs/project-documentation`) is stale.** It adds an architecture/deployment

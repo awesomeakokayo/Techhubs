@@ -81,9 +81,12 @@ Staged rollout and the existing-user transition are documented in
    supports. Do **not** assume international card acceptance implies settlement.
 2. Set `PAYSTACK_SECRET_KEY`. Configure the webhook URL
    `https://<your-domain>/api/payments/webhook`.
-3. Provide approved **NGN** prices in `lib/commercial/pricing.ts` under
-   `PROVISIONAL_PRICES.paystack` (none are defined; none should be invented).
-4. Confirm the payout/settlement route; then use test mode to verify flows.
+3. The current code has one individually approved price in `PRICE_CATALOGUE.paystack`:
+   `TRACK_PASS` = 600,000 kobo (₦6,000), one-time for three calendar months. Paystack
+   is not enabled for Pro Monthly/Annual, and no NGN Pro prices are defined.
+4. Confirm the payout/settlement route and run a test-mode webhook/fulfilment check
+   against an isolated environment. The global checkout/publication/enforcement
+   flags remain off until the full release gates pass.
 
 ## 5. Go-live checklist (all required)
 

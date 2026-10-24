@@ -200,8 +200,8 @@ A track may be considered individually once signed off; an awaiting track is **n
 - [ ] Product definitions reconciled code ↔ docs (`docs/product-specification.md` §10): **consistent**.
 - [ ] Draft approval checklists (descriptions, prices, eligibility, disclosures, cancellation/refund,
       support): **drafted, not approved** (§11).
-- [ ] Prices approved: **no** (`COMMERCE_PRICES_APPROVED=false`; 3 provisional USD prices).
-- [ ] NGN prices: **undefined** (must not be invented).
+- [ ] Global price publication: **off** (`COMMERCE_PRICES_APPROVED=false`). The Nigerian Track Pass price is individually approved in code at ₦6,000 for three calendar months; international USD prices remain unapproved.
+- [ ] Additional NGN prices: **not configured**. Pro Monthly/Annual are not offered through Paystack; no extra NGN prices should be invented.
 
 ### 7.4 Provider sandbox verification
 - [ ] Lemon Squeezy sandbox order → webhook → entitlement: **not performed** (matrix ready;
