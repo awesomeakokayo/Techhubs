@@ -15,7 +15,16 @@
  * unit-testable.
  */
 
-/** Length of a Track Pass in whole calendar months. */
+/**
+ * Length of a Track Pass in whole calendar months.
+ *
+ * Three calendar months is the customer-facing offer (₦6,000 per track) and the
+ * term the pricing and track pages promise. The historical migration name
+ * `20261014_track_pass_six_months` is intentionally left unchanged: migration
+ * names record history and must not be rewritten to describe a new decision.
+ * The verified expiry instant lives in TrackPassPurchase, so changing the term
+ * needs no schema change.
+ */
 export const TRACK_PASS_TERM_MONTHS = 3
 
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]

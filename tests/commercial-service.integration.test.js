@@ -190,7 +190,7 @@ test(
 )
 
 test(
-  'integration: six-month Track Pass lifecycle, retention and repurchase',
+  'integration: three-month Track Pass lifecycle, retention and repurchase',
   { skip: testDbUrl ? false : 'TSH_CHECKLIST_IMPORT_TEST_DB is not set' },
   async () => {
     const prisma = new PrismaClient({ datasources: { db: { url: testDbUrl } } })
@@ -206,7 +206,7 @@ test(
       assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-02-01T00:00:00.000Z'))).tier, 'FREE')
       assert.equal(await prisma.trackPassPurchase.count({ where: { userId: user.id } }), 0)
 
-      // 2. A verified $9 payment grants the chosen track for six CALENDAR months.
+      // 2. A verified $9 payment grants the chosen track for three CALENDAR months.
       const paidAt = '2026-01-15T09:30:00.000Z'
       const granted = await applyBillingEvent(
         prisma,
@@ -218,8 +218,9 @@ test(
 
       const purchase = await prisma.trackPassPurchase.findUnique({ where: { orderReference: ref1 } })
       assert.equal(purchase.startedAt.toISOString(), '2026-01-15T09:30:00.000Z')
-      // Six calendar months (181 days Jan->Jul), not a 180-day approximation:
-      assert.equal(purchase.expiresAt.toISOString(), '2026-07-15T09:30:00.000Z')
+      // Three calendar months (Jan 15 -> Apr 15), not a fixed 90-day approximation
+      // and not a term derived from the historical migration's filename:
+      assert.equal(purchase.expiresAt.toISOString(), '2026-04-15T09:30:00.000Z')
       assert.equal(purchase.amount, 900)
       assert.equal(purchase.currency, 'USD')
       assert.equal(purchase.status, 'ACTIVE')
@@ -230,9 +231,9 @@ test(
       assert.equal((await getTrackPasses(prisma, user.id, at('2026-02-01T00:00:00.000Z')))[0].active, true)
 
       // 3. Just before expiry still entitled; at and after expiry denied.
-      assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-07-15T09:29:59.000Z'))).tier, 'PASS')
-      assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-07-15T09:30:00.000Z'))).tier, 'FREE')
-      assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-07-15T09:30:01.000Z'))).tier, 'FREE')
+      assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-04-15T09:29:59.000Z'))).tier, 'PASS')
+      assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-04-15T09:30:00.000Z'))).tier, 'FREE')
+      assert.equal((await getEntitlementSnapshot(prisma, user.id, at('2026-04-15T09:30:01.000Z'))).tier, 'FREE')
       assert.equal((await getTrackPasses(prisma, user.id, at('2026-08-01T00:00:00.000Z')))[0].active, false)
 
       // 4. A pass for one track never unlocks another.

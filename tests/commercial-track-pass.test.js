@@ -37,6 +37,27 @@ test('month-end clamps to the last valid day of the target month', () => {
   assert.equal(iso(addCalendarMonthsUtc(new Date('2026-01-31T12:00:00.000Z'), 1)), '2026-02-28T12:00:00.000Z')
 })
 
+test('three months lands correctly in shorter target months without day overflow', () => {
+  // January 31 + 3 months -> April 30 (April has 30 days; must not become May 1).
+  assert.equal(iso(addCalendarMonthsUtc(new Date('2026-01-31T00:00:00.000Z'), 3)), '2026-04-30T00:00:00.000Z')
+  // November 15 + 3 months -> February 15 (short month, day preserved).
+  assert.equal(iso(addCalendarMonthsUtc(new Date('2026-11-15T00:00:00.000Z'), 3)), '2027-02-15T00:00:00.000Z')
+  // November 30 + 3 months -> February 28 in a non-leap year.
+  assert.equal(iso(addCalendarMonthsUtc(new Date('2026-11-30T00:00:00.000Z'), 3)), '2027-02-28T00:00:00.000Z')
+  // May 31 + 3 months -> August 31: 92 days, so a 90-day approximation would be wrong here too.
+  const mayEnd = new Date('2026-05-31T00:00:00.000Z')
+  const mayEndPlus3 = addCalendarMonthsUtc(mayEnd, 3)
+  assert.equal(iso(mayEndPlus3), '2026-08-31T00:00:00.000Z')
+  assert.notEqual(iso(mayEndPlus3), iso(new Date(mayEnd.getTime() + 90 * 86400000)))
+})
+
+test('the default period is exactly three calendar months from the payment instant', () => {
+  // A January payment must expire in April, never in July (the historical six-month term).
+  const period = computeTrackPassPeriod(new Date('2026-01-15T09:30:00.000Z'))
+  assert.equal(iso(period.expiresAt), '2026-04-15T09:30:00.000Z')
+  assert.equal(TRACK_PASS_TERM_MONTHS, 3)
+})
+
 test('leap-year boundaries are handled', () => {
   assert.equal(daysInUtcMonth(2028, 1), 29)
   assert.equal(daysInUtcMonth(2027, 1), 28)
