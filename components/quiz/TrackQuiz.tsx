@@ -5,12 +5,18 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, RotateCcw, Clock } from 'lucide-react'
-import { TRACKS } from '@/lib/tracks'
+import { aggregateQuizAnswers } from '@/lib/quiz-recommendations'
 import { getProgress, saveQuizResult, type QuizResult } from '@/lib/progress'
 import { trackEvent, trackQuizCompletion } from '@/lib/analytics'
-import type { Track } from '@/lib/tracks'
 
 type Level = 'beginner' | 'intermediate' | 'advanced'
+
+interface RecommendationTrack {
+  id: string
+  slug: string
+  name: string
+  tagline: string
+}
 
 interface Option {
   label: string
@@ -74,13 +80,28 @@ const TIME_OPTIONS: { label: string; weeklyHours: number }[] = [
   { label: '15+ hours', weeklyHours: 18 },
 ]
 
+const AI_FOCUS_QUESTION: Question = {
+  q: 'Which kind of AI-enabled work interests you most?',
+  options: [
+    { label: 'Use AI to learn, research, and work more effectively', scores: { 'ai-foundations': 3, 'ai-work': 3, 'ai-research': 2 } },
+    { label: 'Build software, agents, and automated workflows with AI', scores: { 'ai-software-development': 3, 'ai-engineering': 3, 'ai-agents': 2, 'ai-automation': 2 } },
+    { label: 'Create content, videos, and design with AI', scores: { 'ai-content': 3, 'ai-youtube': 3, 'ai-design': 3 } },
+    { label: 'I am still exploring AI and want a broad foundation', scores: { 'ai-foundations': 3, 'ai-work': 2 } },
+  ],
+}
+
 const QUESTIONS: Question[] = [
   ...INTRO_QUESTIONS,
+  AI_FOCUS_QUESTION,
   { q: 'How much tech experience do you have right now?', options: EXPERIENCE_OPTIONS },
 ]
 
-function resolveTracks(ids: string[]): (Track | undefined)[] {
-  return ids.map((id) => TRACKS.find((t) => t.id === id)).filter(Boolean)
+function resolveTracks(ids: string[], tracks: RecommendationTrack[]): RecommendationTrack[] {
+  const byId = new Map(tracks.map((track) => [track.id, track]))
+  return ids.flatMap((id) => {
+    const track = byId.get(id)
+    return track ? [track] : []
+  })
 }
 
 function estimateWeeks(trackId: string, weeklyHours: number, approxHoursByTrack: Record<string, number>): number | null {
@@ -106,6 +127,7 @@ function ResultsList({
   approxHoursByTrack,
   onRetake,
   saved,
+  tracks,
 }: {
   ids: string[]
   reasons?: Record<string, string[]>
@@ -113,8 +135,9 @@ function ResultsList({
   approxHoursByTrack: Record<string, number>
   onRetake?: () => void
   saved?: boolean
+  tracks: RecommendationTrack[]
 }) {
-  const tracks = resolveTracks(ids)
+  const recommendedTracks = resolveTracks(ids, tracks)
   return (
     <motion.div
       key="results"
@@ -127,7 +150,7 @@ function ResultsList({
         {saved ? 'From your last quiz. Retake it anytime to refresh your results.' : 'Based on your answers, start with one of these paths:'}
       </p>
       <div className="mt-6 space-y-3">
-        {tracks.map((track) =>
+        {recommendedTracks.map((track) =>
           track ? (
             <div
               key={track.id}
@@ -160,8 +183,9 @@ function ResultsList({
   )
 }
 
-export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Record<string, number> }) {
+export function TrackQuiz({ approxHoursByTrack = {}, tracks }: { approxHoursByTrack?: Record<string, number>; tracks: RecommendationTrack[] }) {
   const [stage, setStage] = useState(0)
+  const [answers, setAnswers] = useState<(Option | null)[]>(() => Array(QUESTIONS.length).fill(null))
   const [scores, setScores] = useState<Record<string, number>>({})
   const [reasons, setReasons] = useState<Record<string, string[]>>({})
   const [level, setLevel] = useState<Level | null>(null)
@@ -177,6 +201,7 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
 
   const reset = () => {
     setStage(0)
+    setAnswers(Array(QUESTIONS.length).fill(null))
     setScores({})
     setReasons({})
     setLevel(null)
@@ -185,6 +210,8 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
     setPrimaryGoal('')
     setDone(false)
     setShowSaved(false)
+    setStarted(false)
+    setSubmitting(false)
   }
 
   const advance = (option: Option) => {
@@ -206,17 +233,12 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
     }
     if (stage === 2) setPrimaryGoal(option.label)
 
-    const nextScores = { ...scores }
-    Object.entries(option.scores).forEach(([k, v]) => {
-      if (v) nextScores[k] = (nextScores[k] ?? 0) + v
-    })
-    setScores(nextScores)
-
-    const nextReasons = { ...reasons }
-    for (const id of Object.keys(option.scores)) {
-      nextReasons[id] = [...(nextReasons[id] ?? []), option.label]
-    }
-    setReasons(nextReasons)
+    const nextAnswers = [...answers]
+    nextAnswers[stage] = option
+    setAnswers(nextAnswers)
+    const next = aggregateQuizAnswers(nextAnswers)
+    setScores(next.scores)
+    setReasons(next.reasons)
 
     advance(option)
   }
@@ -283,7 +305,7 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
   if (showSaved && savedResult) {
     return (
       <div id="quiz" className="scroll-mt-24 space-y-4">
-        <ResultsList ids={savedResult.recommendations} saved approxHoursByTrack={approxHoursByTrack} onRetake={reset} />
+        <ResultsList ids={savedResult.recommendations} saved approxHoursByTrack={approxHoursByTrack} onRetake={reset} tracks={tracks} />
       </div>
     )
   }
@@ -294,6 +316,7 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
         <ResultsList
           ids={results.ids}
           reasons={results.reasons}
+          tracks={tracks}
           weeklyHours={weeklyHours}
           approxHoursByTrack={approxHoursByTrack}
           onRetake={reset}
@@ -332,7 +355,14 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
                 </button>
               ))}
             </div>
-          </motion.div>
+          <button
+            type="button"
+            onClick={() => setStage(QUESTIONS.length - 1)}
+            className="mt-5 text-sm text-text-muted hover:text-text-primary"
+          >
+            ← Back
+          </button>
+        </motion.div>
         ) : (
           <motion.div
             key={stage}
@@ -346,16 +376,20 @@ export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Re
             </p>
             <h3 className="mt-2 font-editorial text-2xl">{question?.q}</h3>
             <div className="mt-6 space-y-3">
-              {question?.options.map((opt) => (
-                <button
-                  key={opt.label}
-                  type="button"
-                  onClick={() => pick(opt)}
-                  className="flex w-full min-h-[44px] items-center rounded-md border border-border-default px-4 py-3 text-left text-text-primary transition-colors hover:border-teal hover:bg-teal/5"
-                >
-                  {opt.label}
-                </button>
-              ))}
+              {question?.options.map((opt) => {
+                const selected = answers[stage]?.label === opt.label
+                return (
+                  <button
+                    key={opt.label}
+                    type="button"
+                    onClick={() => pick(opt)}
+                    aria-pressed={selected}
+                    className={`flex w-full min-h-[44px] items-center rounded-md border px-4 py-3 text-left text-text-primary transition-colors ${selected ? 'border-grape bg-grape/5' : 'border-border-default hover:border-teal hover:bg-teal/5'}`}
+                  >
+                    {opt.label}
+                  </button>
+                )
+              })}
             </div>
             {stage > 0 && (
               <button
