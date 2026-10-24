@@ -3,6 +3,8 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { getTrackById } from '@/lib/tracks'
 import { isLearnerExperienceLevel, isWeeklyHours } from '@/lib/learner-profile'
+import { recordOnboardingEvents } from '@/lib/event-recorder'
+import { syncLearnerProfile } from '@/lib/quiz-sync'
 import {
   DEFAULT_LEARNER_TIME_ZONE,
   DEFAULT_PLANNED_STUDY_DAYS,
@@ -40,6 +42,7 @@ export async function POST(req: Request) {
   const weeklyHours = body?.weeklyHours
   const recommendedTrackId = typeof body?.recommendedTrackId === 'string' ? body.recommendedTrackId.trim() : ''
   const timeZone = isValidTimeZone(body?.timeZone) ? body.timeZone : undefined
+  const clientUpdatedAt = typeof body?.clientUpdatedAt === 'string' ? body.clientUpdatedAt : undefined
 
   if (!primaryGoal || primaryGoal.length > 120) {
     return NextResponse.json({ error: 'A valid primary goal is required.' }, { status: 400 })
@@ -54,28 +57,23 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'A valid recommended learning path is required.' }, { status: 400 })
   }
 
-  const profile = await prisma.learnerProfile.upsert({
-    where: { userId },
-    create: {
-      userId,
-      primaryGoal,
-      experienceLevel,
-      weeklyHours,
-      recommendedTrackId,
-      onboardingCompleted: true,
-      timeZone: timeZone ?? DEFAULT_LEARNER_TIME_ZONE,
-    },
-    update: {
-      primaryGoal,
-      experienceLevel,
-      weeklyHours,
-      recommendedTrackId,
-      onboardingCompleted: true,
-      ...(timeZone ? { timeZone } : {}),
-    },
+  const { decision, profile } = await syncLearnerProfile(prisma, userId, {
+    primaryGoal,
+    experienceLevel,
+    weeklyHours,
+    recommendedTrackId,
+    ...(timeZone ? { timeZone } : {}),
+    ...(clientUpdatedAt ? { clientUpdatedAt } : {}),
   })
 
-  return NextResponse.json({ profile })
+  if (decision === 'stale') {
+    // A newer server-side preference exists; do not overwrite it.
+    return NextResponse.json({ status: 'stale', profile })
+  }
+
+  await recordOnboardingEvents(userId, recommendedTrackId)
+
+  return NextResponse.json({ status: 'updated', profile })
 }
 
 export async function PATCH(req: Request) {
