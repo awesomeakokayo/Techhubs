@@ -1,7 +1,42 @@
 import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
+import Credentials from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { prisma } from '@/lib/prisma'
+
+const TEST_AUTH_FLAG = 'TSH_TEST_AUTH'
+const TEST_EMAIL_DOMAIN = '@example.test'
+
+/**
+ * Test-only authentication. Fail-closed: never registered in production, and
+ * only when explicitly enabled via TSH_TEST_AUTH. Restricted to @example.test
+ * addresses so it cannot authenticate real accounts.
+ */
+function testAuthEnabled(): boolean {
+  if (process.env.NODE_ENV === 'production') return false
+  return process.env[TEST_AUTH_FLAG] === 'true'
+}
+
+function testAuthProviders() {
+  if (!testAuthEnabled()) return []
+  return [
+    Credentials({
+      id: 'test-credentials',
+      name: 'Test Credentials',
+      credentials: { email: { label: 'Email', type: 'email' } },
+      async authorize(credentials) {
+        const email = typeof credentials?.email === 'string' ? credentials.email.trim().toLowerCase() : ''
+        if (!email.endsWith(TEST_EMAIL_DOMAIN)) return null
+        const user = await prisma.user.upsert({
+          where: { email },
+          create: { email, name: 'Test Learner' },
+          update: {},
+        })
+        return { id: user.id, email: user.email, name: user.name }
+      },
+    }),
+  ]
+}
 
 const cookieOptions = {
   httpOnly: true,
@@ -25,6 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: '/login',
   },
   providers: [
+    ...testAuthProviders(),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',

@@ -14,7 +14,6 @@ export default function robots(): MetadataRoute.Robots {
           '/account/',
           '/dashboard/',
           '/certificate/',
-          '/purchase/',
           '/guided-path/',
           '/upgrade',
         ],
