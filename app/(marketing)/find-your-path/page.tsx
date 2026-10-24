@@ -7,6 +7,7 @@ import { TrackQuiz } from '@/components/quiz/TrackQuiz'
 import { TypewriterIllustration } from '@/components/ui/TypewriterIllustration'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
 import { approxLearningHoursByTrack } from '@/lib/quiz-pace'
+import { TRACKS } from '@/lib/tracks'
 
 export const metadata: Metadata = getPageMetadata({
   title: 'Find Your Path: Get a Personalized Tech Recommendation',
@@ -29,14 +30,14 @@ export default function FindYourPathPage() {
           </div>
           <PageHeader
             title="Find Your Path"
-            subtitle="Answer three quick questions. We'll point you toward the directions worth exploring first."
+            subtitle="Answer a few quick questions. We'll recommend the learning paths worth exploring first."
             breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Find Your Path' }]}
           />
         </div>
       </div>
 
       <div className="container max-w-3xl">
-        <TrackQuiz approxHoursByTrack={approxHoursByTrack} />
+        <TrackQuiz approxHoursByTrack={approxHoursByTrack} tracks={TRACKS.map(({ id, slug, name, tagline }) => ({ id, slug, name, tagline }))} />
 
         <Link
           href="/paths"
