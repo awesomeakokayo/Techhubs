@@ -43,9 +43,10 @@ migration history or touch learner rows.
 
 ## Step 2 — reconcile migration history before adding schema
 
-The previous handoff says that migration-history recovery is still pending and that
-20261011_checklist_progress must not be marked as applied unless ChecklistProgress
-actually exists. Do not mark a migration applied merely because its file is present.
+Historical note: the pre-recovery handoff said migration-history recovery was pending.
+That condition was resolved on 2026-10-24, as recorded below. For any future database,
+never mark a migration applied merely because its file is present; verify the schema
+objects first.
 
 Use a local checkout of the reviewed branch and a disposable database copy:
 
@@ -82,12 +83,13 @@ database migration checks, entitlement/legacy-user transition and deployment pre
 all pass. Do not paste a combined SQL migration into production while the history is
 unreconciled: even additive DDL can leave Prisma's migration ledger inconsistent.
 
-## Why there is no one-shot production ALTER script yet
+## Why Prisma-managed migrations remain the source of truth
 
-The correct DDL depends on the Neon schema and migration ledger currently present. The
-read-only preflight is the first SQL to run. After those results are available, the
-remaining DDL can be selected from the existing versioned migrations without guessing,
-reapplying enum changes, or accidentally marking a missing table as already migrated.
+For the 2026-10-24 recovery, the production schema inventory and absent migration ledger
+were reviewed, the baseline was reconciled, and the three pending migrations were applied
+through Prisma; see the completion record below. For future schema changes, inspect the
+target schema and ledger first, use a reviewed versioned Prisma migration, rehearse it
+against a disposable clone, and avoid ad-hoc DDL or blindly marking history as applied.
 
 ## Completion record (2026-10-24)
 
