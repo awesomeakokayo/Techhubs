@@ -1,0 +1,116 @@
+{
+  "schema": "tsh-unresolved-resources/v1",
+  "generated_at": "2026-10-20T17:11:49.852Z",
+  "source": "scripts/resource-probe.json (status not 2xx)",
+  "count": 4,
+  "entries": [
+    {
+      "url": "https://tryhackme.com/paths",
+      "status": 429,
+      "final_url": "https://tryhackme.com/paths",
+      "host": "tryhackme.com",
+      "checked_at": "2026-10-17",
+      "title": "",
+      "kind": "blocked-or-shell",
+      "paywalled": null,
+      "content_vocabulary_terms_count": 0,
+      "mapped_entries": [
+        {
+          "entry_id": "cyber:2:cy-4:1",
+          "track_id": "cyber",
+          "track_title": "Cybersecurity",
+          "stage_id": 2,
+          "role": "required"
+        }
+      ]
+    },
+    {
+      "url": "https://www.canva.com/design-school/courses",
+      "status": 403,
+      "final_url": "https://www.canva.com/design-school/courses/",
+      "host": "www.canva.com",
+      "checked_at": "2026-10-17",
+      "title": "",
+      "kind": "blocked-or-shell",
+      "paywalled": null,
+      "content_vocabulary_terms_count": 0,
+      "mapped_entries": [
+        {
+          "entry_id": "ai-content:4:ai-c4-canva-design-school:1",
+          "track_id": "ai-content",
+          "track_title": "AI Content Creation",
+          "stage_id": 4,
+          "role": "required"
+        },
+        {
+          "entry_id": "ai-design:1:ai-gap-design-1:1",
+          "track_id": "ai-design",
+          "track_title": "AI Design & Creative Work",
+          "stage_id": 1,
+          "role": "required"
+        },
+        {
+          "entry_id": "ai-design:3:ai-gap-design-3:1",
+          "track_id": "ai-design",
+          "track_title": "AI Design & Creative Work",
+          "stage_id": 3,
+          "role": "required"
+        }
+      ]
+    },
+    {
+      "url": "https://www.canva.com/designschool",
+      "status": 403,
+      "final_url": "https://www.canva.com/designschool/",
+      "host": "www.canva.com",
+      "checked_at": "2026-10-17",
+      "title": "",
+      "kind": "blocked-or-shell",
+      "paywalled": null,
+      "content_vocabulary_terms_count": 0,
+      "mapped_entries": [
+        {
+          "entry_id": "ai-content:4:ai-c4:1",
+          "track_id": "ai-content",
+          "track_title": "AI Content Creation",
+          "stage_id": 4,
+          "role": "required"
+        },
+        {
+          "entry_id": "ai-design:1:ai-d4:1",
+          "track_id": "ai-design",
+          "track_title": "AI Design & Creative Work",
+          "stage_id": 1,
+          "role": "required"
+        }
+      ]
+    },
+    {
+      "url": "https://www.pexels.com",
+      "status": 403,
+      "final_url": "https://www.pexels.com/",
+      "host": "www.pexels.com",
+      "checked_at": "2026-10-17",
+      "title": "",
+      "kind": "blocked-or-shell",
+      "paywalled": null,
+      "content_vocabulary_terms_count": 0,
+      "mapped_entries": [
+        {
+          "entry_id": "video:2:vid-5:1",
+          "track_id": "video",
+          "track_title": "Video Editing",
+          "stage_id": 2,
+          "role": "required"
+        },
+        {
+          "entry_id": "youtube:2:yt-6:1",
+          "track_id": "youtube",
+          "track_title": "YouTube Automation",
+          "stage_id": 2,
+          "role": "required"
+        }
+      ]
+    }
+  ]
+}

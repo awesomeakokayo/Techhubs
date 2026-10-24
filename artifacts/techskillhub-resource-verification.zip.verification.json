@@ -1,0 +1,14 @@
+﻿{
+    "generated_at":  "2026-10-20T17:39:01Z",
+    "archive":  "techskillhub-resource-verification.zip",
+    "bytes":  1167692,
+    "sha256":  "ec2ff32e9f7c805cc9c6db1972426fdbe412a31ec3487ace1993867ae3cf6266",
+    "entries":  82,
+    "required_files_present":  true,
+    "missing_required":  [
+
+                         ],
+    "readable_readme":  true,
+    "resources_json_parses":  true,
+    "note":  "Opened with System.IO.Compression.ZipFile, listed all entries, read README.md and parsed resources.json from inside the archive."
+}

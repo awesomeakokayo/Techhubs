@@ -1,0 +1,57 @@
+{
+  "note": "The curriculum-quality report was generated BEFORE the latest resource-probe re-run. This file records the difference so no reader treats the older list as current.",
+  "report_generated_at": "2026-10-17T20:56:55.722Z",
+  "probe_generated_at": "2026-10-17",
+  "report_unresolved": [
+    {
+      "url": "https://openai.com/academy/ai-fundamentals",
+      "status": 403
+    },
+    {
+      "url": "https://openai.com/academy/getting-started",
+      "status": 403
+    },
+    {
+      "url": "https://www.pexels.com",
+      "status": 403
+    },
+    {
+      "url": "https://tryhackme.com/paths",
+      "status": 429
+    }
+  ],
+  "current_unresolved_from_probe": [
+    {
+      "url": "https://tryhackme.com/paths",
+      "status": 429
+    },
+    {
+      "url": "https://www.canva.com/design-school/courses",
+      "status": 403
+    },
+    {
+      "url": "https://www.canva.com/designschool",
+      "status": 403
+    },
+    {
+      "url": "https://www.pexels.com",
+      "status": 403
+    }
+  ],
+  "resolved_since_report": [
+    "https://openai.com/academy/ai-fundamentals",
+    "https://openai.com/academy/getting-started"
+  ],
+  "newly_unresolved_since_report": [
+    "https://www.canva.com/design-school/courses",
+    "https://www.canva.com/designschool"
+  ],
+  "counts": {
+    "report_unresolved": 4,
+    "current_unresolved": 4,
+    "probe_total": 326,
+    "probe_reachable": 322,
+    "probe_content_inspected": 242,
+    "report_content_inspected_urls": 241
+  }
+}
