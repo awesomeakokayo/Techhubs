@@ -37,7 +37,7 @@ export default function FindYourPathPage() {
       </div>
 
       <div className="container max-w-3xl">
-        <TrackQuiz approxHoursByTrack={approxHoursByTrack} tracks={TRACKS.map(({ id, slug, name, tagline }) => ({ id, slug, name, tagline }))} />
+        <TrackQuiz approxHoursByTrack={approxHoursByTrack} tracks={TRACKS.map(({ id, slug, name, tagline, colorHex }) => ({ id, slug, name, tagline, colorHex }))} />
 
         <Link
           href="/paths"
