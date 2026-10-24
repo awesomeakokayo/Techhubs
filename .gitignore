@@ -38,3 +38,9 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# freebuff desktop workspace (local tool state)
+/.freebuff/
+
+# dev server logs
+dev.log
