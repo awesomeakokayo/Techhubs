@@ -4,11 +4,11 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 const root = path.resolve(__dirname, '..')
-const certificatePage = fs.readFileSync(path.join(root, 'app', 'certificate', '[trackId]', 'page.tsx'), 'utf8')
-const certificateActions = fs.readFileSync(path.join(root, 'app', 'certificate', '[trackId]', 'CertificateActions.tsx'), 'utf8')
+const certificatePage = fs.readFileSync(path.join(root, 'app', '(app)', 'certificate', '[trackId]', 'page.tsx'), 'utf8')
+const certificateActions = fs.readFileSync(path.join(root, 'app', '(app)', 'certificate', '[trackId]', 'CertificateActions.tsx'), 'utf8')
 const certificateRoute = fs.readFileSync(path.join(root, 'app', 'api', 'certificate', '[trackId]', 'route.ts'), 'utf8')
 const guidedRoute = fs.readFileSync(path.join(root, 'app', 'api', 'guided-path', '[trackId]', 'route.ts'), 'utf8')
-const guidedPage = fs.readFileSync(path.join(root, 'app', 'guided-path', '[trackId]', 'page.tsx'), 'utf8')
+const guidedPage = fs.readFileSync(path.join(root, 'app', '(app)', 'guided-path', '[trackId]', 'GuidedPathClient.tsx'), 'utf8')
 const schema = fs.readFileSync(path.join(root, 'prisma', 'schema.prisma'), 'utf8')
 
 test('certificate page keeps browser-only print logic in a client component', () => {
@@ -27,7 +27,7 @@ test('certificate page is gated by actual course completion', () => {
 
 test('guided path creates course completion only after the final step', () => {
   assert.match(guidedRoute, /if \(stepIndex === steps\.length - 1\)/)
-  assert.match(guidedRoute, /prisma\.courseCompletion\.upsert/)
+  assert.match(guidedRoute, /tx\.courseCompletion\.upsert/)
 })
 
 test('completed guided path sends learner directly to certificate', () => {
