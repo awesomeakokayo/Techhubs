@@ -1,4 +1,4 @@
-import { TRACKS } from './tracks'
+import { getAIEnrichedTracks } from './ai-track'
 
 export type SearchResultType = 'track' | 'resource' | 'project' | 'roadmap'
 
@@ -15,7 +15,7 @@ export interface SearchResult {
 function buildIndex(): SearchResult[] {
   const items: SearchResult[] = []
 
-  TRACKS.forEach((track) => {
+  getAIEnrichedTracks().forEach((track) => {
     items.push({
       id: `track-${track.id}`,
       type: 'track',

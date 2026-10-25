@@ -1,3 +1,4 @@
+import { TRACKS } from './tracks'
 import type { Track } from './tracks'
 import { AI_PROJECT_EXTENSIONS, AI_RESOURCE_EXTENSIONS } from './ai-curriculum'
 import { getVerifiedAIResource } from './ai-resource-audit'
@@ -31,4 +32,10 @@ export function getAIEnrichedTrack(track: Track): Track {
     resources: resources ? [...track.resources, ...auditedResources] : track.resources,
     projects: projects ? [...track.projects, ...projects] : track.projects,
   }
+}
+
+
+/** One catalogue view for every learner-facing resource/search surface. */
+export function getAIEnrichedTracks(): Track[] {
+  return TRACKS.map(getAIEnrichedTrack)
 }

@@ -3,26 +3,32 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl
-  const isGuidedPath = pathname.startsWith('/guided-path')
-  const isAccount = pathname === '/account' || pathname.startsWith('/account/')
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+    secureCookie: process.env.NODE_ENV === 'production',
+    cookieName: 'next-auth.session-token',
+  })
 
-  if (isGuidedPath || isAccount) {
-    const token = await getToken({
-      req,
-      secret: process.env.AUTH_SECRET,
-      secureCookie: process.env.NODE_ENV === 'production',
-      cookieName: 'next-auth.session-token',
-    })
-
-    if (!token) {
-      return NextResponse.redirect(new URL('/login?next=' + pathname, req.url))
-    }
+  if (!token) {
+    const url = new URL('/login', req.url)
+    url.searchParams.set('next', req.nextUrl.pathname + req.nextUrl.search)
+    return NextResponse.redirect(url)
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/guided-path/:path*', '/account', '/account/:path*'],
+  matcher: [
+    '/account',
+    '/account/:path*',
+    '/dashboard',
+    '/dashboard/:path*',
+    '/learning',
+    '/plan',
+    '/achievements',
+    '/certificate/:path*',
+    '/guided-path/:path+',
+  ],
 }

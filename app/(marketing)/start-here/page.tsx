@@ -1,0 +1,115 @@
+import type { Metadata } from 'next'
+import { getPageMetadata } from '@/lib/seo/utils'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { TrackQuiz } from '@/components/quiz/TrackQuiz'
+import { PageViewTracker } from '@/components/analytics/page-view-tracker'
+import { TrackedLink } from '@/components/ui/tracked-link'
+import { approxLearningHoursByTrack } from '@/lib/quiz-pace'
+import {
+  SURVIVAL_STEPS,
+  FIRST_WEEK_PLAN,
+  COMMUNITIES_ONLINE,
+  COMMUNITIES_AFRICA,
+} from '@/lib/site-content'
+
+export const metadata: Metadata = getPageMetadata({
+  title: 'Start Here: Your First Week Learning Tech',
+  description:
+    'Beginner onboarding guide with seven survival steps, a first-week plan, a track quiz and communities that help independent learners.',
+  path: '/start-here',
+  keywords: ['start learning tech', 'first week coding plan', 'tech survival steps'],
+})
+
+export default function StartHerePage() {
+  const approxHoursByTrack = approxLearningHoursByTrack()
+  return (
+    <div className="section pt-16">
+      <div className="container max-w-3xl">
+        <PageViewTracker path="/start-here" eventName="start_here_page_open" />
+        <PageHeader
+          title="Start Here"
+          subtitle="You're in the right place. This guide is for students starting from zero."
+          breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Start Here' }]}
+        />
+
+        <section className="prose-dark">
+          <p className="text-lg text-text-secondary max-w-none">
+            This hub is a structured, self-paced learning system for students who want to break into tech.
+            Pick a track, follow the roadmap stage by stage, build the projects, and use AI as a thinking
+            partner — not a shortcut.
+          </p>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="font-editorial text-3xl">The 7 Steps</h2>
+          <p className="mt-2 text-text-secondary">From the Beginner Survival Guide — read these before picking a track.</p>
+          <div className="mt-8 space-y-4">
+            {SURVIVAL_STEPS.map((step) => (
+              <article key={step.step} className="card">
+                <span className="font-mono text-4xl font-bold text-teal/20">{String(step.step).padStart(2, '0')}</span>
+                <h3 className="mt-2 font-display text-lg font-semibold">{step.title}</h3>
+                <p className="mt-2 text-sm text-text-secondary max-w-none">{step.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="font-editorial text-3xl">Which track is for you?</h2>
+          <p className="mt-2 text-text-secondary">Answer 3 quick questions and we&apos;ll recommend the best paths.</p>
+          <div className="mt-8">
+            <TrackQuiz approxHoursByTrack={approxHoursByTrack} />
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="font-editorial text-3xl">Your First Week</h2>
+          <div className="mt-6 space-y-3">
+            {FIRST_WEEK_PLAN.map((day) => (
+              <div key={day.day} className="flex gap-4 rounded-lg border border-border-default p-4">
+                <span className="shrink-0 font-mono text-sm font-medium text-teal w-16">{day.day}</span>
+                <p className="text-sm text-text-secondary">{day.task}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16 pb-8">
+          <h2 className="font-editorial text-3xl">Join a Community</h2>
+          <h3 className="mt-8 font-display text-lg font-semibold">Online</h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {COMMUNITIES_ONLINE.map((c) => (
+              <TrackedLink
+                key={c.url}
+                href={c.url}
+                className="card no-underline hover:border-teal/40 py-4"
+                path="/start-here"
+                resourceTitle={c.name}
+                resourceType="community"
+              >
+                <h4 className="font-medium text-teal">{c.name}</h4>
+                <p className="text-xs text-text-secondary">{c.description}</p>
+              </TrackedLink>
+            ))}
+          </div>
+          <h3 className="mt-10 font-display text-lg font-semibold">African & Nigerian</h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {COMMUNITIES_AFRICA.map((c) => (
+              <TrackedLink
+                key={c.url}
+                href={c.url}
+                className="card no-underline hover:border-teal/40 py-4"
+                path="/start-here"
+                resourceTitle={c.name}
+                resourceType="community"
+              >
+                <h4 className="font-medium text-teal">{c.name}</h4>
+                <p className="text-xs text-text-secondary">{c.description}</p>
+              </TrackedLink>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  )
+}

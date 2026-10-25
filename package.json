@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "tsc -p tsconfig.test.json && node --test tests/",
+    "test:e2e": "playwright test",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -23,14 +24,15 @@
     "fuse.js": "^7.0.0",
     "lucide-react": "^0.468.0",
     "next": "14.2.35",
-    "nodemailer": "^6.9.16",
     "next-auth": "^5.0.0-beta.25",
+    "nodemailer": "^6.9.16",
     "prisma": "^5.22.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "@types/node": "^20.17.10",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^18.3.12",

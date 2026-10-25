@@ -25,6 +25,17 @@ See [OPEN_SOURCE.md](./OPEN_SOURCE.md) for the project's open-source policy and 
 
 TechSkillHub is built with Next.js, React, TypeScript, Prisma, PostgreSQL, Tailwind CSS, and NextAuth.
 
+## Current development status
+
+Active development is on `feat/retention-v3`, which is ahead of `main` and not yet
+merged. Production (`main`) is unchanged by that branch. For the verified architecture,
+feature status, test results, known issues and next tasks, see
+[docs/DEVELOPMENT_HANDOFF.md](./docs/DEVELOPMENT_HANDOFF.md).
+
+## Documentation
+
+Start with [the documentation index](./docs/README.md). It links to the current architecture and development handoff, launch blockers, curriculum evidence, billing operations, and archived implementation prompts. Historical audit and planning files are kept under `docs/archive/`; they are retained for provenance, not treated as the current source of truth.
+
 ## Getting started
 
 ### 1. Clone the repository
@@ -63,8 +74,19 @@ Open `http://localhost:3000` in your browser.
 Before opening a pull request, run the checks that apply to your change:
 
 ```bash
+npm run lint
+npm test
+npx tsc --noEmit -p tsconfig.json
 npm run build
-npm run test
+```
+
+`npm test` compiles the test TypeScript project and runs the unit/contract tests.
+Database-backed integration tests skip unless `TSH_CHECKLIST_IMPORT_TEST_DB` points at
+a disposable database. Playwright E2E must be run with `E2E_DATABASE_URL` set to a
+disposable database — never the production database:
+
+```bash
+E2E_DATABASE_URL="postgresql://..." npm run test:e2e
 ```
 
 ## Contributing

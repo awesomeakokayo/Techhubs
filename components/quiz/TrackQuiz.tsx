@@ -1,13 +1,12 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, RotateCcw, Clock } from 'lucide-react'
 import { TRACKS } from '@/lib/tracks'
-import { buildGuidedPath } from '@/lib/guided-path'
-import { getProgress, saveQuizResult } from '@/lib/progress'
+import { getProgress, saveQuizResult, type QuizResult } from '@/lib/progress'
 import { trackEvent, trackQuizCompletion } from '@/lib/analytics'
 import type { Track } from '@/lib/tracks'
 
@@ -84,16 +83,15 @@ function resolveTracks(ids: string[]): (Track | undefined)[] {
   return ids.map((id) => TRACKS.find((t) => t.id === id)).filter(Boolean)
 }
 
-function estimateWeeks(trackId: string, weeklyHours: number): number | null {
-  const steps = buildGuidedPath(trackId)
-  const approxHours = steps.filter((s) => s.type !== 'checkpoint').length * 0.75
-  if (!weeklyHours) return null
+function estimateWeeks(trackId: string, weeklyHours: number, approxHoursByTrack: Record<string, number>): number | null {
+  const approxHours = approxHoursByTrack[trackId]
+  if (!weeklyHours || !approxHours) return null
   return Math.max(1, Math.round(approxHours / weeklyHours))
 }
 
-function PaceNote({ trackId, weeklyHours }: { trackId: string; weeklyHours: number | null }) {
+function PaceNote({ trackId, weeklyHours, approxHoursByTrack }: { trackId: string; weeklyHours: number | null; approxHoursByTrack: Record<string, number> }) {
   if (!weeklyHours) return null
-  const weeks = estimateWeeks(trackId, weeklyHours)
+  const weeks = estimateWeeks(trackId, weeklyHours, approxHoursByTrack)
   return (
     <span className="inline-flex items-center gap-1 text-xs text-text-muted">
       <Clock size={11} /> {weeks} week{weeks !== 1 ? 's' : ''} at your pace
@@ -105,12 +103,14 @@ function ResultsList({
   ids,
   reasons,
   weeklyHours,
+  approxHoursByTrack,
   onRetake,
   saved,
 }: {
   ids: string[]
   reasons?: Record<string, string[]>
   weeklyHours?: number | null
+  approxHoursByTrack: Record<string, number>
   onRetake?: () => void
   saved?: boolean
 }) {
@@ -142,7 +142,7 @@ function ResultsList({
                     Matches: {Array.from(new Set(reasons?.[track.id])).slice(0, 2).join(' · ')}
                   </p>
                 )}
-                {!saved && <PaceNote trackId={track.id} weeklyHours={weeklyHours ?? null} />}
+                {!saved && <PaceNote trackId={track.id} weeklyHours={weeklyHours ?? null} approxHoursByTrack={approxHoursByTrack} />}
               </div>
               <Link href={`/tracks/${track.slug}`} className="btn btn-primary shrink-0 inline-flex items-center gap-1.5">
                 Start This Track <ArrowRight size={16} className="shrink-0" />
@@ -160,7 +160,7 @@ function ResultsList({
   )
 }
 
-export function TrackQuiz() {
+export function TrackQuiz({ approxHoursByTrack = {} }: { approxHoursByTrack?: Record<string, number> }) {
   const [stage, setStage] = useState(0)
   const [scores, setScores] = useState<Record<string, number>>({})
   const [reasons, setReasons] = useState<Record<string, string[]>>({})
@@ -171,7 +171,8 @@ export function TrackQuiz() {
   const { data: session } = useSession()
   const [done, setDone] = useState(false)
   const [started, setStarted] = useState(false)
-  const [showSaved, setShowSaved] = useState(() => getProgress().quizResult?.completed ?? false)
+  const [showSaved, setShowSaved] = useState(false)
+  const [savedResult, setSavedResult] = useState<QuizResult | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
   const reset = () => {
@@ -245,7 +246,7 @@ export function TrackQuiz() {
       .slice(0, 3)
       .map(([id]) => id)
     try {
-      saveQuizResult(top, { level: level ?? undefined, time, weeklyHours: hours ?? undefined })
+      saveQuizResult(top, { level: level ?? undefined, time, weeklyHours: hours ?? undefined, goal: goal || undefined })
       if (session?.user?.id && goal && level && hours && top[0]) {
         await fetch('/api/learner-profile', {
           method: 'POST',
@@ -271,16 +272,18 @@ export function TrackQuiz() {
     return { ids, reasons }
   }, [done, scores, reasons])
 
-  const savedPicks = useMemo(() => {
-    const r = getProgress().quizResult
-    if (!r?.completed || !r.recommendations?.length) return null
-    return r
-  }, [showSaved])
+  useEffect(() => {
+    const result = getProgress().quizResult
+    if (result?.completed && result.recommendations?.length) {
+      setSavedResult(result)
+      setShowSaved(true)
+    }
+  }, [])
 
-  if (showSaved && savedPicks) {
+  if (showSaved && savedResult) {
     return (
       <div id="quiz" className="scroll-mt-24 space-y-4">
-        <ResultsList ids={savedPicks.recommendations} saved onRetake={reset} />
+        <ResultsList ids={savedResult.recommendations} saved approxHoursByTrack={approxHoursByTrack} onRetake={reset} />
       </div>
     )
   }
@@ -292,6 +295,7 @@ export function TrackQuiz() {
           ids={results.ids}
           reasons={results.reasons}
           weeklyHours={weeklyHours}
+          approxHoursByTrack={approxHoursByTrack}
           onRetake={reset}
         />
       </div>

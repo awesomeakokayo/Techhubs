@@ -32,6 +32,7 @@ export interface QuizResult {
   level?: 'beginner' | 'intermediate' | 'advanced'
   time?: string
   weeklyHours?: number
+  goal?: string
   updatedAt?: string
 }
 
@@ -67,14 +68,6 @@ export function saveProgress(data: ProgressData): void {
 export function getTrackProgress(trackId: string): TrackProgress {
   const data = getProgress()
   return data.tracks[trackId] ?? defaultProgress()
-}
-
-export function startTrack(trackId: string): void {
-  const data = getProgress()
-  if (!data.tracks[trackId]) data.tracks[trackId] = defaultProgress()
-  data.tracks[trackId].started = true
-  data.tracks[trackId].lastVisited = new Date().toISOString()
-  saveProgress(data)
 }
 
 export function toggleStage(trackId: string, stageId: number, totalStages: number): void {
@@ -118,68 +111,10 @@ export function getInProgressTracks(): string[] {
 
 export function saveQuizResult(
   recommendations: string[],
-  extras?: Pick<QuizResult, 'level' | 'time' | 'weeklyHours'>
+  extras?: Pick<QuizResult, 'level' | 'time' | 'weeklyHours' | 'goal'>
 ): void {
   const data = getProgress()
   data.quizResult = { completed: true, recommendations, ...extras, updatedAt: new Date().toISOString() }
   saveProgress(data)
 }
 
-/* ---- Server sync for Pro subscribers ---- */
-
-export async function syncTrackProgressToServer(trackId: string): Promise<void> {
-  const data = getProgress()
-  const trackData = data.tracks[trackId]
-  if (!trackData) return
-  try {
-    await fetch('/api/progress', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ trackId, data: trackData }),
-    })
-  } catch {
-    // silently fail
-  }
-}
-
-export async function loadTrackProgressFromServer(trackId: string): Promise<void> {
-  try {
-    const res = await fetch('/api/progress')
-    if (!res.ok) return
-    const serverData = await res.json() as Record<string, { data: TrackProgress; updatedAt: string }>
-    const serverTrack = serverData[trackId]
-    if (!serverTrack) return
-
-    const local = getProgress()
-    const localTrack = local.tracks[trackId]
-
-    if (!localTrack || new Date(serverTrack.updatedAt) > new Date(localTrack.lastVisited ?? 0)) {
-      local.tracks[trackId] = serverTrack.data
-      saveProgress(local)
-    }
-  } catch {
-    // silently fail
-  }
-}
-
-export async function loadAllServerProgress(): Promise<ProgressData | null> {
-  try {
-    const res = await fetch('/api/progress')
-    if (!res.ok) return null
-    const serverData = await res.json() as Record<string, { data: TrackProgress; updatedAt: string }>
-
-    const merged: ProgressData = { tracks: {} }
-    const local = getProgress()
-    for (const [trackId, entry] of Object.entries(serverData)) {
-      const localTrack = local.tracks[trackId]
-      if (!localTrack || new Date(entry.updatedAt) > new Date(localTrack.lastVisited ?? 0)) {
-        merged.tracks[trackId] = entry.data
-      } else {
-        merged.tracks[trackId] = localTrack
-      }
-    }
-    return merged
-  } catch {
-    return null
-  }
-}

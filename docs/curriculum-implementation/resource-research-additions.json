@@ -1,0 +1,1506 @@
+{
+  "schema": "tsh-package-resource-research-additions-v1",
+  "generatedAt": "2026-10-22",
+  "method": "Fresh web research followed by the package verifier's exact-URL public fetch and main-text inspection. Additions are alternatives only; package primaries retain their own disposition.",
+  "batches": [
+    {
+      "id": "A1",
+      "scope": "Priority A and B: AI automation, AI content, AI design, AI engineering RAG and AI software verification",
+      "stages": [
+        "ai-agents:4",
+        "ai-automation:1",
+        "ai-automation:2",
+        "ai-automation:3",
+        "ai-automation:4",
+        "ai-automation:5",
+        "ai-automation:7",
+        "ai-automation:8",
+        "ai-content:1",
+        "ai-content:2",
+        "ai-content:6",
+        "ai-design:2",
+        "ai-design:5",
+        "ai-engineering:6",
+        "ai-software-development:6"
+      ]
+    },
+    {
+      "id": "A2",
+      "scope": "Priority A/B: backend/frontend AI workflow, full-stack delivery, Linux/CI, Solidity/DeFi/security/on-chain data, product management metrics/shipping/portfolio, video pacing, writing portfolio and YouTube SEO",
+      "stages": [
+        "backend:1",
+        "frontend:5",
+        "fullstack:2",
+        "fullstack:4",
+        "devops:1",
+        "crypto:3",
+        "crypto:5",
+        "crypto:9",
+        "crypto:11",
+        "productmgmt:5",
+        "productmgmt:6",
+        "productmgmt:7",
+        "productmgmt:8",
+        "video:2",
+        "writing:4",
+        "youtube:3",
+        "devops:2",
+        "productmgmt:5"
+      ]
+    },
+    {
+      "id": "C1",
+      "scope": "Priority C: AI engineering model/embedding/cost/deployment, AI coding review/debugging, content measurement, AI planning/learning/judgment and repeatable workflows",
+      "stages": [
+        "ai-engineering:2",
+        "ai-engineering:4",
+        "ai-engineering:9",
+        "ai-engineering:10",
+        "ai-software-development:1",
+        "ai-software-development:3",
+        "ai-software-development:7",
+        "ai-content:5",
+        "ai-work:4",
+        "ai-work:3",
+        "ai-foundations:4",
+        "ai-foundations:6",
+        "ai-engineering:9",
+        "ai-engineering:10"
+      ]
+    },
+    {
+      "id": "C2",
+      "scope": "Priority C: project/Scrum foundations, product thinking, paid search, no-code automation, statistics/deep learning, Firebase mobile backend and Python OOP/API integration",
+      "stages": [
+        "projectmgmt:1",
+        "projectmgmt:3",
+        "productmgmt:1",
+        "marketing:3",
+        "nocode:3",
+        "datascience:2",
+        "datascience:4",
+        "mobile:3",
+        "python:2",
+        "python:5"
+      ]
+    },
+    {
+      "id": "C3",
+      "scope": "Priority C: React components, Sonic Web3/ecosystem positioning and visual-design fundamentals",
+      "stages": [
+        "frontend:3",
+        "sonic:1",
+        "sonic:2",
+        "uiux:1",
+        "uiux:1"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "trackId": "ai-agents",
+      "stageId": 4,
+      "candidateId": "research-ai-agents-4-function-calling",
+      "candidateTitle": "Function calling: define tool inputs with JSON Schema",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/guides/function-calling",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The tool calling flow, function tool schema, strict mode and supported schema limitations.",
+      "accessNotes": "Public documentation fetched without a login. Interactive examples may require an OpenAI account and are not required for the lesson.",
+      "rationale": "Directly explains declaring tool names, descriptions, JSON Schema parameters and strict validation, which match safe tool contracts. Preferred over the package primary because it addresses the contract rather than presenting an agent product.",
+      "rejectedAlternatives": [
+        "n8n AI Agent Tool: useful for orchestration but does not teach the input/output schema contract in enough depth.",
+        "Anthropic tool-use overview: credible but the OpenAI page provides a more explicit schema and strict-mode treatment."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 1,
+      "candidateId": "research-ai-automation-1-ibm-task-automation",
+      "candidateTitle": "What is task automation? Criteria for tasks to automate",
+      "publisher": "IBM",
+      "url": "https://www.ibm.com/think/topics/task-automation",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Determine and evaluate which tasks to automate: repetitive, recurring, rule-based, error-prone and measurable work.",
+      "accessNotes": "Free public article; no login observed. Vendor perspective; use the criteria, not the product recommendations, as the lesson evidence.",
+      "rationale": "Matches the stage task of identifying stable, repetitive, measurable and safe automation candidates and explicitly distinguishes work that still needs human judgement.",
+      "rejectedAlternatives": [
+        "Slack automation guide: accurate but Slack-specific and does not give a broad task-selection framework.",
+        "Asana automation guide: useful workflow examples, but more product-led and less explicit about when not to automate."
+      ]
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 2,
+      "candidateId": "research-ai-automation-2-n8n-errors",
+      "candidateTitle": "Handle errors gracefully with error workflows",
+      "publisher": "n8n",
+      "url": "https://docs.n8n.io/build/flow-logic/handle-errors-gracefully",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Error workflows, Error Trigger payload, retries and investigating failed executions.",
+      "accessNotes": "Free public documentation; no login observed. Examples assume an n8n instance, but the failure-path design is transferable.",
+      "rationale": "Shows how to model explicit failure paths instead of assuming each step succeeds, including error payloads, alerts and retry investigation.",
+      "rejectedAlternatives": [
+        "n8n workflow settings page: too short and does not explain failure handling.",
+        "Postman debugging guide: strong for request diagnosis but not workflow-level failure design."
+      ]
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 3,
+      "candidateId": "research-ai-automation-3-postman-debug",
+      "candidateTitle": "Debug API requests: credentials, endpoints, payloads and configuration",
+      "publisher": "Postman",
+      "url": "https://learning.postman.com/docs/sending-requests/response-data/troubleshooting-api-requests",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Troubleshooting requests with the Console, HTTP version, certificates, headers, status codes and invalid request data.",
+      "accessNotes": "Free public documentation; no login observed. The page discusses Postman features that require the free app; the diagnostic checklist is readable without it.",
+      "rationale": "Directly covers diagnosing API failures across credentials, endpoints, payloads, headers and configuration. It is more exact than the current package primary, which was the n8n documentation home.",
+      "rejectedAlternatives": [
+        "Stack Overflow REST debugging article: useful status-code triage, but less current and less structured than vendor documentation.",
+        "Zapier free-plan article: unrelated to request diagnosis."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 4,
+      "candidateId": "research-ai-automation-4-n8n-webhook-auth",
+      "candidateTitle": "Webhook credentials and supported authentication",
+      "publisher": "n8n",
+      "url": "https://docs.n8n.io/integrations/builtin/credentials/webhook",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Basic auth, header auth, JWT auth and the none option for Webhook credentials.",
+      "accessNotes": "Free public documentation; no login observed. It does not by itself cover payload validation or constrained side effects; the TechSkillHUB practice must supply those parts.",
+      "rationale": "Provides exact guidance on authenticating webhook callers and records the no-authentication risk, supporting the stage's authentication and permissions requirement.",
+      "rejectedAlternatives": [
+        "n8n Webhook node page: relevant but broader and less focused on credential choices.",
+        "Generic webhook security blog posts: often omit JWT/header trade-offs and are less authoritative."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 5,
+      "candidateId": "research-ai-automation-5-n8n-tools",
+      "candidateTitle": "How tools work in AI workflows",
+      "publisher": "n8n",
+      "url": "https://docs.n8n.io/build/integrate-ai/understand-ai-components/how-tools-work",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "What tools are, how an agent invokes them, and the built-in Workflow, Code and HTTP Request tools.",
+      "accessNotes": "Free public documentation; no login observed. It explains tool placement but does not prove deterministic control design by itself.",
+      "rationale": "Supports placing probabilistic interpretation in the model while keeping deterministic operations in tools and workflows, which is the stage's central distinction.",
+      "rejectedAlternatives": [
+        "n8n AI Agent node page: broader orchestration overview, less explicit about tool boundaries.",
+        "OpenAI function calling: strong contract detail but not workflow-level deterministic controls."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 7,
+      "candidateId": "research-ai-automation-7-n8n-hitl",
+      "candidateTitle": "Human-in-the-loop approval for tool calls",
+      "publisher": "n8n",
+      "url": "https://docs.n8n.io/build/integrate-ai/ai-examples/human-in-the-loop-for-tools",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "When to require review, approval and denial behavior, and the treatment of irreversible or high-value actions.",
+      "accessNotes": "Free public documentation; no login observed. The page assumes n8n but the approval pattern is transferable.",
+      "rationale": "Directly addresses consequential or ambiguous actions that should pause for human approval, including irreversible actions and high-value decisions.",
+      "rejectedAlternatives": [
+        "n8n Tools Agent overview: mentions the feature but does not explain the review policy.",
+        "General AI governance frameworks: too high-level for an implementable approval gate."
+      ]
+    },
+    {
+      "trackId": "ai-automation",
+      "stageId": 8,
+      "candidateId": "research-ai-automation-8-n8n-executions",
+      "candidateTitle": "Understand executions, logs and failure evidence",
+      "publisher": "n8n",
+      "url": "https://docs.n8n.io/build/understand-workflows/understand-executions",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Execution records, saved execution data and investigating failed runs.",
+      "accessNotes": "Free public documentation; no login observed. Retention and log streaming depend on the n8n deployment and plan.",
+      "rationale": "Supports operating an automation with logs, failure evidence and recovery. It is paired with the error-workflow page for alerts and bounded retry design.",
+      "rejectedAlternatives": [
+        "n8n logging/monitoring hosting page: deployment-specific and not a learner-facing operations lesson.",
+        "Generic observability articles: not tied to workflow execution evidence."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-content",
+      "stageId": 1,
+      "candidateId": "research-ai-content-1-salesforce-strategy",
+      "candidateTitle": "Build a content strategy around audience, goals and differentiation",
+      "publisher": "Salesforce",
+      "url": "https://www.salesforce.com/marketing/content-strategy",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Understand the audience, set goals, audit content and define differentiation before production.",
+      "accessNotes": "Free public article; no login observed. Vendor marketing source; factual strategy steps were inspected, product promotion ignored.",
+      "rationale": "Covers audience, purpose, original value and differentiation before production, matching the stage's pre-AI strategy requirement.",
+      "rejectedAlternatives": [
+        "Coursera content-strategy article: credible overview but more generic and tied to course promotion.",
+        "Independent consultant guide: useful detail but weaker institutional reputation and less consistent maintenance."
+      ]
+    },
+    {
+      "trackId": "ai-content",
+      "stageId": 2,
+      "candidateId": "research-ai-content-2-qut-evaluate",
+      "candidateTitle": "Evaluating AI generated content and its sources",
+      "publisher": "QUT Library",
+      "url": "https://libguides.library.qut.edu.au/library-guidance-for-ai/evaluating-generated-content",
+      "type": "guide",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Critical evaluation questions, CRAAP and SIFT checks, source verification and the limits of AI authority.",
+      "accessNotes": "Free public library guide; no login observed. Last updated 1 October 2026. Some linked library resources may be institution-specific.",
+      "rationale": "Directly teaches traceable claims, source verification and independent confirmation, which is exactly the editorial ownership required by this stage.",
+      "rejectedAlternatives": [
+        "Generic AI fact-checking blog posts: usually shorter and less methodical.",
+        "Vendor AI-content policies: focused on platform compliance rather than research traceability."
+      ]
+    },
+    {
+      "trackId": "ai-content",
+      "stageId": 6,
+      "candidateId": "research-ai-content-6-buffer-repurpose",
+      "candidateTitle": "Repurposing content: adapt the core idea across formats",
+      "publisher": "Buffer",
+      "url": "https://buffer.com/resources/repurposing-content-guide",
+      "type": "guide",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Crossposting versus repurposing, choosing channels, adapting formats and avoiding repetitive repackaging.",
+      "accessNotes": "Free public article; no login observed. Vendor examples promote Buffer; the method and cautions were inspected.",
+      "rationale": "Explains preserving core value while adapting to each channel and warns against shallow duplication, directly matching the stage outcome.",
+      "rejectedAlternatives": [
+        "Buffer social-media platform guide: overlaps but is less focused on preserving core value.",
+        "Generic listicles: often recommend volume without quality or adaptation criteria."
+      ]
+    },
+    {
+      "trackId": "ai-design",
+      "stageId": 2,
+      "candidateId": "research-ai-design-2-nng-testing-ai",
+      "candidateTitle": "Testing AI with real design scenarios: evaluation methodology",
+      "publisher": "Nielsen Norman Group",
+      "url": "https://www.nngroup.com/articles/testing-ai-methodology/",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Writing realistic prompts, generating variants and assessing AI-generated designs with goal alignment, hierarchy and usability criteria.",
+      "accessNotes": "Free public article; no login observed. Published 24 October 2025. It evaluates tools that may require paid accounts; the evaluation method is free.",
+      "rationale": "Directly evaluates AI-generated UI concepts against hierarchy, task completion and usability evidence using a documented heuristic method.",
+      "rejectedAlternatives": [
+        "NN/G generative UI article: conceptual, not an evaluation method for generated concepts.",
+        "NN/G research agenda: identifies questions but does not provide the stage's practical assessment process."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-design",
+      "stageId": 5,
+      "candidateId": "research-ai-design-5-nng-confirmation-bias",
+      "candidateTitle": "Confirmation bias in UX: test assumptions instead of validating them",
+      "publisher": "Nielsen Norman Group",
+      "url": "https://www.nngroup.com/articles/confirmation-bias-ux",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "How assumptions distort design research, and how to research rather than validate using multiple evidence sources.",
+      "accessNotes": "Free public article; no login observed. It is conceptual and requires the stage practice to apply the checks to an actual design decision.",
+      "rationale": "Directly addresses unsupported user assumptions and evidence-guided decisions, including the risk of treating ambiguous evidence as confirmation.",
+      "rejectedAlternatives": [
+        "NN/G UX research cheat sheet: broader methods overview, less specific to assumption bias.",
+        "NN/G journey-mapping assumptions article: relevant but limited to mapping workshops."
+      ]
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 6,
+      "candidateId": "research-ai-engineering-6-azure-rag",
+      "candidateTitle": "Retrieval-augmented generation: retrieval and generation layers",
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/azure/search/retrieval-augmented-generation-overview",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "RAG architecture, query planning, retrieval quality and grounding generation in retrieved content.",
+      "accessNotes": "Free public documentation; no login observed. Product-specific; the architecture and failure separation are transferable.",
+      "rationale": "Separates retrieval and generation concerns and explains how poor retrieval produces poor grounded answers, matching the diagnostic objective.",
+      "rejectedAlternatives": [
+        "OpenAI cookbook RAG example: implementation-focused and requires API access.",
+        "Generic RAG review papers: current but too academic for a beginner stage."
+      ]
+    },
+    {
+      "trackId": "ai-software-development",
+      "stageId": 6,
+      "candidateId": "research-ai-software-6-github-review",
+      "candidateTitle": "Review AI-generated code: verify tests and inspect evidence",
+      "publisher": "GitHub",
+      "url": "https://docs.github.com/en/copilot/tutorials/review-ai-generated-code",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Functional checks, automated tests and static analysis, reviewing changes, and treating AI output as untrusted until verified.",
+      "accessNotes": "Free public documentation; no login observed. Copilot-specific prompts are optional; the review workflow is generally applicable.",
+      "rationale": "Directly frames AI-generated tests and code as evidence to inspect rather than proof of correctness, matching the stage outcome.",
+      "rejectedAlternatives": [
+        "GitHub Copilot quickstart: product onboarding, not verification practice.",
+        "Generic AI code-review blog posts: often lack concrete test and static-analysis checks."
+      ]
+    },
+    {
+      "trackId": "backend",
+      "stageId": 1,
+      "candidateId": "research-backend-1-mdn-express",
+      "candidateTitle": "Express/Node introduction: server-side web frameworks, HTTP and routes",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/Express_Nodejs/Introduction",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The server-side web framework overview, the HTTP request/response model, Node.js and Express roles, and the first server and route example.",
+      "durationMinutes": 12,
+      "accessNotes": "Public MDN page fetched without a login. Code examples can be read in the browser; running them requires local Node.js.",
+      "rationale": "Explains how a web request reaches a server and how a first Express/Node backend is structured, which is the stage gap. Git practice remains a separate stage exercise and is not claimed as covered by this page.",
+      "rejectedAlternatives": [
+        "MDN HTTP overview: accurate on protocol basics but does not show a first backend program or route handling.",
+        "FastAPI tutorial: strong for Python APIs but assumes more framework knowledge and does not introduce the web request lifecycle as directly."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "frontend",
+      "stageId": 5,
+      "candidateId": "research-frontend-5-harness-engineering",
+      "candidateTitle": "Harness engineering for coding agent users: tests, architecture fitness and human ownership",
+      "publisher": "Martin Fowler / Thoughtworks",
+      "url": "https://martinfowler.com/articles/harness-engineering.html",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The steering loop, maintainability and architecture fitness harnesses, behaviour harnesses, and the role of the human reviewer.",
+      "durationMinutes": 20,
+      "accessNotes": "Free public article; no login or paywall observed. Long-form, so the required reading is the harness sections rather than the whole essay.",
+      "rationale": "Directly addresses using coding agents without surrendering correctness, architecture or review responsibility. It names concrete feedback loops and fitness checks, matching the stage objective more closely than generic AI tool documentation.",
+      "rejectedAlternatives": [
+        "GitHub Copilot best practices: useful prompting and workflow advice but weaker on architecture ownership and fitness functions.",
+        "MDN Learn web development: foundational frontend material, not an AI-assisted workflow or review method."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "fullstack",
+      "stageId": 2,
+      "candidateId": "research-fullstack-2-nextjs-auth",
+      "candidateTitle": "How to implement authentication in Next.js: sessions, authorization and data access",
+      "publisher": "Next.js",
+      "url": "https://nextjs.org/docs/app/guides/authentication",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Authentication versus session management versus authorization, session creation and verification, and protecting routes and server data access.",
+      "durationMinutes": 15,
+      "accessNotes": "Current public Next.js documentation, last updated 2026-09-16; fetched without a login. Examples require a Next.js project and a database or auth provider to run.",
+      "rationale": "Connects the backend consolidation topics of APIs, database-backed sessions and authorization in one current guide. It is specific to Next.js but the session and authorization model transfers to the stack used by the track.",
+      "rejectedAlternatives": [
+        "PostgreSQL tutorial: strong database SQL but no application authentication or session model.",
+        "SQLite tutorial: useful embedded database material but does not cover API authentication or authorization."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "fullstack",
+      "stageId": 4,
+      "candidateId": "research-fullstack-4-render-multi-service",
+      "candidateTitle": "Multi-service architectures on Render: frontend, API, database and private networking",
+      "publisher": "Render",
+      "url": "https://render.com/docs/multi-service-architecture",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The multi-service example, service types, environment-variable wiring, private-network communication and deployment of the combined app.",
+      "durationMinutes": 12,
+      "accessNotes": "Public documentation fetched without a login. Following the deployment requires a Render account; reading and architecture review do not.",
+      "rationale": "Matches the stage task of deploying frontend, backend and database together with safe configuration. It explicitly covers service boundaries, environment variables and private networking rather than a single-service deploy.",
+      "rejectedAlternatives": [
+        "Vercel Next.js deployment guide: strong for the frontend but does not combine a separate API, database and private service network.",
+        "PostgreSQL tutorial: database operations only; no full-stack deployment or configuration model."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "devops",
+      "stageId": 1,
+      "candidateId": "research-devops-1-digitalocean-sysadmin",
+      "candidateTitle": "Making Servers Work: Linux terminal, permissions, server setup and networking",
+      "publisher": "DigitalOcean",
+      "url": "https://assets.digitalocean.com/books/making-servers-work-a-practical-guide-to-system-administration.pdf",
+      "type": "book",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Chapters 4?8 on the Linux terminal, navigation, permissions, I/O redirection and initial Ubuntu server setup, plus the networking chapters used for the network-reasoning exercise.",
+      "durationMinutes": 45,
+      "accessNotes": "Free PDF under CC BY-NC-SA 4.0; downloaded without a login. Examples target Ubuntu 18.04 and 2020 tooling, so package versions and some commands need a currency check during human review.",
+      "rationale": "A single credible text covers both halves of the stage: operating a Linux server and reasoning about networking. It includes command practice and server setup rather than only networking theory.",
+      "rejectedAlternatives": [
+        "Ubuntu Server documentation: current and authoritative but organised as a product manual rather than a guided server-operations path.",
+        "Linux Journey: beginner-friendly but narrower on server administration and networking configuration."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "crypto",
+      "stageId": 3,
+      "candidateId": "research-crypto-3-solidity-example",
+      "candidateTitle": "Solidity by Example: voting, auctions, purchase and payment-channel contracts",
+      "publisher": "Solidity documentation",
+      "url": "https://docs.soliditylang.org/en/latest/solidity-by-example.html",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The Voting, Blind Auction, Safe Remote Purchase and micropayment-channel examples, including the contract state, functions, modifiers and events they use.",
+      "durationMinutes": 15,
+      "accessNotes": "Official public documentation fetched without a login. Compiling and running examples uses Remix or a local compiler.",
+      "rationale": "Teaches the core language through complete contracts rather than isolated syntax. The examples exercise state variables, functions, modifiers, events, payments and access checks, matching the stage outcome.",
+      "rejectedAlternatives": [
+        "Solidity documentation home: broad but index-like, with no single focused reading path.",
+        "Ethereum technical introduction: explains the platform but not how to read and write Solidity contracts."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "crypto",
+      "stageId": 5,
+      "candidateId": "research-crypto-5-ethereum-defi",
+      "candidateTitle": "Decentralized finance (DeFi): lending, borrowing, stablecoins and risks",
+      "publisher": "ethereum.org",
+      "url": "https://ethereum.org/en/defi/",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The DeFi overview, lending and borrowing, stablecoins, decentralized exchanges, composability, and the risk and security warnings.",
+      "durationMinutes": 15,
+      "accessNotes": "Public ethereum.org page fetched without a login. Some links lead to third-party applications and are optional.",
+      "rationale": "Explains the economic mechanics and risk trade-offs the stage asks for, without requiring a wallet or transaction. It is more directly aligned than a Solidity language reference.",
+      "rejectedAlternatives": [
+        "Ethereum technical introduction: protocol and EVM material, not DeFi market mechanics.",
+        "Solidity documentation: contract language only and no treatment of lending, stablecoins or market risk."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "crypto",
+      "stageId": 9,
+      "candidateId": "research-crypto-9-solidity-security",
+      "candidateTitle": "Security considerations: reentrancy, overflow, ether transfer and defensive recommendations",
+      "publisher": "Solidity documentation",
+      "url": "https://docs.soliditylang.org/en/latest/security-considerations.html",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The pitfalls sections on reentrancy, gas limits, sending and receiving ether, tx.origin and overflows, followed by the checks-effects-interactions and fail-safe recommendations.",
+      "durationMinutes": 18,
+      "accessNotes": "Official public documentation fetched without a login. The page is current for the documented compiler line.",
+      "rationale": "Maps directly to several of the most damaging vulnerability classes and pairs each pitfall with a defensive recommendation. It is authoritative and specific, while access-control and oracle risk still need the stage practice and project review.",
+      "rejectedAlternatives": [
+        "OWASP Smart Contract Top 10 index: current taxonomy, but the landing page mostly names categories rather than teaching each exploit and mitigation.",
+        "ConsenSys best-practices site: valuable but the former attacks path returned 404 and the material is no longer actively maintained."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "crypto",
+      "stageId": 11,
+      "candidateId": "research-crypto-11-dune-data-hub",
+      "candidateTitle": "Dune Data Hub: SQL queries, visualizations, dashboards and sharing",
+      "publisher": "Dune",
+      "url": "https://docs.dune.com/web-app/overview",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The Data Hub workflow from SQL query to visualization, dashboard assembly, scheduled refresh and public sharing.",
+      "durationMinutes": 10,
+      "accessNotes": "Public documentation fetched without a login. Running queries requires a free Dune account and SQL knowledge.",
+      "rationale": "Covers the full on-chain analysis deliverable: query, chart, dashboard and publication. It is a current product guide from the data platform rather than a generic Ethereum overview.",
+      "rejectedAlternatives": [
+        "Ethereum technical introduction: explains chain concepts but not on-chain querying, visualization or dashboards.",
+        "Solidity documentation: contract development, not data analysis."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "productmgmt",
+      "stageId": 5,
+      "candidateId": "research-productmgmt-5-north-star",
+      "candidateTitle": "The North Star Playbook: choosing a value metric and supporting inputs",
+      "publisher": "Amplitude",
+      "url": "https://info.amplitude.com/rs/138-CDN-550/images/Amplitude-The-North-Star-Playbook.pdf",
+      "type": "book",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Chapter 1, pages 7?10: the North Star Metric qualities, input metrics, the vanity-metric test and the metric-versus-input relationship.",
+      "durationMinutes": 12,
+      "accessNotes": "Free PDF download; no login observed. The full playbook is longer and the required segment is the opening framework chapter.",
+      "rationale": "Directly teaches how to choose a high-level growth metric that expresses customer value and is not a vanity metric. It includes the input-metric model needed for the stage exercise.",
+      "rejectedAlternatives": [
+        "Amplitude product analytics guide: broader measurement overview but less focused on selecting one North Star and its inputs.",
+        "Atlassian product management guide: useful product practice, not a metric-selection method."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "productmgmt",
+      "stageId": 6,
+      "candidateId": "research-productmgmt-6-amplitude-analytics",
+      "candidateTitle": "What is product analytics? Retention, funnels, cohorts and experimentation",
+      "publisher": "Amplitude",
+      "url": "https://amplitude.com/explore/analytics/product-analytics-guide",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Core analysis types: funnel, cohort, retention, path, segmentation and experimentation, including how each answers a product question.",
+      "durationMinutes": 15,
+      "accessNotes": "Public article fetched without a login. Vendor examples and benchmark claims should be treated as illustrative, not independent evidence.",
+      "rationale": "Covers retention, funnels and experiment interpretation in one current guide, matching all three parts of the stage. The vendor perspective is disclosed and the method can be checked against the stage rubric.",
+      "rejectedAlternatives": [
+        "Amplitude A/B testing article: deeper on experiments but not on retention or funnel diagnosis.",
+        "Government user-research discovery guidance: research method context, not product analytics or experiment design."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "productmgmt",
+      "stageId": 7,
+      "candidateId": "research-productmgmt-7-svpg-engineering",
+      "candidateTitle": "Product management vs engineering: peer relationship, discovery and reducing churn",
+      "publisher": "Silicon Valley Product Group",
+      "url": "https://www.svpg.com/product-management-vs-engineering/",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The peer relationship, involving engineers in discovery and feasibility, defining the minimal product, and reducing implementation churn.",
+      "durationMinutes": 8,
+      "accessNotes": "Free public article; no login observed. Published in 2007, so the organisational examples are dated even though the collaboration principles remain relevant.",
+      "rationale": "Directly addresses shipping with engineering through early feasibility input, minimal scope and low-churn implementation. The age is a currency limitation, not a reason to ignore the operating principles.",
+      "rejectedAlternatives": [
+        "Atlassian project management guides: process and delivery mechanics but not the product?engineering peer relationship.",
+        "Agile Manifesto: values context, too abstract for the stage?s practical collaboration behaviours."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "productmgmt",
+      "stageId": 8,
+      "candidateId": "research-productmgmt-8-portfolio-examples",
+      "candidateTitle": "Product manager portfolio tips and ten worked examples",
+      "publisher": "Product School",
+      "url": "https://productschool.com/blog/career-development/product-management-portfolio-examples",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The portfolio guidance and the worked examples showing process, outcomes, case studies and role-targeted presentation.",
+      "durationMinutes": 12,
+      "accessNotes": "Public article fetched without a login. It is a vendor blog promoting Product School, so examples are marketing-adjacent; use the portfolio structure and evidence criteria.",
+      "rationale": "Shows what a credible PM portfolio contains and how outcomes and process are evidenced, which matches the portfolio half of the stage. Interview preparation still needs the stage practice.",
+      "rejectedAlternatives": [
+        "Product School resources hub: too broad and index-like for a focused reading.",
+        "Government user-research guidance: research practice, not PM career positioning or portfolio evidence."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "video",
+      "stageId": 2,
+      "candidateId": "research-video-2-youtube-editing",
+      "candidateTitle": "Video editing tips: planning, pacing and keeping viewers engaged",
+      "publisher": "YouTube Help",
+      "url": "https://support.google.com/youtube/answer/11221953",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Planning the edit before shooting, shot lists, pacing, cutting for audience attention and the basic editing workflow.",
+      "durationMinutes": 8,
+      "accessNotes": "Public YouTube Help page fetched without a login. Embedded creator videos may require YouTube playback, but the written guidance is readable without it.",
+      "rationale": "Official platform guidance on structuring an edit around attention and pacing, directly matching the storytelling stage. It is shorter and more focused than a full editing-software course.",
+      "rejectedAlternatives": [
+        "DaVinci Resolve training: deep software training but not a storytelling or pacing method.",
+        "StudioBinder blog index: broad filmmaking hub; the inspected landing page did not provide a focused segment."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "writing",
+      "stageId": 4,
+      "candidateId": "research-writing-4-ucsd-portfolio",
+      "candidateTitle": "How to create a good technical writing portfolio: tailoring, context and story",
+      "publisher": "UC San Diego Division of Extended Studies",
+      "url": "https://extendedstudies.ucsd.edu/news-events/extended-studies-blog/how-to-create-a-good-tech-writing-portfolio",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The three portfolio criteria ? tailor to the role, provide context for each sample, and tell a story ? plus the advice on showing breadth and a few specialties.",
+      "durationMinutes": 10,
+      "accessNotes": "Public university career article fetched without a login. Published in 2022; the portfolio principles are stable but current job-market specifics need separate checking.",
+      "rationale": "Gives a concrete, employer-facing portfolio method and explicitly addresses showing specialties, which supports both halves of the stage. It is from a named technical-communication programme.",
+      "rejectedAlternatives": [
+        "Google developer documentation style guide: writing style rules, not portfolio construction or career positioning.",
+        "W3C accessibility principles: important quality criteria but unrelated to portfolio selection or specialisation."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "youtube",
+      "stageId": 3,
+      "candidateId": "research-youtube-3-buffer-seo",
+      "candidateTitle": "YouTube SEO: keyword research, titles, descriptions and analytics feedback",
+      "publisher": "Buffer",
+      "url": "https://buffer.com/resources/youtube-seo",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The keyword-research workflow, title and description optimisation, and using YouTube Studio search-traffic and retention data to choose the next change.",
+      "durationMinutes": 15,
+      "accessNotes": "Public article fetched without a login. Vendor blog; recommendations are practical but not official YouTube policy.",
+      "rationale": "Connects packaging choices to search and analytics rather than promising growth hacks. It covers keyword research, metadata and reading search traffic, matching the stage outcome.",
+      "rejectedAlternatives": [
+        "YouTube Help trends page: official but narrow to trend discovery; no full packaging and analytics loop.",
+        "Backlinko video SEO playbook: comprehensive but web-SEO-heavy and less specific to YouTube Studio feedback."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "devops",
+      "stageId": 2,
+      "candidateId": "research-devops-2-github-actions",
+      "candidateTitle": "Quickstart for GitHub Actions: workflows, tests and deployment",
+      "publisher": "GitHub Docs",
+      "url": "https://docs.github.com/en/actions/get-started/quickstart",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Creating a workflow from a template, triggering it on a repository event, running tests and viewing the workflow result.",
+      "durationMinutes": 10,
+      "accessNotes": "Public GitHub documentation fetched without a login. Running the workflow requires a GitHub repository; reading and editing the YAML do not.",
+      "rationale": "Provides a concrete first CI pipeline that runs on version-controlled code. Git fundamentals are practised in the repository workflow, but this page itself teaches CI/CD rather than Git basics; that limitation is recorded for human review.",
+      "rejectedAlternatives": [
+        "GitHub Actions documentation home: index-like and too broad for a first pipeline.",
+        "Kubernetes tutorials: container orchestration, not version control or CI/CD foundations."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "productmgmt",
+      "stageId": 5,
+      "candidateId": "research-productmgmt-5-north-star-article",
+      "candidateTitle": "Every product needs a North Star Metric: characteristics, inputs and selection",
+      "publisher": "Amplitude",
+      "url": "https://amplitude.com/blog/product-north-star-metric",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The North Star definition, the customer-value/strategy/leading-indicator characteristics, the single-metric rule, inputs, and the three product engagement games.",
+      "durationMinutes": 15,
+      "accessNotes": "Public article fetched without a login. Vendor perspective with illustrative company examples; use the framework and checks, not the product promotion.",
+      "rationale": "Covers how to choose one value-based growth metric and its three-to-five inputs, including why DAU and registered users are insufficient on their own. It is a focused HTML alternative to the PDF playbook.",
+      "rejectedAlternatives": [
+        "North Star Playbook PDF: directly relevant but the verifier could not extract text from the PDF, so automated content inspection was not established.",
+        "Mixpanel homepage: product marketing, not a metric-selection framework."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 2,
+      "candidateId": "research-ai-engineering-2-model-selection",
+      "candidateTitle": "Model selection: optimise accuracy, then cost and latency, and evaluate before routing",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/guides/model-selection",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The accuracy-first principle, model comparison and evaluation, cost and latency trade-offs, distillation and the practical selection example.",
+      "durationMinutes": 12,
+      "accessNotes": "Public API documentation fetched without a login. Running the evaluation examples requires an API key and billing; the selection method is readable without either.",
+      "rationale": "Directly teaches capability, quality, cost and latency trade-offs and recommends measuring on a representative example set before routing. It covers the stage decision better than a general generative-AI module.",
+      "rejectedAlternatives": [
+        "Microsoft Learn ? Explore Generative AI: broad concepts but no concrete model-selection or routing method.",
+        "Structured outputs guide: output-schema reliability, not model choice across workloads."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 4,
+      "candidateId": "research-ai-engineering-4-embeddings",
+      "candidateTitle": "Embeddings: semantic search, similarity, clustering and retrieval limits",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/guides/embeddings",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "What embeddings are, semantic-search and similarity use cases, the embeddings workflow, chunking and the limitations of cosine similarity.",
+      "durationMinutes": 12,
+      "accessNotes": "Public API documentation fetched without a login. Generating embeddings requires an API key and billing; the concepts and workflow are readable without running code.",
+      "rationale": "Explains both the appropriate uses and the limits of embeddings for knowledge access, including why similarity is not factual verification. That matches the stage more closely than a broad LangChain overview.",
+      "rejectedAlternatives": [
+        "LangChain overview: framework breadth but less direct explanation of embedding similarity and retrieval limits.",
+        "scikit-learn getting started: classical ML workflow, not embedding-based semantic retrieval."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 9,
+      "candidateId": "research-ai-engineering-9-latency",
+      "candidateTitle": "Latency optimisation: measure first, then reduce tokens, calls and model cost",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/guides/latency-optimization",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The latency checklist, measuring the baseline, reducing output tokens, fewer model calls, parallelisation, model choice and streaming trade-offs.",
+      "durationMinutes": 10,
+      "accessNotes": "Public API documentation fetched without a login. Profiling your own system requires API access and application instrumentation.",
+      "rationale": "Gives concrete, measurable ways to reduce latency while preserving the required quality, exactly the stage outcome. This is the package primary, now manually inspected and retained as a curated alternative.",
+      "rejectedAlternatives": [
+        "Structured outputs guide: reliability feature, not a cost/latency optimisation method.",
+        "NIST Generative AI Profile: risk governance, not runtime performance."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 10,
+      "candidateId": "research-ai-engineering-10-production",
+      "candidateTitle": "Production best practices: security, monitoring, evaluation, reliability and rollback",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/guides/production-best-practices",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The production checklist covering security and access, reliability and fallbacks, evaluation, monitoring and alerting, cost controls and staged rollout.",
+      "durationMinutes": 12,
+      "accessNotes": "Public API documentation fetched without a login. Implementing the controls requires a deployed application and provider account.",
+      "rationale": "Covers the operational concerns named by the stage, including monitoring, evaluation, error handling and staged rollout. It is a current provider guide, not a generic deployment article.",
+      "rejectedAlternatives": [
+        "NIST Generative AI Profile: governance context but no practical deployment checklist.",
+        "Structured outputs guide: one reliability technique, not production operations."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-software-development",
+      "stageId": 1,
+      "candidateId": "research-ai-software-development-1-copilot-basics",
+      "candidateTitle": "Best practices for using GitHub Copilot: strengths, limits and checking its work",
+      "publisher": "GitHub Docs",
+      "url": "https://docs.github.com/en/copilot/get-started/best-practices",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "When Copilot is and is not appropriate, understanding suggestions before use, reviewing for functionality and security, and using tests, linting and scanning to check generated code.",
+      "durationMinutes": 8,
+      "accessNotes": "Public GitHub documentation fetched without a login. Copilot itself requires an account and IDE integration; the guidance is readable without either.",
+      "rationale": "Explicitly distinguishes assistance from verified software and requires review, tests and tooling. It is more focused than the Copilot documentation home.",
+      "rejectedAlternatives": [
+        "GitHub Copilot documentation home: index-like and too broad for the stage.",
+        "OpenAI prompt engineering guide: prompting technique without the verification responsibilities of AI coding."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-software-development",
+      "stageId": 3,
+      "candidateId": "research-ai-software-development-3-debugging",
+      "candidateTitle": "Learning to debug with GitHub Copilot: reproduce, explain and fix errors",
+      "publisher": "GitHub Docs",
+      "url": "https://docs.github.com/en/get-started/learning-to-code/learning-to-debug-with-github-copilot",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The two debugging cases ? code that throws an error and code that runs with incorrect output ? plus the explain, fix and apply workflow on the learner?s own project.",
+      "durationMinutes": 10,
+      "accessNotes": "Public GitHub documentation fetched without a login. Following the examples requires VS Code and Copilot Chat; the method is readable without either.",
+      "rationale": "Uses real failure evidence before accepting a fix, asks the model to explain the cause, and then applies and checks the change. It aligns with the stage?s reproduce/understand/validate sequence.",
+      "rejectedAlternatives": [
+        "GitHub Copilot code review: review after implementation, not failure reproduction or root-cause analysis.",
+        "Copilot SDK debugging guide: debugging the SDK itself, not debugging application code with AI."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-software-development",
+      "stageId": 7,
+      "candidateId": "research-ai-software-development-7-review",
+      "candidateTitle": "Review AI-generated code: human oversight, tests and example review prompts",
+      "publisher": "GitHub Docs",
+      "url": "https://docs.github.com/en/copilot/tutorials/review-ai-generated-code",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Why generated code needs review, the reviewer checklist, using tests and static checks, and the example prompts for security, correctness and maintainability review.",
+      "durationMinutes": 12,
+      "accessNotes": "Public GitHub tutorial fetched without a login. The interactive parts require a repository and Copilot access; the review method is readable without them.",
+      "rationale": "Covers the review and integration end of the professional AI-assisted loop, including human oversight and verification. It complements the stage?s requirements-to-test workflow.",
+      "rejectedAlternatives": [
+        "Copilot code review feature page: product mechanics but less on human review criteria.",
+        "GitHub Copilot best practices: broad usage guidance, not the full delivery loop."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-content",
+      "stageId": 5,
+      "candidateId": "research-ai-content-5-measurement",
+      "candidateTitle": "A five-stage content measurement framework that goes beyond vanity metrics",
+      "publisher": "Content Marketing Institute",
+      "url": "https://contentmarketinginstitute.com/analytics-data/content-measurement-framework",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The five journey stages, the distinction between reach/impressions and meaningful content metrics, quality signals, retention and advocacy measures, and the cautions about attribution.",
+      "durationMinutes": 15,
+      "accessNotes": "Public article fetched without a login. Published September 2026; examples are marketing-industry guidance rather than independent research.",
+      "rationale": "Directly argues against production volume and reach as the goal, and supplies outcome and quality signals across the content lifecycle. It matches the stage?s measurement decision.",
+      "rejectedAlternatives": [
+        "Google developer documentation style guide: writing quality rules, not content outcome measurement.",
+        "OpenAI prompt engineering guidance: production technique without a measurement framework."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-work",
+      "stageId": 4,
+      "candidateId": "research-ai-work-4-planning",
+      "candidateTitle": "AI in project management: forecasting, dependencies, risk and human review",
+      "publisher": "IBM",
+      "url": "https://www.ibm.com/think/topics/ai-project-management",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The planning use cases, predictive forecasting and scenario modelling, risk assessment, resource and dependency effects, and the limits of AI recommendations.",
+      "durationMinutes": 12,
+      "accessNotes": "Public IBM explainer fetched without a login. Vendor perspective; product claims are illustrative and should not be treated as independent benchmark evidence.",
+      "rationale": "Explains where AI can draft or stress-test a plan and why estimates, dependencies, constraints and risk still need human validation. It is more specific than a generic Copilot training path.",
+      "rejectedAlternatives": [
+        "Microsoft Learn ? Draft, analyze and present with Copilot: a course path, not a planning-validation method.",
+        "PMI Agile planning guide: strong dependency and estimation practice but no AI planning workflow."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-work",
+      "stageId": 3,
+      "candidateId": "research-ai-work-3-learning",
+      "candidateTitle": "Thinking still matters: preserving judgment, verification and active learning with AI",
+      "publisher": "NC State University Human Resources",
+      "url": "https://news.hr.ncsu.edu/2026/07/thinking-still-matters-in-an-ai-powered-world",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The distinction between extending and avoiding thinking, the five-step pause/identify/trace/compare/judge habit, and the draft-first and options-not-answers practices.",
+      "durationMinutes": 10,
+      "accessNotes": "Public university article fetched without a login. Published July 2026; it is practitioner guidance from a named learning scientist, not a controlled study.",
+      "rationale": "Gives concrete learning behaviours that preserve active thinking and require source verification, matching the stage. It is more directly instructional than a generic AI agents module.",
+      "rejectedAlternatives": [
+        "Microsoft Learn ? Understand AI agents and prompting: agent concepts, not learning science or verification habits.",
+        "QUT evaluating AI content: verification criteria but less on preserving active learning."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-foundations",
+      "stageId": 4,
+      "candidateId": "research-ai-foundations-4-thinking",
+      "candidateTitle": "Thinking still matters: AI as an extension of judgment, not a substitute",
+      "publisher": "NC State University Human Resources",
+      "url": "https://news.hr.ncsu.edu/2026/07/thinking-still-matters-in-an-ai-powered-world",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Overreliance and the explain/evaluate/take-responsibility test, the five-step verification habit, drafting first, asking for options and keeping one task AI-free.",
+      "durationMinutes": 10,
+      "accessNotes": "Public university article fetched without a login. Published July 2026; practitioner guidance from a named learning scientist, not a controlled study.",
+      "rationale": "Directly addresses using AI as a reasoning partner without surrendering judgment or accountability, with a repeatable verification habit. It is more concrete than the OpenAI Academy prompting page.",
+      "rejectedAlternatives": [
+        "OpenAI Academy prompting: prompt technique without a responsibility or overreliance model.",
+        "Google PAIR People + AI Guidebook: product-design guidance for AI systems, not personal reasoning practice."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-foundations",
+      "stageId": 6,
+      "candidateId": "research-ai-foundations-6-workflows",
+      "candidateTitle": "Building effective agents: workflow patterns, review points and when not to automate",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/research/building-effective-agents",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The workflow-versus-agent distinction, prompt chaining, routing, parallelisation, orchestrator-workers and evaluator-optimiser patterns, and the guidance to start with the simplest solution.",
+      "durationMinutes": 18,
+      "accessNotes": "Public Anthropic research article fetched without a login. Engineering guidance with code examples; no product account is needed to read it.",
+      "rationale": "Turns a technique into a repeatable workflow with explicit stages and evaluation loops, and warns against unnecessary autonomy. It directly supports defined inputs and quality gates.",
+      "rejectedAlternatives": [
+        "OpenAI prompt engineering guide: single-call prompting, not multi-step workflow design.",
+        "Google PAIR guidebook: human-centred design patterns, not workflow architecture."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 9,
+      "candidateId": "research-ai-engineering-9-model-selection",
+      "candidateTitle": "Model selection: balancing accuracy, cost and latency before optimising",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/guides/model-selection",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Optimise accuracy first, then maintain it with the cheapest and fastest model; measure quality and latency on representative examples; distillation and routing trade-offs.",
+      "durationMinutes": 12,
+      "accessNotes": "Public API documentation fetched without a login. Measuring your own system requires API access and instrumentation.",
+      "rationale": "Provides the decision method behind cost and latency optimisation: establish the quality floor, measure, then route to cheaper or faster models. The dedicated latency page is retained as the package primary but its automatic relevance screen did not pass.",
+      "rejectedAlternatives": [
+        "Structured outputs guide: output reliability, not a cost/latency method.",
+        "NIST Generative AI Profile: risk governance, not runtime optimisation."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "ai-engineering",
+      "stageId": 10,
+      "candidateId": "research-ai-engineering-10-azure-operations",
+      "candidateTitle": "AI workload operations: monitoring, safe deployment, rollback and testing",
+      "publisher": "Microsoft Azure Well-Architected Framework",
+      "url": "https://learn.microsoft.com/en-us/azure/well-architected/ai/operations",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Monitoring quality and health, alerting, safe deployment practices including blue-green and canary releases, feature flags for orchestration code, rollback and production testing.",
+      "durationMinutes": 15,
+      "accessNotes": "Public Microsoft Learn documentation fetched without a login. Azure services are used as examples; the operational principles are not tied to running Azure.",
+      "rationale": "Covers the operational controls the stage names ? monitoring, evaluation in production, safe rollout and rollback ? more completely than a provider API checklist. It is current and identifies concrete deployment patterns.",
+      "rejectedAlternatives": [
+        "OpenAI production best practices: strong security and reliability checklist but less on canary, blue-green and rollback mechanics.",
+        "NIST Generative AI Profile: governance rather than operational deployment."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "projectmgmt",
+      "stageId": 1,
+      "candidateId": "research-projectmgmt-1-apm",
+      "candidateTitle": "What is project management? Time, cost, quality, risk and the project lifecycle",
+      "publisher": "Association for Project Management",
+      "url": "https://www.apm.org.uk/resources/what-is-project-management/",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The definition and finite-deliverable distinction, the time/cost/quality constraints, risk and change management, the lifecycle and the benefits of project management.",
+      "durationMinutes": 10,
+      "accessNotes": "Public professional-body article fetched without a login. UK professional context; terminology is transferable.",
+      "rationale": "Provides the shared vocabulary and constraints the stage calls for, including scope, schedule, budget, quality and risk. It is more concise and definitional than a vendor agile guide.",
+      "rejectedAlternatives": [
+        "Atlassian project management guide: useful delivery practice but broader and less definitional about the project constraints.",
+        "Scrum Guide: one agile framework, not the universal project-management vocabulary."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "projectmgmt",
+      "stageId": 3,
+      "candidateId": "research-projectmgmt-3-atlassian-scrum",
+      "candidateTitle": "Scrum: roles, sprints, ceremonies, backlog and flow",
+      "publisher": "Atlassian",
+      "url": "https://www.atlassian.com/agile/scrum",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The three Scrum roles, sprint planning, daily scrum, review and retrospective, the product and sprint backlogs, and how work flows through a sprint.",
+      "durationMinutes": 15,
+      "accessNotes": "Public Atlassian agile guide fetched without a login. Vendor perspective with product links; the framework description is consistent with the Scrum Guide.",
+      "rationale": "Covers the roles, events and artefacts named by the stage in one practical guide, with enough flow detail for the sprint simulation. The official Scrum Guide remains a comparison source.",
+      "rejectedAlternatives": [
+        "Scrum Guide: authoritative but denser and less illustrated for a first sprint simulation.",
+        "Agile Manifesto: values and principles, not Scrum roles or events."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "productmgmt",
+      "stageId": 1,
+      "candidateId": "research-productmgmt-1-svpg-start",
+      "candidateTitle": "Product management start here: users, problems, outcomes and empowered teams",
+      "publisher": "Silicon Valley Product Group",
+      "url": "https://www.svpg.com/product-management-start-here/",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The product manager?s role, starting from user problems rather than features, product discovery, outcomes and the conditions for empowered teams.",
+      "durationMinutes": 12,
+      "accessNotes": "Public article fetched without a login. Vendor/consultancy perspective from an experienced product practitioner; not independent research.",
+      "rationale": "Frames product work around user problems and outcomes, exactly the stage?s product-thinking shift. It is more foundational than the SVPG engineering-collaboration article used later.",
+      "rejectedAlternatives": [
+        "Atlassian product management guide: process-oriented and broader, with less emphasis on the product-thinking mindset.",
+        "Google Digital Garage: digital marketing foundations, not product discovery or product thinking."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "marketing",
+      "stageId": 3,
+      "candidateId": "research-marketing-3-google-ads-search",
+      "candidateTitle": "Create a Search campaign: intent, targeting, ad groups and budget",
+      "publisher": "Google Ads Help",
+      "url": "https://support.google.com/google-ads/answer/9510373?hl=en",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Choosing a campaign goal, selecting search settings, keyword and demographic targeting, building ad groups, writing relevant ads and setting a daily or total budget.",
+      "durationMinutes": 12,
+      "accessNotes": "Public Google Ads Help page fetched without a login. Running a campaign requires an ads account and payment; the setup and budget controls are readable without spending.",
+      "rationale": "Connects intent-based targeting to ad-group relevance and explicit budget control, which are the stage?s core decisions. It is the platform?s current operational guide rather than a course index.",
+      "rejectedAlternatives": [
+        "Google Skillshop: course hub, not a single campaign-planning procedure.",
+        "Meta Ads overview: platform marketing page without the same keyword-intent and budget workflow."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "nocode",
+      "stageId": 3,
+      "candidateId": "research-nocode-3-zapier-quickstart",
+      "candidateTitle": "Zap workflows quick start: triggers, actions, tests and publishing",
+      "publisher": "Zapier",
+      "url": "https://help.zapier.com/hc/en-us/articles/22234847450893",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Trigger and action concepts, building a Zap, adding filters/formatter/delay steps, testing each step and publishing the workflow.",
+      "durationMinutes": 10,
+      "accessNotes": "Public Zapier help article fetched without a login. Building and running a Zap requires a Zapier account; free-plan task limits apply.",
+      "rationale": "Explains the trigger-action model and the test/publish discipline needed for a reliable automation. It is more concrete than a free-plan feature list.",
+      "rejectedAlternatives": [
+        "Zapier free-plan article: pricing and limits, not how to build or verify an automation.",
+        "Bubble manual: app building, not connecting services or workflow automation."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "datascience",
+      "stageId": 2,
+      "candidateId": "research-datascience-2-seeing-theory",
+      "candidateTitle": "Seeing Theory: a visual introduction to probability, inference and regression",
+      "publisher": "Brown University",
+      "url": "https://seeing-theory.brown.edu/",
+      "type": "interactive",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Basic and compound probability, distributions, frequentist and Bayesian inference, and regression analysis.",
+      "durationMinutes": 20,
+      "accessNotes": "Free public interactive site; no login observed. The site is marked as archived for reference, so it is stable but not actively updated.",
+      "rationale": "Covers the probability, inference and regression concepts that underpin machine learning, with visual explanations rather than notation alone. The archive status is a currency limitation, not a correctness problem for these foundations.",
+      "rejectedAlternatives": [
+        "scikit-learn getting started: applied modelling workflow without the statistical foundations.",
+        "OpenIntro Statistics: comprehensive textbook but much longer than a focused stage segment."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "datascience",
+      "stageId": 4,
+      "candidateId": "research-datascience-4-neural-networks",
+      "candidateTitle": "Using neural nets to recognize handwritten digits: neurons, gradient descent and deep learning",
+      "publisher": "Michael Nielsen",
+      "url": "http://neuralnetworksanddeeplearning.com/chap1.html",
+      "type": "book",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Perceptrons and sigmoid neurons, the structure of a neural network, gradient descent, learning from data and a worked handwritten-digit classifier.",
+      "durationMinutes": 25,
+      "accessNotes": "Free public book chapter; no login observed. Published in 2015 and uses older libraries, so code examples need a currency check; the concepts remain foundational.",
+      "rationale": "Explains what a neural network is and why deep learning is useful through a complete worked example, which is the stage outcome. It is more instructional than a framework overview.",
+      "rejectedAlternatives": [
+        "scikit-learn getting started: classical models and API basics, not neural-network internals.",
+        "PyTorch tutorials: implementation-first and framework-specific, with less conceptual grounding."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "mobile",
+      "stageId": 3,
+      "candidateId": "research-mobile-3-firebase-flutter",
+      "candidateTitle": "Get to know Firebase for Flutter: authentication, Firestore and live data",
+      "publisher": "Firebase",
+      "url": "https://firebase.google.com/codelabs/firebase-get-to-know-flutter",
+      "type": "codelab",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The Flutter codelab steps that connect Firebase, add authentication, read and write Firestore data and update the UI from live backend data.",
+      "durationMinutes": 30,
+      "accessNotes": "Public codelab fetched without a login. Completing it requires Flutter, a Firebase project and a Google account; the instructions are readable without running them.",
+      "rationale": "A single guided build covers the backend services the stage names ? auth and a cloud database ? in the mobile framework used by the track. It is more concrete than the Firebase documentation home.",
+      "rejectedAlternatives": [
+        "Firebase documentation home: broad product index, not a guided integration.",
+        "Flutter documentation home: framework overview without Firebase authentication or data services."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "python",
+      "stageId": 2,
+      "candidateId": "research-python-2-classes",
+      "candidateTitle": "Python classes: objects, scope, inheritance, iterators and generators",
+      "publisher": "Python documentation",
+      "url": "https://docs.python.org/3/tutorial/classes.html",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Names and objects, scopes and namespaces, class and instance variables, inheritance, private variables, iterators and generators.",
+      "durationMinutes": 18,
+      "accessNotes": "Official public Python tutorial fetched without a login. Current for Python 3.15; examples run with a local interpreter.",
+      "rationale": "Covers the object model and reusable structure the stage needs, including inheritance and generators. It is authoritative and deeper than a general ?Automate the Boring Stuff? overview.",
+      "rejectedAlternatives": [
+        "Automate the Boring Stuff: practical scripting but less systematic on object-oriented design.",
+        "FastAPI tutorial: framework usage, not Python?s object model or idiomatic class design."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "python",
+      "stageId": 5,
+      "candidateId": "research-python-5-openai-quickstart",
+      "candidateTitle": "OpenAI API quickstart: install the Python SDK, set limits and make a first request",
+      "publisher": "OpenAI",
+      "url": "https://platform.openai.com/docs/quickstart",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Creating an API key, installing the Python SDK, making a first request, choosing a model, and the guidance on usage limits and production readiness.",
+      "durationMinutes": 12,
+      "accessNotes": "Public API documentation fetched without a login. Running the example requires an API key and billing; the integration steps and limits are readable without either.",
+      "rationale": "Shows the concrete Python integration path and the operational limits that must be handled, matching the stage?s ?clear prompting and sensible limits?. It is not just a model catalogue.",
+      "rejectedAlternatives": [
+        "LangChain overview: abstraction-heavy and not the shortest path to a first Python API call.",
+        "Prompt engineering guide: prompting technique without SDK integration or usage limits."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "frontend",
+      "stageId": 3,
+      "candidateId": "research-frontend-3-mdn-react",
+      "candidateTitle": "React getting started: components, props, state and rendering",
+      "publisher": "MDN Web Docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Frameworks_libraries/React_getting_started",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The component model, JSX, props, state with hooks, event handling, rendering lists and the worked React app example.",
+      "durationMinutes": 20,
+      "accessNotes": "Public MDN tutorial fetched without a login. Running the example requires Node.js and a local project; the explanations are readable without running it.",
+      "rationale": "Explains how components, props and state drive rendering through a guided build, which is the stage outcome. It is more task-focused than the React documentation landing page.",
+      "rejectedAlternatives": [
+        "React documentation home: broad and index-like, with no single focused reading segment.",
+        "web.dev Learn: general web development path, not React component state and props."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "sonic",
+      "stageId": 1,
+      "candidateId": "research-sonic-1-ethereum-intro",
+      "candidateTitle": "Introduction to Ethereum: accounts, transactions, EVM and gas",
+      "publisher": "ethereum.org",
+      "url": "https://ethereum.org/en/developers/docs/intro-to-ethereum/",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "What Ethereum is, accounts and keys, transactions and gas, the EVM and smart contracts, and the layer-1/layer-2 context.",
+      "durationMinutes": 12,
+      "accessNotes": "Public ethereum.org page fetched without a login. Chain-agnostic Ethereum foundations apply to Sonic?s EVM model; Sonic-specific differences are covered separately in the ecosystem stage.",
+      "rationale": "Provides the Web3 vocabulary and EVM mental model that Sonic builds on, without assuming prior blockchain knowledge. It is more foundational than Sonic?s performance overview.",
+      "rejectedAlternatives": [
+        "Sonic technology overview: performance and consensus highlights, but assumes blockchain fundamentals.",
+        "Solidity by Example: contract syntax without the underlying accounts, transactions and gas model."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "sonic",
+      "stageId": 2,
+      "candidateId": "research-sonic-2-overview",
+      "candidateTitle": "Sonic overview: EVM L1 performance, S token, Gateway and incentive programs",
+      "publisher": "Sonic Documentation",
+      "url": "https://docs.soniclabs.com/sonic/overview",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The EVM L1 positioning, 400,000 TPS and sub-second finality claims, EVM/Solidity/Vyper compatibility, the S token roles, the Gateway and the FeeM/Innovator Fund/airdrop programs.",
+      "durationMinutes": 8,
+      "accessNotes": "Official public documentation fetched without a login. Throughput and finality figures are the network?s own claims and should be presented as such.",
+      "rationale": "Directly explains the features that distinguish Sonic ? performance, EVM compatibility and builder incentives ? which is the stage outcome. It is the official source rather than a third-party summary.",
+      "rejectedAlternatives": [
+        "Ethereum introduction: foundations Sonic inherits, not what makes Sonic distinct.",
+        "Dwellir Sonic overview: third-party infrastructure summary; useful but less authoritative than Sonic?s documentation."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "uiux",
+      "stageId": 1,
+      "candidateId": "research-uiux-1-canva-principles",
+      "candidateTitle": "Design elements and principles: scale, colour, typography, layout, hierarchy and Gestalt",
+      "publisher": "Canva",
+      "url": "https://www.canva.com/learn/design-elements-principles",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The elements and principles sections covering scale, colour, repetition, balance, symmetry, hierarchy, typography, composition and Gestalt grouping.",
+      "durationMinutes": 18,
+      "accessNotes": "Public Canva article fetched without a login. Design-tool vendor perspective with illustrative examples; the principles are standard visual-design foundations.",
+      "rationale": "Covers all the named foundations ? typography, colour, layout, hierarchy and Gestalt ? in one visual guide and applies them to composition. It is more comprehensive than a single-topic hierarchy article.",
+      "rejectedAlternatives": [
+        "IxDF visual hierarchy article: focused on hierarchy but the previous URL now redirects to a blog index.",
+        "Web Style Guide graphic-design chapter: rigorous but longer and less visual for a first pass."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "uiux",
+      "stageId": 1,
+      "candidateId": "research-uiux-1-pressbooks-principles",
+      "candidateTitle": "Basic design principles: hierarchy, Gestalt, colour theory and typography",
+      "publisher": "PALNI Pressbooks",
+      "url": "https://pressbooks.palni.org/writingfordigitalmedia/chapter/basic-design-principles/",
+      "type": "book",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Visual hierarchy and scanning patterns, contrast, Gestalt grouping principles, colour theory and typography for digital layouts.",
+      "durationMinutes": 15,
+      "accessNotes": "Free open textbook chapter; no login observed. Published in an open educational resource and licensed for reuse; examples include US government sites.",
+      "rationale": "Covers hierarchy, Gestalt, colour and typography together, matching the stage?s foundation in visual design. It is an open textbook with explanatory depth rather than a vendor gallery.",
+      "rejectedAlternatives": [
+        "Canva design elements article: returned only a consent/interstitial snippet to the verifier, so content could not be inspected.",
+        "NN/G five visual-design principles: strong but focused on five principles and less on typography and colour theory."
+      ],
+      "curated": true
+    },
+    {
+      "trackId": "crypto",
+      "stageId": 9,
+      "candidateId": "research-crypto-9-owasp-sctop10",
+      "candidateTitle": "OWASP Smart Contract Top 10 (2026): vulnerability classes and preventions",
+      "publisher": "OWASP Smart Contract Security",
+      "url": "https://scs.owasp.org/sctop10/",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The 2026 Top 10 overview and the linked descriptions for access control, business logic, oracle manipulation, flash-loan attacks, input validation, unchecked external calls, arithmetic, reentrancy and upgradeability.",
+      "accessNotes": "Public awareness document fetched without a login on 2026-10-22. No payment or account observed.",
+      "rationale": "The canonical objective requires recognising and preventing the most damaging vulnerability classes, including access control, reentrancy, oracle/flash-loan composition and unsafe external calls. OWASP is an independent standards body and the 2026 edition explicitly covers those classes. Front-running is referenced in the OWASP weakness taxonomy but is not a standalone Top 10 item, so the authored lesson and practice must supply the front-running example; this limitation is recorded.",
+      "rejectedAlternatives": [
+        "Solidity security considerations: covers reentrancy and arithmetic but not access control or front-running adequately.",
+        "Individual OWASP SC pages: too narrow to satisfy the whole-class objective on their own.",
+        "Zealynx blog: useful analysis but secondary to the OWASP source."
+      ],
+      "curated": true,
+      "durationMinutes": 20
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 4,
+      "candidateId": "research-ai-youtube-4-narration",
+      "candidateTitle": "Narration tips for professional sound and an engaging performance",
+      "publisher": "Enlightened Audio",
+      "url": "https://enlightenedaudio.com/education/narration-tips-for-a-professional-sound-and-an-engaging-performance",
+      "type": "article",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Microphone placement, plosives, room noise, consistent delivery and recording in sections; use with the authored checks for synthetic-voice pronunciation, rights and disclosure.",
+      "accessNotes": "Public lesson page fetched without a login on 2026-10-22. No paywall observed. The site sells audio training, but the assigned lesson is readable without purchase.",
+      "rationale": "Directly teaches clean narration capture and the common causes of unusable voice audio. It does not cover synthetic-voice rights or YouTube disclosure, so those are carried by the authored lesson and stage checks rather than attributed to this source.",
+      "rejectedAlternatives": [
+        "YouTube video-editing tips: focused on edit workflow, not voice capture.",
+        "Hollyland store blog: vendor product content and a narrower recording walkthrough.",
+        "Listen2It blog: covers voiceover production but has weaker provenance and promotional claims."
+      ],
+      "curated": true,
+      "durationMinutes": 12
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 6,
+      "candidateId": "research-ai-youtube-6-editing-tips",
+      "candidateTitle": "Video editing tips: planning, pacing and keeping viewers engaged",
+      "publisher": "YouTube Help",
+      "url": "https://support.google.com/youtube/answer/11221953",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Editing workflow, planning the story, pacing, cutting and the review questions before export.",
+      "accessNotes": "Public YouTube Help page fetched without a login on 2026-10-22. Embedded creator video is optional; the written guidance is readable without playback.",
+      "rationale": "Matches the corrected Editing objective: assemble a clear, well-paced edit. The AI-specific review boundary and caption/meaning checks are supplied by the authored lesson because the official page is tool-agnostic.",
+      "rejectedAlternatives": [
+        "W3C media accessibility: necessary for captions but not an editing workflow.",
+        "DaVinci Resolve training hub: course index rather than one inspected lesson.",
+        "Generic AI editing tool landing pages: product promotion without a review method."
+      ],
+      "curated": true,
+      "durationMinutes": 8
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 7,
+      "candidateId": "research-ai-youtube-7-thumbnail-title",
+      "candidateTitle": "Thumbnail and title tips",
+      "publisher": "YouTube Help",
+      "url": "https://support.google.com/youtube/answer/12340300",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Audience targeting, thumbnail composition and legibility, searchable versus intriguing titles, and measuring packaging with CTR and impressions.",
+      "accessNotes": "Public YouTube Help page fetched without a login on 2026-10-22. No payment or account observed.",
+      "rationale": "Directly covers honest packaging, title/thumbnail alignment and measurement. The authored lesson adds a controlled-test and non-clickbait review because the official page focuses on guidance rather than experimental design.",
+      "rejectedAlternatives": [
+        "Custom thumbnail upload instructions: settings only, not design judgement.",
+        "A/B test help page: useful for testing but does not teach design.",
+        "Creator interviews and ranking videos: playback-dependent and less inspectable."
+      ],
+      "curated": true,
+      "durationMinutes": 10
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 8,
+      "candidateId": "research-ai-youtube-8-upload",
+      "candidateTitle": "Upload YouTube videos: visibility, details, checks and scheduling",
+      "publisher": "YouTube Help",
+      "url": "https://support.google.com/youtube/answer/57407",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "Upload flow, title/description fields, visibility and scheduling, checks and the published result.",
+      "accessNotes": "Public YouTube Help page fetched without a login on 2026-10-22. Performing an upload requires a channel and account; reading the checklist does not.",
+      "rationale": "Directly supports the Publishing objective: accurate metadata, visibility, scheduling and verifying the live result. The stage practice uses a synthetic or private test upload so no public posting is required.",
+      "rejectedAlternatives": [
+        "Monetization policies: policy constraints, not the publishing workflow.",
+        "Creator Academy production hub: course index rather than an inspected page.",
+        "Third-party scheduling blogs: less authoritative than the platform help page."
+      ],
+      "curated": true,
+      "durationMinutes": 15
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 9,
+      "candidateId": "research-ai-youtube-9-retention",
+      "candidateTitle": "Measure key moments for audience retention",
+      "publisher": "YouTube Help",
+      "url": "https://support.google.com/youtube/answer/9314415",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The key-moments retention report, reading spikes and dips, segment comparison and interpreting audience behaviour.",
+      "accessNotes": "Public YouTube Help page fetched without a login on 2026-10-22. Using the report requires a channel with analytics; the method is readable without account data.",
+      "rationale": "Directly supports reading retention and choosing a diagnosed next experiment. The authored lesson adds impressions/CTR, traffic-source segmentation and causal caution so the stage is not reduced to a single report.",
+      "rejectedAlternatives": [
+        "YouTube Analytics basics hub: broad navigation rather than one inspected method.",
+        "Creator Academy analytics lesson: less directly inspectable and partly video-based.",
+        "Third-party analytics blogs: secondary and often promotional."
+      ],
+      "curated": true,
+      "durationMinutes": 10
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 9,
+      "candidateId": "research-ai-youtube-9-analytics-basics",
+      "candidateTitle": "Get started with YouTube Analytics: overview, reach, engagement and audience reports",
+      "publisher": "YouTube Help",
+      "url": "https://support.google.com/youtube/answer/9002587",
+      "type": "documentation",
+      "current_role": "selected_alternative",
+      "decision": "fresh_research_selection",
+      "exactPortion": "The Analytics overview and the reach, engagement and audience report families, including impressions, click-through rate, watch time and retention.",
+      "accessNotes": "Public YouTube Help page fetched without a login on 2026-10-22. Using reports requires a channel; the method is readable without account data.",
+      "rationale": "The corrected Analytics objective needs more than a retention report. This page explains the report families and metrics used to diagnose impressions, clicks, watch time and audience behaviour before choosing an experiment.",
+      "rejectedAlternatives": [
+        "Measure key moments for audience retention: valuable deep dive but too narrow to be the only required resource.",
+        "YouTube Analytics API documentation: implementation-focused and not a learner analytics method.",
+        "Third-party analytics blogs: secondary and often promotional."
+      ],
+      "curated": true,
+      "durationMinutes": 15
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 5,
+      "candidateId": "research-ai-youtube-5-broll",
+      "candidateTitle": "What is B-roll and how to shoot usable supporting footage",
+      "publisher": "TechSmith",
+      "url": "https://www.techsmith.com/blog/b-roll/",
+      "type": "article",
+      "current_role": "comparison_candidate_not_approved",
+      "decision": "screened_not_selected",
+      "exactPortion": "B-roll definitions, A-roll versus B-roll, shot types and how supporting footage is selected.",
+      "accessNotes": "Public article fetched without a login on 2026-10-22. No paywall observed.",
+      "rationale": "Credible treatment of B-roll planning and shot selection, but it does not cover AI image/video generation, screen recording workflows or licensing verification together, so it cannot be the required stage resource on its own.",
+      "rejectedAlternatives": [
+        "YouTube video-editing tips: workflow-focused and not visual sourcing.",
+        "W3C media accessibility: necessary accessibility guidance but not production planning.",
+        "Google Cloud video generation: product API documentation, too narrow for the whole objective."
+      ],
+      "curated": false,
+      "durationMinutes": 10
+    },
+    {
+      "trackId": "ai-youtube",
+      "stageId": 5,
+      "candidateId": "research-ai-youtube-5-veo",
+      "candidateTitle": "Generate videos with the Google Cloud video generation model",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/video/generate-videos",
+      "type": "documentation",
+      "current_role": "comparison_candidate_not_approved",
+      "decision": "screened_not_selected",
+      "exactPortion": "Text-to-video and image-to-video generation inputs, outputs and limitations.",
+      "accessNotes": "Public documentation fetched without a login on 2026-10-22. Running the model requires a Google Cloud project and is not required for the lesson.",
+      "rationale": "Directly covers AI video generation and its limitations, but it is a product API page without B-roll planning, screen recording, rights review or accessibility. It is a useful optional deep dive, not the required primary.",
+      "rejectedAlternatives": [
+        "TechSmith B-roll guide: strong on planning but not AI generation.",
+        "W3C media accessibility: accessibility only.",
+        "YouTube inauthentic-content policy: platform rules, not visual craft."
+      ],
+      "curated": false,
+      "durationMinutes": 15
+    }
+  ]
+}
