@@ -32,12 +32,13 @@ Internal plan ids are stable and are **not** display text.
 | *(none)* | **Free** | — | — | `FREE` |
 | `TRACK_PASS` | **Track Pass** | one-time | none | `PASS` |
 | `PRO_MONTHLY` | **TechSkillHub Pro — Monthly** | subscription | month | `PRO` |
+| `PRO_QUARTERLY` | **TechSkillHub Pro — Quarterly** | subscription | three months | `PRO` |
 | `PRO_ANNUAL` | **TechSkillHub Pro — Annual** | subscription | year | `PRO` |
 
 ### Product 1 — Free
 - Full public catalogue, all public previews, and the free learning experiences that
   remain included (see §4).
-- A **defined** monthly AI-assessment allowance of **20** (never unlimited). Configurable
+- A **defined** monthly AI-assessment allowance of **2** (never unlimited). Configurable
   product rule, not a public figure.
 - Restrictions: premium tracks are gated behind Track Pass/Pro **only when entitlement
   enforcement is enabled**; enforcement is currently **OFF**, so every learner retains
