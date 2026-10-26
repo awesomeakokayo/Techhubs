@@ -38,7 +38,7 @@ export const PROVIDER_PRODUCT_ENV: Record<ProviderId, Partial<Record<PlanId, str
     PRO_QUARTERLY: 'LEMONSQUEEZY_VARIANT_PRO_QUARTERLY',
     PRO_ANNUAL: 'LEMONSQUEEZY_VARIANT_PRO_ANNUAL',
   },
-  // Paystack transactions do not require a provider-side plan/product id.
+  // Track Pass is one-time and needs no Paystack plan code; Pro subscription products do.
   paystack: {
     PRO_MONTHLY: 'PAYSTACK_PLAN_CODE_PRO_MONTHLY',
     PRO_QUARTERLY: 'PAYSTACK_PLAN_CODE_PRO_QUARTERLY',
