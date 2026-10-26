@@ -107,6 +107,8 @@ function asNumber(value: unknown): number | null {
 
 const PAYSTACK_EVENTS: Record<string, BillingEventType> = {
   'charge.success': 'payment_succeeded',
+  'charge.failed': 'payment_failed',
+  'order_payment_failed': 'payment_failed',
   'refund.processed': 'refunded',
   'refund.pending': 'refunded',
   'subscription.create': 'subscription_created',
