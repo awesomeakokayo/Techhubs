@@ -41,7 +41,8 @@ secret values were not read, printed, changed, or copied into this repository.
 | Paystack server-side integration | Implemented in /api/billing/checkout and /api/payments/webhook |
 | Paystack key stored in Vercel | Owner reports it is already configured; not inspected by this review |
 | Approved NGN price catalogue | ₦6,000 pass; ₦4,500 monthly; ₦11,000 quarterly; ₦36,000 annual |
-| Paystack Pro plan codes and interval matching | Guarded in code; real plan codes/sandbox still required |\n| Paystack test-mode checkout | Not verified in this review |
+| Paystack Pro plan codes and interval matching | Guarded in code; real plan codes/sandbox still required |
+| Paystack test-mode checkout | Not verified in this review |
 | Signature-verified webhook fulfilment | Implemented in code; live delivery and replay/idempotency remain to be tested |
 | Production payment and refund | Not tested |
 | Existing-user access transition | Enforcement and transition gates remain approval-gated |
