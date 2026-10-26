@@ -28,6 +28,7 @@ import { assessmentAllowanceEnforced, providerProductId, type ProviderId } from 
 import { countReservationUsage } from './assessment-credits'
 import { validatePaymentMatch } from './payments'
 import { computeTrackPassPeriod, laterExpiry, trackPassActive } from './track-pass'
+import type { CheckoutAttribution } from './attribution'
 
 /** A Prisma transaction client (interactive transactions). */
 type Db = Prisma.TransactionClient
@@ -257,6 +258,8 @@ export interface CreateOrderInput {
   amountMinor: number
   reference: string
   pricingVersion: string
+  campaignId?: string | null
+  attribution?: CheckoutAttribution | null
 }
 
 export async function createPendingOrder(prisma: PrismaClient, input: CreateOrderInput) {
@@ -271,6 +274,8 @@ export async function createPendingOrder(prisma: PrismaClient, input: CreateOrde
       amount: input.amountMinor,
       amountMajor: Math.round(input.amountMinor / 100),
       pricingVersion: input.pricingVersion,
+      campaignId: input.campaignId ?? null,
+      attribution: input.attribution ? (input.attribution as Prisma.InputJsonValue) : Prisma.JsonNull,
       status: 'PENDING',
       reference: input.reference,
       provider: providerEnum(input.provider),
@@ -508,8 +513,8 @@ export async function applyBillingEvent(
   const userId = await resolveUserId(prisma, event, order)
   if (!userId) return { applied: false, reason: 'unresolved_user', userId: null }
 
-  const planId = ((event.productCode ?? order?.productCode) as PlanId | null) ?? null
-  const trackId = event.trackId ?? (order && order.trackId !== PRO_ORDER_TRACK ? order.trackId : null)
+  const planId = ((order?.productCode ?? event.productCode) as PlanId | null) ?? null
+  const trackId = (order && order.trackId !== PRO_ORDER_TRACK ? order.trackId : null) ?? event.trackId
   const plan = planId ? getPlan(planId) : null
   const occurredAt = parseDate(event.occurredAt)
 
