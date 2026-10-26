@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { signIn, useSession } from 'next-auth/react'
 import { track } from '@vercel/analytics'
+import type { PlanId } from '@/lib/commercial/plans'
 import { ArrowRight, Loader2 } from 'lucide-react'
 
 const ATTRIBUTION_STORAGE_KEY = 'tsh_checkout_attribution_v1'
@@ -28,7 +29,8 @@ function collectCheckoutAttribution(): Record<string, string> | null {
       utm_term: 'utmTerm',
     } as const
     for (const [queryKey, targetKey] of Object.entries(mapping) as [keyof typeof mapping, (typeof mapping)[keyof typeof mapping]][]) {
-      const value = current[targetKey] || (typeof stored[targetKey] === 'string' ? String(stored[targetKey]).slice(0, 120) : '')
+      const storedValue = stored[targetKey] ?? stored[queryKey]
+      const value = current[targetKey] || (typeof storedValue === 'string' ? storedValue.slice(0, 120) : '')
       if (value) result[targetKey] = value
     }
 
@@ -61,7 +63,7 @@ export function CheckoutButton({
   resumePath = '/pricing',
   expectedPricingVersion,
 }: {
-  planId: 'TRACK_PASS' | 'PRO_MONTHLY' | 'PRO_ANNUAL'
+  planId: PlanId
   trackId?: string
   trackOptions?: Array<{ id: string; name: string }>
   label: string
