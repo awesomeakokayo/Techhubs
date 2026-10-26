@@ -235,7 +235,7 @@ code wins and the document was corrected.
 | Track Pass is one-time, 3 **calendar** months, no auto-renewal | `lib/commercial/plans.ts` (`PLANS.TRACK_PASS`: `kind:'ONE_TIME'`), `lib/commercial/track-pass.ts` (`TRACK_PASS_TERM_MONTHS = 3`, UTC, month-end/leap-year clamped) | ✅ |
 | Track Pass grants exactly one premium track | `plans.ts` (`grantsTrackCount: 1`) | ✅ |
 | Pro grants every premium track | `plans.ts` (`grantsAllPremiumTracks: true`) | ✅ |
-| Allowances are finite: Free 20 / Pass 30 / Pro 150 per **UTC calendar month** | `plans.ts` (`allowanceForTier`), `lib/commercial/entitlements.ts` (`monthBounds`) | ✅ |
+| Allowances are finite: Free 2 / Pass 30 / Pro 150 per **UTC calendar month** | `plans.ts` (`allowanceForTier`), `lib/commercial/entitlements.ts` (`monthBounds`) | ✅ |
 | Allowance is server-enforced, race-safe, idempotent | `lib/commercial/assessment-credits.ts` (`SELECT … FOR UPDATE` bucket per (user, month); unique (userId, requestId) idempotency; TTL reservations) | ✅ |
 | Allowance enforcement is ON by default (cost control) unless explicitly `false` | `lib/commercial/providers.ts` (`assessmentAllowanceEnforced`) | ✅ |
 | Access starts at the **verified-payment** instant, not at order creation | `service.ts` (entitlement from verified webhook state) | ✅ |
