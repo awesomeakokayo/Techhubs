@@ -94,6 +94,7 @@ export function resolveCommercialPrice(
     provider === 'paystack' &&
     planId === 'TRACK_PASS' &&
     base.approved &&
+    base.amountMinor === campaign.regularPriceMinor &&
     campaign.active
   ) {
     return {
