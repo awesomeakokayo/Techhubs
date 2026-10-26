@@ -47,17 +47,26 @@ export async function POST(req: Request) {
       const metadata = data?.metadata ?? {}
       const reference = data?.reference
 
-      // Per-course purchase: reference-based fulfillment, idempotent and replay-safe.
-      // Unknown/legacy references resolve to no order and are safely rejected.
+      // Commercial Track Pass and Pro checkout create a trusted PaymentOrder first.
+      // Pro orders deliberately have no track_id, so route by the internal plan id
+      // as well as by the order's server-created productCode.
+      const order = reference
+        ? await prisma.paymentOrder.findUnique({ where: { reference }, select: { productCode: true } })
+        : null
+      const orderPlanId = order?.productCode
+      if (reference && (isPlanId(metadata?.plan_id) || isPlanId(orderPlanId))) {
+        const normalized = normalizePaystackEvent(event)
+        await applyBillingEvent(
+          prisma,
+          { ...normalized, productCode: isPlanId(metadata?.plan_id) ? metadata.plan_id : orderPlanId },
+          `paystack:${webhookContentHash(body)}`,
+        )
+        break
+      }
+
+      // Legacy per-course purchase path: do not route to the new plan service.
       if (reference && metadata?.track_id) {
-        if (isPlanId(metadata?.plan_id)) {
-          // New commercial catalogue (Track Pass / Pro): one canonical path.
-          const normalized = normalizePaystackEvent(event)
-          await applyBillingEvent(prisma, normalized, `paystack:${webhookContentHash(body)}`)
-        } else {
-          // Legacy per-course purchase path (unchanged).
-          await fulfillOrder(reference)
-        }
+        await fulfillOrder(reference)
         break
       }
 
@@ -102,33 +111,68 @@ export async function POST(req: Request) {
       break
     }
 
-    case 'subscription.create': {
-      const { subscription_code, customer } = event.data
-      if (!customer?.customer_code) break
-      await prisma.subscription.updateMany({
-        where: { paystackCustomerCode: customer.customer_code },
-        data: { paystackSubscriptionCode: subscription_code, status: 'ACTIVE' },
-      })
-      break
-    }
-
+    case 'subscription.create':
+    case 'subscription.not_renew':
+    case 'subscription.disable':
     case 'invoice.payment_failed': {
-      const { customer } = event.data
-      if (!customer?.customer_code) break
-      await prisma.subscription.updateMany({
-        where: { paystackCustomerCode: customer.customer_code },
-        data: { status: 'PAST_DUE' },
+      const normalized = normalizePaystackEvent(event)
+      const data = event.data ?? {}
+      const subscriptionCode = data.subscription_code ?? data.subscription?.subscription_code ?? data.plan?.subscription
+      const customerCode = data.customer?.customer_code
+      const linked = await prisma.subscription.findFirst({
+        where: {
+          OR: [
+            ...(subscriptionCode ? [{ providerSubscriptionId: String(subscriptionCode) }, { paystackSubscriptionCode: String(subscriptionCode) }] : []),
+            ...(customerCode ? [{ providerCustomerId: String(customerCode) }, { paystackCustomerCode: String(customerCode) }] : []),
+          ],
+        },
+        select: { userId: true, productCode: true, providerSubscriptionId: true, paystackSubscriptionCode: true },
       })
-      break
-    }
+      const knownPlan = isPlanId(data.metadata?.plan_id)
+        ? data.metadata.plan_id
+        : isPlanId(linked?.productCode)
+          ? linked.productCode
+          : null
 
-    case 'subscription.disable': {
-      const { customer } = event.data
-      if (!customer?.customer_code) break
-      await prisma.subscription.updateMany({
-        where: { paystackCustomerCode: customer.customer_code },
-        data: { status: 'CANCELLED' },
-      })
+      if (linked && knownPlan) {
+        // Canonical entitlement processing handles cancellation-at-period-end,
+        // failed invoice grace and expiry; provider event IDs are idempotent.
+        await applyBillingEvent(
+          prisma,
+          {
+            ...normalized,
+            productCode: knownPlan,
+            userId: linked.userId,
+            providerSubscriptionId: normalized.providerSubscriptionId ?? linked.providerSubscriptionId ?? linked.paystackSubscriptionCode,
+          },
+          `paystack:${webhookContentHash(body)}`,
+        )
+      } else if (event.event === 'subscription.create' && customerCode) {
+        // Legacy subscriptions are kept compatible; new Pro products never fall
+        // through this branch because their order carries the canonical plan id.
+        await prisma.subscription.updateMany({
+          where: { paystackCustomerCode: customerCode },
+          data: {
+            paystackSubscriptionCode: subscriptionCode ? String(subscriptionCode) : undefined,
+            status: 'ACTIVE',
+          },
+        })
+      } else if (event.event === 'invoice.payment_failed' && customerCode) {
+        await prisma.subscription.updateMany({
+          where: { paystackCustomerCode: customerCode },
+          data: { status: 'PAST_DUE' },
+        })
+      } else if (event.event === 'subscription.disable' && customerCode) {
+        await prisma.subscription.updateMany({
+          where: { paystackCustomerCode: customerCode },
+          data: { status: 'EXPIRED', currentPeriodEnd: new Date() },
+        })
+      } else if (event.event === 'subscription.not_renew' && customerCode) {
+        await prisma.subscription.updateMany({
+          where: { paystackCustomerCode: customerCode },
+          data: { status: 'CANCELLED', cancelAtPeriodEnd: true },
+        })
+      }
       break
     }
   }
