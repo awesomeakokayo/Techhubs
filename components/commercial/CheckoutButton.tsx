@@ -14,7 +14,7 @@ function collectCheckoutAttribution(): Record<string, string> | null {
     const params = new URLSearchParams(window.location.search)
     const current: Record<string, string> = {}
     for (const key of CLIENT_UTM_KEYS) {
-      const value = params.get(key)?.replace(/[\\u0000-\\u001f\\u007f]/g, '').trim().slice(0, 120)
+      const value = params.get(key)?.replace(/[\u0000-\u001f\u007f]/g, '').trim().slice(0, 120)
       if (value) current[{ utm_source: 'utmSource', utm_medium: 'utmMedium', utm_campaign: 'utmCampaign', utm_content: 'utmContent', utm_term: 'utmTerm' }[key]] = value
     }
 
