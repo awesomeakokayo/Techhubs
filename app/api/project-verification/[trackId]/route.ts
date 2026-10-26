@@ -12,7 +12,7 @@ import { artifactKindSet, missingRequiredArtifacts, parseArtifacts } from '@/lib
 import { assessSubmission } from '@/lib/project-verification/assessment'
 import { createDeepSeekProvider } from '@/lib/project-verification/provider'
 import { checkAssessmentBudget, getSubmission, isReusablePass, saveSubmission, type StoredSubmission } from '@/lib/project-verification/store'
-import { getEntitlementSnapshot } from '@/lib/commercial/service'
+import { checkAssessmentAllowance, getEntitlementSnapshot } from '@/lib/commercial/service'
 import {
   consumeAssessmentCredit,
   deriveAssessmentRequestId,
@@ -139,10 +139,27 @@ export async function POST(req: Request, { params }: { params: { trackId: string
   })
 
   if (reservation.outcome === 'exhausted') {
+    if (snapshot.tier === 'FREE') {
+      await recordLearningEvent({
+        userId,
+        eventName: 'free_ai_quota_exhausted',
+        trackId: params.trackId,
+        stepId: String(stepIndex),
+        metadata: {
+          tier: snapshot.tier,
+          used: reservation.consumed + reservation.reserved,
+          allowance: reservation.allowance,
+          trigger: 'assessment_attempt',
+        },
+      })
+    }
     return NextResponse.json(
       {
-        error: `You have used all ${snapshot.assessmentAllowance} AI project assessments included in your plan this month.`,
+        error: snapshot.tier === 'FREE'
+          ? "You've used your free AI assessments. Explore Pro for a higher monthly assessment allowance, or continue learning for free."
+          : `You have used all ${snapshot.assessmentAllowance} AI project assessments included in your plan this month.`,
         status: 'allowance_exhausted',
+        tier: snapshot.tier,
         used: reservation.consumed + reservation.reserved,
         allowance: reservation.allowance,
         remaining: reservation.remaining,
@@ -174,6 +191,14 @@ export async function POST(req: Request, { params }: { params: { trackId: string
       evidenceFingerprint: fingerprint,
     })
   }
+
+  await recordLearningEvent({
+    userId,
+    eventName: 'ai_assessment_started',
+    trackId: params.trackId,
+    stepId: String(stepIndex),
+    metadata: { tier: snapshot.tier, remainingAtStart: reservation.remaining },
+  })
 
   // Preserve the learner's submission before any network/AI work.
   const priorAttempts = existing?.attemptCount ?? 0
@@ -255,8 +280,43 @@ export async function POST(req: Request, { params }: { params: { trackId: string
     })
   }
 
+  const usageAfterAssessment = await checkAssessmentAllowance(prisma, userId)
+  await recordLearningEvent({
+    userId,
+    eventName: 'ai_assessment_completed',
+    trackId: params.trackId,
+    stepId: String(stepIndex),
+    metadata: {
+      tier: snapshot.tier,
+      outcome: result.status,
+      remaining: usageAfterAssessment.remaining,
+      creditConsumed: result.creditConsumed,
+    },
+  })
+  if (snapshot.tier === 'FREE' && result.creditConsumed && usageAfterAssessment.remaining === 0) {
+    await recordLearningEvent({
+      userId,
+      eventName: 'free_ai_quota_exhausted',
+      trackId: params.trackId,
+      stepId: String(stepIndex),
+      metadata: {
+        tier: 'FREE',
+        used: usageAfterAssessment.used,
+        allowance: usageAfterAssessment.allowance,
+        trigger: 'assessment_completed',
+      },
+    })
+  }
+
   return NextResponse.json({
     status: result.status,
+    assessmentUsage: {
+      tier: usageAfterAssessment.tier,
+      used: usageAfterAssessment.used,
+      allowance: usageAfterAssessment.allowance,
+      remaining: usageAfterAssessment.remaining,
+      enforced: usageAfterAssessment.enforced,
+    },
     code: result.code,
     reviewSummary: result.reviewSummary,
     criteria: result.criteria,
