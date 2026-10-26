@@ -102,7 +102,22 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
           </div>
 
           <div className="md:col-span-7">
-            <div className="landing-module overflow-hidden shadow-[0_18px_50px_rgba(53,56,79,0.10)]">
+            <div className="relative pb-2">
+              <div
+                aria-hidden="true"
+                className="relative h-36 overflow-hidden rounded-[20px] bg-brand bg-cover bg-center md:h-48"
+                style={{
+                  backgroundImage:
+                    "url('https://images.unsplash.com/photo-1671726203454-5d7a5370a9f4?auto=format&fit=crop&w=1200&q=80')",
+                }}
+              >
+                <div className="flex h-full items-end bg-gradient-to-t from-ink/65 via-ink/10 to-transparent p-4 md:p-6">
+                  <span className="rounded-full border border-white/30 bg-ink/45 px-3 py-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
+                    One clear next step at a time
+                  </span>
+                </div>
+              </div>
+              <div className="landing-module relative z-10 mx-2 -mt-10 overflow-hidden shadow-[0_18px_50px_rgba(53,56,79,0.10)] md:mx-5 md:-mt-12">
               <div className="flex items-center justify-between gap-3 border-b border-hairline px-5 py-4 md:px-6">
                 <div className="flex items-center gap-2.5">
                   <LogoMark size={22} />
@@ -170,6 +185,7 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
                   Open roadmap <ArrowUpRight size={14} className="shrink-0" />
                 </Link>
               </div>
+            </div>
             </div>
           </div>
         </div>

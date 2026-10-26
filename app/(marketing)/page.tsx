@@ -34,7 +34,7 @@ export const metadata: Metadata = getPageMetadata({
  */
 const DIRECTION_SAMPLES: Record<string, string[]> = {
   build: ['frontend', 'backend', 'python'],
-  design: ['uiux', 'nocode', 'writing'],
+  design: ['uiux', 'video', 'writing'],
   analyze: ['data', 'datascience'],
   grow: ['marketing', 'projectmgmt', 'productmgmt'],
   ai: ['ai-foundations', 'ai-work', 'ai-agents'],
