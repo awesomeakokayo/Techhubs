@@ -24,6 +24,7 @@ import {
 } from './entitlements'
 import type { NormalizedBillingEvent } from './webhooks'
 import { getPlan, type PlanId } from './plans'
+import { resolveProviderPrice } from './pricing'
 import { assessmentAllowanceEnforced, providerProductId, type ProviderId } from './providers'
 import { countReservationUsage } from './assessment-credits'
 import { validatePaymentMatch } from './payments'
@@ -560,6 +561,23 @@ export async function applyBillingEvent(
       { requiresOrder: event.type === 'payment_succeeded' && plan?.kind === 'ONE_TIME' },
     )
     if (!match.matches) return { applied: false, reason: `mismatch:${match.reason}`, userId }
+
+    // Renewals arrive without a new browser-created order. For a recurring
+    // subscription, require the provider plan code AND the configured amount and
+    // currency to match the internal approved catalogue before extending access.
+    if (event.type === 'payment_succeeded' && plan?.kind === 'SUBSCRIPTION' && !order) {
+      const recurringPrice = resolveProviderPrice(event.provider, plan.id)
+      if (
+        !recurringPrice ||
+        event.amountMinor == null ||
+        event.amountMinor !== recurringPrice.amountMinor ||
+        (event.currency ?? '').toUpperCase() !== recurringPrice.currency.toUpperCase() ||
+        !expectedProductId ||
+        event.productId !== expectedProductId
+      ) {
+        return { applied: false, reason: 'mismatch:recurring_payment_does_not_match_approved_plan', userId }
+      }
+    }
 
     switch (event.type) {
       case 'payment_succeeded': {
