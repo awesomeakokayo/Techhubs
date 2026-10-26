@@ -504,6 +504,23 @@ export function GuidedPathClient({ trackId, trackMeta }: { trackId: string; trac
 
   useEffect(() => {
     let cancelled = false
+    fetch('/api/billing/entitlements').then(async (response) => {
+      if (!response.ok) return null
+      return response.json()
+    }).then((data) => {
+      if (cancelled || !data?.assessments) return
+      const remaining = data.assessments.remaining
+      const tier = data.tier
+      if (typeof remaining === 'number') setQuotaRemaining(remaining)
+      if (typeof tier === 'string') setQuotaTier(tier)
+      if (tier === 'FREE' && remaining === 0) {
+        setShowQuotaUpgrade(true)
+        trackEvent({ event_name: 'pro_upgrade_viewed', path: `/guided-path/${trackId}`, content_type: 'free_ai_quota_exhausted' })
+      }
+    }).catch(() => {
+      // Quota status is supplemental; assessment authorization remains server-side.
+    })
+
     fetch(`/api/guided-path/${trackId}`).then(async (response) => {
       if (response.status === 401) { router.push(`/login?next=/guided-path/${trackId}`); return null }
       if (response.status === 403) throw new Error('You do not have access to this learning path.')
