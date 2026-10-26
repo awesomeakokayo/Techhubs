@@ -24,7 +24,8 @@ test('approved NGN prices remain visible while checkout publication is gated', (
     checkoutReady: false, env: {},
   })
 
-  assert.equal(trackPass.priceLabel, '₦6,000')
+  assert.equal(trackPass.priceLabel, '₦3,000')
+  assert.equal(trackPass.regularPriceLabel, '₦6,000')
   assert.equal(monthly.priceLabel, '₦4,500')
   assert.equal(annual.priceLabel, '₦36,000')
   assert.match(trackPass.offerNotice, /₦3,000/)
@@ -51,11 +52,11 @@ test('active promotion is not presented as available while checkout is not ready
     checkoutReady: false, now: nowDuringCampaign, env: activeCampaign,
   })
 
-  assert.equal(display.priceLabel, '₦6,000')
-  assert.equal(display.regularPriceLabel, null)
+  assert.equal(display.priceLabel, '₦3,000')
+  assert.equal(display.regularPriceLabel, '₦6,000')
   assert.equal(display.isPromotional, false)
   assert.match(display.offerNotice, /₦3,000/)
-  assert.match(display.offerNotice, /not open yet/)
+  assert.match(display.offerNotice, /Checkout is not open yet/)
   assert.equal(display.pricingVersion, 'TSH-COMMERCE-2026-10-NGN-APPROVED-PRICING-V1')
 })
 
