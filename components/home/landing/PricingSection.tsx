@@ -173,7 +173,6 @@ export function PricingSection() {
             <ul className="mt-5 space-y-3 text-sm text-ink/75">
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-brand" /> All included premium guided paths</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-brand" /> {allowanceForTier('PRO')} AI assessments each month</li>
-              <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-brand" /> Priority assessment capacity</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-brand" /> Cancel any time; access continues through the paid period</li>
             </ul>
 
