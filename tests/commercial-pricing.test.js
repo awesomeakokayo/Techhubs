@@ -22,13 +22,13 @@ test('the publication master switch is off by default', () => {
   assert.equal(pricesApprovedForPublication({ COMMERCE_PRICES_APPROVED: 'false' }), false)
 })
 
-test('international prices remain unapproved until explicitly reviewed', () => {
+test('international prices remain unapproved while the Nigerian Pro catalogue is approved', () => {
   assert.equal(resolveProviderPrice('lemonsqueezy', 'TRACK_PASS').amountMinor, 900)
   assert.equal(resolveProviderPrice('lemonsqueezy', 'PRO_MONTHLY').amountMinor, 1200)
   assert.equal(resolveProviderPrice('lemonsqueezy', 'PRO_ANNUAL').amountMinor, 9600)
   const env = { COMMERCE_PRICES_APPROVED: 'true' }
   assert.equal(isPriceApproved(resolveProviderPrice('lemonsqueezy', 'TRACK_PASS'), env), false)
-  assert.equal(hasApprovedPrice('PRO_MONTHLY', env), false)
+  assert.equal(hasApprovedPrice('PRO_MONTHLY', env), true)
   assert.ok(COMMERCIAL_PRICING_VERSION.includes('NGN-APPROVED'))
 })
 
