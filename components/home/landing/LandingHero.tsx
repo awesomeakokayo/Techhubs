@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, Asterisk } from 'lucide-react'
 import { LogoMark } from '@/components/brand/Logo'
 import { CtaLink } from './CtaLink'
@@ -105,14 +104,14 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
           <div className="md:col-span-7">
             <div className="relative pb-2">
               <div className="relative h-36 overflow-hidden rounded-[20px] bg-brand md:h-48">
-                <Image
-                  src="https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=1280"
+                <img
+                  src="https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=1000"
                   alt="Black professional concentrating while working on a laptop"
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 58vw"
-                  quality={68}
-                  className="object-cover"
+                  width={1000}
+                  height={667}
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/65 via-ink/10 to-transparent p-4 md:p-6">
                   <span className="rounded-full border border-white/30 bg-ink/45 px-3 py-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
