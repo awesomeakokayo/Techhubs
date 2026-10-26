@@ -61,12 +61,24 @@ test('Lemon Squeezy is available for configured products with a known price', ()
   assert.equal(providerProductId('lemonsqueezy', 'PRO_MONTHLY', FULL_LS_ENV), '12')
 })
 
-test('Paystack is restricted to the approved NGN Track Pass', () => {
-  const env = { PAYSTACK_SECRET_KEY: 'sk' }
-  assert.deepEqual(availableProviders('TRACK_PASS', env), ['paystack'])
-  assert.equal(selectProvider('TRACK_PASS', 'paystack', env), 'paystack')
-  assert.deepEqual(availableProviders('PRO_MONTHLY', env), [])
-  assert.deepEqual(availableProviders('PRO_ANNUAL', env), [])
-  assert.equal(selectProvider('PRO_MONTHLY', 'lemonsqueezy', env), null)
-  assert.equal(providerProductId('paystack', 'TRACK_PASS', env), null)
+test('Paystack Pro subscriptions remain blocked until explicit plan codes and release flag are present', () => {
+  const base = { PAYSTACK_SECRET_KEY: 'sk' }
+  assert.deepEqual(availableProviders('TRACK_PASS', base), ['paystack'])
+  assert.equal(selectProvider('TRACK_PASS', 'paystack', base), 'paystack')
+  assert.deepEqual(availableProviders('PRO_MONTHLY', base), [])
+  assert.deepEqual(availableProviders('PRO_QUARTERLY', base), [])
+  assert.deepEqual(availableProviders('PRO_ANNUAL', base), [])
+
+  const recurring = {
+    ...base,
+    COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED: 'true',
+    PAYSTACK_PLAN_CODE_PRO_MONTHLY: 'PLN_month',
+    PAYSTACK_PLAN_CODE_PRO_QUARTERLY: 'PLN_quarter',
+    PAYSTACK_PLAN_CODE_PRO_ANNUAL: 'PLN_year',
+  }
+  assert.equal(selectProvider('PRO_MONTHLY', 'paystack', recurring), 'paystack')
+  assert.equal(selectProvider('PRO_QUARTERLY', 'paystack', recurring), 'paystack')
+  assert.equal(selectProvider('PRO_ANNUAL', 'paystack', recurring), 'paystack')
+  assert.equal(providerProductId('paystack', 'PRO_QUARTERLY', recurring), 'PLN_quarter')
+  assert.equal(providerProductId('paystack', 'TRACK_PASS', recurring), null)
 })
