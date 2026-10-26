@@ -145,7 +145,7 @@ export default function PricingPage({
             <h2 className="mt-3 min-h-14 font-display text-xl font-semibold text-text-primary">Single Guided Path Pass</h2>
             <div className="mt-3 flex flex-wrap items-baseline gap-2">
               <p className="font-display text-3xl font-semibold text-text-primary">{trackPassPriceDisplay.priceLabel}</p>
-              {showFoundingOffer && trackPassPriceDisplay.regularPriceLabel && (
+              {trackPassPriceDisplay.regularPriceLabel && (
                 <p className="text-sm text-text-muted line-through">{trackPassPriceDisplay.regularPriceLabel}</p>
               )}
             </div>
