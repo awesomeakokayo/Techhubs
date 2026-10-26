@@ -3,6 +3,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { LEMONSQUEEZY_API_BASE } from '@/lib/commercial/lemonsqueezy'
 import { recordEntitlementEvent } from '@/lib/commercial/service'
+import { recordLearningEvent } from '@/lib/event-recorder'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
 
 export const dynamic = 'force-dynamic'
@@ -78,6 +79,15 @@ export async function POST() {
     type: 'subscription_cancelled',
     source: 'user',
     metadata: { initiatedBy: 'user' },
+  })
+  await recordLearningEvent({
+    userId: session.user.id,
+    eventName: 'subscription_cancelled',
+    metadata: {
+      planId: subscription.productCode ?? subscription.plan ?? null,
+      initiatedBy: 'user',
+      cancelAtPeriodEnd: true,
+    },
   })
   paymentLog('payment_verified', { userId: session.user.id, event: 'subscription_cancelled_by_user' })
 
