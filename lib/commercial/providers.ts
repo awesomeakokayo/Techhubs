@@ -38,7 +38,11 @@ export const PROVIDER_PRODUCT_ENV: Record<ProviderId, Partial<Record<PlanId, str
     PRO_ANNUAL: 'LEMONSQUEEZY_VARIANT_PRO_ANNUAL',
   },
   // Paystack transactions do not require a provider-side plan/product id.
-  paystack: {},
+  paystack: {
+    PRO_MONTHLY: 'PAYSTACK_PLAN_CODE_PRO_MONTHLY',
+    PRO_QUARTERLY: 'PAYSTACK_PLAN_CODE_PRO_QUARTERLY',
+    PRO_ANNUAL: 'PAYSTACK_PLAN_CODE_PRO_ANNUAL',
+  },
 }
 
 type Env = Record<string, string | undefined>
@@ -106,11 +110,21 @@ export function providerCapabilities(provider: ProviderId, env: Env = process.en
       configured: lemonSqueezyConfigured(env),
     }
   }
+  const paystackSupports: PlanId[] = ['TRACK_PASS']
+  const proSubscriptionsEnabled = env.COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED === 'true'
+  if (proSubscriptionsEnabled && paystackConfigured(env)) {
+    for (const planId of ['PRO_MONTHLY', 'PRO_QUARTERLY', 'PRO_ANNUAL'] as const) {
+      const planCodeEnv = PROVIDER_PRODUCT_ENV.paystack[planId]
+      if (planCodeEnv && present(env, planCodeEnv)) paystackSupports.push(planId)
+    }
+  }
+
   return {
     id: 'paystack',
     label: PROVIDER_LABELS.paystack,
-    // Nigerian Track Pass only until more NGN plan prices are explicitly approved.
-    supports: ['TRACK_PASS'],
+    // Track Pass is one-time. Pro plans require explicit opt-in plus a verified
+    // provider-side recurring plan code for the matching billing interval.
+    supports: paystackSupports,
     currencies: ['NGN'],
     configured: paystackConfigured(env),
   }
