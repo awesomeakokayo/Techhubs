@@ -9,8 +9,8 @@
 
 This document records what is actually in the repository and what was actually executed.
 It does not authorise a merge, deployment, live migration, payment activation, or customer
-communication. Prior evidence records remain in `docs/LAUNCH_READINESS.md`,
-`docs/final-review-report.md`, and `docs/product-specification.md`.
+communication. Prior evidence records remain in `docs/operations/LAUNCH_READINESS.md`,
+`docs/operations/final-review-report.md`, and `docs/product/product-specification.md`.
 
 ---
 
@@ -136,7 +136,7 @@ journey is missing or unverified; **Blocked** = requires credentials, approval, 
 | Payments (Lemon Squeezy / Paystack) | Implemented, externally unverified | Webhook verification, idempotency and fulfilment tests pass. Merchant, variant, NGN pricing, payout and sandbox verification are outstanding. |
 | SEO | Implemented | Metadata helpers, `sitemap.ts`, `robots.ts`, static generation for catalogue routes. No Lighthouse/Core Web Vitals run in this session. |
 | Responsive design and accessibility | Partial | A prior E2E suite reported a mobile-layout and no-hydration pass; that suite was not re-run here. No dedicated automated accessibility audit. |
-| Rate limiting | Missing (launch blocker) | No shared-store limiter for contact or authenticated write endpoints. See `docs/LAUNCH_READINESS.md` §2. |
+| Rate limiting | Missing (launch blocker) | No shared-store limiter for contact or authenticated write endpoints. See `docs/operations/LAUNCH_READINESS.md` §2. |
 | Live migration history | Reconciled (2026-10-24) | Ten migrations applied to production Neon branch `main`. Final `migrate status` clean, `migrate diff` empty, learner rows unchanged. Restore branch `backup/pre-migration-20261024` retained. See `docs/database/NEON_MIGRATION_GUIDE.md`. |
 
 ### Catalogue quality

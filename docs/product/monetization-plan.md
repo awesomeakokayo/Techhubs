@@ -34,7 +34,7 @@ the free mission, and **without** turning the existing free experience into a pa
    learner has achieved.
 4. **The main variable operating cost is AI project assessment.** Pro is priced
    to cover that cost plus a margin, with abuse controls.
-5. **Nothing is enabled until settlement (see `payment-provider-readiness.md`) and
+5. **Nothing is enabled until settlement (see `docs/billing/payment-provider-readiness.md`) and
    policy are approved.**
 
 ---
@@ -110,7 +110,7 @@ Project verification calls a paid model (`deepseek-flash`) after retrieving real
 artifact evidence (up to ~52,000 characters of README/source/README/page text per
 submission; `lib/project-verification/prompt.ts:56`). This is the platform's only
 material variable cost. Full unit economics are in
-`docs/assessment-economics.md`; the summary:
+`docs/product/assessment-economics.md`; the summary:
 
 | | Off-peak | Peak |
 | --- | --- | --- |
@@ -140,7 +140,7 @@ values remain provisional and must not be inferred from these figures.
 
 Quarterly is the launch recommendation (approximately 18.5% below three monthly payments); annual is best long-term value (approximately 33.3% below twelve monthly payments). Pro assessment capacity is finite (150 per UTC calendar month), not unlimited.
 
-The promotion is a fixed 14-day sale after a seven-day warm-up, part of a 21-day campaign. Its start and end instants must be explicitly set using Africa/Lagos time with an offset (for example `+01:00`). No default dates or per-visitor timer resets are permitted. The server uses the saved order amount to honour a checkout created before the deadline; new orders created after expiry use the regular ₦6,000 price. See `docs/pricing-launch-campaign.md` for environment configuration, verification gates and analytics definitions.
+The promotion is a fixed 14-day sale after a seven-day warm-up, part of a 21-day campaign. Its start and end instants must be explicitly set using Africa/Lagos time with an offset (for example `+01:00`). No default dates or per-visitor timer resets are permitted. The server uses the saved order amount to honour a checkout created before the deadline; new orders created after expiry use the regular ₦6,000 price. See `docs/product/pricing-launch-campaign.md` for environment configuration, verification gates and analytics definitions.
 
 Pro recurring payments must remain unavailable until the owner configures three Paystack plan codes and checkout verifies each provider plan's amount, NGN currency and interval before creating the transaction. The global commerce gates and provider sandbox check still determine launch readiness.
 

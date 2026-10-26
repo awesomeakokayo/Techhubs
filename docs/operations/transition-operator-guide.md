@@ -37,7 +37,7 @@ learners.
 
 ## 2. What is preserved for a returning learner
 
-Verified by `docs/learner-continuity.md` and the continuity tests:
+Verified by `docs/engineering/learner-continuity.md` and the continuity tests:
 
 - current position and incomplete stages;
 - completed work and saved project submissions;
