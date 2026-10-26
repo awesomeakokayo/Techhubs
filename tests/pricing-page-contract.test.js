@@ -25,6 +25,8 @@ test('pricing page defines four distinct, responsive plan cards', () => {
 test('pricing cards show approved Nigerian prices while keeping unavailable checkout disabled', () => {
   assert.match(pricingPage, /resolvePublicPricingPriceDisplay/)
   assert.match(pricingPage, /trackPassPriceDisplay\.offerNotice/)
+  assert.match(pricingPage, /trackPassPriceDisplay\.regularPriceLabel && \(/)
+  assert.doesNotMatch(pricingPage, /showFoundingOffer && trackPassPriceDisplay\.regularPriceLabel/)
   assert.match(pricingPage, /disabled=\{!ready\}/)
   assert.match(pricingPage, /Approved Nigerian prices are displayed for planning/)
 })
