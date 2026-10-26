@@ -113,7 +113,8 @@ export function providerCapabilities(provider: ProviderId, env: Env = process.en
   }
   const paystackSupports: PlanId[] = ['TRACK_PASS']
   const proSubscriptionsEnabled = env.COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED === 'true'
-  if (proSubscriptionsEnabled && paystackConfigured(env)) {
+  const proSubscriptionsVerified = env.COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED === 'true'
+  if (proSubscriptionsEnabled && proSubscriptionsVerified && paystackConfigured(env)) {
     for (const planId of ['PRO_MONTHLY', 'PRO_QUARTERLY', 'PRO_ANNUAL'] as const) {
       const planCodeEnv = PROVIDER_PRODUCT_ENV.paystack[planId]
       if (planCodeEnv && present(env, planCodeEnv)) paystackSupports.push(planId)
