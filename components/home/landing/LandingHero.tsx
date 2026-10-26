@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, ArrowUpRight, Asterisk } from 'lucide-react'
 import { LogoMark } from '@/components/brand/Logo'
 import { CtaLink } from './CtaLink'
@@ -103,15 +104,17 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
 
           <div className="md:col-span-7">
             <div className="relative pb-2">
-              <div
-                aria-hidden="true"
-                className="relative h-36 overflow-hidden rounded-[20px] bg-brand bg-cover bg-center md:h-48"
-                style={{
-                  backgroundImage:
-                    "url('https://images.unsplash.com/photo-1671726203454-5d7a5370a9f4?auto=format&fit=crop&w=1200&q=80')",
-                }}
-              >
-                <div className="flex h-full items-end bg-gradient-to-t from-ink/65 via-ink/10 to-transparent p-4 md:p-6">
+              <div className="relative h-36 overflow-hidden rounded-[20px] bg-brand md:h-48">
+                <Image
+                  src="https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=1280"
+                  alt="Black professional concentrating while working on a laptop"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 58vw"
+                  quality={68}
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-ink/65 via-ink/10 to-transparent p-4 md:p-6">
                   <span className="rounded-full border border-white/30 bg-ink/45 px-3 py-2 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
                     One clear next step at a time
                   </span>
