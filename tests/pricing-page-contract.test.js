@@ -34,5 +34,5 @@ test('the Founding Learner banner only renders for a truly active promotional pr
   assert.match(pricingPage, /showFoundingOffer && campaign\.startsAt && campaign\.endsAt && trackPassBasePrice/)
   assert.match(pricingDisplay, /campaign\.active &&\s*checkoutReady/)
   assert.match(pricingDisplay, /Founding Learner offer planned at ₦3,000/)
-  assert.match(pricingDisplay, /checkout is not open yet/)
+  assert.match(pricingDisplay, /Checkout is not open yet/)
 })
