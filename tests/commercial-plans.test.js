@@ -86,8 +86,16 @@ test('assessment allowances are finite and tiered (never unlimited)', () => {
 })
 
 
-test('Track Pass copy clearly states a three-calendar-month one-time term', () => {
+test('Track Pass copy clearly states the term and finite assessment allowance', () => {
   const pass = getPlan('TRACK_PASS')
   assert.match(pass.summary, /three calendar months/i)
   assert.ok(pass.features.some((feature) => /three months/i.test(feature)))
+  assert.ok(pass.features.some((feature) => /30 AI project assessments per month/i.test(feature)))
+})
+
+test('Pro plan descriptions contain no unsupported priority-queue promise', () => {
+  for (const planId of ['PRO_MONTHLY', 'PRO_QUARTERLY', 'PRO_ANNUAL']) {
+    const plan = getPlan(planId)
+    assert.ok(!plan.features.some((feature) => /priority assessment capacity/i.test(feature)))
+  }
 })
