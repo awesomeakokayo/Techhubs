@@ -29,7 +29,6 @@ export const LEARNING_EVENT_NAMES = [
   'free_ai_quota_exhausted',
   'pro_upgrade_viewed',
   'pro_upgrade_clicked',
-
   'milestone_reached',
   'course_completed',
   'session_returned',
