@@ -90,12 +90,16 @@ export async function POST(req: Request) {
   }
   const price = resolvedPrice.price
 
+  // Every paid checkout must acknowledge the exact displayed price version.
   // A stale campaign page must never silently charge the regular price after the
-  // offer expires. Orders created before expiry keep their recorded amount; only
-  // new order creation is checked against the currently active price version.
-  if (expectedPricingVersion && expectedPricingVersion !== resolvedPrice.pricingVersion) {
+  // offer expires. Orders already created keep their recorded amount; new orders
+  // require a fresh review if the version changed or the client omitted it.
+  if (!expectedPricingVersion || expectedPricingVersion !== resolvedPrice.pricingVersion) {
     return NextResponse.json(
-      { code: 'PRICE_CHANGED', error: 'The offer or price has changed. Review the current price before starting checkout.' },
+      {
+        code: expectedPricingVersion ? 'PRICE_CHANGED' : 'PRICE_CONFIRMATION_REQUIRED',
+        error: 'Review the current plan price and try again. No payment has been started.',
+      },
       { status: 409 },
     )
   }
