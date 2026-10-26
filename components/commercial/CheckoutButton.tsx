@@ -5,6 +5,44 @@ import { signIn, useSession } from 'next-auth/react'
 import { track } from '@vercel/analytics'
 import { ArrowRight, Loader2 } from 'lucide-react'
 
+const ATTRIBUTION_STORAGE_KEY = 'tsh_checkout_attribution_v1'
+const CLIENT_UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const
+
+function collectCheckoutAttribution(): Record<string, string> | null {
+  try {
+    const params = new URLSearchParams(window.location.search)
+    const current: Record<string, string> = {}
+    for (const key of CLIENT_UTM_KEYS) {
+      const value = params.get(key)?.replace(/[\\u0000-\\u001f\\u007f]/g, '').trim().slice(0, 120)
+      if (value) current[{ utm_source: 'utmSource', utm_medium: 'utmMedium', utm_campaign: 'utmCampaign', utm_content: 'utmContent', utm_term: 'utmTerm' }[key]] = value
+    }
+
+    const storedRaw = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY)
+    const stored = storedRaw ? JSON.parse(storedRaw) as Record<string, unknown> : {}
+    const result: Record<string, string> = {}
+    const mapping = {
+      utm_source: 'utmSource',
+      utm_medium: 'utmMedium',
+      utm_campaign: 'utmCampaign',
+      utm_content: 'utmContent',
+      utm_term: 'utmTerm',
+    } as const
+    for (const [queryKey, targetKey] of Object.entries(mapping) as [keyof typeof mapping, (typeof mapping)[keyof typeof mapping]][]) {
+      const value = current[targetKey] || (typeof stored[targetKey] === 'string' ? String(stored[targetKey]).slice(0, 120) : '')
+      if (value) result[targetKey] = value
+    }
+
+    const landingPath = typeof stored.landingPath === 'string' ? stored.landingPath : window.location.pathname
+    if (landingPath.startsWith('/') && !landingPath.startsWith('//')) result.landingPath = landingPath.split('?')[0].split('#')[0]
+    const referrerHost = typeof stored.referrerHost === 'string' ? stored.referrerHost : ''
+    if (referrerHost) result.referrerHost = referrerHost.slice(0, 200)
+
+    return Object.keys(result).length ? result : null
+  } catch {
+    return null
+  }
+}
+
 /**
  * Starts checkout through the server. Prices, eligibility and provider selection
  * stay server-controlled; access is granted only after verified payment.
@@ -63,7 +101,7 @@ export function CheckoutButton({
       const res = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId, trackId: chosenTrackId, ...(expectedPricingVersion ? { expectedPricingVersion } : {}) }),
+        body: JSON.stringify({ planId, trackId: chosenTrackId, ...(expectedPricingVersion ? { expectedPricingVersion } : {}), attribution: collectCheckoutAttribution() }),
       })
       const data = await res.json().catch(() => ({}))
 
