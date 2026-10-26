@@ -165,7 +165,7 @@ Requires credentials / access / authorization (blockers):
   documented rubric over real catalogue data and gated on project-outcome
   readiness. See `docs/premium-first-wave.md`. Selecting them does **not** restrict
   anyone; enforcement is still off.
-- **Assessment-credit concurrency fixed:** the monthly allowance (Free 20 / Track
+- **Assessment-credit concurrency fixed:** the monthly allowance (Free 2 / Track
   Pass 30 / Pro 150) is now reserved atomically via a durable ledger before each
   billable model call, so concurrent requests cannot exceed it. The allowance is
   enforced by default (`COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCED`). See
