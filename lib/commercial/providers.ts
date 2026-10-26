@@ -76,7 +76,7 @@ export function providerTestMode(env: Env = process.env): boolean {
 /**
  * Monthly AI-assessment allowance enforcement.
  *
- * ON by default: the allowance is a finite cost control (Free 20 / Pass 30 /
+ * ON by default: the allowance is a finite cost control (Free 2 / Pass 30 /
  * Pro 150 per month, from `lib/commercial/plans.ts`) that must be authoritative
  * to keep AI spend bounded and to make the reservation ledger meaningful. It is
  * an additional limit on top of the existing hourly abuse budget, never a
