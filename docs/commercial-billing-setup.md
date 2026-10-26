@@ -24,6 +24,10 @@ live billing. No credentials, store ids or variant ids are invented here.
 | `COMMERCE_ENTITLEMENTS_ENFORCED` | Enforce Premium **track access** (global) | `false` |
 | `COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCED` | Enforce the monthly AI-assessment allowance | `true` |
 | `COMMERCE_PRICES_APPROVED` | Master switch; each price also needs its individual approval flag | `false` |
+| `COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED` | Explicit gate for Nigerian Pro recurring plans | `false` |
+| `COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED` | Set only after Pro sandbox lifecycle tests pass | `false` |
+| `COMMERCE_FOUNDING_OFFER_ENABLED` | Enable fixed-window ₦3,000 offer after dates are configured | `false` |
+| `COMMERCE_FOUNDING_OFFER_STARTS_AT` / `COMMERCE_FOUNDING_OFFER_ENDS_AT` | Explicit sale instants with timezone offset, Africa/Lagos | unset |
 | `COMMERCE_ANNOUNCEMENT` | Set to `false` to hide the in-app announcement | shown |
 | `COMMERCE_PREMIUM_TRACK_IDS` | Override the premium track set (validated, comma-separated) | unset → first-wave manifest |
 | `COMMERCE_SHADOW_EVAL` | Log proposed access decisions without changing access | `false` |
@@ -42,6 +46,7 @@ live billing. No credentials, store ids or variant ids are invented here.
 | `LEMONSQUEEZY_VARIANT_TRACK_PASS` | Variant id for the Track Pass product | unset |
 | `LEMONSQUEEZY_VARIANT_PRO_MONTHLY` | Variant id for Pro Monthly | unset |
 | `LEMONSQUEEZY_VARIANT_PRO_ANNUAL` | Variant id for Pro Annual | unset |
+| `PAYSTACK_PLAN_CODE_PRO_MONTHLY` / `PAYSTACK_PLAN_CODE_PRO_QUARTERLY` / `PAYSTACK_PLAN_CODE_PRO_ANNUAL` | Real recurring plan codes; checked against amount, currency and interval | unset |
 | `PAYSTACK_SECRET_KEY` | Enables Paystack for the Nigerian Track Pass only (NGN) | unset |
 
 A provider is only considered available when its variables are present. This is
@@ -81,12 +86,14 @@ Staged rollout and the existing-user transition are documented in
    supports. Do **not** assume international card acceptance implies settlement.
 2. Set `PAYSTACK_SECRET_KEY`. Configure the webhook URL
    `https://<your-domain>/api/payments/webhook`.
-3. The current code has one individually approved price in `PRICE_CATALOGUE.paystack`:
-   `TRACK_PASS` = 600,000 kobo (₦6,000), one-time for three calendar months. Paystack
-   is not enabled for Pro Monthly/Annual, and no NGN Pro prices are defined.
-4. Confirm the payout/settlement route and run a test-mode webhook/fulfilment check
-   against an isolated environment. The global checkout/publication/enforcement
-   flags remain off until the full release gates pass.
+3. The approved NGN price catalogue is Track Pass ₦6,000 once for three months, Pro
+   Monthly ₦4,500, Pro Quarterly ₦11,000, and Pro Annual ₦36,000. Pro recurring checkout
+   remains unavailable until the three real Paystack plan codes are configured and
+   sandbox-verified. The server fetches the configured plan and checks amount, NGN
+   currency, plan code and billing interval before starting checkout.
+4. Confirm payout/settlement, then complete isolated sandbox tests for initial payment,
+   recurring renewals, failures, cancellation and expiry. The global checkout,
+   publication and entitlement flags remain off until all release gates pass.
 
 ## 5. Go-live checklist (all required)
 
@@ -119,9 +126,9 @@ selected premium track**. It is not a subscription and never auto-renews.
 
 - **Term arithmetic** (`lib/commercial/track-pass.ts`): the period starts at the
   verified payment instant (provider `paid_at`/order timestamp; server verified
-  time if absent) and ends six *calendar* months later, computed in UTC with
-  month-end and leap-year clamping (e.g. `2026-08-31 + 6mo = 2027-02-28`,
-  `2027-08-31 + 6mo = 2028-02-29`). It is deliberately **not** a 180-day
+  time if absent) and ends three *calendar* months later, computed in UTC with
+  month-end and leap-year clamping (e.g. `2026-08-31 + 3mo = 2026-11-30`,
+  `2027-11-30 + 3mo = 2028-02-29`). It is deliberately **not** a 90-day
   approximation and never depends on the browser or server timezone.
 - **Grant** (`lib/commercial/service.ts → grantTrackPass`): a verified payment
   writes one `TrackPassPurchase` row (keyed by the unique internal
