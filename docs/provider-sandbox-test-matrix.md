@@ -65,7 +65,7 @@ credentials. "Expected" is the behaviour the code must exhibit.
 
 | # | Scenario | Expected behaviour | How to verify | Status |
 | --- | --- | --- | --- | --- |
-| P1 | Successful one-time **Track Pass** payment (Lemon Squeezy) | Pending order created → redirect → verified webhook → one `TrackAccess` row ACTIVE with a **6-calendar-month** `expiresAt`; entitlement tier `PASS`; only the purchased track unlocked | Complete a test checkout; assert DB rows + `deriveSnapshot` | ☐ |
+| P1 | Successful one-time **Track Pass** payment (Lemon Squeezy) | Pending order created → redirect → verified webhook → one `TrackAccess` row ACTIVE with a **3-calendar-month** `expiresAt`; entitlement tier `PASS`; only the purchased track unlocked | Complete a test checkout; assert DB rows + `deriveSnapshot` | ☐ |
 | P2 | **Pending** checkout (user does not complete) | No entitlement; order stays `PENDING`; no `TrackAccess` | Abandon at provider; assert no entitlement | ☐ |
 | P3 | **Failed** payment | No entitlement; order `FAILED`/unchanged; learner sees a clear message | Use a failing test card | ☐ |
 | P4 | **Abandoned** checkout then return | No duplicate order/entitlement; resume or re-initiate cleanly | Reopen checkout | ☐ |
@@ -75,7 +75,7 @@ credentials. "Expected" is the behaviour the code must exhibit.
 | P8 | **Retried** webhook after a transient failure | Eventually consistent; still exactly-once effect | Force a failure then redeliver | ☐ |
 | P9 | **Wrong order / user / product / amount / currency** | Rejected or recorded without granting the wrong entitlement; amount/currency mismatch never grants | Craft mismatched events | ☐ |
 | P10 | **Track-specific** entitlement (Track Pass) | Only the chosen premium track unlocks; other premium tracks stay gated | Assert `canAccessTrack` for all premium ids | ☐ |
-| P11 | **Six-calendar-month expiry** | Access ends at `expiresAt` (UTC, month-clamped); data retained | Fast-forward clock / set `expiresAt` past | ☐ |
+| P11 | **Three-calendar-month expiry** | Access ends at `expiresAt` (UTC, month-clamped); data retained | Fast-forward clock / set `expiresAt` past | ☐ |
 | P12 | **Repurchase** after expiry | New verified payment creates a new access period; no auto-charge | Complete a second test checkout | ☐ |
 | P13 | Pro **subscription creation** | Subscription ACTIVE → tier `PRO`; all premium tracks unlocked; Pro allowance | Complete a test subscription | ☐ |
 | P14 | Pro **renewal** | Period extends; remains `PRO`; no double grant | Simulate a renewal event | ☐ |
