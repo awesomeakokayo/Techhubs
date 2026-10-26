@@ -72,7 +72,7 @@ export function CheckoutButton({
   disabledReason?: string
   autoStart?: boolean
   resumePath?: string
-  expectedPricingVersion?: string
+  expectedPricingVersion: string
 }) {
   const [busy, setBusy] = useState(false)
   const [selectedTrackId, setSelectedTrackId] = useState(trackId ?? trackOptions?.[0]?.id ?? '')
