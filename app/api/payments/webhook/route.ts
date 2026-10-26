@@ -7,6 +7,7 @@ import { isPlanId } from '@/lib/commercial/plans'
 import { normalizePaystackEvent, webhookContentHash } from '@/lib/commercial/webhooks'
 import { applyBillingEvent } from '@/lib/commercial/service'
 import { recordLearningEvent } from '@/lib/event-recorder'
+import { sanitizeCheckoutAttribution } from '@/lib/commercial/attribution'
 
 export const dynamic = 'force-dynamic'
 
@@ -54,7 +55,7 @@ export async function POST(req: Request) {
       const order = reference
         ? await prisma.paymentOrder.findUnique({
             where: { reference },
-            select: { productCode: true, userId: true, campaignId: true, amount: true, currency: true, pricingVersion: true },
+            select: { productCode: true, userId: true, campaignId: true, amount: true, currency: true, pricingVersion: true, attribution: true },
           })
         : null
       const orderPlanId = isPlanId(order?.productCode) ? order.productCode : null
@@ -77,6 +78,7 @@ export async function POST(req: Request) {
               pricingVersion: order!.pricingVersion,
               campaignId: order!.campaignId,
               purchaseType: 'initial',
+              ...(sanitizeCheckoutAttribution(order!.attribution) ?? {}),
             },
           })
           if (orderPlanId !== 'TRACK_PASS') {
@@ -183,7 +185,7 @@ export async function POST(req: Request) {
       if (!reference) break
       const order = await prisma.paymentOrder.findUnique({
         where: { reference },
-        select: { productCode: true, userId: true, amount: true, currency: true, pricingVersion: true },
+        select: { productCode: true, userId: true, amount: true, currency: true, pricingVersion: true, campaignId: true, attribution: true },
       })
       if (!order || !isPlanId(order.productCode)) break
       const normalized = normalizePaystackEvent(event)
@@ -196,7 +198,13 @@ export async function POST(req: Request) {
         await recordLearningEvent({
           userId: order.userId,
           eventName: 'purchase_failed',
-          metadata: { planId: order.productCode, pricingVersion: order.pricingVersion, campaignId: null, providerStatus: normalized.status },
+          metadata: {
+            planId: order.productCode,
+            pricingVersion: order.pricingVersion,
+            campaignId: order.campaignId,
+            providerStatus: normalized.status,
+            ...(sanitizeCheckoutAttribution(order.attribution) ?? {}),
+          },
         })
       }
       break
