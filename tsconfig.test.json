@@ -73,6 +73,7 @@
     "lib/commercial/attribution.ts",
     "lib/commercial/paystack-plan-validation.ts",
     "lib/commercial/pricing.ts",
+    "lib/commercial/pricing-display.ts",
     "lib/commercial/providers.ts",
     "lib/commercial/rollout.ts",
     "lib/commercial/shadow.ts",
