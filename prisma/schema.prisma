@@ -250,6 +250,10 @@ model PaymentOrder {
   amount             Int
   amountMajor        Int
   pricingVersion     String
+  /// Server-assigned campaign identifier (for example FOUNDING_LEARNER_OFFER).
+  campaignId         String?
+  /// Sanitized non-sensitive UTM/source attribution captured at checkout start.
+  attribution        Json?
   status             PaymentStatus   @default(PENDING)
   reference          String          @unique
   ipCountry          String?
