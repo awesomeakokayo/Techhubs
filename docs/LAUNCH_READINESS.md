@@ -6,11 +6,13 @@ audit summary, and the remaining release-readiness gates.
 
 ## 1. Security hardening applied
 
-- **Pricing decision (2026-10-24):** the code catalogue contains an individually approved
-  ₦6,000 Paystack Track Pass for three calendar months. Lemon Squeezy USD prices remain
-  individually unapproved. The checkout master switch, price-publication switch and
-  entitlement enforcement must not be enabled in production until the provider sandbox,
-  existing-learner transition, and database migration-history checks are complete.
+- **Pricing decision (2026-10-26):** the canonical catalogue now contains the approved
+  Nigerian prices: ₦6,000 Single Guided Path Pass, ₦4,500 Pro Monthly, ₦11,000 Pro Quarterly
+  and ₦36,000 Pro Annual. The ₦3,000 Founding Learner Offer is inactive without valid
+  fixed campaign timestamps. Pro checkout remains blocked until each Paystack plan code's
+  amount, currency and interval is verified against the catalogue. Do not enable production
+  checkout or entitlement enforcement until the disposable provider tests, learner transition
+  policy and related release checks pass.
 
 - **`/api/debug`**: returns `404` in production. Development/preview diagnostics now report only session presence and forwarded-host metadata; they do not return session identifiers or cookie names/values.
 - **Legacy commerce APIs**: unused `POST /api/payments/initialize` and `GET /api/payments/pricing` are retired with `410 Gone`; current checkout is handled by the launch-guarded `/api/billing/checkout` route.
