@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionRail } from './SectionRail'
@@ -22,26 +23,27 @@ export interface Direction {
   tracks: DirectionTrack[]
 }
 
+// Free Pexels stock photos. Images are illustrative and do not depict TechSkillHub learners or imply endorsement.
 const DIRECTION_VISUALS: Record<string, { image: string; alt: string }> = {
   build: {
-    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=720&q=75',
-    alt: 'People collaborating around computers',
+    image: 'https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=900',
+    alt: 'Black professional concentrating while working on a laptop',
   },
   design: {
-    image: 'https://images.unsplash.com/photo-1618329027137-a520b57c6606?auto=format&fit=crop&w=720&q=75',
-    alt: 'A video editing timeline on a wide monitor',
+    image: 'https://images.pexels.com/photos/1181727/pexels-photo-1181727.jpeg?auto=compress&cs=tinysrgb&w=900',
+    alt: 'Black woman focused on work at a laptop in a modern office',
   },
   analyze: {
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=720&q=75',
-    alt: 'Data analytics on a computer screen',
+    image: 'https://images.pexels.com/photos/7191959/pexels-photo-7191959.jpeg?auto=compress&cs=tinysrgb&w=900',
+    alt: 'Black woman concentrating while working at a computer',
   },
   grow: {
-    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=720&q=75',
-    alt: 'A team discussing work around a table',
+    image: 'https://images.pexels.com/photos/9430884/pexels-photo-9430884.jpeg?auto=compress&cs=tinysrgb&w=900',
+    alt: 'Black colleagues discussing a project around a table',
   },
   ai: {
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=720&q=75',
-    alt: 'An abstract artificial intelligence visual',
+    image: 'https://images.pexels.com/photos/6974804/pexels-photo-6974804.jpeg?auto=compress&cs=tinysrgb&w=900',
+    alt: 'Black professional working thoughtfully on a laptop',
   },
 }
 
@@ -108,13 +110,17 @@ export function DirectionExplorer({ directions }: { directions: Direction[] }) {
                   onKeyDown={(event) => handleKeyDown(event, index)}
                   className="landing-tab group overflow-hidden rounded-[14px] p-0 text-left last:col-span-2 sm:last:col-span-1"
                 >
-                  <div
-                    aria-hidden="true"
-                    className="relative aspect-[16/10] bg-cover bg-center"
-                    style={{
-                      backgroundImage: `linear-gradient(to top, rgba(14, 14, 13, 0.78), rgba(14, 14, 13, 0.04)), url('${DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}')`,
-                    }}
-                  >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-brand">
+                    <Image
+                      src={DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 48vw, (max-width: 1024px) 30vw, 18vw"
+                      quality={55}
+                      loading="lazy"
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
                     <span className="absolute left-3 top-3 font-mono text-[0.6rem] tracking-[0.12em] text-white/90">
                       {String(index + 1).padStart(2, '0')}
                     </span>
@@ -145,11 +151,19 @@ export function DirectionExplorer({ directions }: { directions: Direction[] }) {
                   <div className="border-b border-hairline p-6 md:col-span-5 md:border-b-0 md:border-r">
                     <div
                       aria-hidden="true"
-                      className="-mx-6 -mt-6 mb-5 h-36 bg-cover bg-center md:h-44"
-                      style={{
-                        backgroundImage: `linear-gradient(to top, rgba(14, 14, 13, 0.48), rgba(14, 14, 13, 0.02)), url('${DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}')`,
-                      }}
-                    />
+                      className="relative -mx-6 -mt-6 mb-5 h-36 overflow-hidden bg-brand md:h-44"
+                    >
+                      <Image
+                        src={DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, 420px"
+                        quality={58}
+                        loading="lazy"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent" />
+                    </div>
                     <p className="landing-index">Direction / {direction.label}</p>
                     <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink">
                       {direction.description}
