@@ -16,6 +16,7 @@ import { createPendingOrder, getActiveTrackPass } from '@/lib/commercial/service
 import { launchReadiness } from '@/lib/commercial/launch'
 import { createLemonSqueezyCheckout } from '@/lib/commercial/lemonsqueezy'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
+import { sanitizeCheckoutAttribution } from '@/lib/commercial/attribution'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,6 +45,7 @@ export async function POST(req: Request) {
   }
   const plan = getPlan(planId)!
   const expectedPricingVersion = typeof body?.expectedPricingVersion === 'string' ? body.expectedPricingVersion : null
+  const attribution = sanitizeCheckoutAttribution(body?.attribution)
 
   let trackId: string | null = null
   if (plan.kind === 'ONE_TIME') {
@@ -123,6 +125,8 @@ export async function POST(req: Request) {
       amountMinor: price.amountMinor,
       reference,
       pricingVersion: resolvedPrice.pricingVersion,
+      campaignId: resolvedPrice.campaignId,
+      attribution,
     })
   } catch (error) {
     paymentLogError('checkout_initialized', 'order create failed', {
