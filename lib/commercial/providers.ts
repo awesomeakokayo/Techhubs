@@ -124,8 +124,8 @@ export function providerCapabilities(provider: ProviderId, env: Env = process.en
   return {
     id: 'paystack',
     label: PROVIDER_LABELS.paystack,
-    // Track Pass is one-time. Pro plans require explicit opt-in plus a verified
-    // provider-side recurring plan code for the matching billing interval.
+    // Track Pass is one-time. Pro plans require explicit enablement, a completed
+    // sandbox-verification gate, and a matching provider-side recurring plan code.
     supports: paystackSupports,
     currencies: ['NGN'],
     configured: paystackConfigured(env),
