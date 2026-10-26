@@ -45,8 +45,9 @@ export function FoundingLearnerBanner({
   const pathname = usePathname()
   const router = useRouter()
   const endTime = new Date(endsAt).getTime()
-  const [remainingMs, setRemainingMs] = useState(() => Math.max(0, endTime - Date.now()))
-  const [expired, setExpired] = useState(() => !Number.isFinite(endTime) || Date.now() >= endTime)
+  // Use a stable server/client first render; the actual countdown starts after hydration.
+  const [remainingMs, setRemainingMs] = useState<number | null>(null)
+  const [expired, setExpired] = useState(false)
 
   useEffect(() => {
     trackEvent({
@@ -72,7 +73,7 @@ export function FoundingLearnerBanner({
     }
   }, [endTime, pathname, placement, router])
 
-  if (expired || remainingMs <= 0) return null
+  if (expired || (remainingMs !== null && remainingMs <= 0)) return null
 
   const closeAt = formatLagosDate(endsAt)
   return (
@@ -96,7 +97,7 @@ export function FoundingLearnerBanner({
         <div className="flex flex-col items-start gap-3 md:items-end">
           <div className="inline-flex items-center gap-2 rounded-md border border-brand/20 bg-white px-3 py-2 font-mono text-sm text-ink" aria-live="off">
             <Clock3 size={15} className="text-brand" aria-hidden />
-            <span>Ends in {countdownLabel(remainingMs)}</span>
+            <span>Ends in {remainingMs === null ? 'checking deadline…' : countdownLabel(remainingMs)}</span>
           </div>
           <Link
             href={pathname === '/pricing' ? '#plans' : '#plans'}
