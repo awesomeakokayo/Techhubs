@@ -44,6 +44,7 @@ function providerEnum(provider: ProviderId): 'PAYSTACK' | 'LEMON_SQUEEZY' {
 function planEnum(planId: PlanId): 'TRACK_PASS' | 'MONTHLY' | 'YEARLY' | 'THREE_MONTHS' {
   if (planId === 'TRACK_PASS') return 'TRACK_PASS'
   if (planId === 'PRO_ANNUAL') return 'YEARLY'
+  if (planId === 'PRO_QUARTERLY') return 'THREE_MONTHS'
   return 'MONTHLY'
 }
 
@@ -53,11 +54,24 @@ function parseDate(value: string | null | undefined): Date | null {
   return Number.isNaN(date.getTime()) ? null : date
 }
 
-function periodEndForPlan(planId: PlanId | null, from: Date): Date {
+function addUtcMonthsClamped(from: Date, months: number): Date {
   const date = new Date(from)
-  if (planId === 'PRO_ANNUAL') date.setUTCFullYear(date.getUTCFullYear() + 1)
-  else date.setUTCMonth(date.getUTCMonth() + 1)
-  return date
+  const desiredMonth = date.getUTCMonth() + months
+  const targetYear = date.getUTCFullYear() + Math.floor(desiredMonth / 12)
+  const targetMonth = ((desiredMonth % 12) + 12) % 12
+  const day = date.getUTCDate()
+  const hour = date.getUTCHours()
+  const minute = date.getUTCMinutes()
+  const second = date.getUTCSeconds()
+  const millisecond = date.getUTCMilliseconds()
+  const lastDay = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate()
+  return new Date(Date.UTC(targetYear, targetMonth, Math.min(day, lastDay), hour, minute, second, millisecond))
+}
+
+function periodEndForPlan(planId: PlanId | null, from: Date): Date {
+  if (planId === 'PRO_ANNUAL') return addUtcMonthsClamped(from, 12)
+  if (planId === 'PRO_QUARTERLY') return addUtcMonthsClamped(from, 3)
+  return addUtcMonthsClamped(from, 1)
 }
 
 function mapProviderStatus(status: string | null): SubscriptionStatusValue {
