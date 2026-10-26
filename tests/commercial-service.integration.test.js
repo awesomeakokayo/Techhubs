@@ -86,11 +86,20 @@ test(
       assert.equal(snapshot.tier, 'PRO')
       assert.equal(snapshot.hasAllPremiumTracks, true)
 
-      // Cancellation keeps access until period end.
-      await applyBillingEvent(prisma, event({ ...proEvent, type: 'subscription_cancelled', rawType: 'subscription_cancelled', status: 'cancelled' }), 'lemonsqueezy:hash-3')
+      // Cancellation events do not always carry a refreshed period end.
+      // Preserve the previously verified end date instead of extending access.
+      await applyBillingEvent(prisma, event({
+        ...proEvent,
+        type: 'subscription_cancelled',
+        rawType: 'subscription_cancelled',
+        status: 'cancelled',
+        currentPeriodEnd: null,
+      }), 'lemonsqueezy:hash-3')
       snapshot = await getEntitlementSnapshot(prisma, user.id)
       assert.equal(snapshot.tier, 'PRO')
       assert.equal(snapshot.cancelAtPeriodEnd, true)
+      const cancelledSub = await prisma.subscription.findUnique({ where: { userId: user.id } })
+      assert.equal(cancelledSub.currentPeriodEnd.toISOString(), periodEnd)
 
       // Expiry removes Pro (Track Pass remains).
       await applyBillingEvent(prisma, event({ ...proEvent, type: 'subscription_expired', rawType: 'subscription_expired', status: 'expired', currentPeriodEnd: new Date(Date.now() - 86400000).toISOString() }), 'lemonsqueezy:hash-4')
