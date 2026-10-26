@@ -76,7 +76,6 @@ export default function PricingPage({
       : undefined
 
   const campaign = getFoundingLearnerCampaign()
-  const trackPassProvider = selectProvider('TRACK_PASS', preferredProvider)
   const trackPassReady = checkedOutPlanReady('TRACK_PASS', preferredProvider)
   // Never display urgency when a real purchase cannot be completed.
   const showFoundingOffer = country === 'NG' && campaign.active && trackPassReady
