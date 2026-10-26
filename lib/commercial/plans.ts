@@ -51,7 +51,7 @@ export const PLANS: Record<PlanId, PlanDefinition> = {
     summary: 'One-time purchase for three calendar months of access to one premium track you choose.',
     features: [
       'Three months of access to one premium track you choose',
-      'Includes the track\x27s AI project assessments',
+      '30 AI project assessments per month while access is active',
       'No automatic renewal — nothing is charged when the term ends',
       'Your progress, submissions and certificates are kept when the term ends',
     ],
@@ -83,7 +83,6 @@ export const PLANS: Record<PlanId, PlanDefinition> = {
     features: [
       'Every included premium guided path',
       'Pro AI assessment allowance each month',
-      'Priority assessment capacity',
       'Billed every three months; cancel any time',
     ],
     grantsAllPremiumTracks: true,
