@@ -1,6 +1,6 @@
 # Reviewer packet — Video Editing
 
-- **Track id:** `video`  ·  **Slug:** `video-editing`  ·  **Category:** grow  ·  **AI track:** no
+- **Track id:** `video`  ·  **Slug:** `video-editing`  ·  **Category:** design  ·  **AI track:** no
 - **Status:** ⏳ AWAITING INDEPENDENT HUMAN REVIEW — **not approved**.
 - **Automated evidence (not approval):** readiness 99.3/100 · worthiness 98.5/100 · mandatory gates pass. A passing mechanical audit is not human sign-off.
 
