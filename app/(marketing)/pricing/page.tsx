@@ -102,8 +102,8 @@ export default function PricingPage({
                   : !provider
                     ? 'The payment option for this plan is not configured yet.'
                     : 'Checkout is in final verification.'
-            const monthlyPrice = provider ? resolveProviderPrice(provider, 'PRO_MONTHLY') : null
-            const annualPrice = provider ? resolveProviderPrice(provider, 'PRO_ANNUAL') : null
+            const monthlyPrice = resolveProviderPrice(preferredProvider, 'PRO_MONTHLY')
+            const annualPrice = resolveProviderPrice(preferredProvider, 'PRO_ANNUAL')
             const annualSavingsPercent =
               pricesApproved &&
               monthlyPrice &&
@@ -131,7 +131,7 @@ export default function PricingPage({
                 )}
                 <h2 className="font-display text-lg font-semibold text-text-primary">{plan.displayName}</h2>
                 <p className="mt-1 text-sm text-text-secondary">{plan.summary}</p>
-                <p className="mt-4 font-display text-2xl text-text-primary">{planPriceLabel(planId, provider)}</p>
+                <p className="mt-4 font-display text-2xl text-text-primary">{planPriceLabel(planId, preferredProvider)}</p>
                 <ul className="mt-4 space-y-2 text-sm text-text-secondary">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {feature}</li>
