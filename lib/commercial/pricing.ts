@@ -8,8 +8,13 @@
  */
 import type { PlanId } from './plans'
 import type { ProviderId } from './providers'
+import {
+  FOUNDING_LEARNER_CAMPAIGN_ID,
+  getFoundingLearnerCampaign,
+} from './campaign'
 
-export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000'
+export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-NGN-APPROVED-PRICING-V1'
+export const FOUNDING_LEARNER_PRICING_VERSION = 'TSH-COMMERCE-2026-10-FOUNDING-LEARNER-3M-NGN3000'
 
 export interface PlanPrice {
   planId: PlanId
@@ -62,6 +67,43 @@ export function isPriceApproved(
 /** Resolve the configured price for a provider + plan, approved or not. */
 export function resolveProviderPrice(provider: ProviderId, planId: PlanId): PlanPrice | null {
   return PRICE_CATALOGUE[provider]?.[planId] ?? null
+}
+
+/**
+ * Resolve the authoritative price for display or a new order. The promotion is
+ * server-time-gated, only applies to the Nigerian one-time Track Pass, and never
+ * changes Pro subscription prices.
+ */
+export interface ResolvedCommercialPrice {
+  price: PlanPrice
+  pricingVersion: string
+  campaignId: string | null
+}
+
+export function resolveCommercialPrice(
+  provider: ProviderId,
+  planId: PlanId,
+  now: Date = new Date(),
+  env: Record<string, string | undefined> = process.env,
+): ResolvedCommercialPrice | null {
+  const base = resolveProviderPrice(provider, planId)
+  if (!base) return null
+
+  const campaign = getFoundingLearnerCampaign(env, now)
+  if (
+    provider === 'paystack' &&
+    planId === 'TRACK_PASS' &&
+    base.approved &&
+    campaign.active
+  ) {
+    return {
+      price: { ...base, amountMinor: campaign.promotionalPriceMinor },
+      pricingVersion: FOUNDING_LEARNER_PRICING_VERSION,
+      campaignId: FOUNDING_LEARNER_CAMPAIGN_ID,
+    }
+  }
+
+  return { price: base, pricingVersion: COMMERCIAL_PRICING_VERSION, campaignId: null }
 }
 
 /** True when any provider has a configured price for the plan. */
