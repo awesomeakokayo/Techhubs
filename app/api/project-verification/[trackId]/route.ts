@@ -117,7 +117,7 @@ export async function POST(req: Request, { params }: { params: { trackId: string
   }
 
   // Plan + allowance come from trusted server-side entitlement state, never the
-  // browser. The monthly allowance (Free 20 / Track Pass 30 / Pro 150) is enforced
+  // browser. The monthly allowance (Free 2 / Track Pass 30 / Pro 150) is enforced
   // through an atomic, durable reservation taken BEFORE the billable model call.
   const snapshot = await getEntitlementSnapshot(prisma, userId)
   const requestId = deriveAssessmentRequestId({
