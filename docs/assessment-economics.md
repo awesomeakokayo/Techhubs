@@ -101,7 +101,7 @@ with an external Postgres; the owner must supply those actuals.
 
 | Control | Recommendation |
 | --- | --- |
-| Free allowance | **20 assessments/month** (completes any single base track with retries; see monetization plan §3.3) |
+| Free allowance | **2 assessments/month** (launch allowance; users retain access to free resources and progress after exhaustion) |
 | Pro allowance | **150 assessments/month** |
 | Per-user hourly | keep 20/hr while trialling; consider 6/hr to blunt scripted abuse (a learner rarely needs >6 judged submissions in an hour) |
 | Global hourly | keep 500/hr; alert at 60% |
