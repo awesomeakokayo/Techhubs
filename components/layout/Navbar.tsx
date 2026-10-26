@@ -8,6 +8,48 @@ import { ArrowRight, ArrowUpRight, LayoutDashboard, Menu, Search, X } from 'luci
 import { SearchModal } from '@/components/search/SearchModal'
 import { LogoMark } from '@/components/brand/Logo'
 
+const ATTRIBUTION_STORAGE_KEY = 'tsh_checkout_attribution_v1'
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'] as const
+
+function captureFirstTouchAttribution() {
+  try {
+    const query = new URLSearchParams(window.location.search)
+    const current: Record<string, string> = {}
+    for (const key of UTM_KEYS) {
+      const value = query.get(key)?.trim().slice(0, 120)
+      if (value) current[key] = value
+    }
+
+    const savedRaw = window.localStorage.getItem(ATTRIBUTION_STORAGE_KEY)
+    const saved = savedRaw ? JSON.parse(savedRaw) as Record<string, unknown> : {}
+    const next: Record<string, string> = {}
+    for (const key of UTM_KEYS) {
+      const oldValue = saved[key]
+      const cleanOld = typeof oldValue === 'string' ? oldValue.slice(0, 120) : ''
+      if (cleanOld) next[key] = cleanOld
+      else if (current[key]) next[key] = current[key]
+    }
+
+    const landingPath = typeof saved.landingPath === 'string'
+      ? saved.landingPath
+      : window.location.pathname
+    if (landingPath.startsWith('/') && !landingPath.startsWith('//')) next.landingPath = landingPath
+
+    const oldHost = typeof saved.referrerHost === 'string' ? saved.referrerHost : ''
+    if (oldHost) next.referrerHost = oldHost.slice(0, 200)
+    else if (document.referrer) {
+      try {
+        const host = new URL(document.referrer).hostname.toLowerCase()
+        if (host && host !== window.location.hostname) next.referrerHost = host.slice(0, 200)
+      } catch {}
+    }
+
+    if (Object.keys(next).length) window.localStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(next))
+  } catch {
+    // Storage, query parsing and attribution are best-effort; never block navigation.
+  }
+}
+
 const NAV_LINKS = [
   { href: '/roadmaps', label: 'Roadmaps' },
   { href: '/paths', label: 'Paths' },
@@ -47,6 +89,7 @@ export function Navbar() {
   useEffect(() => {
     setMenuOpen(false)
     setSearchOpen(false)
+    captureFirstTouchAttribution()
   }, [pathname])
 
   useEffect(() => {
