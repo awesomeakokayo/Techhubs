@@ -9,6 +9,7 @@ import {
 import { applyBillingEvent } from '@/lib/commercial/service'
 import { recordLearningEvent } from '@/lib/event-recorder'
 import { isPlanId } from '@/lib/commercial/plans'
+import { sanitizeCheckoutAttribution } from '@/lib/commercial/attribution'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
 
 export const dynamic = 'force-dynamic'
@@ -49,7 +50,7 @@ export async function POST(req: Request) {
     const order = event.orderReference
       ? await prisma.paymentOrder.findUnique({
           where: { reference: event.orderReference },
-          select: { productCode: true, campaignId: true, pricingVersion: true, amount: true, currency: true },
+          select: { productCode: true, campaignId: true, pricingVersion: true, amount: true, currency: true, attribution: true },
         })
       : null
     const result = await applyBillingEvent(prisma, event, providerEventId)
@@ -73,6 +74,7 @@ export async function POST(req: Request) {
             purchaseType: isRenewal ? 'renewal' : 'initial',
             provider: 'lemonsqueezy',
             occurredAt: event.occurredAt,
+            ...(sanitizeCheckoutAttribution(order?.attribution) ?? {}),
           },
         })
         if (planId && planId !== 'TRACK_PASS' && isRenewal) {
@@ -92,7 +94,14 @@ export async function POST(req: Request) {
         await recordLearningEvent({
           userId: result.userId,
           eventName: 'purchase_failed',
-          metadata: { planId, amountMinor: event.amountMinor, currency: event.currency, billingEvent: event.rawType },
+          metadata: {
+            planId,
+            amountMinor: event.amountMinor,
+            currency: event.currency,
+            billingEvent: event.rawType,
+            campaignId: order?.campaignId ?? null,
+            ...(sanitizeCheckoutAttribution(order?.attribution) ?? {}),
+          },
         })
       } else if (event.type === 'subscription_cancelled') {
         await recordLearningEvent({
