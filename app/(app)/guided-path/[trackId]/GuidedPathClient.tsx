@@ -890,6 +890,13 @@ export function GuidedPathClient({ trackId, trackMeta }: { trackId: string; trac
         ) : null}
       </div>
 
+      {quotaRemaining !== null ? (
+        <p className="mt-4 text-xs text-text-muted" role="status" aria-live="polite">
+          {quotaTier === 'FREE' ? 'Free AI assessments remaining this month:' : 'AI assessments remaining this month:'}{' '}
+          <span className="font-mono font-semibold text-text-primary">{quotaRemaining}</span>
+        </p>
+      ) : null}
+
       {showQuotaUpgrade && quotaTier === 'FREE' ? (
         <section className="mt-5 rounded-xl border border-brand/25 bg-brand/[0.04] p-5 md:p-6" aria-labelledby="quota-upgrade-title">
           <p className="section-label">AI assessment allowance</p>
