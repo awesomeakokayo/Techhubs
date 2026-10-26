@@ -70,6 +70,14 @@ test('Paystack charge.success normalizes to payment_succeeded with metadata', ()
   assert.equal(event.providerCustomerId, 'CUS_1')
 })
 
+test('Paystack recurring and failed billing events are normalized', () => {
+  assert.equal(normalizePaystackEvent({ event: 'charge.failed', data: {} }).type, 'payment_failed')
+  const recurring = normalizePaystackEvent({ event: 'subscription.create', data: { subscription_code: 'SUB_X', plan: { plan_code: 'PLN_quarter' }, metadata: { plan_id: 'PRO_QUARTERLY' } } })
+  assert.equal(recurring.type, 'subscription_created')
+  assert.equal(recurring.productId, 'PLN_quarter')
+  assert.equal(recurring.providerSubscriptionId, 'SUB_X')
+})
+
 test('Paystack unknown events normalize to ignored', () => {
   assert.equal(normalizePaystackEvent({ event: 'transfer.success', data: {} }).type, 'ignored')
 })
