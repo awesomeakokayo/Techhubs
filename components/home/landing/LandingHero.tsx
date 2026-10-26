@@ -105,8 +105,8 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
             <div className="relative pb-2">
               <div className="relative h-36 overflow-hidden rounded-[20px] bg-brand md:h-48">
                 <img
-                  src="https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=1000"
-                  alt="Black professional concentrating while working on a laptop"
+                  src="https://images.unsplash.com/photo-1671726203454-5d7a5370a9f4?auto=format&fit=crop&w=1000&q=70"
+                  alt="Woman working at a laptop in a modern workspace"
                   width={1000}
                   height={667}
                   loading="eager"
