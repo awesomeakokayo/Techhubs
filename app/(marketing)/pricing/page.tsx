@@ -189,7 +189,6 @@ export default function PricingPage({
             <ul className="mt-5 space-y-3 text-sm text-text-secondary">
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> All included premium guided paths</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {allowanceForTier('PRO')} AI assessments per month</li>
-              <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Priority assessment capacity</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Cancellation and period-end access handled according to the selected subscription terms</li>
             </ul>
 
