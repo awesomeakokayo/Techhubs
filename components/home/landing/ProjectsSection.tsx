@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionRail } from './SectionRail'
 
@@ -74,13 +75,17 @@ export function ProjectsSection({
                           : 'landing-module bg-white',
                     ].join(' ')}
                   >
-                    <div
-                      aria-hidden="true"
-                      className="relative aspect-[16/10] w-full bg-cover bg-center"
-                      style={{
-                        backgroundImage: `linear-gradient(to top, rgba(14, 14, 13, 0.62), rgba(14, 14, 13, 0.02)), url('${(PROJECT_VISUALS[project.title] ?? PROJECT_VISUALS['Personal Portfolio']).image}')`,
-                      }}
-                    >
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand">
+                      <Image
+                        src={(PROJECT_VISUALS[project.title] ?? PROJECT_VISUALS['Personal Portfolio']).image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
+                        quality={58}
+                        loading="lazy"
+                        className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      />
+                      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/65 via-transparent to-transparent" />
                       <span className="absolute left-4 top-4 rounded-full border border-white/35 bg-ink/40 px-3 py-1.5 font-mono text-[0.55rem] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
                         Illustrative preview
                       </span>
