@@ -6,6 +6,7 @@ import { paymentLog, paymentLogError } from '@/lib/payment-log'
 import { isPlanId } from '@/lib/commercial/plans'
 import { normalizePaystackEvent, webhookContentHash } from '@/lib/commercial/webhooks'
 import { applyBillingEvent } from '@/lib/commercial/service'
+import { recordLearningEvent } from '@/lib/event-recorder'
 
 export const dynamic = 'force-dynamic'
 
@@ -51,18 +52,84 @@ export async function POST(req: Request) {
       // Pro orders deliberately have no track_id, so route by the internal plan id
       // as well as by the order's server-created productCode.
       const order = reference
-        ? await prisma.paymentOrder.findUnique({ where: { reference }, select: { productCode: true } })
+        ? await prisma.paymentOrder.findUnique({
+            where: { reference },
+            select: { productCode: true, userId: true, campaignId: true, amount: true, currency: true, pricingVersion: true },
+          })
         : null
-      const orderPlanId = order?.productCode
-      if (reference && (isPlanId(metadata?.plan_id) || isPlanId(orderPlanId))) {
-        const normalized = normalizePaystackEvent(event)
-        await applyBillingEvent(
+      const orderPlanId = isPlanId(order?.productCode) ? order.productCode : null
+      const normalized = normalizePaystackEvent(event)
+
+      if (reference && orderPlanId) {
+        const result = await applyBillingEvent(
           prisma,
-          { ...normalized, productCode: isPlanId(metadata?.plan_id) ? metadata.plan_id : orderPlanId },
+          { ...normalized, productCode: orderPlanId, userId: order!.userId },
           `paystack:${webhookContentHash(body)}`,
         )
+        if (result.applied && result.userId) {
+          await recordLearningEvent({
+            userId: result.userId,
+            eventName: 'purchase_succeeded',
+            metadata: {
+              planId: orderPlanId,
+              amountMinor: normalized.amountMinor,
+              currency: normalized.currency,
+              pricingVersion: order!.pricingVersion,
+              campaignId: order!.campaignId,
+              purchaseType: 'initial',
+            },
+          })
+          if (orderPlanId !== 'TRACK_PASS') {
+            await recordLearningEvent({
+              userId: result.userId,
+              eventName: 'subscription_started',
+              metadata: { planId: orderPlanId, amountMinor: normalized.amountMinor, currency: normalized.currency },
+            })
+          }
+        }
         break
       }
+
+      // Renewal charges have no new internal checkout order. They may only update
+      // a subscription already linked by verified provider subscription/customer ids.
+      if (normalized.providerSubscriptionId || normalized.providerCustomerId) {
+        const linked = await prisma.subscription.findFirst({
+          where: {
+            OR: [
+              ...(normalized.providerSubscriptionId
+                ? [{ providerSubscriptionId: normalized.providerSubscriptionId }, { paystackSubscriptionCode: normalized.providerSubscriptionId }]
+                : []),
+              ...(normalized.providerCustomerId
+                ? [{ providerCustomerId: normalized.providerCustomerId }, { paystackCustomerCode: normalized.providerCustomerId }]
+                : []),
+            ],
+          },
+          select: { userId: true, productCode: true },
+        })
+        if (linked && isPlanId(linked.productCode) && linked.productCode !== 'TRACK_PASS') {
+          const result = await applyBillingEvent(
+            prisma,
+            { ...normalized, productCode: linked.productCode, userId: linked.userId, orderReference: null },
+            `paystack:${webhookContentHash(body)}`,
+          )
+          if (result.applied && result.userId) {
+            await recordLearningEvent({
+              userId: result.userId,
+              eventName: 'purchase_succeeded',
+              metadata: { planId: linked.productCode, amountMinor: normalized.amountMinor, currency: normalized.currency, purchaseType: 'renewal' },
+            })
+            await recordLearningEvent({
+              userId: result.userId,
+              eventName: 'subscription_renewed',
+              metadata: { planId: linked.productCode, amountMinor: normalized.amountMinor, currency: normalized.currency },
+            })
+          }
+          break
+        }
+      }
+
+      // Never interpret an unlinked commercial plan claim as a legacy subscription.
+      if (isPlanId(metadata?.plan_id)) break
 
       // Legacy per-course purchase path: do not route to the new plan service.
       if (reference && metadata?.track_id) {
@@ -111,6 +178,30 @@ export async function POST(req: Request) {
       break
     }
 
+    case 'charge.failed': {
+      const reference = event.data?.reference
+      if (!reference) break
+      const order = await prisma.paymentOrder.findUnique({
+        where: { reference },
+        select: { productCode: true, userId: true, amount: true, currency: true, pricingVersion: true },
+      })
+      if (!order || !isPlanId(order.productCode)) break
+      const normalized = normalizePaystackEvent(event)
+      const result = await applyBillingEvent(
+        prisma,
+        { ...normalized, productCode: order.productCode, userId: order.userId },
+        `paystack:${webhookContentHash(body)}`,
+      )
+      if (result.applied) {
+        await recordLearningEvent({
+          userId: order.userId,
+          eventName: 'purchase_failed',
+          metadata: { planId: order.productCode, pricingVersion: order.pricingVersion, campaignId: null, providerStatus: normalized.status },
+        })
+      }
+      break
+    }
+
     case 'subscription.create':
     case 'subscription.not_renew':
     case 'subscription.disable':
@@ -137,7 +228,7 @@ export async function POST(req: Request) {
       if (linked && knownPlan) {
         // Canonical entitlement processing handles cancellation-at-period-end,
         // failed invoice grace and expiry; provider event IDs are idempotent.
-        await applyBillingEvent(
+        const applied = await applyBillingEvent(
           prisma,
           {
             ...normalized,
@@ -147,6 +238,15 @@ export async function POST(req: Request) {
           },
           `paystack:${webhookContentHash(body)}`,
         )
+        if (applied.applied && applied.userId) {
+          if (normalized.type === 'subscription_cancelled') {
+            await recordLearningEvent({ userId: applied.userId, eventName: 'subscription_cancelled', metadata: { planId: knownPlan, cancelAtPeriodEnd: true } })
+          } else if (normalized.type === 'subscription_expired') {
+            await recordLearningEvent({ userId: applied.userId, eventName: 'paid_access_expired', metadata: { planId: knownPlan } })
+          } else if (normalized.type === 'subscription_payment_failed') {
+            await recordLearningEvent({ userId: applied.userId, eventName: 'purchase_failed', metadata: { planId: knownPlan, billingEvent: normalized.rawType } })
+          }
+        }
       } else if (event.event === 'subscription.create' && customerCode) {
         // Legacy subscriptions are kept compatible; new Pro products never fall
         // through this branch because their order carries the canonical plan id.
