@@ -30,7 +30,7 @@ function collectCheckoutAttribution(): Record<string, string> | null {
     } as const
     for (const [queryKey, targetKey] of Object.entries(mapping) as [keyof typeof mapping, (typeof mapping)[keyof typeof mapping]][]) {
       const storedValue = stored[targetKey] ?? stored[queryKey]
-      const value = current[targetKey] || (typeof storedValue === 'string' ? storedValue.slice(0, 120) : '')
+      const value = (typeof storedValue === 'string' ? storedValue.slice(0, 120) : '') || current[targetKey] || ''
       if (value) result[targetKey] = value
     }
 
