@@ -1,10 +1,10 @@
 /**
  * Public pricing-page display rules.
  *
- * Approved Nigerian amounts remain visible while checkout is closed. A
- * promotional amount is presented as the active price only while its configured
- * campaign is active AND the matching checkout is ready; otherwise the UI may
- * explain the planned offer without pretending it can currently be purchased.
+ * Approved Nigerian base prices remain visible while checkout is gated.
+ * The ₦3,000 Founding Learner offer is always disclosed for planning, but it is
+ * only presented as the current chargeable price when the fixed campaign window
+ * is active and checkout is ready. A closed checkout never implies a live sale.
  */
 import type { PlanId } from './plans'
 import type { ProviderId } from './providers'
@@ -63,12 +63,7 @@ export function resolvePublicPricingPriceDisplay(options: {
     planId === 'TRACK_PASS' &&
     base.amountMinor === campaign.regularPriceMinor
 
-  const isPromotional = Boolean(
-    isNigerianTrackPass &&
-    campaign.active &&
-    checkoutReady,
-  )
-
+  const isPromotional = Boolean(isNigerianTrackPass && campaign.active && checkoutReady)
   if (isPromotional) {
     return {
       priceLabel: formatPrice({ ...base, amountMinor: campaign.promotionalPriceMinor }),
@@ -80,37 +75,68 @@ export function resolvePublicPricingPriceDisplay(options: {
     }
   }
 
-  let offerNotice: string | null = null
-  if (isNigerianTrackPass) {
-    if (campaign.active && !checkoutReady) {
-      offerNotice = 'Founding Learner price: ₦3,000. Checkout is not open yet.'
-    } else if (
-      campaign.configured &&
-      campaign.enabled &&
-      campaign.startsAt &&
-      now.getTime() < new Date(campaign.startsAt).getTime()
-    ) {
-      const startLabel = new Intl.DateTimeFormat('en-NG', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-        timeZone: 'Africa/Lagos',
-      }).format(new Date(campaign.startsAt))
-      offerNotice = `Founding Learner offer: ₦3,000 from ${startLabel} (Africa/Lagos).`
-    } else if (
-      campaign.configured &&
-      campaign.endsAt &&
-      now.getTime() >= new Date(campaign.endsAt).getTime()
-    ) {
-      offerNotice = 'The Founding Learner offer has ended.'
-    } else {
-      offerNotice = 'Founding Learner offer planned at ₦3,000 (50% off ₦6,000); dates will be announced.'
+  if (!isNigerianTrackPass) {
+    return {
+      priceLabel: formatPrice(base),
+      regularPriceLabel: null,
+      offerNotice: null,
+      isPromotional: false,
+      pricingVersion: COMMERCIAL_PRICING_VERSION,
+      campaignId: null,
     }
   }
 
+  // Once the configured campaign has ended, revert to the regular price.
+  if (campaign.configured && campaign.endsAt && now.getTime() >= new Date(campaign.endsAt).getTime()) {
+    return {
+      priceLabel: formatPrice(base),
+      regularPriceLabel: null,
+      offerNotice: 'The Founding Learner offer has ended.',
+      isPromotional: false,
+      pricingVersion: COMMERCIAL_PRICING_VERSION,
+      campaignId: null,
+    }
+  }
+
+  // A future, explicitly configured campaign is advertised without activating
+  // the discount early. Checkout stays at the regular price until the start.
+  if (campaign.configured && campaign.enabled && campaign.startsAt && now.getTime() < new Date(campaign.startsAt).getTime()) {
+    const startLabel = new Intl.DateTimeFormat('en-NG', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+      timeZone: 'Africa/Lagos',
+    }).format(new Date(campaign.startsAt))
+    return {
+      priceLabel: formatPrice(base),
+      regularPriceLabel: null,
+      offerNotice: `Founding Learner offer: ₦3,000 from ${startLabel} (Africa/Lagos). The regular price applies until then.`,
+      isPromotional: false,
+      pricingVersion: COMMERCIAL_PRICING_VERSION,
+      campaignId: null,
+    }
+  }
+
+  // Show the planned amount prominently while checkout is closed. It remains
+  // explicitly non-purchasable; the checkout version stays at the regular price.
+  if (!checkoutReady) {
+    return {
+      priceLabel: formatPrice({ ...base, amountMinor: campaign.promotionalPriceMinor }),
+      regularPriceLabel: formatPrice(base),
+      offerNotice: campaign.active
+        ? 'Founding Learner offer: 50% off the regular price. Checkout is not open yet.'
+        : 'Planned Founding Learner offer: 50% off the regular price. Campaign dates and checkout availability will be announced.',
+      isPromotional: false,
+      pricingVersion: COMMERCIAL_PRICING_VERSION,
+      campaignId: null,
+    }
+  }
+
+  // If checkout is ready but the campaign is not currently active, never show
+  // the discounted amount as purchasable.
   return {
     priceLabel: formatPrice(base),
     regularPriceLabel: null,
-    offerNotice,
+    offerNotice: 'Founding Learner offer planned at ₦3,000 (50% off ₦6,000); dates will be announced.',
     isPromotional: false,
     pricingVersion: COMMERCIAL_PRICING_VERSION,
     campaignId: null,
