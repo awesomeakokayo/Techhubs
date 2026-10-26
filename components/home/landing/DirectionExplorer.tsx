@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionRail } from './SectionRail'
@@ -26,23 +25,23 @@ export interface Direction {
 // Free Pexels stock photos. Images are illustrative and do not depict TechSkillHub learners or imply endorsement.
 const DIRECTION_VISUALS: Record<string, { image: string; alt: string }> = {
   build: {
-    image: 'https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=640',
     alt: 'Black professional concentrating while working on a laptop',
   },
   design: {
-    image: 'https://images.pexels.com/photos/7971542/pexels-photo-7971542.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/7971542/pexels-photo-7971542.jpeg?auto=compress&cs=tinysrgb&w=640',
     alt: 'Black woman focused on work at a laptop in a modern office',
   },
   analyze: {
-    image: 'https://images.pexels.com/photos/8204353/pexels-photo-8204353.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/8204353/pexels-photo-8204353.jpeg?auto=compress&cs=tinysrgb&w=640',
     alt: 'Black woman concentrating while working at a computer',
   },
   grow: {
-    image: 'https://images.pexels.com/photos/9430884/pexels-photo-9430884.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/9430884/pexels-photo-9430884.jpeg?auto=compress&cs=tinysrgb&w=640',
     alt: 'Black colleagues discussing a project around a table',
   },
   ai: {
-    image: 'https://images.pexels.com/photos/6974804/pexels-photo-6974804.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/6974804/pexels-photo-6974804.jpeg?auto=compress&cs=tinysrgb&w=640',
     alt: 'Black professional working thoughtfully on a laptop',
   },
 }
@@ -111,14 +110,14 @@ export function DirectionExplorer({ directions }: { directions: Direction[] }) {
                   className="landing-tab group overflow-hidden rounded-[14px] p-0 text-left last:col-span-2 sm:last:col-span-1"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-brand">
-                    <Image
+                    <img
                       src={DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}
                       alt=""
-                      fill
-                      sizes="(max-width: 640px) 48vw, (max-width: 1024px) 30vw, 18vw"
-                      quality={55}
+                      width={640}
+                      height={427}
                       loading="lazy"
-                      className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                     />
                     <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
                     <span className="absolute left-3 top-3 font-mono text-[0.6rem] tracking-[0.12em] text-white/90">
@@ -153,14 +152,14 @@ export function DirectionExplorer({ directions }: { directions: Direction[] }) {
                       aria-hidden="true"
                       className="relative -mx-6 -mt-6 mb-5 h-36 overflow-hidden bg-brand md:h-44"
                     >
-                      <Image
+                      <img
                         src={DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 100vw, 420px"
-                        quality={58}
+                        alt={DIRECTION_VISUALS[direction.id]?.alt ?? ""}
+                        width={900}
+                        height={600}
                         loading="lazy"
-                        className="object-cover"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent" />
                     </div>
