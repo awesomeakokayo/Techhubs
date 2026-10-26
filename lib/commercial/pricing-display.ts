@@ -124,7 +124,7 @@ export function resolvePublicPricingPriceDisplay(options: {
       regularPriceLabel: formatPrice(base),
       offerNotice: campaign.active
         ? 'Founding Learner offer: 50% off the regular price. Checkout is not open yet.'
-        : 'Planned Founding Learner offer: 50% off the regular price. Campaign dates and checkout availability will be announced.',
+        : 'Planned Founding Learner offer: ₦3,000 (50% off ₦6,000); campaign dates and checkout availability will be announced.',
       isPromotional: false,
       pricingVersion: COMMERCIAL_PRICING_VERSION,
       campaignId: null,
