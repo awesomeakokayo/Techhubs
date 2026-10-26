@@ -24,16 +24,17 @@ function priceLabel(planId: PlanId, provider: ProviderId | null): string {
 function unavailableReason(
   planId: PlanId,
   provider: ProviderId | null,
+  displayProvider: ProviderId,
   country: string,
 ): string | undefined {
-  const price = provider ? resolveProviderPrice(provider, planId) : null
-  if (!pricesApprovedForPublication() || !isPriceApproved(price)) {
-    return 'Pricing and checkout are still being finalised.'
-  }
   if (country === 'NG' && planId !== 'TRACK_PASS') {
     return 'Pro subscriptions in naira are not configured yet.'
   }
-  if (!provider) return 'This payment option is not configured yet.'
+  const price = resolveProviderPrice(displayProvider, planId)
+  if (!pricesApprovedForPublication() || !isPriceApproved(price)) {
+    return 'This price is not approved for publication yet.'
+  }
+  if (!provider) return 'The price is approved, but checkout is not configured yet.'
   if (!checkoutEnabled() || !launchReadiness(process.env, planId, provider).ready) {
     return 'Checkout is not available until the payment checks are complete.'
   }
@@ -69,9 +70,9 @@ export function PricingSection() {
         planId,
         {
           provider,
-          price: priceLabel(planId, provider),
+          price: priceLabel(planId, preferredProvider),
           ready: isReady(planId, provider),
-          reason: unavailableReason(planId, provider, country),
+          reason: unavailableReason(planId, provider, preferredProvider, country),
         },
       ]
     }),
@@ -99,7 +100,7 @@ export function PricingSection() {
           <article className="flex flex-col rounded-[18px] border border-hairline bg-white p-5 md:p-6">
             <p className="landing-eyebrow">01 / Start here</p>
             <h3 className="mt-3 font-display text-xl font-semibold text-ink">Free</h3>
-            <p className="mt-2 font-display text-3xl font-semibold text-ink">₦0 / $0</p>
+            <p className="mt-2 font-display text-3xl font-semibold text-ink">Free forever</p>
             <p className="mt-3 text-sm leading-relaxed text-ink/70">
               Build your foundation without a payment barrier.
             </p>
