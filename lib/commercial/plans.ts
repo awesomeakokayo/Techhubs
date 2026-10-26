@@ -14,9 +14,9 @@
 
 import { FIRST_WAVE_TRACK_IDS, resolvePremiumConfig } from './premium'
 
-export type PlanId = 'TRACK_PASS' | 'PRO_MONTHLY' | 'PRO_ANNUAL'
+export type PlanId = 'TRACK_PASS' | 'PRO_MONTHLY' | 'PRO_QUARTERLY' | 'PRO_ANNUAL'
 export type PlanKind = 'ONE_TIME' | 'SUBSCRIPTION'
-export type BillingInterval = 'NONE' | 'MONTH' | 'YEAR'
+export type BillingInterval = 'NONE' | 'MONTH' | 'QUARTER' | 'YEAR'
 export type EntitlementTier = 'FREE' | 'PASS' | 'PRO'
 
 export interface PlanDefinition {
@@ -37,7 +37,7 @@ export interface PlanDefinition {
   grantsTrackCount: number
 }
 
-export const PLAN_IDS: readonly PlanId[] = ['TRACK_PASS', 'PRO_MONTHLY', 'PRO_ANNUAL'] as const
+export const PLAN_IDS: readonly PlanId[] = ['TRACK_PASS', 'PRO_MONTHLY', 'PRO_QUARTERLY', 'PRO_ANNUAL'] as const
 
 export const PLANS: Record<PlanId, PlanDefinition> = {
   TRACK_PASS: {
@@ -70,6 +70,22 @@ export const PLANS: Record<PlanId, PlanDefinition> = {
       'Pro AI assessment allowance each month',
       'Priority assessment capacity',
       'Cancel any time; access continues to period end',
+    ],
+    grantsAllPremiumTracks: true,
+    grantsTrackCount: Number.POSITIVE_INFINITY,
+  },
+  PRO_QUARTERLY: {
+    id: 'PRO_QUARTERLY',
+    tier: 'PRO',
+    kind: 'SUBSCRIPTION',
+    interval: 'QUARTER',
+    displayName: 'TechSkillHub Pro — Quarterly',
+    summary: 'Full premium guided-path access billed every three months, with more value than paying monthly.',
+    features: [
+      'Every included premium guided path',
+      'Pro AI assessment allowance each month',
+      'Priority assessment capacity',
+      'Billed every three months; cancel any time',
     ],
     grantsAllPremiumTracks: true,
     grantsTrackCount: Number.POSITIVE_INFINITY,
@@ -135,11 +151,11 @@ export function isPremiumTrack(trackId: string, env: Record<string, string | und
 }
 
 /**
- * Monthly AI-assessment allowances by tier. Free is a defined allowance (never
- * unlimited). Values are provisional configuration, not published figures.
+ * Monthly AI-assessment allowances by tier. These limits are enforced server-side;
+ * Free's public plan copy intentionally says only "Limited AI assessments".
  */
 export const ASSESSMENT_ALLOWANCES: Record<EntitlementTier, number> = {
-  FREE: 20,
+  FREE: 2,
   PASS: 30,
   PRO: 150,
 }
