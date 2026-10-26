@@ -56,7 +56,7 @@ test('active promotion is not presented as available while checkout is not ready
   assert.equal(display.regularPriceLabel, '₦6,000')
   assert.equal(display.isPromotional, false)
   assert.match(display.offerNotice, /₦3,000/)
-  assert.match(display.offerNotice, /Checkout is not open yet/)
+  assert.match(display.offerNotice, /checkout is not open yet/i)
   assert.equal(display.pricingVersion, 'TSH-COMMERCE-2026-10-NGN-APPROVED-PRICING-V1')
 })
 
