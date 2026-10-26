@@ -30,11 +30,11 @@ const DIRECTION_VISUALS: Record<string, { image: string; alt: string }> = {
     alt: 'Black professional concentrating while working on a laptop',
   },
   design: {
-    image: 'https://images.pexels.com/photos/1181727/pexels-photo-1181727.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/7971542/pexels-photo-7971542.jpeg?auto=compress&cs=tinysrgb&w=900',
     alt: 'Black woman focused on work at a laptop in a modern office',
   },
   analyze: {
-    image: 'https://images.pexels.com/photos/7191959/pexels-photo-7191959.jpeg?auto=compress&cs=tinysrgb&w=900',
+    image: 'https://images.pexels.com/photos/8204353/pexels-photo-8204353.jpeg?auto=compress&cs=tinysrgb&w=900',
     alt: 'Black woman concentrating while working at a computer',
   },
   grow: {
