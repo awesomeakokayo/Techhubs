@@ -69,7 +69,7 @@ The application reuses Vercel Analytics for low-friction client funnel events an
 | pricing_plan_selected | Vercel Analytics when a plan checkout CTA is activated |
 | launch_offer_viewed | Vercel Analytics when the active campaign banner renders |
 | pricing_cta_clicked | Vercel Analytics when a pricing/offer CTA is clicked |
-| checkout_started | Vercel Analytics after checkout initialization returns a provider URL |
+| checkout_started | Vercel Analytics and the authenticated LearningEvent store after checkout initialization returns a provider URL; includes plan, amount, currency, campaign and sanitized UTM/source attribution |
 | purchase_succeeded | Authenticated database event written only after the canonical service accepts a verified successful-payment webhook |
 | purchase_failed | Database event from a verified failed payment or failed subscription invoice |
 | subscription_started | Database event for a successful initial Pro payment |
@@ -81,7 +81,7 @@ The application reuses Vercel Analytics for low-friction client funnel events an
 | free_ai_quota_exhausted | Database event when a Free learner exhausts the two-use allowance |
 | pro_upgrade_viewed / pro_upgrade_clicked | Upgrade prompt view/click following quota exhaustion |
 
-Authenticated checkout orders store sanitized first-touch UTM fields, landing path and referrer hostname when available, together with the server-assigned campaign ID, price version, selected plan, amount, currency and order reference. The attribution sanitizer drops arbitrary fields, user identifiers, email addresses and payment data.
+Authenticated checkout orders store sanitized first-touch UTM fields, landing path and referrer hostname when available, together with the server-assigned campaign ID, price version, selected plan, amount, currency and order reference. The same whitelisted attribution fields are copied to first-party checkout-start and verified purchase events so the checkout and paid-conversion funnel can be analysed together. The attribution sanitizer drops arbitrary fields, user identifiers, email addresses and payment data.
 
 ### Business metrics
 
