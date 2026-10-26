@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: '/guides', label: 'Guides' },
   { href: '/ai', label: 'AI' },
   { href: '/career', label: 'Career' },
+  { href: '/pricing', label: 'Pricing' },
 ]
 
 export function Navbar() {
