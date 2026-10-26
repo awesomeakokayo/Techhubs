@@ -32,7 +32,7 @@ the free mission, and **without** turning the existing free experience into a pa
 3. **Pro sells capacity and depth, not competence.** Payment must not be a
    substitute for demonstrated skill, and certificates must not overstate what a
    learner has achieved.
-4. **The only meaningful recurring cost is AI project assessment.** Pro is priced
+4. **The main variable operating cost is AI project assessment.** Pro is priced
    to cover that cost plus a margin, with abuse controls.
 5. **Nothing is enabled until settlement (see `payment-provider-readiness.md`) and
    policy are approved.**
@@ -75,7 +75,7 @@ Legend for the five required categories:
 | Tier | Suggested monthly allowance | Rationale |
 | --- | --- | --- |
 | Free | **2 assessments/month** | Small entry allowance; exact usage is shown inside the authenticated app. Free roadmaps, resources, projects, career guides and existing progress stay available after exhaustion. **[approved]** |
-| Pro | **150 assessments/month** | Multiple tracks in parallel + portfolio iteration. **[proposal]** |
+| Pro | **150 assessments/month** | Finite monthly capacity for multiple tracks and portfolio iteration. **[approved catalogue]** |
 
 **Allowance policy:** Free accounts receive two server-enforced AI project assessments per UTC calendar month. The exact remaining allowance is shown in the authenticated dashboard and guided learning experience. Exhausting it must not remove access to free roadmaps, resources, projects, career guides, recorded progress, submissions or earned certificates. A project assessment already in flight is not stopped mid-request; a completed final assessment can be followed by a respectful Pro upgrade prompt. Identical evidence reuse and deterministic pre-checks remain non-billable.
 
