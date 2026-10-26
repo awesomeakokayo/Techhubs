@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import { SectionRail } from './SectionRail'
 
@@ -16,15 +15,15 @@ const VARIANTS = ['light', 'aqua', 'grape'] as const
 
 const PROJECT_VISUALS: Record<string, { image: string; label: string }> = {
   'Personal Portfolio': {
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=75',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=720&q=65',
     label: 'Interface design',
   },
   'URL Shortener': {
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=75',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=720&q=65',
     label: 'APIs and systems',
   },
   'E-commerce Platform': {
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=75',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=720&q=65',
     label: 'Storefront experience',
   },
 }
@@ -76,14 +75,14 @@ export function ProjectsSection({
                     ].join(' ')}
                   >
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand">
-                      <Image
+                      <img
                         src={(PROJECT_VISUALS[project.title] ?? PROJECT_VISUALS['Personal Portfolio']).image}
                         alt=""
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 360px"
-                        quality={58}
+                        width={720}
+                        height={450}
                         loading="lazy"
-                        className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                       />
                       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/65 via-transparent to-transparent" />
                       <span className="absolute left-4 top-4 rounded-full border border-white/35 bg-ink/40 px-3 py-1.5 font-mono text-[0.55rem] uppercase tracking-[0.12em] text-white backdrop-blur-sm">
