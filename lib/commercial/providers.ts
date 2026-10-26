@@ -35,6 +35,7 @@ export const PROVIDER_PRODUCT_ENV: Record<ProviderId, Partial<Record<PlanId, str
   lemonsqueezy: {
     TRACK_PASS: 'LEMONSQUEEZY_VARIANT_TRACK_PASS',
     PRO_MONTHLY: 'LEMONSQUEEZY_VARIANT_PRO_MONTHLY',
+    PRO_QUARTERLY: 'LEMONSQUEEZY_VARIANT_PRO_QUARTERLY',
     PRO_ANNUAL: 'LEMONSQUEEZY_VARIANT_PRO_ANNUAL',
   },
   // Paystack transactions do not require a provider-side plan/product id.
