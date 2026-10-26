@@ -89,7 +89,7 @@ export function Footer() {
           className="relative mt-12 h-32 overflow-hidden rounded-[18px] border border-hairline bg-cover bg-center sm:h-40 md:mt-14 md:h-48"
           style={{
             backgroundImage:
-              "linear-gradient(90deg, rgba(34, 34, 34, 0.28), rgba(75, 78, 109, 0.08)), url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1800&q=80')",
+              "linear-gradient(90deg, rgba(34, 34, 34, 0.28), rgba(75, 78, 109, 0.08)), url('https://images.unsplash.com/photo-1603201667230-bd139210db18?auto=format&fit=crop&w=1800&q=80')",
           }}
         />
 
