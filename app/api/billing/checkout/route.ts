@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { getTrackById } from '@/lib/tracks'
 import { getPlan, isPlanId, isPremiumTrack } from '@/lib/commercial/plans'
-import { COMMERCIAL_PRICING_VERSION, resolveProviderPrice } from '@/lib/commercial/pricing'
+import { resolveCommercialPrice } from '@/lib/commercial/pricing'
 import {
   checkoutEnabled,
   providerProductId,
@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid plan selected.' }, { status: 400 })
   }
   const plan = getPlan(planId)!
+  const expectedPricingVersion = typeof body?.expectedPricingVersion === 'string' ? body.expectedPricingVersion : null
 
   let trackId: string | null = null
   if (plan.kind === 'ONE_TIME') {
@@ -79,13 +80,30 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'No payment method is currently available.' }, { status: 503 })
   }
 
-  const price = resolveProviderPrice(provider, planId)
-  if (!price) {
+  const resolvedPrice = resolveCommercialPrice(provider, planId)
+  if (!resolvedPrice) {
     return NextResponse.json({ error: 'This plan is not available at the moment.' }, { status: 503 })
   }
+  const price = resolvedPrice.price
 
-  // Evaluate the exact product and provider, so approving the Nigerian Track
-  // Pass cannot accidentally unlock any unapproved international Pro price.
+  // A stale campaign page must never silently charge the regular price after the
+  // offer expires. Orders created before expiry keep their recorded amount; only
+  // new order creation is checked against the currently active price version.
+  if (expectedPricingVersion && expectedPricingVersion !== resolvedPrice.pricingVersion) {
+    return NextResponse.json(
+      { code: 'PRICE_CHANGED', error: 'The offer or price has changed. Review the current price before starting checkout.' },
+      { status: 409 },
+    )
+  }
+
+  // A Pro charge must use a configured recurring plan code, never a one-off
+  // transaction that merely grants a temporary subscription-shaped entitlement.
+  if (plan.kind === 'SUBSCRIPTION' && provider === 'paystack' && !providerProductId('paystack', planId)) {
+    return NextResponse.json({ error: 'Recurring billing is not configured for this plan yet.' }, { status: 503 })
+  }
+
+  // Evaluate the exact product and provider. Prices may be displayed before
+  // checkout is released, but checkout remains fail-closed until every gate passes.
   const guard = launchReadiness(process.env, planId, provider)
   if (!guard.ready) {
     paymentLogError('checkout_initialized', 'launch guard blocked checkout', { blockers: guard.blockers, planId, provider })
@@ -104,7 +122,7 @@ export async function POST(req: Request) {
       currency: price.currency,
       amountMinor: price.amountMinor,
       reference,
-      pricingVersion: COMMERCIAL_PRICING_VERSION,
+      pricingVersion: resolvedPrice.pricingVersion,
     })
   } catch (error) {
     paymentLogError('checkout_initialized', 'order create failed', {
@@ -151,15 +169,17 @@ export async function POST(req: Request) {
       headers: { Authorization: `Bearer ${secretKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: session.user.email,
-        amount: String(price.amountMinor),
-        currency: price.currency,
+        ...(plan.kind === 'SUBSCRIPTION'
+          ? { plan: providerProductId('paystack', planId) }
+          : { amount: String(price.amountMinor), currency: price.currency }),
         reference,
         callback_url: `${baseUrl}/billing/success?reference=${encodeURIComponent(reference)}`,
         metadata: {
           plan_id: planId,
           track_id: trackId ?? '',
           user_id: session.user.id,
-          pricing_version: COMMERCIAL_PRICING_VERSION,
+          pricing_version: resolvedPrice.pricingVersion,
+          campaign_id: resolvedPrice.campaignId ?? '',
           provider: 'PAYSTACK',
         },
       }),
