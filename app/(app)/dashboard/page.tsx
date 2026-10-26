@@ -14,6 +14,7 @@ import {
   WEEKDAY_LABELS,
 } from '@/lib/learning-rhythm'
 import { PathSummaryCard } from '@/components/app/PathSummaryCard'
+import { checkAssessmentAllowance } from '@/lib/commercial/service'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -42,7 +43,7 @@ export default async function DashboardPage() {
   const historyStart = new Date(now)
   historyStart.setDate(historyStart.getDate() - 400)
 
-  const [profile, summaries, completions, activityRecords, totalActivities] = await Promise.all([
+  const [profile, summaries, completions, activityRecords, totalActivities, assessmentAllowance] = await Promise.all([
     prisma.learnerProfile.findUnique({ where: { userId } }),
     getGuidedPathSummaries(prisma, userId),
     prisma.courseCompletion.findMany({ where: { userId }, select: { trackId: true } }),
@@ -51,6 +52,7 @@ export default async function DashboardPage() {
       select: { completedAt: true },
     }),
     prisma.userProgress.count({ where: { userId, status: 'COMPLETED' } }),
+    checkAssessmentAllowance(prisma, userId),
   ])
 
   const timeZone = profile?.timeZone || DEFAULT_LEARNER_TIME_ZONE
@@ -109,6 +111,25 @@ export default async function DashboardPage() {
           </p>
         </div>
       </header>
+
+      <section className="mt-5 flex flex-col gap-4 rounded-xl border border-border-default bg-surface p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5" aria-label="AI assessment allowance">
+        <div>
+          <p className="section-label">AI assessments / this month</p>
+          <p className="mt-1 font-display text-2xl font-semibold text-text-primary">
+            {assessmentAllowance.remaining} remaining
+          </p>
+          <p className="mt-1 text-sm text-text-secondary">
+            {assessmentAllowance.remaining === 0
+              ? 'You have used your current monthly allowance. Free learning content remains available.'
+              : `Your remaining allowance is managed securely by TechSkillHub.`}
+          </p>
+        </div>
+        {assessmentAllowance.tier === 'FREE' ? (
+          <Link href="/pricing#pro" className="btn btn-secondary inline-flex shrink-0 items-center justify-center gap-2">
+            Explore Pro <ArrowRight size={15} />
+          </Link>
+        ) : null}
+      </section>
 
       {/* Continue learning */}
       <section className="mt-8 overflow-hidden rounded-2xl border border-border-default bg-surface shadow-card">
