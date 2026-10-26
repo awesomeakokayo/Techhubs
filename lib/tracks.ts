@@ -3244,7 +3244,7 @@ export const TRACKS: Track[] = [
     name: "Video Editing",
     tagline:
       "Transform raw footage into stories that captivate and retain audiences.",
-    category: "grow",
+    category: "design",
     colorHex: "#FBB040",
     icon: "Film",
     difficulty: 2,
