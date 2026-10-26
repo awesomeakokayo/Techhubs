@@ -99,7 +99,7 @@ Never include payment credentials, emails, user secrets or submitted assessment 
 - Plan selection: Free users start learning without payment. A one-path buyer chooses a premium guided path and continues to checkout. The Pro card recommends Quarterly and identifies Annual as the best long-term value.
 - Authentication: if the learner is signed out, Google sign-in returns to the selected plan and resumes checkout automatically. The selected track and displayed price version are carried through that journey.
 - Access integrity: all amounts come from the server catalogue, selected track IDs are validated, paid access is granted only by verified/idempotent provider events, and recurring checkouts verify the actual Paystack plan first.
-- After Track Pass expiry, access to that paid path ends, but free resources, existing progress, submissions and earned certificates are retained. The Track Pass never auto-renews. Pro billing cadence and cancellation conditions must be shown before payment; cancellations and period-end access depend on verified recurring subscription state.
+- After Track Pass expiry, access to that paid path ends, but free resources, existing progress, submissions and earned certificates are retained. The Track Pass never auto-renews. Pro automatically renews at the selected monthly, three-month or annual interval until cancelled; cancellation stops future renewals while access continues through the verified paid period. Show these terms before payment.
 
 ## 6. Current launch boundary
 
