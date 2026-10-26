@@ -293,6 +293,6 @@ const PRICING_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Will my subscription renew automatically?',
-    a: 'Pro is a recurring subscription at the interval shown before checkout. Cancellation and renewal handling are only enabled with the verified payment flow; the final checkout screen must show the applicable terms before you confirm.',
+    a: 'Yes. Pro automatically renews monthly, every three months, or yearly according to the plan you select, until you cancel. Cancellation stops future renewals while access remains through the paid period. These terms must also be shown at checkout before you confirm.',
   },
 ]
