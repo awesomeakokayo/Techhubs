@@ -1,10 +1,10 @@
 /**
  * TechSkillHub — provider/currency keyed prices with per-product approval.
  *
- * COMMERCE_PRICES_APPROVED is the publication/checkout master switch. It does
- * not approve every catalogue entry: each price must also be marked approved.
- * This lets the owner launch a confirmed Nigerian Track Pass without silently
- * publishing provisional international Pro prices.
+ * COMMERCE_PRICES_APPROVED is the publication/checkout master switch.
+ * It does not approve every catalogue entry: each price must also be marked
+ * approved. Approved NGN prices may be shown before checkout release; only
+ * provider-ready plans may be charged. International prices remain provisional.
  */
 import type { PlanId } from './plans'
 import type { ProviderId } from './providers'
