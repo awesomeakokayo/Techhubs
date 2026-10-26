@@ -46,6 +46,7 @@ These flags remain off until testing is complete:
 - COMMERCE_PRICES_APPROVED=false
 - COMMERCE_ENTITLEMENTS_ENFORCED=false
 - COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED=false
+- COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED=false
 
 The Nigerian Track Pass uses the existing Paystack one-time transaction path. Pro recurring checkouts stay unavailable until the actual plans exist in the Paystack merchant account and the following server-side configuration is filled with their real plan codes:
 
@@ -53,7 +54,7 @@ The Nigerian Track Pass uses the existing Paystack one-time transaction path. Pr
 - PAYSTACK_PLAN_CODE_PRO_QUARTERLY
 - PAYSTACK_PLAN_CODE_PRO_ANNUAL
 
-After configuring codes in a sandbox, set COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED=true only for that sandbox verification window. Before initializing a recurring checkout, the server fetches the Paystack plan and confirms plan code, amount, NGN currency, and billing interval match the displayed catalogue price. A mismatch or unavailable provider API fails closed without creating an order or starting a charge.
+After configuring codes in a sandbox, the recurring routes remain blocked until the plan codes are configured and the successful start/renewal/failure/cancellation/expiry checks have been completed. Set COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED=true only after those tests pass, then explicitly enable COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED=true. Before initializing a recurring checkout, the server fetches the Paystack plan and confirms plan code, amount, NGN currency, and billing interval match the displayed catalogue price. A mismatch or unavailable provider API fails closed without creating an order or starting a charge.
 
 Run the test-mode matrix in docs/provider-sandbox-test-matrix.md. Verify the first payment, subsequent renewal, failed renewal, cancellation, expiry, duplicate webhook and invalid signature. Confirm that a Track Pass unlocks only the selected premium path; Pro unlocks all included premium paths. Verify that a successful browser redirect alone never grants access. Keep live credentials and production data untouched during sandbox testing.
 
