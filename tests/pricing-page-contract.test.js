@@ -8,6 +8,10 @@ const pricingPage = fs.readFileSync(
   path.join(__dirname, '../app/(marketing)/pricing/page.tsx'),
   'utf8',
 )
+const pricingDisplay = fs.readFileSync(
+  path.join(__dirname, '../lib/commercial/pricing-display.ts'),
+  'utf8',
+)
 
 test('pricing page keeps four distinct, responsive plan cards', () => {
   assert.match(pricingPage, /grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-4/)
