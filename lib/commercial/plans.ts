@@ -68,7 +68,6 @@ export const PLANS: Record<PlanId, PlanDefinition> = {
     features: [
       'Every premium track',
       'Pro AI assessment allowance each month',
-      'Priority assessment capacity',
       'Cancel any time; access continues to period end',
     ],
     grantsAllPremiumTracks: true,
