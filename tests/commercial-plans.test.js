@@ -23,10 +23,10 @@ const {
 } = require('../.test-dist/commercial/plans.js')
 
 test('the canonical catalogue defines exactly the four commercial products', () => {
-  assert.deepEqual([...PLAN_IDS].sort(), ['PRO_ANNUAL', 'PRO_MONTHLY', 'TRACK_PASS'])
+  assert.deepEqual([...PLAN_IDS].sort(), ['PRO_ANNUAL', 'PRO_MONTHLY', 'PRO_QUARTERLY', 'TRACK_PASS'])
   assert.equal(oneTimePlanIds().length, 1)
   assert.deepEqual(oneTimePlanIds(), ['TRACK_PASS'])
-  assert.deepEqual(subscriptionPlanIds().sort(), ['PRO_ANNUAL', 'PRO_MONTHLY'])
+  assert.deepEqual(subscriptionPlanIds().sort(), ['PRO_ANNUAL', 'PRO_MONTHLY', 'PRO_QUARTERLY'])
 })
 
 test('plan identifiers validate and resolve', () => {
@@ -35,6 +35,7 @@ test('plan identifiers validate and resolve', () => {
   assert.equal(isPlanId(''), false)
   assert.equal(getPlan('TRACK_PASS').tier, 'PASS')
   assert.equal(getPlan('PRO_ANNUAL').kind, 'SUBSCRIPTION')
+  assert.equal(getPlan('PRO_QUARTERLY').interval, 'QUARTER')
   assert.equal(getPlan('nope'), null)
 })
 
@@ -79,7 +80,8 @@ test('assessment allowances are finite and tiered (never unlimited)', () => {
   }
   assert.ok(ASSESSMENT_ALLOWANCES.PASS >= ASSESSMENT_ALLOWANCES.FREE)
   assert.ok(ASSESSMENT_ALLOWANCES.PRO > ASSESSMENT_ALLOWANCES.FREE)
-  assert.equal(allowanceForTier('FREE'), ASSESSMENT_ALLOWANCES.FREE)
+  assert.equal(ASSESSMENT_ALLOWANCES.FREE, 2)
+  assert.equal(allowanceForTier('FREE'), 2)
   assert.equal(allowanceForTier('unknown'), ASSESSMENT_ALLOWANCES.FREE)
 })
 
