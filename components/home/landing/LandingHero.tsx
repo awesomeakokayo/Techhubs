@@ -110,6 +110,7 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
                   width={1000}
                   height={667}
                   loading="eager"
+                  fetchPriority="high"
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
