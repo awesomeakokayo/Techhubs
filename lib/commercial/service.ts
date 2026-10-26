@@ -341,7 +341,7 @@ async function upsertSubscription(
   }
 
   const status = args.status ?? mapProviderStatus(event.status)
-  const periodEnd = parseDate(event.currentPeriodEnd) ?? periodEndForPlan(planId, now)
+  const periodEnd = parseDate(event.currentPeriodEnd) ?? existing?.currentPeriodEnd ?? periodEndForPlan(planId, now)
   const plan = planId ? planEnum(planId) : undefined
   const providerUpdatedAt = occurredAt ?? now
 
