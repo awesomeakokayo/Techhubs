@@ -14,6 +14,7 @@ import {
 } from '@/lib/commercial/providers'
 import { createPendingOrder, getActiveTrackPass } from '@/lib/commercial/service'
 import { launchReadiness } from '@/lib/commercial/launch'
+import { validatePaystackPlan } from '@/lib/commercial/paystack-plan-validation'
 import { createLemonSqueezyCheckout } from '@/lib/commercial/lemonsqueezy'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
 import { sanitizeCheckoutAttribution } from '@/lib/commercial/attribution'
@@ -110,6 +111,45 @@ export async function POST(req: Request) {
   if (!guard.ready) {
     paymentLogError('checkout_initialized', 'launch guard blocked checkout', { blockers: guard.blockers, planId, provider })
     return NextResponse.json({ error: 'Checkout is not available yet.' }, { status: 503 })
+  }
+
+  // A configured recurring-plan code is not sufficient on its own. Read the
+  // actual plan from Paystack and fail closed unless amount, currency and billing
+  // interval exactly match the price shown on TechSkillHub. This prevents a typo
+  // in a dashboard plan code from charging a different amount.
+  if (plan.kind === 'SUBSCRIPTION' && provider === 'paystack') {
+    const planCode = providerProductId('paystack', planId)
+    const paystackSecret = process.env.PAYSTACK_SECRET_KEY
+    if (!planCode || !paystackSecret) {
+      return NextResponse.json({ error: 'Recurring billing is not configured for this plan yet.' }, { status: 503 })
+    }
+    try {
+      const response = await fetch(`https://api.paystack.co/plan/${encodeURIComponent(planCode)}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${paystackSecret}` },
+        cache: 'no-store',
+      })
+      const result = await response.json().catch(() => null)
+      const check = response.ok && result?.status === true
+        ? validatePaystackPlan(planCode, result.data, price)
+        : { matches: false as const, reason: 'plan_not_retrievable' }
+      if (!check.matches) {
+        paymentLogError('checkout_initialized', 'Paystack recurring plan did not match approved catalogue', {
+          planId,
+          reason: check.reason ?? 'plan_not_retrievable',
+        })
+        return NextResponse.json(
+          { error: 'This subscription is not available yet. Please try again later.' },
+          { status: 503 },
+        )
+      }
+    } catch {
+      paymentLogError('checkout_initialized', 'Paystack recurring plan verification failed', { planId })
+      return NextResponse.json(
+        { error: 'We could not verify this subscription price right now. No payment has been started.' },
+        { status: 503 },
+      )
+    }
   }
 
   const reference = `TSH_${session.user.id.slice(0, 8)}_${crypto.randomUUID()}`
