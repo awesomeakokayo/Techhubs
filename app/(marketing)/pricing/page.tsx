@@ -8,31 +8,27 @@ import { FoundingLearnerBanner } from '@/components/commercial/FoundingLearnerBa
 import { getPageMetadata } from '@/lib/seo/utils'
 import {
   COMMERCIAL_PRICING_VERSION,
-  FOUNDING_LEARNER_PRICING_VERSION,
   formatPrice,
   resolveProviderPrice,
 } from '@/lib/commercial/pricing'
+import { resolvePublicPricingPriceDisplay } from '@/lib/commercial/pricing-display'
 import { getFoundingLearnerCampaign } from '@/lib/commercial/campaign'
-import { PLAN_IDS, PLANS, allowanceForTier, premiumTrackIds, type PlanId } from '@/lib/commercial/plans'
+import { PLANS, allowanceForTier, premiumTrackIds, type PlanId } from '@/lib/commercial/plans'
 import { checkoutEnabled, selectProvider, type ProviderId } from '@/lib/commercial/providers'
 import { launchReadiness } from '@/lib/commercial/launch'
 import { TRACKS } from '@/lib/tracks'
 
 export const metadata: Metadata = {
   ...getPageMetadata({
-    title: 'Pricing — Free, Guided Path and Pro',
+    title: 'TechSkillHub Pricing — Free, Track Pass and Pro',
     description:
-      'Start for free, get three months of access to one guided learning path, or choose TechSkillHub Pro for all included premium guided paths.',
+      'Compare TechSkillHub Free, Single Guided Path Pass, Pro Monthly and Pro Annual. See Nigerian pricing and what each plan includes.',
     path: '/pricing',
     keywords: ['techskillhub pricing', 'guided path pass', 'founding learner offer', 'pro plan'],
   }),
-  // Keep this route out of search results until the commerce release gate is approved.
+  // Approved NGN prices can be shown while checkout is gated. Keep this page
+  // out of search results until the commerce publication switch is approved.
   robots: process.env.COMMERCE_PRICES_APPROVED === 'true' ? undefined : { index: false, follow: false },
-}
-
-function publicPriceLabel(planId: PlanId, displayProvider: ProviderId): string {
-  const price = resolveProviderPrice(displayProvider, planId)
-  return price?.approved ? formatPrice(price) : 'Not available in your region yet'
 }
 
 function checkoutReason(planId: PlanId, provider: ProviderId | null, country: string): string | undefined {
@@ -51,6 +47,16 @@ function checkedOutPlanReady(planId: PlanId, preferredProvider: ProviderId): boo
   return Boolean(checkoutEnabled() && provider && launchReadiness(process.env, planId, provider).ready)
 }
 
+const PRO_CARD_PLANS: {
+  id: 'PRO_MONTHLY' | 'PRO_ANNUAL'
+  eyebrow: string
+  billingLabel: string
+  badge?: string
+}[] = [
+  { id: 'PRO_MONTHLY', eyebrow: '03 / Flexible billing', billingLabel: 'Billed monthly' },
+  { id: 'PRO_ANNUAL', eyebrow: '04 / Long-term value', billingLabel: 'Billed yearly', badge: 'Best value' },
+]
+
 export default function PricingPage({
   searchParams = {},
 }: {
@@ -60,7 +66,9 @@ export default function PricingPage({
     Array.isArray(value) ? value[0] : value
 
   const resumePlanValue = queryParam(searchParams.resumeCheckout)
-  const resumePlan = PLAN_IDS.includes(resumePlanValue as PlanId) ? resumePlanValue as PlanId : null
+  const resumePlan = ['TRACK_PASS', 'PRO_MONTHLY', 'PRO_ANNUAL'].includes(resumePlanValue ?? '')
+    ? (resumePlanValue as PlanId)
+    : null
   const requestedTrackId = queryParam(searchParams.trackId)
   const requestedPricingVersion = queryParam(searchParams.expectedPricingVersion)
 
@@ -75,43 +83,27 @@ export default function PricingPage({
       ? requestedTrackId
       : undefined
 
-  const campaign = getFoundingLearnerCampaign()
+  const now = new Date()
+  const campaign = getFoundingLearnerCampaign(process.env, now)
   const trackPassProvider = selectProvider('TRACK_PASS', preferredProvider)
   const trackPassReady = Boolean(
     checkoutEnabled() &&
     trackPassProvider &&
     launchReadiness(process.env, 'TRACK_PASS', trackPassProvider).ready
   )
-  // Never display urgency when a real purchase cannot be completed.
-  const showFoundingOffer = country === 'NG' && campaign.active && trackPassReady
+  const trackPassPriceDisplay = resolvePublicPricingPriceDisplay({
+    provider: trackPassProvider,
+    planId: 'TRACK_PASS',
+    country,
+    checkoutReady: trackPassReady,
+    now,
+  })
+  const showFoundingOffer = trackPassPriceDisplay.isPromotional
   const trackPassBasePrice = resolveProviderPrice(preferredProvider, 'TRACK_PASS')
-  const trackPassDisplayPrice = showFoundingOffer
-    ? formatPrice({ ...trackPassBasePrice!, amountMinor: campaign.promotionalPriceMinor })
-    : publicPriceLabel('TRACK_PASS', preferredProvider)
-  const trackPassPricingVersion = requestedPricingVersion && resumePlan === 'TRACK_PASS'
-    ? requestedPricingVersion
-    : showFoundingOffer
-      ? FOUNDING_LEARNER_PRICING_VERSION
-      : COMMERCIAL_PRICING_VERSION
-
-  const monthlyPrice = resolveProviderPrice(preferredProvider, 'PRO_MONTHLY')
-  const quarterlyPrice = resolveProviderPrice(preferredProvider, 'PRO_QUARTERLY')
-  const annualPrice = resolveProviderPrice(preferredProvider, 'PRO_ANNUAL')
-  const monthlyMinor = monthlyPrice?.approved ? monthlyPrice.amountMinor : null
-  const quarterlyMinor = quarterlyPrice?.approved ? quarterlyPrice.amountMinor : null
-  const annualMinor = annualPrice?.approved ? annualPrice.amountMinor : null
-  const quarterlySavings = monthlyMinor && quarterlyMinor
-    ? Math.round((1 - quarterlyMinor / (monthlyMinor * 3)) * 1000) / 10
-    : null
-  const annualSavings = monthlyMinor && annualMinor
-    ? Math.round((1 - annualMinor / (monthlyMinor * 12)) * 1000) / 10
-    : null
-
-  const proPlans: { id: PlanId; label: string; cadence: string; saving: number | null; recommended?: boolean; bestValue?: boolean }[] = [
-    { id: 'PRO_MONTHLY', label: 'Monthly', cadence: 'Billed monthly', saving: null },
-    { id: 'PRO_QUARTERLY', label: 'Quarterly', cadence: 'Billed every three months', saving: quarterlySavings, recommended: true },
-    { id: 'PRO_ANNUAL', label: 'Annual', cadence: 'Billed yearly', saving: annualSavings, bestValue: true },
-  ]
+  const trackPassPricingVersion =
+    requestedPricingVersion && resumePlan === 'TRACK_PASS'
+      ? requestedPricingVersion
+      : trackPassPriceDisplay.pricingVersion
 
   return (
     <div className="section pt-12 md:pt-16">
@@ -119,56 +111,54 @@ export default function PricingPage({
         <PageViewTracker path="/pricing" eventName="pricing_viewed" />
         <PageHeader
           title="Choose your path. Build your future."
-          subtitle="Start for free, get guided access to one learning path, or unlock the included premium guided paths with Pro."
+          subtitle="Start for free, focus on one guided path, or unlock premium learning with Pro. Every plan is clearly priced so you can choose what fits."
           breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Pricing' }]}
         />
 
-        {showFoundingOffer && campaign.startsAt && campaign.endsAt && (
+        {showFoundingOffer && campaign.startsAt && campaign.endsAt && trackPassBasePrice && (
           <FoundingLearnerBanner
             startsAt={campaign.startsAt}
             endsAt={campaign.endsAt}
-            regularPrice={formatPrice(trackPassBasePrice!)}
-            promotionalPrice={formatPrice({ ...trackPassBasePrice!, amountMinor: campaign.promotionalPriceMinor })}
+            regularPrice={formatPrice(trackPassBasePrice)}
+            promotionalPrice={trackPassPriceDisplay.priceLabel}
             discountPercent={campaign.discountPercent}
             placement="pricing"
           />
         )}
 
-        <div id="plans" className="mt-8 grid items-stretch gap-5 lg:grid-cols-3">
-          <article className="card flex flex-col">
+        <div id="plans" className="mt-8 grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          <article className="card flex h-full flex-col">
             <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-text-muted">01 / Start here</p>
-            <h2 className="mt-3 font-display text-xl font-semibold text-text-primary">Free</h2>
-            <p className="mt-2 font-display text-3xl font-semibold text-text-primary">₦0</p>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">Explore technology and build your foundations without a payment barrier.</p>
-            <ul className="mt-5 flex-1 space-y-3 text-sm text-text-secondary">
+            <h2 className="mt-3 min-h-14 font-display text-xl font-semibold text-text-primary">Free</h2>
+            <p className="mt-3 font-display text-3xl font-semibold text-text-primary">₦0 <span className="font-sans text-sm font-normal text-text-secondary">/ forever</span></p>
+            <p className="mt-3 min-h-14 text-sm leading-6 text-text-secondary">Build your tech foundations and explore available learning resources without a payment barrier.</p>
+            <ul className="mt-5 flex-1 space-y-3 text-sm leading-5 text-text-secondary">
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Free roadmaps, resources, projects and career guides</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Available free learning and progress features</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Limited AI assessments</li>
             </ul>
-            <a href="/find-your-path" className="btn btn-secondary mt-6 w-full justify-center">Start learning for free</a>
+            <a href="/find-your-path" className="btn btn-secondary mt-8 w-full justify-center">Start learning for free</a>
           </article>
 
-          <article className="card flex flex-col">
+          <article className="card flex h-full flex-col">
             <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-text-muted">02 / One direction</p>
-            <h2 className="mt-3 font-display text-xl font-semibold text-text-primary">Single Guided Path Pass</h2>
+            <h2 className="mt-3 min-h-14 font-display text-xl font-semibold text-text-primary">Single Guided Path Pass</h2>
             <div className="mt-3 flex flex-wrap items-baseline gap-2">
-              <p className="font-display text-3xl font-semibold text-text-primary">{trackPassDisplayPrice}</p>
-              {showFoundingOffer && (
-                <>
-                  <p className="text-sm text-text-muted line-through">₦6,000</p>
-                  <span className="rounded-sm bg-brand/10 px-2 py-1 font-mono text-[0.6rem] uppercase tracking-widest text-brand">50% off</span>
-                </>
+              <p className="font-display text-3xl font-semibold text-text-primary">{trackPassPriceDisplay.priceLabel}</p>
+              {showFoundingOffer && trackPassPriceDisplay.regularPriceLabel && (
+                <p className="text-sm text-text-muted line-through">{trackPassPriceDisplay.regularPriceLabel}</p>
               )}
             </div>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              Focus on one selected premium guided path for three calendar months. No automatic renewal.
-            </p>
-            <ul className="mt-5 flex-1 space-y-3 text-sm text-text-secondary">
+            {trackPassPriceDisplay.offerNotice && (
+              <p className="mt-2 text-xs leading-5 text-text-secondary">{trackPassPriceDisplay.offerNotice}</p>
+            )}
+            <p className="mt-3 min-h-14 text-sm leading-6 text-text-secondary">Focus on one selected premium guided path for three calendar months. It never renews automatically.</p>
+            <ul className="mt-5 flex-1 space-y-3 text-sm leading-5 text-text-secondary">
               {PLANS.TRACK_PASS.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {feature}</li>
               ))}
             </ul>
-            <div className="mt-6">
+            <div className="mt-8">
               <CheckoutButton
                 planId="TRACK_PASS"
                 trackId={resumedTrackId}
@@ -184,78 +174,67 @@ export default function PricingPage({
             </div>
           </article>
 
-          <article id="pro" className="card flex flex-col border-2 border-brand shadow-sm">
-            <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-brand">03 / Full premium access</p>
-            <h2 className="mt-3 font-display text-2xl font-semibold text-text-primary">TechSkillHub Pro</h2>
-            <p className="mt-3 text-sm leading-6 text-text-secondary">
-              For learners building several skills, shipping projects, and using AI assessment regularly.
-            </p>
-            <ul className="mt-5 space-y-3 text-sm text-text-secondary">
-              <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> All included premium guided paths</li>
-              <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {allowanceForTier('PRO')} AI assessments per month</li>
-              <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Cancellation and period-end access handled according to the selected subscription terms</li>
-            </ul>
+          {PRO_CARD_PLANS.map((card) => {
+            const plan = PLANS[card.id]
+            const provider = selectProvider(card.id, preferredProvider)
+            const ready = checkedOutPlanReady(card.id, preferredProvider)
+            const priceDisplay = resolvePublicPricingPriceDisplay({
+              provider,
+              planId: card.id,
+              country,
+              checkoutReady: ready,
+              now,
+            })
+            const expectedVersion =
+              requestedPricingVersion && resumePlan === card.id
+                ? requestedPricingVersion
+                : priceDisplay.pricingVersion
 
-            <div className="mt-6 border-t border-border-default">
-              {proPlans.map((item) => {
-                const provider = selectProvider(item.id, preferredProvider)
-                const ready = checkedOutPlanReady(item.id, preferredProvider)
-                const price = publicPriceLabel(item.id, preferredProvider)
-                const resumedExpectedVersion = requestedPricingVersion && resumePlan === item.id
-                  ? requestedPricingVersion
-                  : COMMERCIAL_PRICING_VERSION
-                return (
-                  <div key={item.id} className="border-b border-border-default py-4 last:border-b-0">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-text-primary">
-                          {item.label}
-                          {item.recommended ? <span className="ml-2 font-mono text-[0.55rem] uppercase tracking-widest text-brand">Recommended</span> : null}
-                          {item.bestValue ? <span className="ml-2 font-mono text-[0.55rem] uppercase tracking-widest text-brand">Best value</span> : null}
-                        </p>
-                        <p className="mt-1 font-display text-xl font-semibold text-text-primary">
-                          {price}{item.id === 'PRO_MONTHLY' ? ' / month' : item.id === 'PRO_QUARTERLY' ? ' / 3 months' : ' / year'}
-                        </p>
-                        <p className="mt-1 text-xs text-text-muted">{item.cadence}</p>
-                        {item.id === 'PRO_QUARTERLY' && quarterlyMinor && (
-                          <p className="mt-1 text-xs text-text-secondary">
-                            About ₦{Math.round(quarterlyMinor / 100 / 3).toLocaleString('en-NG')}/month
-                            {item.saving !== null && item.saving > 0 ? ` · Save ${item.saving}%` : ''}
-                          </p>
-                        )}
-                        {item.id === 'PRO_ANNUAL' && annualMinor && (
-                          <p className="mt-1 text-xs text-text-secondary">
-                            ₦{Math.round(annualMinor / 100 / 12).toLocaleString('en-NG')}/month
-                            {item.saving !== null && item.saving > 0 ? ` · Save ${item.saving}%` : ''}
-                          </p>
-                        )}
-                      </div>
-                      <CheckoutButton
-                        planId={item.id}
-                        autoStart={resumePlan === item.id}
-                        label={ready ? (item.id === 'PRO_QUARTERLY' ? 'Choose quarterly' : `Choose ${item.label.toLowerCase()}`) : 'Not available yet'}
-                        disabled={!ready}
-                        disabledReason={checkoutReason(item.id, provider, country)}
-                        expectedPricingVersion={resumedExpectedVersion}
-                        className={item.recommended ? 'btn btn-primary justify-center' : 'btn btn-secondary justify-center'}
-                        resumePath="/pricing"
-                      />
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </article>
+            return (
+              <article key={card.id} className={`card relative flex h-full flex-col ${card.id === 'PRO_ANNUAL' ? 'border-2 border-brand shadow-sm' : ''}`}>
+                <p className="font-mono text-[0.625rem] uppercase tracking-[0.14em] text-brand">{card.eyebrow}</p>
+                {card.badge && <span className="absolute right-4 top-4 rounded-sm bg-brand/10 px-2 py-1 font-mono text-[0.55rem] uppercase tracking-widest text-brand">{card.badge}</span>}
+                <h2 className="mt-3 min-h-14 pr-2 font-display text-xl font-semibold text-text-primary">{plan.displayName}</h2>
+                <p className="mt-3 min-h-14 text-sm leading-6 text-text-secondary">{plan.summary}</p>
+                <p className="mt-3 font-display text-3xl font-semibold text-text-primary">
+                  {priceDisplay.priceLabel}{card.id === 'PRO_MONTHLY' ? ' / month' : ' / year'}
+                </p>
+                <p className="mt-1 min-h-5 text-xs text-text-muted">{card.billingLabel}</p>
+                {card.id === 'PRO_ANNUAL' && priceDisplay.priceLabel.startsWith('₦') && (
+                  <p className="mt-1 text-xs text-text-secondary">
+                    About ₦{Math.round((resolveProviderPrice(provider ?? 'paystack', 'PRO_ANNUAL')?.amountMinor ?? 0) / 100 / 12).toLocaleString('en-NG')}/month, billed yearly
+                  </p>
+                )}
+                <ul className="mt-5 flex-1 space-y-3 text-sm leading-5 text-text-secondary">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {feature}</li>
+                  ))}
+                </ul>
+                <div className="mt-8">
+                  <CheckoutButton
+                    planId={card.id}
+                    autoStart={resumePlan === card.id}
+                    label={ready ? `Choose ${card.id === 'PRO_MONTHLY' ? 'monthly Pro' : 'annual Pro'}` : 'Checkout not available yet'}
+                    disabled={!ready}
+                    disabledReason={checkoutReason(card.id, provider, country)}
+                    expectedPricingVersion={expectedVersion || COMMERCIAL_PRICING_VERSION}
+                    className={card.id === 'PRO_ANNUAL' ? 'btn btn-primary w-full justify-center' : 'btn btn-secondary w-full justify-center'}
+                    resumePath="/pricing"
+                  />
+                </div>
+              </article>
+            )
+          })}
         </div>
 
         <p className="mt-8 text-xs leading-5 text-text-muted">
           The Single Guided Path Pass is a one-time payment for three calendar months; it does not renew automatically.
-          Pro renews at the monthly, three-month or annual interval selected before checkout, subject to the verified payment flow.
-          Prices and terms are shown before payment. Free roadmaps, public resources, projects, career guides, progress and earned certificates are not removed when a paid period ends.
+          Pro renews monthly or yearly according to the plan selected before checkout, until cancelled. Your terms and price are shown before payment.
+          Free resources, existing progress, submissions and earned certificates are preserved when a paid period ends.
         </p>
         <p className="mt-3 text-xs leading-5 text-text-muted">
           {(!checkoutEnabled() || process.env.COMMERCE_PRICES_APPROVED !== 'true')
-            ? 'Paid checkout is not open yet. Approved prices are displayed for planning; no charge starts until the relevant payment route and access checks are enabled.'
+            ? 'Paid checkout is not open yet. Approved Nigerian prices are displayed for planning; no charge starts until the relevant payment route and access checks are enabled.'
             : 'Payment availability depends on your region and the payment method shown on the selected plan.'}
         </p>
 
@@ -290,14 +269,14 @@ const PRICING_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'What is TechSkillHub Pro?',
-    a: 'Pro provides access to all included premium guided paths and a higher AI assessment allowance. The pricing card shows the applicable monthly, three-month or yearly billing interval.',
+    a: 'Pro provides access to all included premium guided paths and a higher AI assessment allowance. Monthly and annual prices are displayed separately above.',
   },
   {
     q: 'How does the Founding Learner offer work?',
-    a: 'When the fixed campaign is active, the Single Guided Path Pass is ₦3,000 instead of ₦6,000 for three months. The offer closes at the date and time shown in Africa/Lagos time; it will not display an active countdown without a configured, valid campaign window.',
+    a: 'When the fixed campaign is active and checkout is ready, the Single Guided Path Pass is ₦3,000 instead of ₦6,000 for three months. Until then, the planned offer is disclosed without presenting it as an active sale. No countdown appears without a configured, valid campaign window.',
   },
   {
     q: 'Will my subscription renew automatically?',
-    a: 'Yes. Pro automatically renews monthly, every three months, or yearly according to the plan you select, until you cancel. Cancellation stops future renewals while access remains through the paid period. These terms must also be shown at checkout before you confirm.',
+    a: 'Pro automatically renews monthly or yearly according to the plan you select, until you cancel. Cancellation stops future renewals while access remains through the paid period. These terms must be shown at checkout before you confirm.',
   },
 ]
