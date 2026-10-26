@@ -55,17 +55,21 @@ export function FoundingLearnerBanner({
       content_type: placement,
     })
 
+    let interval: number | undefined
     const update = () => {
       const next = endTime - Date.now()
       setRemainingMs(Math.max(0, next))
       if (next <= 0) {
         setExpired(true)
+        if (interval !== undefined) window.clearInterval(interval)
         router.refresh()
       }
     }
+    interval = window.setInterval(update, 1000)
     update()
-    const interval = window.setInterval(update, 1000)
-    return () => window.clearInterval(interval)
+    return () => {
+      if (interval !== undefined) window.clearInterval(interval)
+    }
   }, [endTime, pathname, placement, router])
 
   if (expired || remainingMs <= 0) return null
