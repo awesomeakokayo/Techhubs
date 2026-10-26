@@ -18,6 +18,7 @@ import { validatePaystackPlan } from '@/lib/commercial/paystack-plan-validation'
 import { createLemonSqueezyCheckout } from '@/lib/commercial/lemonsqueezy'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
 import { sanitizeCheckoutAttribution } from '@/lib/commercial/attribution'
+import { recordLearningEvent } from '@/lib/event-recorder'
 
 export const dynamic = 'force-dynamic'
 
@@ -198,6 +199,19 @@ export async function POST(req: Request) {
       paymentLogError('checkout_initialized', 'lemonsqueezy checkout failed', { reference, userId: session.user.id, error: result.error })
       return NextResponse.json({ error: 'We could not start checkout. Please try again.' }, { status: 502 })
     }
+    await recordLearningEvent({
+      userId: session.user.id,
+      eventName: 'checkout_started',
+      metadata: {
+        planId,
+        amountMinor: price.amountMinor,
+        currency: price.currency,
+        pricingVersion: resolvedPrice.pricingVersion,
+        campaignId: resolvedPrice.campaignId,
+        provider,
+        ...(attribution ?? {}),
+      },
+    })
     paymentLog('payment_redirected', { reference, userId: session.user.id, provider, planId })
     return NextResponse.json({ provider, url: result.url, reference })
   }
@@ -234,6 +248,19 @@ export async function POST(req: Request) {
       paymentLogError('checkout_initialized', 'paystack initialize error', { reference, userId: session.user.id })
       return NextResponse.json({ error: 'We could not start your payment. Please try again.' }, { status: 502 })
     }
+    await recordLearningEvent({
+      userId: session.user.id,
+      eventName: 'checkout_started',
+      metadata: {
+        planId,
+        amountMinor: price.amountMinor,
+        currency: price.currency,
+        pricingVersion: resolvedPrice.pricingVersion,
+        campaignId: resolvedPrice.campaignId,
+        provider,
+        ...(attribution ?? {}),
+      },
+    })
     paymentLog('payment_redirected', { reference, userId: session.user.id, provider, planId })
     return NextResponse.json({ provider, url, reference })
   } catch {
