@@ -1,15 +1,20 @@
 /**
  * TechSkillHub — provider/currency keyed prices with per-product approval.
  *
- * COMMERCE_PRICES_APPROVED is the publication/checkout master switch. It does
- * not approve every catalogue entry: each price must also be marked approved.
- * This lets the owner launch a confirmed Nigerian Track Pass without silently
- * publishing provisional international Pro prices.
+ * COMMERCE_PRICES_APPROVED is the publication/checkout master switch.
+ * It does not approve every catalogue entry: each price must also be marked
+ * approved. Approved NGN prices may be shown before checkout release; only
+ * provider-ready plans may be charged. International prices remain provisional.
  */
 import type { PlanId } from './plans'
 import type { ProviderId } from './providers'
+import {
+  FOUNDING_LEARNER_CAMPAIGN_ID,
+  getFoundingLearnerCampaign,
+} from './campaign'
 
-export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000'
+export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-NGN-APPROVED-PRICING-V1'
+export const FOUNDING_LEARNER_PRICING_VERSION = 'TSH-COMMERCE-2026-10-FOUNDING-LEARNER-3M-NGN3000'
 
 export interface PlanPrice {
   planId: PlanId
@@ -19,15 +24,15 @@ export interface PlanPrice {
   /** Integer minor units: kobo for NGN, cents for USD. */
   amountMinor: number
   /** ISO 8601 duration for subscriptions, if applicable. */
-  interval: 'P1M' | 'P1Y' | null
+  interval: 'P1M' | 'P3M' | 'P1Y' | null
   /** Owner-confirmed for this specific plan/provider/currency. */
   approved: boolean
 }
 
 /**
- * Internal price catalogue. The existing USD values remain provisional. The
- * only owner-approved price here is ₦6,000 for a three-calendar-month Track Pass
- * through Paystack. Publication and checkout still require their master flags.
+ * Approved Nigerian pricing. Pro billing remains disabled for checkout until
+ * Paystack subscription plan codes and sandbox verification are configured.
+ * USD variants remain provisional and are never inferred from NGN pricing.
  */
 export const PRICE_CATALOGUE: Partial<Record<ProviderId, Partial<Record<PlanId, PlanPrice>>>> = {
   lemonsqueezy: {
@@ -37,6 +42,9 @@ export const PRICE_CATALOGUE: Partial<Record<ProviderId, Partial<Record<PlanId, 
   },
   paystack: {
     TRACK_PASS: { planId: 'TRACK_PASS', provider: 'paystack', currency: 'NGN', amountMinor: 600000, interval: null, approved: true },
+    PRO_MONTHLY: { planId: 'PRO_MONTHLY', provider: 'paystack', currency: 'NGN', amountMinor: 450000, interval: 'P1M', approved: true },
+    PRO_QUARTERLY: { planId: 'PRO_QUARTERLY', provider: 'paystack', currency: 'NGN', amountMinor: 1100000, interval: 'P3M', approved: true },
+    PRO_ANNUAL: { planId: 'PRO_ANNUAL', provider: 'paystack', currency: 'NGN', amountMinor: 3600000, interval: 'P1Y', approved: true },
   },
 }
 
@@ -59,6 +67,44 @@ export function isPriceApproved(
 /** Resolve the configured price for a provider + plan, approved or not. */
 export function resolveProviderPrice(provider: ProviderId, planId: PlanId): PlanPrice | null {
   return PRICE_CATALOGUE[provider]?.[planId] ?? null
+}
+
+/**
+ * Resolve the authoritative price for display or a new order. The promotion is
+ * server-time-gated, only applies to the Nigerian one-time Track Pass, and never
+ * changes Pro subscription prices.
+ */
+export interface ResolvedCommercialPrice {
+  price: PlanPrice
+  pricingVersion: string
+  campaignId: string | null
+}
+
+export function resolveCommercialPrice(
+  provider: ProviderId,
+  planId: PlanId,
+  now: Date = new Date(),
+  env: Record<string, string | undefined> = process.env,
+): ResolvedCommercialPrice | null {
+  const base = resolveProviderPrice(provider, planId)
+  if (!base) return null
+
+  const campaign = getFoundingLearnerCampaign(env, now)
+  if (
+    provider === 'paystack' &&
+    planId === 'TRACK_PASS' &&
+    base.approved &&
+    base.amountMinor === campaign.regularPriceMinor &&
+    campaign.active
+  ) {
+    return {
+      price: { ...base, amountMinor: campaign.promotionalPriceMinor },
+      pricingVersion: FOUNDING_LEARNER_PRICING_VERSION,
+      campaignId: FOUNDING_LEARNER_CAMPAIGN_ID,
+    }
+  }
+
+  return { price: base, pricingVersion: COMMERCIAL_PRICING_VERSION, campaignId: null }
 }
 
 /** True when any provider has a configured price for the plan. */

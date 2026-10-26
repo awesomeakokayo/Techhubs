@@ -10,6 +10,13 @@ import { CheckoutButton } from '@/components/commercial/CheckoutButton'
 import { isPremiumTrack } from '@/lib/commercial/plans'
 import { checkoutEnabled, selectProvider, type ProviderId } from '@/lib/commercial/providers'
 import { launchReadiness } from '@/lib/commercial/launch'
+import {
+  COMMERCIAL_PRICING_VERSION,
+  FOUNDING_LEARNER_PRICING_VERSION,
+  formatPrice,
+  resolveCommercialPrice,
+} from '@/lib/commercial/pricing'
+import { FOUNDING_LEARNER_CAMPAIGN_ID } from '@/lib/commercial/campaign'
 import type { Metadata } from 'next'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
@@ -60,6 +67,10 @@ export default async function TrackPage({ params }: Props) {
   const country = headers().get('x-vercel-ip-country')?.trim().toUpperCase() ?? ''
   const preferredProvider: ProviderId = country === 'NG' ? 'paystack' : 'lemonsqueezy'
   const provider = selectProvider('TRACK_PASS', preferredProvider)
+  const trackPassPrice = provider ? resolveCommercialPrice(provider, 'TRACK_PASS') : null
+  const hasFoundingOffer = trackPassPrice?.campaignId === FOUNDING_LEARNER_CAMPAIGN_ID
+  const trackPassVersion = trackPassPrice?.pricingVersion ??
+    (hasFoundingOffer ? FOUNDING_LEARNER_PRICING_VERSION : COMMERCIAL_PRICING_VERSION)
   const canCheckout = checkoutEnabled() && launchReadiness(process.env, 'TRACK_PASS', provider).ready
 
   return (
@@ -72,13 +83,33 @@ export default async function TrackPage({ params }: Props) {
               <h2 className="font-display text-lg font-semibold text-text-primary">Premium track</h2>
               <p className="text-sm text-text-secondary">
                 {canCheckout
-                  ? 'Get three months of access to this track with a Track Pass (one-time, no auto-renewal), or unlock every premium track with Pro.'
+                  ? 'Get three months of access to this track with a Track Pass (one-time, no auto-renewal), or unlock every included premium path with Pro.'
                   : 'This track is planned to be part of the premium offering. When it opens, a Track Pass will give three months of access to this track (one-time, no auto-renewal). Your access to what you are learning now, and your progress, are unchanged.'}
               </p>
+              {canCheckout && trackPassPrice ? (
+                <div className="mt-3 flex items-baseline gap-2">
+                  {hasFoundingOffer ? (
+                    <>
+                      <span className="font-display text-xl font-semibold text-text-primary">{formatPrice(trackPassPrice.price)}</span>
+                      <span className="text-sm text-text-muted line-through">₦6,000</span>
+                      <span className="font-mono text-[0.6rem] uppercase tracking-widest text-brand">50% off</span>
+                    </>
+                  ) : (
+                    <span className="font-display text-xl font-semibold text-text-primary">{formatPrice(trackPassPrice.price)}</span>
+                  )}
+                  <span className="text-xs text-text-muted">/ one-time · 3 months</span>
+                </div>
+              ) : null}
             </div>
             <div className="flex flex-wrap items-center gap-3">
               {canCheckout && (
-                <CheckoutButton planId="TRACK_PASS" trackId={enrichedTrack.id} label="Get 3-Month Track Pass" />
+                <CheckoutButton
+                  planId="TRACK_PASS"
+                  trackId={enrichedTrack.id}
+                  expectedPricingVersion={trackPassVersion}
+                  label={`Get 3-Month Track Pass · ${trackPassPrice ? formatPrice(trackPassPrice.price) : ''}`}
+                  className="btn btn-primary justify-center"
+                />
               )}
               <a href="/pricing" className="btn btn-secondary text-sm">See plans</a>
             </div>

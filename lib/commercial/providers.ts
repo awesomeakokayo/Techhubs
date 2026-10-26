@@ -35,10 +35,15 @@ export const PROVIDER_PRODUCT_ENV: Record<ProviderId, Partial<Record<PlanId, str
   lemonsqueezy: {
     TRACK_PASS: 'LEMONSQUEEZY_VARIANT_TRACK_PASS',
     PRO_MONTHLY: 'LEMONSQUEEZY_VARIANT_PRO_MONTHLY',
+    PRO_QUARTERLY: 'LEMONSQUEEZY_VARIANT_PRO_QUARTERLY',
     PRO_ANNUAL: 'LEMONSQUEEZY_VARIANT_PRO_ANNUAL',
   },
-  // Paystack transactions do not require a provider-side plan/product id.
-  paystack: {},
+  // Track Pass is one-time and needs no Paystack plan code; Pro subscription products do.
+  paystack: {
+    PRO_MONTHLY: 'PAYSTACK_PLAN_CODE_PRO_MONTHLY',
+    PRO_QUARTERLY: 'PAYSTACK_PLAN_CODE_PRO_QUARTERLY',
+    PRO_ANNUAL: 'PAYSTACK_PLAN_CODE_PRO_ANNUAL',
+  },
 }
 
 type Env = Record<string, string | undefined>
@@ -71,7 +76,7 @@ export function providerTestMode(env: Env = process.env): boolean {
 /**
  * Monthly AI-assessment allowance enforcement.
  *
- * ON by default: the allowance is a finite cost control (Free 20 / Pass 30 /
+ * ON by default: the allowance is a finite cost control (Free 2 / Pass 30 /
  * Pro 150 per month, from `lib/commercial/plans.ts`) that must be authoritative
  * to keep AI spend bounded and to make the reservation ledger meaningful. It is
  * an additional limit on top of the existing hourly abuse budget, never a
@@ -106,11 +111,22 @@ export function providerCapabilities(provider: ProviderId, env: Env = process.en
       configured: lemonSqueezyConfigured(env),
     }
   }
+  const paystackSupports: PlanId[] = ['TRACK_PASS']
+  const proSubscriptionsEnabled = env.COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED === 'true'
+  const proSubscriptionsVerified = env.COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED === 'true'
+  if (proSubscriptionsEnabled && proSubscriptionsVerified && paystackConfigured(env)) {
+    for (const planId of ['PRO_MONTHLY', 'PRO_QUARTERLY', 'PRO_ANNUAL'] as const) {
+      const planCodeEnv = PROVIDER_PRODUCT_ENV.paystack[planId]
+      if (planCodeEnv && present(env, planCodeEnv)) paystackSupports.push(planId)
+    }
+  }
+
   return {
     id: 'paystack',
     label: PROVIDER_LABELS.paystack,
-    // Nigerian Track Pass only until more NGN plan prices are explicitly approved.
-    supports: ['TRACK_PASS'],
+    // Track Pass is one-time. Pro plans require explicit enablement, a completed
+    // sandbox-verification gate, and a matching provider-side recurring plan code.
+    supports: paystackSupports,
     currencies: ['NGN'],
     configured: paystackConfigured(env),
   }

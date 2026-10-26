@@ -107,11 +107,13 @@ function asNumber(value: unknown): number | null {
 
 const PAYSTACK_EVENTS: Record<string, BillingEventType> = {
   'charge.success': 'payment_succeeded',
+  'charge.failed': 'payment_failed',
+  'order_payment_failed': 'payment_failed',
   'refund.processed': 'refunded',
   'refund.pending': 'refunded',
   'subscription.create': 'subscription_created',
   'subscription.not_renew': 'subscription_cancelled',
-  'subscription.disable': 'subscription_cancelled',
+  'subscription.disable': 'subscription_expired',
   'invoice.payment_failed': 'subscription_payment_failed',
 }
 
@@ -122,6 +124,7 @@ export function normalizePaystackEvent(payload: unknown): NormalizedBillingEvent
   const metadata = asRecord(data.metadata)
   const customer = asRecord(data.customer)
   const plan = asRecord(data.plan)
+  const planCode = asString(plan.plan_code) ?? asString(data.plan_code)
 
   return {
     provider: 'paystack',
@@ -130,6 +133,9 @@ export function normalizePaystackEvent(payload: unknown): NormalizedBillingEvent
     orderReference: asString(data.reference),
     userId: asString(metadata.user_id),
     productCode: asString(metadata.plan_id) ?? asString(metadata.product_code),
+    // Expose the provider's plan code via productId only when it is available;
+    // the webhook route maps it back to the internal plan id from trusted config.
+
     trackId: asString(metadata.track_id),
     providerOrderId: asString(data.id),
     providerSubscriptionId: asString(data.subscription_code) ?? asString(plan.subscription),
@@ -138,7 +144,7 @@ export function normalizePaystackEvent(payload: unknown): NormalizedBillingEvent
     currentPeriodEnd: asString(data.next_payment_date),
     amountMinor: asNumber(data.amount),
     currency: asString(data.currency),
-    productId: null,
+    productId: planCode,
     // `paid_at` is the authoritative successful-payment instant for a charge.
     occurredAt: asString(data.paid_at) ?? asString(data.updated_at) ?? asString(data.created_at),
     testMode: asString(data.domain) === 'test',

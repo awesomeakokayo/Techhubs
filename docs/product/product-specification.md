@@ -32,12 +32,13 @@ Internal plan ids are stable and are **not** display text.
 | *(none)* | **Free** | — | — | `FREE` |
 | `TRACK_PASS` | **Track Pass** | one-time | none | `PASS` |
 | `PRO_MONTHLY` | **TechSkillHub Pro — Monthly** | subscription | month | `PRO` |
+| `PRO_QUARTERLY` | **TechSkillHub Pro — Quarterly** | subscription | three months | `PRO` |
 | `PRO_ANNUAL` | **TechSkillHub Pro — Annual** | subscription | year | `PRO` |
 
 ### Product 1 — Free
 - Full public catalogue, all public previews, and the free learning experiences that
   remain included (see §4).
-- A **defined** monthly AI-assessment allowance of **20** (never unlimited). Configurable
+- A **defined** monthly AI-assessment allowance of **2** (never unlimited). Configurable
   product rule, not a public figure.
 - Restrictions: premium tracks are gated behind Track Pass/Pro **only when entitlement
   enforcement is enabled**; enforcement is currently **OFF**, so every learner retains
@@ -210,7 +211,7 @@ data on a snapshot, not from this document.
    Lemon Squeezy and Paystack.
 4. **Merchant payout / settlement readiness** confirmation.
 5. **Refund/dispute policy** wording, approved by owner/legal.
-6. **Rate limiting** credentials (Upstash/Vercel KV) — see `docs/LAUNCH_READINESS.md`.
+6. **Rate limiting** credentials (Upstash/Vercel KV) — see `docs/operations/LAUNCH_READINESS.md`.
 7. **Live migration-history recovery** — approval-gated (§3 of LAUNCH_READINESS).
 8. **Google OAuth production verification**.
 9. **Human curriculum sign-off** for premium tracks. The canonical record is
@@ -235,12 +236,12 @@ code wins and the document was corrected.
 | Track Pass is one-time, 3 **calendar** months, no auto-renewal | `lib/commercial/plans.ts` (`PLANS.TRACK_PASS`: `kind:'ONE_TIME'`), `lib/commercial/track-pass.ts` (`TRACK_PASS_TERM_MONTHS = 3`, UTC, month-end/leap-year clamped) | ✅ |
 | Track Pass grants exactly one premium track | `plans.ts` (`grantsTrackCount: 1`) | ✅ |
 | Pro grants every premium track | `plans.ts` (`grantsAllPremiumTracks: true`) | ✅ |
-| Allowances are finite: Free 20 / Pass 30 / Pro 150 per **UTC calendar month** | `plans.ts` (`allowanceForTier`), `lib/commercial/entitlements.ts` (`monthBounds`) | ✅ |
+| Allowances are finite: Free 2 / Pass 30 / Pro 150 per **UTC calendar month** | `plans.ts` (`allowanceForTier`), `lib/commercial/entitlements.ts` (`monthBounds`) | ✅ |
 | Allowance is server-enforced, race-safe, idempotent | `lib/commercial/assessment-credits.ts` (`SELECT … FOR UPDATE` bucket per (user, month); unique (userId, requestId) idempotency; TTL reservations) | ✅ |
 | Allowance enforcement is ON by default (cost control) unless explicitly `false` | `lib/commercial/providers.ts` (`assessmentAllowanceEnforced`) | ✅ |
 | Access starts at the **verified-payment** instant, not at order creation | `service.ts` (entitlement from verified webhook state) | ✅ |
 | Cancellation continues to period end; past-due gets a grace to period end | `entitlements.ts` (PAST_DUE/CANCELLED grant until `currentPeriodEnd`) | ✅ |
-| Progress/completions/submissions/achievements/certificates are retained after expiry | `transition.ts` + `docs/learner-continuity.md` (retention on any recorded activity) | ✅ |
+| Progress/completions/submissions/achievements/certificates are retained after expiry | `transition.ts` + `docs/engineering/learner-continuity.md` (retention on any recorded activity) | ✅ |
 | USD prices 900 / 1200 / 9600 remain provisional; NGN Track Pass is ₦6,000; NGN Pro plans are undefined | `lib/commercial/pricing.ts` (`PRICE_CATALOGUE`; only Paystack Track Pass individually approved) | ✅ |
 | Premium wave = frontend, backend, python | `lib/commercial/premium.ts` (`PREMIUM_WAVE_1`, `PREMIUM_TRACK_IDS`) | ✅ |
 | Checkout is fail-closed behind `launch.ts` | `lib/commercial/launch.ts`, `app/api/billing/checkout/route.ts` | ✅ |
@@ -249,7 +250,7 @@ One code gap found during reconciliation and **fixed**: the Lemon Squeezy checko
 builder could only produce **live** checkouts (`test_mode: false` hard-coded), which
 makes a genuine sandbox run impossible. It is now config-gated
 (`COMMERCE_PROVIDER_TEST_MODE`, default `false`) via `providerTestMode()`; test-mode
-deliveries still never grant entitlement. See `docs/provider-sandbox-test-matrix.md`.
+deliveries still never grant entitlement. See `docs/billing/provider-sandbox-test-matrix.md`.
 
 ## 11. Draft approval checklists (status: PENDING — full product launch is not approved)
 

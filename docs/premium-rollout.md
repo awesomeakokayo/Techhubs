@@ -141,7 +141,7 @@ authorised operator can run it safely on a replica before any transition.
 ## 5. Applying the transition (checklist, later)
 
 1. Run the dry run on a replica; review the `uncertain` count.
-2. Publish the announcement (`docs/commercial-faq.md` copy) at least
+2. Publish the announcement (`docs/billing/commercial-faq.md` copy) at least
    `COMMERCE_TRANSITION_NOTICE_DAYS` in advance.
 3. Set the cutoff and deadline, keep mode `OPEN` until the notice period ends.
 4. Set mode `GRANDFATHERED` with a grace period; monitor shadow/`uncertain`.

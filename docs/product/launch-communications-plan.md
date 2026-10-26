@@ -15,7 +15,7 @@ until approved.
   **Update (2026-10 wave):** a dismissible, non-blocking in-app announcement now
   exists (`components/commercial/CommercialAnnouncement.tsx`, gated by
   `COMMERCE_ANNOUNCEMENT`), plus a premium notice on selected track pages and a
-  `/pricing` FAQ + `docs/commercial-faq.md`. It makes no price or date claims.
+  `/pricing` FAQ + `docs/billing/commercial-faq.md`. It makes no price or date claims.
 - **No learner email sender exists.** `NotificationPreference` and
   `NotificationLog` models exist in the schema, but `NotificationLog` is never
   written and no code sends mail to learners. The only mailer is

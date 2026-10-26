@@ -11,6 +11,7 @@ import { ProjectsSection } from '@/components/home/landing/ProjectsSection'
 import { LibrarySection } from '@/components/home/landing/LibrarySection'
 import { GuidedPathSection } from '@/components/home/landing/GuidedPathSection'
 import { CatalogueSection } from '@/components/home/landing/CatalogueSection'
+import { PricingSection } from '@/components/home/landing/PricingSection'
 import { FaqSection } from '@/components/home/landing/FaqSection'
 import { FinalCta } from '@/components/home/landing/FinalCta'
 
@@ -189,6 +190,7 @@ export default function HomePage() {
       />
       <GuidedPathSection trackName={frontend.name} stages={guidedStages} />
       <CatalogueSection stats={stats} />
+      <PricingSection />
       <FaqSection />
       <FinalCta />
     </div>

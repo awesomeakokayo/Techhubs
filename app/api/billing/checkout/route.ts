@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { getTrackById } from '@/lib/tracks'
 import { getPlan, isPlanId, isPremiumTrack } from '@/lib/commercial/plans'
-import { COMMERCIAL_PRICING_VERSION, resolveProviderPrice } from '@/lib/commercial/pricing'
+import { resolveCommercialPrice } from '@/lib/commercial/pricing'
 import {
   checkoutEnabled,
   providerProductId,
@@ -14,8 +14,11 @@ import {
 } from '@/lib/commercial/providers'
 import { createPendingOrder, getActiveTrackPass } from '@/lib/commercial/service'
 import { launchReadiness } from '@/lib/commercial/launch'
+import { validatePaystackPlan } from '@/lib/commercial/paystack-plan-validation'
 import { createLemonSqueezyCheckout } from '@/lib/commercial/lemonsqueezy'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
+import { sanitizeCheckoutAttribution } from '@/lib/commercial/attribution'
+import { recordLearningEvent } from '@/lib/event-recorder'
 
 export const dynamic = 'force-dynamic'
 
@@ -43,6 +46,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid plan selected.' }, { status: 400 })
   }
   const plan = getPlan(planId)!
+  const expectedPricingVersion = typeof body?.expectedPricingVersion === 'string' ? body.expectedPricingVersion : null
+  const attribution = sanitizeCheckoutAttribution(body?.attribution)
 
   let trackId: string | null = null
   if (plan.kind === 'ONE_TIME') {
@@ -79,17 +84,77 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'No payment method is currently available.' }, { status: 503 })
   }
 
-  const price = resolveProviderPrice(provider, planId)
-  if (!price) {
+  const resolvedPrice = resolveCommercialPrice(provider, planId)
+  if (!resolvedPrice) {
     return NextResponse.json({ error: 'This plan is not available at the moment.' }, { status: 503 })
   }
+  const price = resolvedPrice.price
 
-  // Evaluate the exact product and provider, so approving the Nigerian Track
-  // Pass cannot accidentally unlock any unapproved international Pro price.
+  // Every paid checkout must acknowledge the exact displayed price version.
+  // A stale campaign page must never silently charge the regular price after the
+  // offer expires. Orders already created keep their recorded amount; new orders
+  // require a fresh review if the version changed or the client omitted it.
+  if (!expectedPricingVersion || expectedPricingVersion !== resolvedPrice.pricingVersion) {
+    return NextResponse.json(
+      {
+        code: expectedPricingVersion ? 'PRICE_CHANGED' : 'PRICE_CONFIRMATION_REQUIRED',
+        error: 'Review the current plan price and try again. No payment has been started.',
+      },
+      { status: 409 },
+    )
+  }
+
+  // A Pro charge must use a configured recurring plan code, never a one-off
+  // transaction that merely grants a temporary subscription-shaped entitlement.
+  if (plan.kind === 'SUBSCRIPTION' && provider === 'paystack' && !providerProductId('paystack', planId)) {
+    return NextResponse.json({ error: 'Recurring billing is not configured for this plan yet.' }, { status: 503 })
+  }
+
+  // Evaluate the exact product and provider. Prices may be displayed before
+  // checkout is released, but checkout remains fail-closed until every gate passes.
   const guard = launchReadiness(process.env, planId, provider)
   if (!guard.ready) {
     paymentLogError('checkout_initialized', 'launch guard blocked checkout', { blockers: guard.blockers, planId, provider })
     return NextResponse.json({ error: 'Checkout is not available yet.' }, { status: 503 })
+  }
+
+  // A configured recurring-plan code is not sufficient on its own. Read the
+  // actual plan from Paystack and fail closed unless amount, currency and billing
+  // interval exactly match the price shown on TechSkillHub. This prevents a typo
+  // in a dashboard plan code from charging a different amount.
+  if (plan.kind === 'SUBSCRIPTION' && provider === 'paystack') {
+    const planCode = providerProductId('paystack', planId)
+    const paystackSecret = process.env.PAYSTACK_SECRET_KEY
+    if (!planCode || !paystackSecret) {
+      return NextResponse.json({ error: 'Recurring billing is not configured for this plan yet.' }, { status: 503 })
+    }
+    try {
+      const response = await fetch(`https://api.paystack.co/plan/${encodeURIComponent(planCode)}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${paystackSecret}` },
+        cache: 'no-store',
+      })
+      const result = await response.json().catch(() => null)
+      const check = response.ok && result?.status === true
+        ? validatePaystackPlan(planCode, result.data, price)
+        : { matches: false as const, reason: 'plan_not_retrievable' }
+      if (!check.matches) {
+        paymentLogError('checkout_initialized', 'Paystack recurring plan did not match approved catalogue', {
+          planId,
+          reason: check.reason ?? 'plan_not_retrievable',
+        })
+        return NextResponse.json(
+          { error: 'This subscription is not available yet. Please try again later.' },
+          { status: 503 },
+        )
+      }
+    } catch {
+      paymentLogError('checkout_initialized', 'Paystack recurring plan verification failed', { planId })
+      return NextResponse.json(
+        { error: 'We could not verify this subscription price right now. No payment has been started.' },
+        { status: 503 },
+      )
+    }
   }
 
   const reference = `TSH_${session.user.id.slice(0, 8)}_${crypto.randomUUID()}`
@@ -104,7 +169,9 @@ export async function POST(req: Request) {
       currency: price.currency,
       amountMinor: price.amountMinor,
       reference,
-      pricingVersion: COMMERCIAL_PRICING_VERSION,
+      pricingVersion: resolvedPrice.pricingVersion,
+      campaignId: resolvedPrice.campaignId,
+      attribution,
     })
   } catch (error) {
     paymentLogError('checkout_initialized', 'order create failed', {
@@ -136,6 +203,19 @@ export async function POST(req: Request) {
       paymentLogError('checkout_initialized', 'lemonsqueezy checkout failed', { reference, userId: session.user.id, error: result.error })
       return NextResponse.json({ error: 'We could not start checkout. Please try again.' }, { status: 502 })
     }
+    await recordLearningEvent({
+      userId: session.user.id,
+      eventName: 'checkout_started',
+      metadata: {
+        planId,
+        amountMinor: price.amountMinor,
+        currency: price.currency,
+        pricingVersion: resolvedPrice.pricingVersion,
+        campaignId: resolvedPrice.campaignId,
+        provider,
+        ...(attribution ?? {}),
+      },
+    })
     paymentLog('payment_redirected', { reference, userId: session.user.id, provider, planId })
     return NextResponse.json({ provider, url: result.url, reference })
   }
@@ -151,15 +231,17 @@ export async function POST(req: Request) {
       headers: { Authorization: `Bearer ${secretKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: session.user.email,
-        amount: String(price.amountMinor),
-        currency: price.currency,
+        ...(plan.kind === 'SUBSCRIPTION'
+          ? { plan: providerProductId('paystack', planId) }
+          : { amount: String(price.amountMinor), currency: price.currency }),
         reference,
         callback_url: `${baseUrl}/billing/success?reference=${encodeURIComponent(reference)}`,
         metadata: {
           plan_id: planId,
           track_id: trackId ?? '',
           user_id: session.user.id,
-          pricing_version: COMMERCIAL_PRICING_VERSION,
+          pricing_version: resolvedPrice.pricingVersion,
+          campaign_id: resolvedPrice.campaignId ?? '',
           provider: 'PAYSTACK',
         },
       }),
@@ -170,6 +252,19 @@ export async function POST(req: Request) {
       paymentLogError('checkout_initialized', 'paystack initialize error', { reference, userId: session.user.id })
       return NextResponse.json({ error: 'We could not start your payment. Please try again.' }, { status: 502 })
     }
+    await recordLearningEvent({
+      userId: session.user.id,
+      eventName: 'checkout_started',
+      metadata: {
+        planId,
+        amountMinor: price.amountMinor,
+        currency: price.currency,
+        pricingVersion: resolvedPrice.pricingVersion,
+        campaignId: resolvedPrice.campaignId,
+        provider,
+        ...(attribution ?? {}),
+      },
+    })
     paymentLog('payment_redirected', { reference, userId: session.user.id, provider, planId })
     return NextResponse.json({ provider, url, reference })
   } catch {

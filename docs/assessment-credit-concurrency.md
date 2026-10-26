@@ -118,7 +118,7 @@ by consuming immediately after the model returns and outside long transactions.
 
 Previously the limit was only applied when `COMMERCE_ENTITLEMENTS_ENFORCED` was
 on; usage was measured but not capped. The requirement is that each tier's
-allowance is **finite and authoritative** (Free 20 / Track Pass 30 / Pro 150 per
+allowance is **finite and authoritative** (Free 2 / Track Pass 30 / Pro 150 per
 month, in `lib/commercial/plans.ts`), so the ledger cannot be meaningful without
 enforcement. Enforcement is therefore **on by default** and can only be disabled
 by explicitly setting `COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCED=false`.

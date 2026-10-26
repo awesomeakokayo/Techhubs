@@ -95,6 +95,9 @@ export function LandingHero({ track, stats }: LandingHeroProps) {
                 Explore Learning Paths
               </CtaLink>
             </div>
+            <Link href="#pricing" className="landing-arrow mt-4">
+              Compare plans <ArrowRight size={14} className="shrink-0" />
+            </Link>
 
             <p className="mt-5 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-ink/70">
               Beginner-friendly · Self-paced · Free resources

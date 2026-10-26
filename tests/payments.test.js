@@ -85,7 +85,7 @@ test('plan key/enum mapping', () => {
 
 test('a Track Pass is never fulfilled through the legacy day-count path', () => {
   // The legacy path would grant permanent (never-expiring) access; Track Pass
-  // purchases must go through the canonical six-month billing service instead.
+  // purchases must go through the canonical three-month billing service instead.
   assert.equal(requiresCanonicalBilling('TRACK_PASS'), true)
   assert.equal(requiresCanonicalBilling('MONTHLY'), false)
   assert.equal(requiresCanonicalBilling('THREE_MONTHS'), false)

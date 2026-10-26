@@ -24,10 +24,12 @@ import {
 } from './entitlements'
 import type { NormalizedBillingEvent } from './webhooks'
 import { getPlan, type PlanId } from './plans'
+import { resolveProviderPrice } from './pricing'
 import { assessmentAllowanceEnforced, providerProductId, type ProviderId } from './providers'
 import { countReservationUsage } from './assessment-credits'
 import { validatePaymentMatch } from './payments'
 import { computeTrackPassPeriod, laterExpiry, trackPassActive } from './track-pass'
+import type { CheckoutAttribution } from './attribution'
 
 /** A Prisma transaction client (interactive transactions). */
 type Db = Prisma.TransactionClient
@@ -44,6 +46,7 @@ function providerEnum(provider: ProviderId): 'PAYSTACK' | 'LEMON_SQUEEZY' {
 function planEnum(planId: PlanId): 'TRACK_PASS' | 'MONTHLY' | 'YEARLY' | 'THREE_MONTHS' {
   if (planId === 'TRACK_PASS') return 'TRACK_PASS'
   if (planId === 'PRO_ANNUAL') return 'YEARLY'
+  if (planId === 'PRO_QUARTERLY') return 'THREE_MONTHS'
   return 'MONTHLY'
 }
 
@@ -53,11 +56,24 @@ function parseDate(value: string | null | undefined): Date | null {
   return Number.isNaN(date.getTime()) ? null : date
 }
 
-function periodEndForPlan(planId: PlanId | null, from: Date): Date {
+function addUtcMonthsClamped(from: Date, months: number): Date {
   const date = new Date(from)
-  if (planId === 'PRO_ANNUAL') date.setUTCFullYear(date.getUTCFullYear() + 1)
-  else date.setUTCMonth(date.getUTCMonth() + 1)
-  return date
+  const desiredMonth = date.getUTCMonth() + months
+  const targetYear = date.getUTCFullYear() + Math.floor(desiredMonth / 12)
+  const targetMonth = ((desiredMonth % 12) + 12) % 12
+  const day = date.getUTCDate()
+  const hour = date.getUTCHours()
+  const minute = date.getUTCMinutes()
+  const second = date.getUTCSeconds()
+  const millisecond = date.getUTCMilliseconds()
+  const lastDay = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate()
+  return new Date(Date.UTC(targetYear, targetMonth, Math.min(day, lastDay), hour, minute, second, millisecond))
+}
+
+function periodEndForPlan(planId: PlanId | null, from: Date): Date {
+  if (planId === 'PRO_ANNUAL') return addUtcMonthsClamped(from, 12)
+  if (planId === 'PRO_QUARTERLY') return addUtcMonthsClamped(from, 3)
+  return addUtcMonthsClamped(from, 1)
 }
 
 function mapProviderStatus(status: string | null): SubscriptionStatusValue {
@@ -243,6 +259,8 @@ export interface CreateOrderInput {
   amountMinor: number
   reference: string
   pricingVersion: string
+  campaignId?: string | null
+  attribution?: CheckoutAttribution | null
 }
 
 export async function createPendingOrder(prisma: PrismaClient, input: CreateOrderInput) {
@@ -257,6 +275,8 @@ export async function createPendingOrder(prisma: PrismaClient, input: CreateOrde
       amount: input.amountMinor,
       amountMajor: Math.round(input.amountMinor / 100),
       pricingVersion: input.pricingVersion,
+      campaignId: input.campaignId ?? null,
+      attribution: input.attribution ? (input.attribution as Prisma.InputJsonValue) : Prisma.JsonNull,
       status: 'PENDING',
       reference: input.reference,
       provider: providerEnum(input.provider),
@@ -321,7 +341,7 @@ async function upsertSubscription(
   }
 
   const status = args.status ?? mapProviderStatus(event.status)
-  const periodEnd = parseDate(event.currentPeriodEnd) ?? periodEndForPlan(planId, now)
+  const periodEnd = parseDate(event.currentPeriodEnd) ?? existing?.currentPeriodEnd ?? periodEndForPlan(planId, now)
   const plan = planId ? planEnum(planId) : undefined
   const providerUpdatedAt = occurredAt ?? now
 
@@ -494,8 +514,8 @@ export async function applyBillingEvent(
   const userId = await resolveUserId(prisma, event, order)
   if (!userId) return { applied: false, reason: 'unresolved_user', userId: null }
 
-  const planId = ((event.productCode ?? order?.productCode) as PlanId | null) ?? null
-  const trackId = event.trackId ?? (order && order.trackId !== PRO_ORDER_TRACK ? order.trackId : null)
+  const planId = ((order?.productCode ?? event.productCode) as PlanId | null) ?? null
+  const trackId = (order && order.trackId !== PRO_ORDER_TRACK ? order.trackId : null) ?? event.trackId
   const plan = planId ? getPlan(planId) : null
   const occurredAt = parseDate(event.occurredAt)
 
@@ -541,6 +561,23 @@ export async function applyBillingEvent(
       { requiresOrder: event.type === 'payment_succeeded' && plan?.kind === 'ONE_TIME' },
     )
     if (!match.matches) return { applied: false, reason: `mismatch:${match.reason}`, userId }
+
+    // Renewals arrive without a new browser-created order. For a recurring
+    // subscription, require the provider plan code AND the configured amount and
+    // currency to match the internal approved catalogue before extending access.
+    if (event.type === 'payment_succeeded' && plan?.kind === 'SUBSCRIPTION' && !order) {
+      const recurringPrice = resolveProviderPrice(event.provider, plan.id)
+      if (
+        !recurringPrice ||
+        event.amountMinor == null ||
+        event.amountMinor !== recurringPrice.amountMinor ||
+        (event.currency ?? '').toUpperCase() !== recurringPrice.currency.toUpperCase() ||
+        !expectedProductId ||
+        event.productId !== expectedProductId
+      ) {
+        return { applied: false, reason: 'mismatch:recurring_payment_does_not_match_approved_plan', userId }
+      }
+    }
 
     switch (event.type) {
       case 'payment_succeeded': {

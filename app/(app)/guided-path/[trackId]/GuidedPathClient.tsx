@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { Breadcrumbs } from '@/components/ui/Breadcrumbs'
 import { getTrackIcon } from '@/lib/icons'
+import { trackEvent } from '@/lib/analytics'
 import type { PublicGuidedStep, PublicSubmissionState } from '@/lib/guided-path'
 import type { LearningMilestone } from '@/lib/learning-rhythm'
 import type { PortfolioReadiness } from '@/lib/learning-progress'
@@ -481,6 +482,9 @@ export function GuidedPathClient({ trackId, trackMeta }: { trackId: string; trac
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const savedTimer = useRef<number | null>(null)
   const [error, setError] = useState('')
+  const [quotaRemaining, setQuotaRemaining] = useState<number | null>(null)
+  const [quotaTier, setQuotaTier] = useState<string | null>(null)
+  const [showQuotaUpgrade, setShowQuotaUpgrade] = useState(false)
   const [milestones, setMilestones] = useState<LearningMilestone[]>([])
   const [readiness, setReadiness] = useState<PortfolioReadiness | null>(null)
   const [projectSubmission, setProjectSubmission] = useState<PublicSubmissionState | null>(null)
@@ -500,6 +504,23 @@ export function GuidedPathClient({ trackId, trackMeta }: { trackId: string; trac
 
   useEffect(() => {
     let cancelled = false
+    fetch('/api/billing/entitlements').then(async (response) => {
+      if (!response.ok) return null
+      return response.json()
+    }).then((data) => {
+      if (cancelled || !data?.assessments) return
+      const remaining = data.assessments.remaining
+      const tier = data.tier
+      if (typeof remaining === 'number') setQuotaRemaining(remaining)
+      if (typeof tier === 'string') setQuotaTier(tier)
+      if (tier === 'FREE' && remaining === 0) {
+        setShowQuotaUpgrade(true)
+        trackEvent({ event_name: 'pro_upgrade_viewed', path: `/guided-path/${trackId}`, content_type: 'free_ai_quota_exhausted' })
+      }
+    }).catch(() => {
+      // Quota status is supplemental; assessment authorization remains server-side.
+    })
+
     fetch(`/api/guided-path/${trackId}`).then(async (response) => {
       if (response.status === 401) { router.push(`/login?next=/guided-path/${trackId}`); return null }
       if (response.status === 403) throw new Error('You do not have access to this learning path.')
@@ -588,9 +609,31 @@ export function GuidedPathClient({ trackId, trackMeta }: { trackId: string; trac
         body: JSON.stringify({ stepIndex: currentStep.index, ...payload }),
       })
       const data = await response.json().catch(() => null)
+      if (data?.assessmentUsage) {
+        setQuotaRemaining(typeof data.assessmentUsage.remaining === 'number' ? data.assessmentUsage.remaining : null)
+        setQuotaTier(typeof data.assessmentUsage.tier === 'string' ? data.assessmentUsage.tier : null)
+      }
+      if (data?.status === 'allowance_exhausted') {
+        const tier = typeof data.tier === 'string' ? data.tier : 'FREE'
+        setQuotaRemaining(0)
+        setQuotaTier(tier)
+        if (tier === 'FREE') {
+          setShowQuotaUpgrade(true)
+          trackEvent({ event_name: 'pro_upgrade_viewed', path: `/guided-path/${trackId}`, content_type: 'free_ai_quota_exhausted' })
+        }
+        setError(data?.error || "You've used your free AI assessments. Explore Pro plans or continue learning for free.")
+        return
+      }
       if (!data?.status) {
         setError(data?.error || 'Your submission could not be assessed. Please try again.')
         return
+      }
+      if (
+        data?.assessmentUsage?.tier === 'FREE' &&
+        data?.assessmentUsage?.remaining === 0
+      ) {
+        setShowQuotaUpgrade(true)
+        trackEvent({ event_name: 'pro_upgrade_viewed', path: `/guided-path/${trackId}`, content_type: 'free_ai_quota_exhausted' })
       }
       setProjectSubmission({
         status: data.status,
@@ -863,6 +906,41 @@ export function GuidedPathClient({ trackId, trackMeta }: { trackId: string; trac
           </p>
         ) : null}
       </div>
+
+      {quotaRemaining !== null ? (
+        <p className="mt-4 text-xs text-text-muted" role="status" aria-live="polite">
+          {quotaTier === 'FREE' ? 'Free AI assessments remaining this month:' : 'AI assessments remaining this month:'}{' '}
+          <span className="font-mono font-semibold text-text-primary">{quotaRemaining}</span>
+        </p>
+      ) : null}
+
+      {showQuotaUpgrade && quotaTier === 'FREE' ? (
+        <section className="mt-5 rounded-xl border border-brand/25 bg-brand/[0.04] p-5 md:p-6" aria-labelledby="quota-upgrade-title">
+          <p className="section-label">AI assessment allowance</p>
+          <h2 id="quota-upgrade-title" className="mt-2 font-display text-xl font-semibold text-text-primary">
+            Ready to take the next step?
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-text-secondary">
+            You&apos;ve used your free AI assessments. TechSkillHub Pro provides access to all included premium guided paths and a higher monthly AI assessment allowance.
+          </p>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/pricing#pro"
+              className="btn btn-primary inline-flex items-center justify-center gap-2"
+              onClick={() => trackEvent({ event_name: 'pro_upgrade_clicked', path: `/guided-path/${trackId}`, cta_label: 'Explore Pro plans', cta_href: '/pricing#pro' })}
+            >
+              Explore Pro plans <ArrowRight size={15} />
+            </Link>
+            <Link
+              href="/tracks"
+              className="btn btn-secondary inline-flex items-center justify-center"
+              onClick={() => trackEvent({ event_name: 'continue_learning_free', path: `/guided-path/${trackId}`, cta_label: 'Continue learning for free', cta_href: '/tracks' })}
+            >
+              Continue learning for free
+            </Link>
+          </div>
+        </section>
+      ) : null}
 
       {error && (
         <div role="alert" className="mt-5 flex items-start gap-2 rounded-lg p-3" style={{ border: '1px solid rgba(178, 59, 47, 0.25)', backgroundColor: 'rgba(178, 59, 47, 0.05)' }}>
