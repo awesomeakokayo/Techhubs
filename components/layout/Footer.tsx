@@ -84,14 +84,19 @@ export function Footer() {
         </div>
 
         <div
-          role="img"
-          aria-label="Learners collaborating around a laptop in a shared workspace"
-          className="relative mt-12 h-32 overflow-hidden rounded-[18px] border border-hairline bg-cover bg-center sm:h-40 md:mt-14 md:h-48"
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg, rgba(34, 34, 34, 0.28), rgba(75, 78, 109, 0.08)), url('https://images.unsplash.com/photo-1603201667230-bd139210db18?auto=format&fit=crop&w=1800&q=80')",
-          }}
-        />
+          className="relative mt-12 h-32 overflow-hidden rounded-[18px] border border-hairline bg-brand sm:h-40 md:mt-14 md:h-48"
+        >
+          <img
+            src="https://images.pexels.com/photos/9431442/pexels-photo-9431442.jpeg?auto=compress&cs=tinysrgb&w=1100"
+            alt="Black colleagues collaborating at a whiteboard in a shared workspace"
+            width={1100}
+            height={700}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-ink/35 to-transparent" />
+        </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-hairline py-6">
           <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink/70">
