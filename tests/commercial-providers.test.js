@@ -72,10 +72,12 @@ test('Paystack Pro subscriptions remain blocked until explicit plan codes and re
   const recurring = {
     ...base,
     COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED: 'true',
+    COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED: 'true',
     PAYSTACK_PLAN_CODE_PRO_MONTHLY: 'PLN_month',
     PAYSTACK_PLAN_CODE_PRO_QUARTERLY: 'PLN_quarter',
     PAYSTACK_PLAN_CODE_PRO_ANNUAL: 'PLN_year',
   }
+  assert.equal(selectProvider('PRO_MONTHLY', 'paystack', { ...recurring, COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED: 'false' }), null)
   assert.equal(selectProvider('PRO_MONTHLY', 'paystack', recurring), 'paystack')
   assert.equal(selectProvider('PRO_QUARTERLY', 'paystack', recurring), 'paystack')
   assert.equal(selectProvider('PRO_ANNUAL', 'paystack', recurring), 'paystack')
