@@ -34,7 +34,7 @@ feature status, test results, known issues and next tasks, see
 
 ## Documentation
 
-Start with [the documentation index](./docs/README.md). It links to the current architecture and development handoff, launch blockers, curriculum evidence, billing operations, and archived implementation prompts. Historical audit and planning files are kept under `docs/archive/`; they are retained for provenance, not treated as the current source of truth.
+Start with [the documentation index](./docs/README.md). It links to the current architecture and development handoff, launch blockers, curriculum evidence, billing operations, and archived implementation prompts. Historical implementation snapshots and older prompts are kept under `docs/archive/`; current operational, product, engineering, billing, AI-instruction, and curriculum audit documents are grouped in the folders linked from `docs/README.md`.
 
 ## Getting started
 
