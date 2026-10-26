@@ -25,8 +25,9 @@ secret values were not read, printed, changed, or copied into this repository.
   Browser redirects never grant entitlements.
 - **Pro subscriptions in Nigeria:** price entries are approved, but new recurring checkout remains
   blocked until each `PAYSTACK_PLAN_CODE_PRO_*` points at an actual Paystack plan that matches
-  the catalogue amount, NGN currency and interval. `COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED`
-  is off by default. The checkout endpoint verifies the actual provider plan before creating an order.
+  the catalogue amount, NGN currency and interval. Both `COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_ENABLED`
+  and `COMMERCE_PAYSTACK_PRO_SUBSCRIPTIONS_VERIFIED` default to false. The verified flag is set
+  only after the recurring sandbox lifecycle checks pass; checkout rechecks the live plan before creating an order.
 - **International pricing:** Lemon Squeezy entries remain provisional and cannot be charged just
   because the global publication flag is enabled.
 - **Safety gates:** COMMERCE_CHECKOUT_ENABLED, COMMERCE_PRICES_APPROVED, and
