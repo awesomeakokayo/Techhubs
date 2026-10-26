@@ -1,11 +1,6 @@
 # TechSkillHUB — Monetization Plan (Free vs Pro)
 
-Status: **billing remains inactive; release approval is pending.** The Nigerian
-Track Pass price of ₦6,000 for three calendar months is individually approved in
-the code catalogue, but it is not published or chargeable while the global gates
-remain off and provider/database checks are incomplete. The international USD
-prices, assessment allowances, transition dates and remaining launch policies below
-remain proposals unless explicitly marked otherwise.
+Status: **final NGN pricing is coded; paid checkout remains disabled pending provider verification and release approval.** The prices are recorded in the canonical commercial catalogue. The Founding Learner offer is date-gated and stays inactive until valid Africa/Lagos timestamps are configured. Pro recurring checkout remains blocked until real Paystack plan codes are configured and verified against amount, currency and interval.
 
 Evidence basis: inspection of the working tree on `feat/retention-v3`
 (32 tracks, 180 roadmap stages, 271 resources, 114 projects; guided paths are
@@ -79,18 +74,10 @@ Legend for the five required categories:
 
 | Tier | Suggested monthly allowance | Rationale |
 | --- | --- | --- |
-| Free | **20 assessments/month** | Enough to complete **any single base track** (max 6 mandatory project steps: `frontend`, `python`) with retries and repeated attempts, plus headroom. **[estimate]** |
+| Free | **2 assessments/month** | Small entry allowance; exact usage is shown inside the authenticated app. Free roadmaps, resources, projects, career guides and existing progress stay available after exhaustion. **[approved]** |
 | Pro | **150 assessments/month** | Multiple tracks in parallel + portfolio iteration. **[proposal]** |
 
-**Mandatory-activity guarantee (required):** every path advertised as fully free
-and assessed must include enough free credits to complete all its mandatory
-assessments. The base tracks require at most **6** project assessments (measured:
-`frontend` 6, `python` 6, `backend` 5, `uiux` 5, `data` 5; 73 project steps
-across 32 tracks). A free allowance of 20/month therefore completes any single
-path even with several retries. Retries against *identical* evidence reuse the
-prior result without spending a credit, and deterministic rejections (missing
-artifact, invalid URL, short explanation) cost nothing because they never reach
-the model. **[confirmed for measurement; estimate for the allowance]**
+**Allowance policy:** Free accounts receive two server-enforced AI project assessments per UTC calendar month. The exact remaining allowance is shown in the authenticated dashboard and guided learning experience. Exhausting it must not remove access to free roadmaps, resources, projects, career guides, recorded progress, submissions or earned certificates. A project assessment already in flight is not stopped mid-request; a completed final assessment can be followed by a respectful Pro upgrade prompt. Identical evidence reuse and deterministic pre-checks remain non-billable.
 
 ### 3.4 Certificates and achievements
 
@@ -136,32 +123,26 @@ malformed JSON, and a DB-backed budget (20/user/hour, 500 global/hour).
 
 ---
 
-## 5. Proposed pricing (recommendation — not approved)
+## 5. Approved pricing (campaign launch model)
 
-The code already contains a region-split price table (`lib/pricing.ts`,
-`PRICING_VERSION 'TSH-PRO-2026-08'`) for Nigeria (NGN) and international (USD).
-Those figures are **legacy internal values, not approved**. For planning only:
+The canonical source of truth is `lib/commercial/plans.ts` and
+`lib/commercial/pricing.ts`. Nigerian pricing is in NGN; international USD
+values remain provisional and must not be inferred from these figures.
 
-| Tier | Nigeria (NGN) | International (USD) |
-| --- | --- | --- |
-| Monthly | ₦2,450 *(legacy value)* | $4.99 *(legacy value)* |
-| 3 months | ₦5,145 *(legacy value)* | $9.99 *(legacy value)* |
-| Yearly | ₦14,700 *(legacy value)* | $29.99 *(legacy value)* |
+| Plan | Price | Access |
+| --- | ---: | --- |
+| Free | ₦0 | Free learning resources, progress features and two monthly AI assessments |
+| Single Guided Path Pass | ₦6,000 one-time | One selected premium guided path for three calendar months; no auto-renewal |
+| Founding Learner Offer | ₦3,000 one-time during the configured sale window | Same three-month, single-path access; 50% off the ₦6,000 regular price |
+| Pro Monthly | ₦4,500/month | All included premium guided paths; recurring monthly billing |
+| Pro Quarterly | ₦11,000 per three months | All included premium guided paths; recurring quarterly billing |
+| Pro Annual | ₦36,000/year | All included premium guided paths; recurring annual billing |
 
-> **Update — canonical commercial model.** The single source of truth is
-> `lib/commercial/plans.ts` / `lib/commercial/pricing.ts`. The approved Nigerian
-> Track Pass is a one-time **₦6,000 Paystack payment** for **three calendar months**
-> of access to one selected premium track. It does not renew automatically; expiry
-> is calculated server-side from the verified payment instant. Pro Monthly ($12)
-> and Pro Annual ($96) remain provisional, unapproved subscription prices for the
-> international Lemon Squeezy path. The legacy table above is retained only as
-> historical context. Price publication and checkout remain disabled until all
-> release gates and sandbox tests pass.
+Quarterly is the launch recommendation (approximately 18.5% below three monthly payments); annual is best long-term value (approximately 33.3% below twelve monthly payments). Pro assessment capacity is finite (150 per UTC calendar month), not unlimited.
 
-At the typical assessment cost, a Pro user at the 150/month cap costs roughly
-**$0.45–$1.20/month**, leaving healthy margin at $4.99 — **but this is only valid
-if a payout/settlement route exists** (see payment-readiness doc). Do not publish
-these numbers until pricing and settlement are approved.
+The promotion is a fixed 14-day sale after a seven-day warm-up, part of a 21-day campaign. Its start and end instants must be explicitly set using Africa/Lagos time with an offset (for example `+01:00`). No default dates or per-visitor timer resets are permitted. The server uses the saved order amount to honour a checkout created before the deadline; new orders created after expiry use the regular ₦6,000 price. See `docs/pricing-launch-campaign.md` for environment configuration, verification gates and analytics definitions.
+
+Pro recurring payments must remain unavailable until the owner configures three Paystack plan codes and checkout verifies each provider plan's amount, NGN currency and interval before creating the transaction. The global commerce gates and provider sandbox check still determine launch readiness.
 
 ---
 
