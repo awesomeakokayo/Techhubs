@@ -15,18 +15,16 @@ This index organizes TechSkillHub's current product documentation, engineering n
 
 ## Curriculum and learner experience
 
-These generated evidence files and audit documents remain at stable paths used by the app, tests, or audit scripts.
+Generated curriculum evidence remains at stable paths used by audit scripts. Detailed AI audit reports are grouped under [AI curriculum audits](./ai-audits/README.md); two compact entry points remain at their historical paths for automated-test compatibility.
 
 - [Curriculum implementation guide](./curriculum-implementation/README.md)
 - [Curriculum quality audit](./curriculum-quality-audit.md)
 - [Curriculum stage evidence](./curriculum-stage-evidence.md)
 - [Curriculum import preflight](./curriculum-import-preflight.md)
 - [Reviewer packets index](./reviewer-packets/README.md)
-- [AI learning sequence audit](./AI_PHASE_4_SEQUENCE.md)
-- [AI project audit](./AI_PROJECT_AUDIT.md)
-- [AI assessment audit](./AI_PHASE_6_ASSESSMENT_AUDIT.md)
-- [AI resource verification audit](./AI_PHASE_7_RESOURCE_AUDIT.md)
-- [AI beginner learner-flow audit](./AI_PHASE_8_LEARNER_FLOW_AUDIT.md)
+- [AI curriculum audit index](./ai-audits/README.md)
+- [AI assessment audit entry point](./AI_PHASE_6_ASSESSMENT_AUDIT.md) — detailed report is linked from the index.
+- [AI resource audit entry point](./AI_PHASE_7_RESOURCE_AUDIT.md) — detailed report is linked from the index.
 
 ## Research and generated artifacts
 
