@@ -39,23 +39,26 @@ export async function POST() {
       paymentLogError('payment_error', 'lemonsqueezy cancel failed', { userId: session.user.id, httpStatus: response.status })
       return NextResponse.json({ error: 'We could not cancel your subscription. Please try again.' }, { status: 502 })
     }
-  } else if (provider === 'PAYSTACK' && subscription.paystackSubscriptionCode) {
+  } else if (provider === 'PAYSTACK' && (subscription.providerSubscriptionId || subscription.paystackSubscriptionCode)) {
     const secretKey = process.env.PAYSTACK_SECRET_KEY
-    if (!secretKey) {
+    const paystackSubscriptionCode = subscription.providerSubscriptionId ?? subscription.paystackSubscriptionCode
+    if (!secretKey || !paystackSubscriptionCode) {
       return NextResponse.json({ error: 'Cancellation is not available for this subscription yet.' }, { status: 503 })
     }
-    const subRes = await fetch(`https://api.paystack.co/subscription/${subscription.paystackSubscriptionCode}`, {
+    const subRes = await fetch(`https://api.paystack.co/subscription/${encodeURIComponent(paystackSubscriptionCode)}`, {
       headers: { Authorization: `Bearer ${secretKey}` },
+      cache: 'no-store',
     })
-    const subData = await subRes.json()
+    const subData = await subRes.json().catch(() => null)
     const emailToken = subData?.data?.email_token
-    if (!emailToken) {
-      return NextResponse.json({ error: 'Could not retrieve cancellation token from the provider.' }, { status: 400 })
+    if (!subRes.ok || !emailToken) {
+      paymentLogError('payment_error', 'paystack cancel token lookup failed', { userId: session.user.id, httpStatus: subRes.status })
+      return NextResponse.json({ error: 'Could not retrieve cancellation token from the provider.' }, { status: 502 })
     }
-    const disable = await fetch(`https://api.paystack.co/subscription/${subscription.paystackSubscriptionCode}/manage/disable`, {
+    const disable = await fetch(`https://api.paystack.co/subscription/${encodeURIComponent(paystackSubscriptionCode)}/manage/disable`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${secretKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: subscription.paystackSubscriptionCode, token: emailToken }),
+      body: JSON.stringify({ code: paystackSubscriptionCode, token: emailToken }),
     })
     const disableData = await disable.json()
     if (!disableData?.status) {
