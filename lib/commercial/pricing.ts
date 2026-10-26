@@ -19,15 +19,15 @@ export interface PlanPrice {
   /** Integer minor units: kobo for NGN, cents for USD. */
   amountMinor: number
   /** ISO 8601 duration for subscriptions, if applicable. */
-  interval: 'P1M' | 'P1Y' | null
+  interval: 'P1M' | 'P3M' | 'P1Y' | null
   /** Owner-confirmed for this specific plan/provider/currency. */
   approved: boolean
 }
 
 /**
- * Internal price catalogue. The existing USD values remain provisional. The
- * only owner-approved price here is ₦6,000 for a three-calendar-month Track Pass
- * through Paystack. Publication and checkout still require their master flags.
+ * Approved Nigerian pricing. Pro billing remains disabled for checkout until
+ * Paystack subscription plan codes and sandbox verification are configured.
+ * USD variants remain provisional and are never inferred from NGN pricing.
  */
 export const PRICE_CATALOGUE: Partial<Record<ProviderId, Partial<Record<PlanId, PlanPrice>>>> = {
   lemonsqueezy: {
@@ -37,6 +37,9 @@ export const PRICE_CATALOGUE: Partial<Record<ProviderId, Partial<Record<PlanId, 
   },
   paystack: {
     TRACK_PASS: { planId: 'TRACK_PASS', provider: 'paystack', currency: 'NGN', amountMinor: 600000, interval: null, approved: true },
+    PRO_MONTHLY: { planId: 'PRO_MONTHLY', provider: 'paystack', currency: 'NGN', amountMinor: 450000, interval: 'P1M', approved: true },
+    PRO_QUARTERLY: { planId: 'PRO_QUARTERLY', provider: 'paystack', currency: 'NGN', amountMinor: 1100000, interval: 'P3M', approved: true },
+    PRO_ANNUAL: { planId: 'PRO_ANNUAL', provider: 'paystack', currency: 'NGN', amountMinor: 3600000, interval: 'P1Y', approved: true },
   },
 }
 
