@@ -83,6 +83,16 @@ export function Footer() {
           </div>
         </div>
 
+        <div
+          role="img"
+          aria-label="Learners collaborating around a laptop in a shared workspace"
+          className="relative mt-12 h-32 overflow-hidden rounded-[18px] border border-hairline bg-cover bg-center sm:h-40 md:mt-14 md:h-48"
+          style={{
+            backgroundImage:
+              "linear-gradient(90deg, rgba(34, 34, 34, 0.28), rgba(75, 78, 109, 0.08)), url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1800&q=80')",
+          }}
+        />
+
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-hairline py-6">
           <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink/70">
             © 2026 TechSkillHub. All rights reserved.
