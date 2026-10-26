@@ -21,6 +21,7 @@ export function CheckoutButton({
   disabledReason,
   autoStart = false,
   resumePath = '/pricing',
+  expectedPricingVersion,
 }: {
   planId: 'TRACK_PASS' | 'PRO_MONTHLY' | 'PRO_ANNUAL'
   trackId?: string
@@ -31,6 +32,7 @@ export function CheckoutButton({
   disabledReason?: string
   autoStart?: boolean
   resumePath?: string
+  expectedPricingVersion?: string
 }) {
   const [busy, setBusy] = useState(false)
   const [selectedTrackId, setSelectedTrackId] = useState(trackId ?? trackOptions?.[0]?.id ?? '')
@@ -53,17 +55,20 @@ export function CheckoutButton({
 
     setBusy(true)
     setMessage(null)
+    track('pricing_plan_selected', { planId })
+    track('pricing_cta_clicked', { planId })
     track('checkout_start_clicked', { planId })
 
     try {
       const res = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planId, trackId: chosenTrackId }),
+        body: JSON.stringify({ planId, trackId: chosenTrackId, ...(expectedPricingVersion ? { expectedPricingVersion } : {}) }),
       })
       const data = await res.json().catch(() => ({}))
 
       if (res.ok && typeof data?.url === 'string') {
+        track('checkout_started', { planId })
         track('checkout_redirect', { planId })
         window.location.href = data.url
         return
@@ -73,12 +78,15 @@ export function CheckoutButton({
         track('checkout_sign_in_required', { planId })
         const params = new URLSearchParams({ resumeCheckout: planId })
         if (chosenTrackId) params.set('trackId', chosenTrackId)
+        if (expectedPricingVersion) params.set('expectedPricingVersion', expectedPricingVersion)
         await signIn('google', { callbackUrl: `${resumePath}?${params.toString()}#plans` })
         return
       }
 
       track('checkout_start_failed', { planId, status: String(res.status) })
-      if (res.status === 503) {
+      if (data?.code === 'PRICE_CHANGED' || res.status === 409) {
+        setMessage(data?.error || 'The offer has ended or the price changed. Review the current price before continuing.')
+      } else if (res.status === 503) {
         setMessage('Checkout is not available yet. No payment has been taken.')
       } else {
         setMessage(data?.error || 'We could not start checkout. Please try again.')
@@ -89,7 +97,7 @@ export function CheckoutButton({
     } finally {
       setBusy(false)
     }
-  }, [busy, disabled, disabledReason, planId, resumePath, selectedTrackId, trackId])
+  }, [busy, disabled, disabledReason, expectedPricingVersion, planId, resumePath, selectedTrackId, trackId])
 
   useEffect(() => {
     if (!autoStart || status !== 'authenticated' || disabled || autoStartAttempted.current) return
