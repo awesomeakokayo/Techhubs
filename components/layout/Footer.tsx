@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { LogoMark } from '@/components/brand/Logo'
 
@@ -87,14 +86,14 @@ export function Footer() {
         <div
           className="relative mt-12 h-32 overflow-hidden rounded-[18px] border border-hairline bg-brand sm:h-40 md:mt-14 md:h-48"
         >
-          <Image
-            src="https://images.pexels.com/photos/9431442/pexels-photo-9431442.jpeg?auto=compress&cs=tinysrgb&w=1400"
+          <img
+            src="https://images.pexels.com/photos/9431442/pexels-photo-9431442.jpeg?auto=compress&cs=tinysrgb&w=1100"
             alt="Black colleagues collaborating at a whiteboard in a shared workspace"
-            fill
-            sizes="(max-width: 768px) 100vw, 1100px"
-            quality={62}
+            width={1100}
+            height={700}
             loading="lazy"
-            className="object-cover"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
           />
           <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-ink/35 to-transparent" />
         </div>
