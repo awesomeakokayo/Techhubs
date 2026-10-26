@@ -123,7 +123,7 @@ Project verification calls a paid model (`deepseek-flash`) after retrieving real
 artifact evidence (up to ~52,000 characters of README/source/README/page text per
 submission; `lib/project-verification/prompt.ts:56`). This is the platform's only
 material variable cost. Full unit economics are in
-`docs/assessment-economics.md`; the summary:
+`docs/product/assessment-economics.md`; the summary:
 
 | | Off-peak | Peak |
 | --- | --- | --- |

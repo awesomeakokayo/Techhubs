@@ -30,7 +30,7 @@ TechSkillHub is built with Next.js, React, TypeScript, Prisma, PostgreSQL, Tailw
 Active development is on `feat/retention-v3`, which is ahead of `main` and not yet
 merged. Production (`main`) is unchanged by that branch. For the verified architecture,
 feature status, test results, known issues and next tasks, see
-[docs/DEVELOPMENT_HANDOFF.md](./docs/DEVELOPMENT_HANDOFF.md).
+[development handoff](./docs/operations/DEVELOPMENT_HANDOFF.md).
 
 ## Documentation
 

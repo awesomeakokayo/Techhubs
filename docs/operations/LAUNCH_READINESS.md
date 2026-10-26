@@ -53,7 +53,7 @@ endpoint `ep-silent-bread-at33fcy4`). Final `prisma migrate status` reported
 "Database schema is up to date!" and `prisma migrate diff` reported no difference. All
 SQL is unchanged (`0_init` sha256
 `44B0700A215750296C94E39C0B624673E21B942FFD2C247837A0FF5E27FE067D`). Full record:
-[docs/database/NEON_MIGRATION_GUIDE.md](./database/NEON_MIGRATION_GUIDE.md#completion-record-2026-10-24).
+[docs/database/NEON_MIGRATION_GUIDE.md](../database/NEON_MIGRATION_GUIDE.md#completion-record-2026-10-24).
 
 Preconditions satisfied before the change:
 
@@ -213,7 +213,7 @@ Per-track status (approved 0 / awaiting 32):
 A track may be considered individually once signed off; an awaiting track is **not** sold.
 
 ### 7.3 Product and pricing approval
-- [ ] Product definitions reconciled code ↔ docs (`docs/product-specification.md` §10): **consistent**.
+- [ ] Product definitions reconciled code ↔ docs (`docs/product/product-specification.md` §10): **consistent**.
 - [ ] Draft approval checklists (descriptions, prices, eligibility, disclosures, cancellation/refund,
       support): **drafted, not approved** (§11).
 - [ ] Global price publication: **off** (`COMMERCE_PRICES_APPROVED=false`). The Nigerian Track Pass price is individually approved in code at ₦6,000 for three calendar months; international USD prices remain unapproved.
@@ -221,7 +221,7 @@ A track may be considered individually once signed off; an awaiting track is **n
 
 ### 7.4 Provider sandbox verification
 - [ ] Lemon Squeezy sandbox order → webhook → entitlement: **not performed** (matrix ready;
-      `docs/provider-sandbox-test-matrix.md`). Test-mode checkout is now requestable
+      `docs/billing/provider-sandbox-test-matrix.md`). Test-mode checkout is now requestable
       (`COMMERCE_PROVIDER_TEST_MODE`, default false).
 - [ ] Paystack sandbox: **not performed** (merchant/payout unverified).
 
@@ -237,14 +237,14 @@ A track may be considered individually once signed off; an awaiting track is **n
 ### 7.7 Existing-user transition approval
 - [x] Transition policy implemented and dry-runnable (`lib/commercial/transition.ts`,
       `scripts/transition-dry-run.mjs`); default mode `OPEN` retains everyone. Operator
-      procedure + safe-review checklist: `docs/transition-operator-guide.md`.
-- [x] Continuity verified for returning learners (`docs/learner-continuity.md`).
+      procedure + safe-review checklist: `docs/operations/transition-operator-guide.md`.
+- [x] Continuity verified for returning learners (`docs/engineering/learner-continuity.md`).
 - [ ] Cohort analysis on a **production snapshot** — no production data is available here,
       so **no user counts are asserted**.
 - [ ] Grandfathering / grace / notice policy approval by the owner.
 
 ### 7.8 Customer support, refund and legal disclosures
-- [ ] Pricing/terms/cancellation/refund disclosures drafted (`docs/product-specification.md` §4/§11)
+- [ ] Pricing/terms/cancellation/refund disclosures drafted (`docs/product/product-specification.md` §4/§11)
       but **not approved**.
 - [ ] Notice period **not set**; no communications sent.
 - [ ] Support scenarios (payment/handling) drafted, copy not approved.

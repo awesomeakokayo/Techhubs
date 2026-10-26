@@ -210,7 +210,7 @@ data on a snapshot, not from this document.
    Lemon Squeezy and Paystack.
 4. **Merchant payout / settlement readiness** confirmation.
 5. **Refund/dispute policy** wording, approved by owner/legal.
-6. **Rate limiting** credentials (Upstash/Vercel KV) — see `docs/LAUNCH_READINESS.md`.
+6. **Rate limiting** credentials (Upstash/Vercel KV) — see `docs/operations/LAUNCH_READINESS.md`.
 7. **Live migration-history recovery** — approval-gated (§3 of LAUNCH_READINESS).
 8. **Google OAuth production verification**.
 9. **Human curriculum sign-off** for premium tracks. The canonical record is
@@ -240,7 +240,7 @@ code wins and the document was corrected.
 | Allowance enforcement is ON by default (cost control) unless explicitly `false` | `lib/commercial/providers.ts` (`assessmentAllowanceEnforced`) | ✅ |
 | Access starts at the **verified-payment** instant, not at order creation | `service.ts` (entitlement from verified webhook state) | ✅ |
 | Cancellation continues to period end; past-due gets a grace to period end | `entitlements.ts` (PAST_DUE/CANCELLED grant until `currentPeriodEnd`) | ✅ |
-| Progress/completions/submissions/achievements/certificates are retained after expiry | `transition.ts` + `docs/learner-continuity.md` (retention on any recorded activity) | ✅ |
+| Progress/completions/submissions/achievements/certificates are retained after expiry | `transition.ts` + `docs/engineering/learner-continuity.md` (retention on any recorded activity) | ✅ |
 | USD prices 900 / 1200 / 9600 remain provisional; NGN Track Pass is ₦6,000; NGN Pro plans are undefined | `lib/commercial/pricing.ts` (`PRICE_CATALOGUE`; only Paystack Track Pass individually approved) | ✅ |
 | Premium wave = frontend, backend, python | `lib/commercial/premium.ts` (`PREMIUM_WAVE_1`, `PREMIUM_TRACK_IDS`) | ✅ |
 | Checkout is fail-closed behind `launch.ts` | `lib/commercial/launch.ts`, `app/api/billing/checkout/route.ts` | ✅ |
@@ -249,7 +249,7 @@ One code gap found during reconciliation and **fixed**: the Lemon Squeezy checko
 builder could only produce **live** checkouts (`test_mode: false` hard-coded), which
 makes a genuine sandbox run impossible. It is now config-gated
 (`COMMERCE_PROVIDER_TEST_MODE`, default `false`) via `providerTestMode()`; test-mode
-deliveries still never grant entitlement. See `docs/provider-sandbox-test-matrix.md`.
+deliveries still never grant entitlement. See `docs/billing/provider-sandbox-test-matrix.md`.
 
 ## 11. Draft approval checklists (status: PENDING — full product launch is not approved)
 

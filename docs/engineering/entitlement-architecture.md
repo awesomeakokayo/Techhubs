@@ -10,7 +10,7 @@ Related, as-built documents:
 - `docs/premium-first-wave.md` — the three premium tracks.
 - `docs/assessment-credit-concurrency.md` — the race-safe allowance ledger.
 - `docs/premium-rollout.md` — phased rollout + legacy-user transition.
-- `docs/commercial-billing-setup.md` — operator/configuration guide.
+- `docs/billing/commercial-billing-setup.md` — operator/configuration guide.
 
 ---
 

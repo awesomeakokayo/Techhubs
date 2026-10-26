@@ -110,7 +110,7 @@ These are inherent or require external configuration; none was applied here.
    browser holds a lesson, it can be copied. The goal is to prevent *bulk,
    unauthorised* access, not to make copying impossible.
 2. **Rate limiting on expensive/high-volume reads** is still not implemented in
-   code. `docs/LAUNCH_READINESS.md §2` correctly states an in-process limiter must
+   code. `docs/operations/LAUNCH_READINESS.md §2` correctly states an in-process limiter must
    not be used on serverless Vercel. Recommended: Cloudflare WAF rate-limiting
    rules and/or Upstash/Vercel KV for:
    - `POST /api/project-verification/[trackId]` (already has a DB budget:
@@ -136,7 +136,7 @@ These are inherent or require external configuration; none was applied here.
 ## 7. What was deliberately not changed
 
 - No learner access was altered; every existing path remains reachable exactly as
-  before. Free/Pro enforcement is design-only (see `docs/entitlement-architecture.md`).
+  before. Free/Pro enforcement is design-only (see `docs/engineering/entitlement-architecture.md`).
 - Public marketing pages, SEO guides and submission help guides remain public and
   indexable.
 - No `robots.txt` blocks were added for protected content as a substitute for
