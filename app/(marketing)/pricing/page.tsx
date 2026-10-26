@@ -34,7 +34,15 @@ function planPriceLabel(planId: PlanId, provider: ProviderId | null): string {
   return `${formatPrice(price)}${suffix}`
 }
 
-export default function PricingPage() {
+export default function PricingPage({
+  searchParams = {},
+}: {
+  searchParams?: Record<string, string | string[] | undefined>
+}) {
+  const queryParam = (value: string | string[] | undefined) =>
+    Array.isArray(value) ? value[0] : value
+  const resumePlan = queryParam(searchParams.resumeCheckout)
+  const requestedTrackId = queryParam(searchParams.trackId)
   const country = headers().get('x-vercel-ip-country')?.trim().toUpperCase() ?? ''
   const preferredProvider: ProviderId = country === 'NG' ? 'paystack' : 'lemonsqueezy'
   const checkoutReady = checkoutEnabled()
@@ -59,7 +67,7 @@ export default function PricingPage() {
           </div>
         )}
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div id="plans" className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {/* Free */}
           <article className="card flex flex-col">
             <h2 className="font-display text-lg font-semibold text-text-primary">Free</h2>
@@ -77,8 +85,50 @@ export default function PricingPage() {
             const plan = PLANS[planId]
             const provider = selectProvider(planId, preferredProvider)
             const planCheckoutReady = checkoutReady && launchReadiness(process.env, planId, provider).ready
+            const resumedTrackId =
+              planId === 'TRACK_PASS' &&
+              resumePlan === planId &&
+              requestedTrackId &&
+              trackOptions.some((track) => track.id === requestedTrackId)
+                ? requestedTrackId
+                : undefined
+            const shouldResume = resumePlan === planId && (planId !== 'TRACK_PASS' || Boolean(resumedTrackId))
+            const disabledReason = planCheckoutReady
+              ? undefined
+              : !pricesApproved
+                ? 'This price is not approved for publication yet.'
+                : country === 'NG' && planId !== 'TRACK_PASS'
+                  ? 'Pro subscriptions in naira are not configured yet.'
+                  : !provider
+                    ? 'The payment option for this plan is not configured yet.'
+                    : 'Checkout is in final verification.'
+            const monthlyPrice = provider ? resolveProviderPrice(provider, 'PRO_MONTHLY') : null
+            const annualPrice = provider ? resolveProviderPrice(provider, 'PRO_ANNUAL') : null
+            const annualSavingsPercent =
+              pricesApproved &&
+              monthlyPrice &&
+              annualPrice &&
+              isPriceApproved(monthlyPrice) &&
+              isPriceApproved(annualPrice) &&
+              monthlyPrice.amountMinor > 0
+                ? Math.round(100 * (1 - annualPrice.amountMinor / (monthlyPrice.amountMinor * 12)))
+                : 0
             return (
-              <article key={planId} className="card flex flex-col border-teal/30">
+              <article
+                key={planId}
+                id={planId === 'PRO_MONTHLY' ? 'pro' : undefined}
+                className={`card flex flex-col ${planId === 'PRO_MONTHLY' ? 'border-2 border-brand shadow-sm' : 'border border-hairline'}`}
+              >
+                {planId === 'PRO_MONTHLY' && (
+                  <p className="mb-2 font-mono text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-brand">
+                    Recommended · Flexible monthly access
+                  </p>
+                )}
+                {planId === 'PRO_ANNUAL' && annualSavingsPercent > 0 && (
+                  <p className="mb-2 font-mono text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-brand">
+                    Best value · Save {annualSavingsPercent}%
+                  </p>
+                )}
                 <h2 className="font-display text-lg font-semibold text-text-primary">{plan.displayName}</h2>
                 <p className="mt-1 text-sm text-text-secondary">{plan.summary}</p>
                 <p className="mt-4 font-display text-2xl text-text-primary">{planPriceLabel(planId, provider)}</p>
@@ -90,8 +140,21 @@ export default function PricingPage() {
                 <div className="mt-6">
                   <CheckoutButton
                     planId={planId}
-                    trackOptions={planId === 'TRACK_PASS' ? trackOptions : undefined}
-                    label={planCheckoutReady ? (provider === 'paystack' && planId === 'TRACK_PASS' ? 'Pay ₦6,000 with Paystack' : `Choose ${plan.displayName}`) : 'Checkout coming soon'}
+                    trackId={resumedTrackId}
+                    trackOptions={planId === 'TRACK_PASS' && !resumedTrackId ? trackOptions : undefined}
+                    autoStart={shouldResume}
+                    disabled={!planCheckoutReady}
+                    disabledReason={disabledReason}
+                    resumePath="/pricing"
+                    label={
+                      !planCheckoutReady
+                        ? 'Checkout not available yet'
+                        : planId === 'TRACK_PASS'
+                          ? 'Get a Track Pass'
+                          : planId === 'PRO_MONTHLY'
+                            ? 'Start Pro monthly'
+                            : 'Choose annual Pro'
+                    }
                     className="btn btn-primary w-full justify-center"
                   />
                 </div>
