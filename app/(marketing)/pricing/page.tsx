@@ -16,9 +16,9 @@ const pricesApproved = pricesApprovedForPublication()
 
 export const metadata: Metadata = {
   ...getPageMetadata({
-    title: 'Pricing — Free, Track Pass and Pro',
+    title: 'TechSkillHub Pricing — Free, Track Pass and Pro',
     description:
-      'TechSkillHub keeps a full free learning experience. Track Pass and Pro are optional paid plans that add assessment capacity and premium tracks.',
+      'Compare TechSkillHub Free, Track Pass, Pro Monthly and Pro Annual. Choose the learning access that fits your goals and budget.',
     path: '/pricing',
     keywords: ['techskillhub pricing', 'track pass', 'pro plan'],
   }),
@@ -59,18 +59,18 @@ export default function PricingPage() {
           </div>
         )}
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {/* Free */}
-          <article className="card flex flex-col">
+          <article className="card flex h-full flex-col">
             <h2 className="font-display text-lg font-semibold text-text-primary">Free</h2>
-            <p className="mt-1 text-sm text-text-secondary">Discover and learn with everything that is free today.</p>
-            <p className="mt-4 font-display text-2xl text-text-primary">$0</p>
-            <ul className="mt-4 space-y-2 text-sm text-text-secondary">
+            <p className="mt-1 min-h-10 text-sm text-text-secondary">For learners exploring tech and building their foundations at no cost.</p>
+            <p className="mt-4 font-display text-2xl text-text-primary">$0 <span className="font-sans text-sm font-normal text-text-secondary">/ forever</span></p>
+            <ul className="mt-4 space-y-3 text-sm text-text-secondary">
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> All free learning paths and lessons</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> Progress tracking and certificates</li>
               <li className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {allowanceForTier('FREE')} AI project assessments / month</li>
             </ul>
-            <div className="mt-6"><a href="/start" className="btn btn-secondary text-sm">Start learning</a></div>
+            <div className="mt-auto pt-8"><a href="/start" className="btn btn-secondary w-full justify-center text-sm">Start learning</a></div>
           </article>
 
           {PLAN_IDS.map((planId) => {
@@ -78,21 +78,22 @@ export default function PricingPage() {
             const provider = selectProvider(planId, preferredProvider)
             const planCheckoutReady = checkoutReady && launchReadiness(process.env, planId, provider).ready
             return (
-              <article key={planId} className="card flex flex-col border-teal/30">
+              <article key={planId} className={`card relative flex h-full flex-col border-teal/30 ${planId === 'PRO_ANNUAL' ? 'ring-1 ring-teal/40' : ''}`}>
+                {planId === 'PRO_ANNUAL' && <span className="absolute right-4 top-4 rounded-full bg-teal/10 px-2.5 py-1 text-xs font-medium text-teal">Best value</span>}
                 <h2 className="font-display text-lg font-semibold text-text-primary">{plan.displayName}</h2>
-                <p className="mt-1 text-sm text-text-secondary">{plan.summary}</p>
+                <p className="mt-1 min-h-10 pr-1 text-sm text-text-secondary">{plan.summary}</p>
                 <p className="mt-4 font-display text-2xl text-text-primary">{planPriceLabel(planId, provider)}</p>
-                <ul className="mt-4 space-y-2 text-sm text-text-secondary">
+                <ul className="mt-4 space-y-3 text-sm text-text-secondary">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-teal" /> {feature}</li>
                   ))}
                 </ul>
-                <div className="mt-6">
+                <div className="mt-auto pt-8">
                   <CheckoutButton
                     planId={planId}
                     trackOptions={planId === 'TRACK_PASS' ? trackOptions : undefined}
                     label={planCheckoutReady ? (provider === 'paystack' && planId === 'TRACK_PASS' ? 'Pay ₦6,000 with Paystack' : `Choose ${plan.displayName}`) : 'Checkout coming soon'}
-                    className="btn btn-primary w-full justify-center"
+                    className="btn btn-primary w-full justify-center text-sm"
                   />
                 </div>
               </article>
