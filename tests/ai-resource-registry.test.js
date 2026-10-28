@@ -79,12 +79,10 @@ test('no canonical AI resource is intentionally paid or unverified', () => {
 
 test('AI Agents and AI Engineering have a mapped external learning resource for every stage', () => {
   const curriculum = fs.readFileSync(path.join(root, 'lib', 'ai-curriculum.ts'), 'utf8')
-  const agentMap = curriculum.match(/'ai-agents': \\{([^}]+)\\}/)
-  const engineeringMap = curriculum.match(/'ai-engineering': \\{([^}]+)\\}/)
-  assert.ok(agentMap, 'AI Agents stage map missing')
-  assert.ok(engineeringMap, 'AI Engineering stage map missing')
-  for (const [trackId, block] of [['ai-agents', agentMap[1]], ['ai-engineering', engineeringMap[1]]]) {
-    const stages = [...block.matchAll(/'[^']+': (\\d+)/g)].map((match) => Number(match[1]))
+  for (const trackId of ['ai-agents', 'ai-engineering']) {
+    const mapLine = curriculum.split('\n').find((line) => line.trim().startsWith("'" + trackId + "': {"))
+    assert.ok(mapLine, trackId + ' stage map missing')
+    const stages = [...mapLine.matchAll(/'[^']+': ([0-9]+)/g)].map((match) => Number(match[1]))
     for (let stage = 1; stage <= 10; stage += 1) {
       assert.ok(stages.includes(stage), trackId + ' stage ' + stage + ' has no mapped extension resource')
     }
