@@ -184,6 +184,16 @@ export const AI_STAGE_RESOURCES: Record<string, Resource[]> = {
       source: 'LangChain',
     },
     {
+      id: 'ai-x-agents-6b',
+      title: 'LangGraph — Thinking in LangGraph',
+      description:
+        'Official step-by-step design guidance for breaking an agentic process into nodes, mapping control flow, deciding what belongs in shared state, and adding human review at the right decision points.',
+      url: 'https://docs.langchain.com/oss/python/langgraph/thinking-in-langgraph',
+      type: 'docs',
+      free: true,
+      source: 'LangChain',
+    },
+    {
       id: 'ai-x-agents-8',
       title: 'Microsoft Learn — Responsible AI in Azure Workloads (Oversight & Guardrails)',
       description:
@@ -343,7 +353,7 @@ export const AI_STAGE_RESOURCE_MAP: Record<string, Record<string, number>> = {
     'ai-x-automation-7': 7,
     'ai-x-automation-8': 8,
   },
-  'ai-agents': { 'ai-x-agents-2b': 2, 'ai-x-agents-5': 5, 'ai-x-agents-5b': 5, 'ai-x-agents-6': 6, 'ai-x-agents-8': 8, 'ai-x-agents-8b': 8, 'ai-x-agents-9': 9, 'ai-x-agents-9b': 9 },
+  'ai-agents': { 'ai-x-agents-2b': 2, 'ai-x-agents-5': 5, 'ai-x-agents-5b': 5, 'ai-x-agents-6': 6, 'ai-x-agents-6b': 6, 'ai-x-agents-8': 8, 'ai-x-agents-8b': 8, 'ai-x-agents-9': 9, 'ai-x-agents-9b': 9 },
   'ai-engineering': {
     'ai-x-engineering-5': 5,
     'ai-x-engineering-7': 7,
