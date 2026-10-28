@@ -6628,7 +6628,7 @@ export const TRACKS: Track[] = [
         level: 'advanced',
         techTags: ['AI Agents', 'Retrieval', 'Tool Boundaries', 'Human Oversight', 'Evaluation'],
       },
-    ],    ],
+    ],
     aiGuide: {
       goodFor: [
         'Automating complex multi-step tasks',
