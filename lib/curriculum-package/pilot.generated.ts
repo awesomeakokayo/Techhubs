@@ -3052,10 +3052,10 @@ export const PILOT_STAGE_CONTENT: Record<string, PilotStageContent> = {
         ],
         "correctIndex": 1,
         "explanation": "Visible keyboard focus is an accessibility requirement.",
-        "feedbackOnIncorrect": "Revisit CSS Grid; check how the evidence addresses “Make the page usable from 375px to desktop without horizontal scrolling” and retry with a concrete example.",
+        "feedbackOnIncorrect": "Revisit keyboard accessibility and focus management. Confirm that keyboard users can see the current focus and reach interactive controls in logical order, then retry with a keyboard-only example.",
         "points": 20,
         "critical": false,
-        "objective": "Make the page usable from 375px to desktop without horizontal scrolling",
+        "objective": "Provide a visible keyboard focus indicator and logical keyboard access to interactive controls.",
         "difficulty": "challenging",
         "provenance": {
           "package": "05_QUIZ_BANK.jsonl",
