@@ -88,7 +88,7 @@ export function TrackPageView({
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const whoFor = WHO_IS_FOR.default
+  const whoFor = WHO_IS_FOR[track.id] ?? WHO_IS_FOR.default
 
   const mappedIds = new Set(Object.values(resourcesByStage).flat().map((r) => r.id))
   const unmappedResources = track.resources.filter((r) => !mappedIds.has(r.id))
@@ -247,9 +247,6 @@ export function TrackPageView({
                 <span key={job} className="badge badge-teal">{job}</span>
               ))}
             </div>
-            <p className="mt-4 text-sm text-text-secondary">
-              Salary range: <strong className="text-text-primary">{track.overview.salaryRange}</strong>
-            </p>
           </section>
 
           <section id="roadmap" className="scroll-mt-28">
@@ -393,7 +390,6 @@ export function TrackPageView({
                 </span>
               ))}
             </div>
-            <p className="mt-4 text-text-secondary">{track.overview.salaryRange}</p>
             <div className="card mt-6 border-l-[3px] border-l-amber bg-amber/5">
               <p className="text-text-primary">{track.careerTip}</p>
             </div>

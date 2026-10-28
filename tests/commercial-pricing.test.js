@@ -27,10 +27,10 @@ test('international prices remain unapproved until explicitly reviewed', () => {
   const env = { COMMERCE_PRICES_APPROVED: 'true' }
   assert.equal(isPriceApproved(resolveProviderPrice('lemonsqueezy', 'TRACK_PASS'), env), false)
   assert.equal(hasApprovedPrice('PRO_MONTHLY', env), false)
-  assert.ok(COMMERCIAL_PRICING_VERSION.includes('TRACKPASS-3M-NGN6000'))
+  assert.ok(COMMERCIAL_PRICING_VERSION.includes('TRACKPASS-TRACK-TERMS-NGN6000'))
 })
 
-test('the approved Nigerian Track Pass is NGN 6,000 for three months', () => {
+test('the configured Nigerian Track Pass amount remains NGN 6,000 while its term is track-specific', () => {
   const price = resolveProviderPrice('paystack', 'TRACK_PASS')
   assert.equal(price.amountMinor, 600000)
   assert.equal(price.currency, 'NGN')

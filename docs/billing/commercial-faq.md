@@ -22,15 +22,12 @@ explicitly name.
 
 ## How long does a Track Pass last?
 
-Three **calendar** months of access to one premium track you choose. The three months
-are calculated on our servers from the moment your verified payment completes —
-not from when you opened checkout — and are unaffected by your device clock or
-timezone.
+A track-specific number of **calendar months** of access to one eligible premium track. The current eligible terms are Frontend: 6 months, Backend: 8 months, and Python: 5 months, aligned with each track’s published maximum learning estimate. The term is calculated on our servers from the moment your verified payment completes — not from when you opened checkout — and is unaffected by your device clock or timezone.
 
 ## Does a Track Pass renew?
 
 No. A Track Pass is a **one-time** payment. It does not renew and nothing is
-charged when the three months end. To continue premium access to that track
+charged when the selected track’s access term ends. To continue premium access to that track
 afterwards, you choose a new purchase yourself. (Pro, by contrast, is an optional
 recurring plan you can cancel at any time.)
 

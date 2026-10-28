@@ -30,6 +30,15 @@ test('guided path creates course completion only after the final step', () => {
   assert.match(guidedRoute, /tx\.courseCompletion\.upsert/)
 })
 
+test('every project step, including the final capstone, must pass server-side assessment before advancing', () => {
+  assert.match(guidedRoute, /if \(completedStep\.type === 'project'\)[\s\S]*?const assessment = resolveStepAssessment/)
+  assert.match(guidedRoute, /const stored = await getSubmission\(prisma, userId, params\.trackId, assessment\.projectId\)/)
+  assert.match(guidedRoute, /if \(!stored \|\| stored\.status !== 'passed'\)/)
+  assert.match(guidedRoute, /code: 'PROJECT_NOT_PASSED'/)
+  assert.match(guidedRoute, /This section must pass automated verification before you can continue\./)
+  assert.match(guidedRoute, /if \(stepIndex === steps\.length - 1\)[\s\S]*?tx\.courseCompletion\.upsert/)
+})
+
 test('completed guided path sends learner directly to certificate', () => {
   assert.match(guidedPage, /Course complete!/) 
   assert.match(guidedPage, /href=\{`\/certificate\/\$\{trackId\}`\}/)

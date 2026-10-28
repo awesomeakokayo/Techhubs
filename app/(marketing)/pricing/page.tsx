@@ -11,6 +11,7 @@ import { checkoutEnabled, selectProvider, type ProviderId } from '@/lib/commerci
 import { launchReadiness } from '@/lib/commercial/launch'
 import { TRACKS } from '@/lib/tracks'
 import { premiumTrackIds } from '@/lib/commercial/plans'
+import { getTrackPassTermMonths } from '@/lib/commercial/track-pass'
 
 const pricesApproved = pricesApprovedForPublication()
 
@@ -40,7 +41,10 @@ export default function PricingPage() {
   const checkoutReady = checkoutEnabled()
   const trackOptions = premiumTrackIds().flatMap((id) => {
     const track = TRACKS.find((item) => item.id === id)
-    return track ? [{ id: track.id, name: track.name }] : []
+    const termMonths = getTrackPassTermMonths(id)
+    return track && termMonths !== null
+      ? [{ id: track.id, name: track.name, termMonths, timeEstimate: track.timeEstimate }]
+      : []
   })
 
   return (
@@ -134,11 +138,11 @@ const PRICING_FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'How long does a Track Pass last?',
-    a: 'A Track Pass gives three calendar months of access to one premium track you choose. The three months are calculated on our servers from the moment your verified payment completes, not from when checkout was opened.',
+    a: 'A Track Pass is a one-time purchase for a duration matched to the selected track’s published learning estimate. The current eligible terms are Frontend: 6 calendar months, Backend: 8 calendar months, and Python: 5 calendar months. The term is calculated on our servers from the moment your verified payment completes, not from when checkout was opened.',
   },
   {
     q: 'Does a Track Pass renew automatically?',
-    a: 'No. A Track Pass is a one-time payment. It does not renew and nothing is charged when the three months end. To continue premium access to that track after it ends, you would choose a new purchase yourself.',
+    a: 'No. A Track Pass is a one-time payment and does not renew. Nothing is charged when the selected track’s term ends. To continue premium access to that track afterwards, you would choose a new purchase yourself.',
   },
   {
     q: 'Is Pro a subscription?',

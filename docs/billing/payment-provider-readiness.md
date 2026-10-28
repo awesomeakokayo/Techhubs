@@ -1,7 +1,7 @@
 # TechSkillHub — Payment Provider & Settlement Readiness
 
 **Current code decision (2026-10-24):** Nigerian learners are routed to Paystack for a
-one-time Track Pass priced at **₦6,000 for three calendar months**. That is the only
+one-time Track Pass whose **₦6,000 amount was originally reviewed for a three-calendar-month term**. The duration is now track-specific (Frontend 6, Backend 8, Python 5 months), so the old amount approval does not approve the changed offer. That is the only
 price currently marked individually approved in the code catalogue. Lemon Squeezy
 remains the intended international provider, but its USD prices are still unapproved.
 This document does not mean either provider has passed a live transaction test.
@@ -38,7 +38,7 @@ secret values were not read, printed, changed, or copied into this repository.
 | --- | --- |
 | Paystack server-side integration | Implemented in /api/billing/checkout and /api/payments/webhook |
 | Paystack key stored in Vercel | Owner reports it is already configured; not inspected by this review |
-| ₦6,000 / three-month price | Present and individually approved in the code catalogue |
+| ₦6,000 Track Pass amount | Present in code; its previous three-month offer approval must be reviewed against the new track-specific terms before publication or checkout |
 | Paystack test-mode checkout | Not verified in this review |
 | Signature-verified webhook fulfilment | Implemented in code; live delivery and replay/idempotency remain to be tested |
 | Production payment and refund | Not tested |
@@ -48,7 +48,7 @@ secret values were not read, printed, changed, or copied into this repository.
 Before enabling live checkout, run a test-mode transaction in an isolated/approved
 environment and verify that the amount/currency match the internal order, webhook
 signature verification passes, repeated webhooks do not create duplicate access,
-the expiry is exactly three calendar months after the verified payment instant, and
+the expiry is the selected track’s configured number of calendar months after the verified payment instant, and
 the learner's existing progress/certificates remain intact.
 
 ## 3. Settlement questions that still require external confirmation

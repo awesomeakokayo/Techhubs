@@ -144,11 +144,31 @@ export const AI_STAGE_RESOURCES: Record<string, Resource[]> = {
   ],
   'ai-agents': [
     {
-      id: 'ai-x-agents-5',
-      title: 'LangGraph — Memory Overview',
+      id: 'ai-x-agents-2b',
+      title: 'Anthropic — Building Effective Agents',
       description:
-        'Short-term and long-term memory concepts for agent context, including what to store, retrieve, and forget — the context/memory design this stage covers.',
-      url: 'https://docs.langchain.com/oss/python/langgraph/memory',
+        'A first-party engineering guide contrasting fixed workflows with agents and explaining when added autonomy is justified; directly supports choosing a suitable architecture.',
+      url: 'https://www.anthropic.com/research/building-effective-agents',
+      type: 'docs',
+      free: true,
+      source: 'Anthropic',
+    },
+    {
+      id: 'ai-x-agents-5',
+      title: 'LangChain — Memory Overview',
+      description:
+        'Current official documentation distinguishes thread-scoped conversation memory from long-term cross-thread memory and explains when stale context should be removed.',
+      url: 'https://docs.langchain.com/oss/python/concepts/memory',
+      type: 'docs',
+      free: true,
+      source: 'LangChain',
+    },
+    {
+      id: 'ai-x-agents-5b',
+      title: 'LangGraph — Persistence',
+      description:
+        'Official guidance on checkpoints, stores, conversation continuity, and recovery explains how memory persists across runs and interruptions.',
+      url: 'https://docs.langchain.com/oss/python/langgraph/persistence',
       type: 'docs',
       free: true,
       source: 'LangChain',
@@ -164,6 +184,16 @@ export const AI_STAGE_RESOURCES: Record<string, Resource[]> = {
       source: 'LangChain',
     },
     {
+      id: 'ai-x-agents-6b',
+      title: 'LangGraph — Thinking in LangGraph',
+      description:
+        'Official step-by-step design guidance for breaking an agentic process into nodes, mapping control flow, deciding what belongs in shared state, and adding human review at the right decision points.',
+      url: 'https://docs.langchain.com/oss/python/langgraph/thinking-in-langgraph',
+      type: 'docs',
+      free: true,
+      source: 'LangChain',
+    },
+    {
       id: 'ai-x-agents-8',
       title: 'Microsoft Learn — Responsible AI in Azure Workloads (Oversight & Guardrails)',
       description:
@@ -174,6 +204,16 @@ export const AI_STAGE_RESOURCES: Record<string, Resource[]> = {
       source: 'Microsoft Learn',
     },
     {
+      id: 'ai-x-agents-8b',
+      title: 'NIST — AI Risk Management Framework',
+      description:
+        'NIST’s framework provides a recognised structure for identifying, assessing, governing, and monitoring AI-related risks; use it to formalise human oversight and escalation criteria.',
+      url: 'https://www.nist.gov/itl/ai-risk-management-framework',
+      type: 'docs',
+      free: true,
+      source: 'NIST',
+    },
+    {
       id: 'ai-x-agents-9',
       title: 'LangGraph — Testing',
       description:
@@ -182,6 +222,16 @@ export const AI_STAGE_RESOURCES: Record<string, Resource[]> = {
       type: 'docs',
       free: true,
       source: 'LangChain',
+    },
+    {
+      id: 'ai-x-agents-9b',
+      title: 'Anthropic — Demystifying Evals for AI Agents',
+      description:
+        'A current engineering guide to designing task cases, grading criteria, repeated trials, and evaluations that expose agent failures before release.',
+      url: 'https://www.anthropic.com/research/demystifying-evals-for-ai-agents',
+      type: 'docs',
+      free: true,
+      source: 'Anthropic',
     },
   ],
   'ai-engineering': [
@@ -303,7 +353,7 @@ export const AI_STAGE_RESOURCE_MAP: Record<string, Record<string, number>> = {
     'ai-x-automation-7': 7,
     'ai-x-automation-8': 8,
   },
-  'ai-agents': { 'ai-x-agents-5': 5, 'ai-x-agents-6': 6, 'ai-x-agents-8': 8, 'ai-x-agents-9': 9 },
+  'ai-agents': { 'ai-x-agents-2b': 2, 'ai-x-agents-5': 5, 'ai-x-agents-5b': 5, 'ai-x-agents-6': 6, 'ai-x-agents-6b': 6, 'ai-x-agents-8': 8, 'ai-x-agents-8b': 8, 'ai-x-agents-9': 9, 'ai-x-agents-9b': 9 },
   'ai-engineering': {
     'ai-x-engineering-5': 5,
     'ai-x-engineering-7': 7,

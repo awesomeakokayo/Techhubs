@@ -66,11 +66,11 @@ export const AI_PROJECT_BRIEFS: Record<string, AIProjectBrief> = {
   },
   'ai-ag-p2': {
     projectId: 'ai-ag-p2',
-    why: 'Demonstrate that you understand agents as bounded systems with tools, state, evaluation, and controls—not simply as chatbots.',
-    deliverables: ['Define the agent goal and why an agent is justified over a deterministic workflow.', 'Document tools, permissions, context, memory, and action boundaries.', 'Build the main workflow with bounded recovery and escalation.', 'Create an evaluation set covering normal cases, edge cases, and failures.', 'Demonstrate at least five failure cases and the resulting controls.', 'Document approval and monitoring decisions.'],
-    acceptanceCriteria: ['Every tool has a clear contract and constrained permission set.', 'Irreversible or high-impact actions have human approval.', 'Evaluation cases have expected outcomes.', 'Failure handling is bounded; the agent cannot retry indefinitely.'],
-    evidence: ['Architecture diagram', 'Tool contracts', 'Evaluation set', 'Failure demonstrations', 'Monitoring plan'],
-    stretchGoal: 'Compare the agent against a simpler deterministic workflow and quantify whether extra complexity is justified.',
+    why: 'Solve a realistic shop-support problem while proving that retrieval, tools, and autonomy remain bounded by evidence and human authority.',
+    deliverables: ['Build the approved FAQ/policy source set and cite retrieved passages in draft answers.', 'Classify incoming tickets and draft a suggested reply.', 'Use a sandboxed mock order-lookup tool with validated input/output and read-only permissions.', 'Provide a human approval queue; never issue refunds, alter orders, or send messages directly.', 'Create an evaluation set for routine, unsupported, conflicting-policy, prompt-injection, and tool-failure cases.', 'Record traceable audit events and bound retries, timeouts, and approximate spend.', 'Demonstrate at least five failure cases and show safe fallback behaviour.'],
+    acceptanceCriteria: ['Answers cite approved evidence and abstain when the source does not support a claim.', 'Tools are least-privilege, validated, and sandboxed; untrusted ticket content cannot broaden permissions.', 'No consequential or outbound action occurs without explicit human approval.', 'Evaluations cover routine requests, prompt injection, policy conflicts, and tool failures.', 'Logs trace evidence, tool activity, decisions, and approvals without recording secrets.', 'Timeouts and retries are bounded and failures lead to safe escalation.', 'A reviewer can reproduce the demo and failure cases from the README.'],
+    evidence: ['Architecture and permission diagram', 'Public repository with synthetic fixtures', 'FAQ/policy corpus and citations', 'Evaluation dataset/results', 'Redacted audit-log examples', 'Failure-case demo and README'],
+    stretchGoal: 'Compare the agent against a deterministic ticket-routing workflow and document quality, latency, and cost trade-offs.',
   },
   'ai-e-p2': {
     projectId: 'ai-e-p2',

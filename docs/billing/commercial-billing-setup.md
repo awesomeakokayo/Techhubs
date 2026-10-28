@@ -8,7 +8,7 @@ live billing. No credentials, store ids or variant ids are invented here.
 
 - Internal catalogue: `lib/commercial/plans.ts` (`TRACK_PASS`, `PRO_MONTHLY`,
   `PRO_ANNUAL`; plus the implicit Free tier). Prices: `lib/commercial/pricing.ts`.
-- Track Pass term arithmetic (three calendar months, UTC): `lib/commercial/track-pass.ts`.
+- Track Pass term arithmetic (per-track calendar months, UTC): `lib/commercial/track-pass.ts`.
 - Provider capabilities / product mapping: `lib/commercial/providers.ts`.
 - Webhook verification + normalization: `lib/commercial/webhooks.ts`.
 - Entitlement service (the single source of truth): `lib/commercial/service.ts`.
@@ -82,7 +82,7 @@ Staged rollout and the existing-user transition are documented in
 2. Set `PAYSTACK_SECRET_KEY`. Configure the webhook URL
    `https://<your-domain>/api/payments/webhook`.
 3. The current code has one individually approved price in `PRICE_CATALOGUE.paystack`:
-   `TRACK_PASS` = 600,000 kobo (₦6,000), one-time for three calendar months. Paystack
+   `TRACK_PASS` = 600,000 kobo (₦6,000), one-time; the duration depends on the selected eligible track. The previous term-specific approval does not cover the changed duration, so keep checkout/publication flags off pending review. Paystack
    is not enabled for Pro Monthly/Annual, and no NGN Pro prices are defined.
 4. Confirm the payout/settlement route and run a test-mode webhook/fulfilment check
    against an isolated environment. The global checkout/publication/enforcement
@@ -112,10 +112,9 @@ Staged rollout and the existing-user transition are documented in
   credit is consumed only when the model produced a usable decision.
 - Checkout, entitlement enforcement and price publication all default to OFF.
 
-## 7. Track Pass — three-month, non-recurring model
+## 7. Track Pass — track-specific term, non-recurring model
 
-A Track Pass is a **one-time payment for three calendar months of access to one
-selected premium track**. It is not a subscription and never auto-renews.
+A Track Pass is a **one-time payment for a track-specific calendar-month term** to one selected eligible premium track. The current first-wave terms use the published maximum estimate: Frontend 6 months, Backend 8 months, Python 5 months. It is not a subscription and never auto-renews. The ₦6,000 amount is unchanged, but the old approval was for a three-month term; do not enable checkout/publication until this offer change is re-reviewed. Pending orders stamped with the legacy pricing version retain the original three-month term; newly created orders use the track-specific term in the current pricing version.
 
 - **Term arithmetic** (`lib/commercial/track-pass.ts`): the period starts at the
   verified payment instant (provider `paid_at`/order timestamp; server verified
@@ -164,8 +163,8 @@ monthly allowance is enforced by default (`COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCE
   altered.
 - Apply to a **disposable** database first (`prisma migrate deploy`) — never to a
   shared/production database as part of this work.
-- **Legacy vs three-month**: `TrackAccess` rows predate the commercial model and are
-  **not** assumed to represent three-month purchases. New periods are recorded in
+- **Legacy vs Track Pass**: `TrackAccess` rows predate the commercial model and are
+  **not** assumed to represent Track Pass purchases. New periods are recorded in
   `TrackPassPurchase`; a purchase is identified by its unique `orderReference`.
 - **Rollback** (Track Pass): `DROP TABLE "TrackPassPurchase"; DROP TYPE "TrackPassStatus";`.
   **Rollback** (assessment credits):
