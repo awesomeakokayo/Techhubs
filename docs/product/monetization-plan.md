@@ -1,7 +1,7 @@
 # TechSkillHUB — Monetization Plan (Free vs Pro)
 
 Status: **billing remains inactive; release approval is pending.** The Nigerian
-Track Pass price of ₦6,000 for three calendar months is individually approved in
+Track Pass price of ₦6,000 was previously reviewed for a three-calendar-month term; the term now varies by track and requires commercial re-review before publication or checkout is enabled. The global commerce flags remain off.
 the code catalogue, but it is not published or chargeable while the global gates
 remain off and provider/database checks are incomplete. The international USD
 prices, assessment allowances, transition dates and remaining launch policies below
@@ -150,7 +150,7 @@ Those figures are **legacy internal values, not approved**. For planning only:
 
 > **Update — canonical commercial model.** The single source of truth is
 > `lib/commercial/plans.ts` / `lib/commercial/pricing.ts`. The approved Nigerian
-> Track Pass is a one-time **₦6,000 Paystack payment** for **three calendar months**
+> Track Pass is a one-time **₦6,000 Paystack payment** with a **track-specific calendar-month term** (currently Frontend 6, Backend 8, Python 5 months). The amount is unchanged, but the previous approval applied to the old three-month term; do not enable checkout or price publication until the changed offer is reviewed.
 > of access to one selected premium track. It does not renew automatically; expiry
 > is calculated server-side from the verified payment instant. Pro Monthly ($12)
 > and Pro Annual ($96) remain provisional, unapproved subscription prices for the
