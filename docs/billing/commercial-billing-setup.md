@@ -163,7 +163,7 @@ monthly allowance is enforced by default (`COMMERCE_ASSESSMENT_ALLOWANCE_ENFORCE
   altered.
 - Apply to a **disposable** database first (`prisma migrate deploy`) — never to a
   shared/production database as part of this work.
-- **Legacy vs three-month**: `TrackAccess` rows predate the commercial model and are
+- **Legacy vs Track Pass**: `TrackAccess` rows predate the commercial model and are
   **not** assumed to represent Track Pass purchases. New periods are recorded in
   `TrackPassPurchase`; a purchase is identified by its unique `orderReference`.
 - **Rollback** (Track Pass): `DROP TABLE "TrackPassPurchase"; DROP TYPE "TrackPassStatus";`.
