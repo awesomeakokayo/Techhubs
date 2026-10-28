@@ -1,3 +1,4 @@
+import { getAuthoredAIStageLesson } from './ai-stage-lessons-authored'
 export interface AIStageLesson {
   lesson: string
   workedExample: string
@@ -130,6 +131,9 @@ const EXAMPLES: Record<string, string[]> = {
 }
 
 export function getAIStageLesson(trackId: string, stageId: number, stageTitle: string, objective: string, successCriteria: string[]): AIStageLesson {
+  const authored = getAuthoredAIStageLesson(trackId, stageId)
+  if (authored) return authored
+
   const examples = EXAMPLES[trackId] ?? []
   const lens = STAGE_LENSES[trackId]?.[stageId - 1] ?? stageTitle.toLowerCase()
   const domain = DOMAIN_CONTEXT[trackId] ?? 'You are applying AI to practical work where judgment and verification still matter.'

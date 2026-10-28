@@ -2,6 +2,8 @@ const test = require('node:test')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const { AI_RESOURCE_EXTENSIONS, AI_RESOURCE_STAGE_MAP } = require('../.test-dist/ai-curriculum.js')
+const { AI_RESOURCE_REGISTRY } = require('../.test-dist/ai-resource-registry.js')
 
 const root = path.resolve(__dirname, '..')
 const registry = fs.readFileSync(path.join(root, 'lib', 'ai-resource-registry.ts'), 'utf8')
@@ -44,7 +46,7 @@ test('every canonical AI resource has the required Phase 7 fields', () => {
     assert.match(block, /stage:\s*\d+/)
     assert.match(block, /type:/)
     assert.match(block, /status:\s*'verified'/)
-    assert.match(block, /lastChecked:\s*'2026-08-26'/)
+    assert.match(block, /lastChecked:\s*'\d{4}-\d{2}-\d{2}'/)
   }
 })
 
@@ -74,4 +76,23 @@ test('the audit documentation defines the deployment gate', () => {
 test('no canonical AI resource is intentionally paid or unverified', () => {
   assert.doesNotMatch(registry, /free:\s*false/)
   assert.doesNotMatch(registry, /status:\s*'(?!verified)[^']+'/)
+})
+
+
+test('AI Agents and AI Engineering have a real mapped resource and registry record for every stage', () => {
+  for (const trackId of ['ai-agents', 'ai-engineering']) {
+    const mapping = AI_RESOURCE_STAGE_MAP[trackId] || {}
+    const resources = AI_RESOURCE_EXTENSIONS[trackId] || []
+    const resourceById = new Map(resources.map((resource) => [resource.id, resource]))
+    for (let stage = 1; stage <= 10; stage += 1) {
+      const mappedIds = Object.entries(mapping).filter(([, stageId]) => stageId === stage).map(([id]) => id)
+      const hasLink = mappedIds.some((id) => {
+        const resource = resourceById.get(id)
+        return resource && /^https:\/\//.test(resource.url) && Boolean(resource.title && resource.description)
+      })
+      assert.ok(hasLink, trackId + ' stage ' + stage + ' has no real mapped extension resource')
+      const registered = Object.values(AI_RESOURCE_REGISTRY).some((entry) => entry.trackId === trackId && entry.stage === stage)
+      assert.ok(registered, trackId + ' stage ' + stage + ' has no canonical audit entry')
+    }
+  }
 })

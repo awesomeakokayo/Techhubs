@@ -159,6 +159,126 @@ export const AI_RESOURCE_REGISTRY: Record<string, AIResourceAuditEntry> = {
     id: 'ai-d3-canva-design-school', trackId: 'ai-design', url: 'https://www.canva.com/design-school/courses/', provider: 'Canva Design School', free: true,
     competency: 'Strengthen composition, hierarchy, and visual communication when refining AI-assisted creative output.', stage: 3, type: 'course', status: 'verified', lastChecked: '2026-08-26'
   },
+  'ai-ag8': {
+    id: 'ai-ag8', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/tracks/building-agents',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Choose between workflow and agent designs, and understand the components and tradeoffs of agentic applications.', stage: 2, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag9': {
+    id: 'ai-ag9', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/agents/sdk',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Define agents and understand the runtime loop, state, tools, and handoff primitives.', stage: 3, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag10': {
+    id: 'ai-ag10', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/function-calling',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Define tool schemas and follow the request, validation, execution, and tool-result lifecycle.', stage: 4, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag11': {
+    id: 'ai-ag11', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/conversation-state',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Choose state-management patterns and separate current task context from durable memory.', stage: 5, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag12': {
+    id: 'ai-ag12', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/agents/guardrails-approvals',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Validate agent inputs, outputs, and tool behavior and handle a failed check safely.', stage: 6, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag13': {
+    id: 'ai-ag13', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/agents/integrations-observability',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Inspect traces for tool calls, handoffs, guardrails, timing, and runtime failures.', stage: 7, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag14': {
+    id: 'ai-ag14', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/agents/guardrails-approvals',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Pause sensitive operations for human review and resume or reject the exact pending action.', stage: 8, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag15': {
+    id: 'ai-ag15', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/agent-evals',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Create representative agent evaluation cases and use traces to diagnose regressions.', stage: 9, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag16': {
+    id: 'ai-ag16', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/api/docs/guides/agents/orchestration',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Compare manager-with-tools and handoff designs and decide when multiple agents justify their cost.', stage: 10, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e10': {
+    id: 'ai-e10', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/model-selection',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Select models based on measured task quality, capability, latency, and cost.', stage: 2, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e11': {
+    id: 'ai-e11', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/structured-outputs',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Constrain model output to a schema and distinguish syntactic validity from semantic correctness.', stage: 3, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e12': {
+    id: 'ai-e12', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/embeddings',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Understand vector embeddings and where semantic similarity is useful.', stage: 4, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e13': {
+    id: 'ai-e13', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/retrieval',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Design retrieval with vector stores, chunking, ranking, and relevance diagnostics.', stage: 5, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e14': {
+    id: 'ai-e14', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/tools-file-search',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Use file search for knowledge retrieval and inspect the inputs used to ground generated answers.', stage: 6, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e15': {
+    id: 'ai-e15', trackId: 'ai-engineering',
+    url: 'https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview',
+    provider: 'Microsoft Learn', free: true,
+    competency: 'Explain how keyword and vector retrieval can be combined and evaluated.', stage: 7, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e16': {
+    id: 'ai-e16', trackId: 'ai-engineering',
+    url: 'https://www.promptfoo.dev/docs/intro/',
+    provider: 'Promptfoo', free: true,
+    competency: 'Create repeatable model and prompt tests, inspect outputs, and prevent regressions.', stage: 8, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e17': {
+    id: 'ai-e17', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/cost-optimization',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Measure and reduce unnecessary model requests, tokens, and costs while preserving quality.', stage: 9, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e18': {
+    id: 'ai-e18', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs/guides/deployment-checklist',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Check security, model choice, evaluation, monitoring, latency, cost, and reliability before deployment.', stage: 10, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-e19': {
+    id: 'ai-e19', trackId: 'ai-engineering',
+    url: 'https://developers.openai.com/api/docs',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Navigate the API documentation for integrating model calls, tools, and structured responses.', stage: 1, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
+  'ai-ag17': {
+    id: 'ai-ag17', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/tracks/building-agents',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Understand the purpose of agents and map the learning sequence from core concepts to tools, guardrails, and evaluation.', stage: 1, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
 }
 
 export function getAIResourceAuditsForStage(trackId: string, stage: number): AIResourceAuditEntry[] {
