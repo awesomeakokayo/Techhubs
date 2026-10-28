@@ -26,6 +26,95 @@ import type { Resource } from './tracks'
  * `lib/stage-resources.ts`, so the served learner path and the audit agree.
  */
 export const EXTENDED_STAGE_RESOURCES: Record<string, Resource[]> = {
+  frontend: [
+    {
+      id: 'fe-19',
+      title: 'React — Using TypeScript',
+      description: 'Official React guidance for typing component props, hooks, and JSX with TypeScript; directly supports the React stage before learners move on to more complex interfaces.',
+      url: 'https://react.dev/learn/typescript',
+      type: 'docs',
+      free: true,
+      source: 'React',
+    },
+    {
+      id: 'fe-20',
+      title: 'Jest — Getting Started',
+      description: 'Official Jest documentation for installing the runner, writing a first test, and understanding the basic test workflow used in a frontend project.',
+      url: 'https://jestjs.io/docs/getting-started',
+      type: 'docs',
+      free: true,
+      source: 'Jest',
+    },
+    {
+      id: 'fe-21',
+      title: 'W3C WAI — Introduction to Web Accessibility',
+      description: 'The W3C Web Accessibility Initiative introduction explains the needs, principles, and benefits behind accessible web content; use it to review keyboard, semantic, and assistive-technology behaviour.',
+      url: 'https://www.w3.org/WAI/fundamentals/accessibility-intro/',
+      type: 'docs',
+      free: true,
+      source: 'W3C Web Accessibility Initiative',
+    },
+    {
+      id: 'fe-22',
+      title: 'Next.js — Deploying Applications',
+      description: 'Official App Router deployment guidance covering production builds and deployment options for taking a frontend project from development to a hosted environment.',
+      url: 'https://nextjs.org/docs/app/getting-started/deploying',
+      type: 'docs',
+      free: true,
+      source: 'Next.js',
+    },
+  ],
+  backend: [
+    {
+      id: 'be-16',
+      title: 'Node.js — Introduction to Node.js',
+      description: 'Official Node.js guide introducing the runtime and its role in server-side JavaScript, supporting the backend stage’s language and server foundations.',
+      url: 'https://nodejs.org/learn/getting-started/introduction-to-nodejs',
+      type: 'docs', free: true, source: 'Node.js',
+    },
+    {
+      id: 'be-17',
+      title: 'Pro Git — Book',
+      description: 'The free Pro Git book explains repositories, branching, remotes, and collaboration workflows that learners need before maintaining backend code.',
+      url: 'https://git-scm.com/book/en/v2',
+      type: 'book', free: true, source: 'Git',
+    },
+    {
+      id: 'be-18',
+      title: 'FastAPI — Background Tasks',
+      description: 'Official FastAPI tutorial for moving small post-response work out of the request path and recognising when a larger job queue is more appropriate.',
+      url: 'https://fastapi.tiangolo.com/tutorial/background-tasks/',
+      type: 'docs', free: true, source: 'FastAPI',
+    },
+    {
+      id: 'be-19',
+      title: 'FastAPI — WebSockets',
+      description: 'Official FastAPI guide to bidirectional WebSocket endpoints, directly supporting the real-time transport topic in Advanced Backend.',
+      url: 'https://fastapi.tiangolo.com/advanced/websockets/',
+      type: 'docs', free: true, source: 'FastAPI',
+    },
+    {
+      id: 'be-20',
+      title: 'FastAPI — Request Files',
+      description: 'Official tutorial for receiving uploaded files in API endpoints, supporting file-upload handling and validation patterns.',
+      url: 'https://fastapi.tiangolo.com/tutorial/request-files/',
+      type: 'docs', free: true, source: 'FastAPI',
+    },
+    {
+      id: 'be-21',
+      title: 'Redis — Async support for redis-py',
+      description: 'Official Redis Python client documentation for asynchronous connections and commands, relevant to API services that use Redis without blocking request handlers.',
+      url: 'https://redis.io/docs/latest/develop/clients/redis-py/async/',
+      type: 'docs', free: true, source: 'Redis',
+    },
+    {
+      id: 'be-22',
+      title: 'OWASP — API Security Top 10 Training Guide',
+      description: 'OWASP’s current developer training guide summarises common API risks and defensive practices, grounding access control and safe endpoint design in a recognised security reference.',
+      url: 'https://devguide.owasp.org/en/07-training-education/07-api-top-ten/',
+      type: 'docs', free: true, source: 'OWASP',
+    },
+  ],
   python: [
     {
       id: 'py-9',
@@ -36,6 +125,34 @@ export const EXTENDED_STAGE_RESOURCES: Record<string, Resource[]> = {
       type: 'docs',
       free: true,
       source: 'FastAPI',
+    },
+    {
+      id: 'py-10',
+      title: 'Python — The Python Tutorial',
+      description: 'The official Python tutorial covers core syntax, data structures, functions, modules, files, and errors; it is a primary reference for the Python Basics stage.',
+      url: 'https://docs.python.org/3/tutorial/',
+      type: 'docs', free: true, source: 'Python Software Foundation',
+    },
+    {
+      id: 'py-11',
+      title: 'Python — pathlib filesystem paths',
+      description: 'Official pathlib reference for joining paths, traversing directories, and working with files in a portable, maintainable way for automation scripts.',
+      url: 'https://docs.python.org/3/library/pathlib.html',
+      type: 'docs', free: true, source: 'Python Software Foundation',
+    },
+    {
+      id: 'py-12',
+      title: 'Beautiful Soup — Documentation',
+      description: 'The Beautiful Soup documentation explains parsing HTML and navigating a document tree for small, respectful scraping tasks, matching the stage’s web-scraping topic.',
+      url: 'https://beautiful-soup-4.readthedocs.io/en/latest/',
+      type: 'docs', free: true, source: 'Beautiful Soup',
+    },
+    {
+      id: 'py-13',
+      title: 'Python — sched event scheduler',
+      description: 'Official standard-library reference for scheduling events and running repeatable timed tasks, relevant to basic script scheduling and automation.',
+      url: 'https://docs.python.org/3/library/sched.html',
+      type: 'docs', free: true, source: 'Python Software Foundation',
     },
   ],
   uiux: [
@@ -250,7 +367,9 @@ export const EXTENDED_STAGE_RESOURCES: Record<string, Resource[]> = {
 
 /** Maps each additional resource id to the stage it supports. */
 export const EXTENDED_RESOURCE_STAGE_MAP: Record<string, Record<string, number>> = {
-  python: { 'py-9': 3 },
+  frontend: { 'fe-19': 3, 'fe-20': 4, 'fe-21': 4, 'fe-22': 4 },
+  backend: { 'be-16': 1, 'be-17': 1, 'be-18': 4, 'be-19': 4, 'be-20': 4, 'be-21': 4, 'be-22': 4 },
+  python: { 'py-9': 3, 'py-10': 1, 'py-11': 4, 'py-12': 4, 'py-13': 4 },
   uiux: { 'ux-13': 3 },
   data: { 'da-11': 1, 'da-12': 3, 'da-13': 4, 'da-14': 5 },
   datascience: { 'ds-11': 3 },
