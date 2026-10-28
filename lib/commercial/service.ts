@@ -27,7 +27,7 @@ import { getPlan, type PlanId } from './plans'
 import { assessmentAllowanceEnforced, providerProductId, type ProviderId } from './providers'
 import { countReservationUsage } from './assessment-credits'
 import { validatePaymentMatch } from './payments'
-import { computeTrackPassPeriod, laterExpiry, trackPassActive } from './track-pass'
+import { computeTrackPassPeriod, getTrackPassTermMonths, laterExpiry, trackPassActive } from './track-pass'
 
 /** A Prisma transaction client (interactive transactions). */
 type Db = Prisma.TransactionClient
@@ -366,7 +366,9 @@ async function grantTrackPass(
   // supplies one, otherwise the server's verified processing time. Never the
   // instant a checkout session was merely created.
   const paymentAt = parseDate(event.occurredAt) ?? now
-  const period = computeTrackPassPeriod(paymentAt)
+  const termMonths = getTrackPassTermMonths(trackId)
+  if (termMonths === null) throw new Error(`TRACK_PASS_TERM_NOT_CONFIGURED:${trackId}`)
+  const period = computeTrackPassPeriod(paymentAt, termMonths)
 
   // One verified payment → exactly one purchase-period row. The unique
   // orderReference makes this idempotent across webhook retries and duplicate
