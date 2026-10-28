@@ -213,7 +213,7 @@ enum AccessStatus {
   EXPIRED
 }
 
-/// Lifecycle of one three-month Track Pass purchase period.
+/// Lifecycle of one track-specific Track Pass purchase period.
 enum TrackPassStatus {
   ACTIVE
   EXPIRED
@@ -273,7 +273,7 @@ model PaymentOrder {
   @@index([reference])
 }
 
-/// Auditable record of one verified three-month Track Pass purchase period.
+/// Auditable record of one verified track-specific Track Pass purchase period.
 ///
 /// A Track Pass is a ONE-TIME payment that grants access to a single eligible
 /// premium track for its configured track-specific calendar-month term. Each verified purchase writes exactly one row
@@ -282,7 +282,7 @@ model PaymentOrder {
 /// expiry: repurchasing appends a new period rather than overwriting history.
 ///
 /// This table is DISTINCT from legacy `TrackAccess` rows, which predate the
-/// commercial model and are not assumed to represent three-month purchases.
+/// commercial model and are not assumed to represent Track Pass purchases.
 model TrackPassPurchase {
   id                String          @id @default(cuid())
   userId            String
