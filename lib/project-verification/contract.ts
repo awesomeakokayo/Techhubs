@@ -14,6 +14,7 @@
 import type { Project, Track } from '../tracks'
 import type { ProjectBrief } from '../curriculum'
 import { getPackageProjectOverride } from '../curriculum-package/projects.generated'
+import { FLAGSHIP_CAPSTONES } from '../capstone-rubrics'
 
 export type Discipline =
   | 'software'
@@ -461,30 +462,44 @@ export function deriveContract(input: {
   // Package rubrics already total 100. Runtime safety gates are added at
   // weight 0: they can fail an otherwise high-scoring submission without
   // changing the package weighting.
-  const criteria: RubricCriterion[] = packageOverride
+  const flagshipCapstone = FLAGSHIP_CAPSTONES[project.id]
+  const criteria: RubricCriterion[] = flagshipCapstone
     ? [
-        ...packageOverride.rubric.map((criterion) => ({
+        ...flagshipCapstone.rubric.map((criterion) => ({
           id: criterion.id,
           label: criterion.label,
           weight: criterion.weight,
           mandatory: criterion.mandatory,
         })),
         ...mandatoryCriteria(discipline, requiresReadme)
-          .filter((criterion) => !packageOverride.rubric.some((existing) => existing.id === criterion.id))
+          .filter((criterion) => !flagshipCapstone.rubric.some((existing) => existing.id === criterion.id))
           .map((criterion) => ({ ...criterion, weight: 0 })),
       ]
-    : [
-        ...mandatoryCriteria(discipline, requiresReadme),
-        ...brief.acceptanceCriteria.map((label, index) => ({
-          id: `ac-${index + 1}`,
-          label,
-          weight: 1,
-          mandatory: false,
-        })),
-      ]
+    : packageOverride
+      ? [
+          ...packageOverride.rubric.map((criterion) => ({
+            id: criterion.id,
+            label: criterion.label,
+            weight: criterion.weight,
+            mandatory: criterion.mandatory,
+          })),
+          ...mandatoryCriteria(discipline, requiresReadme)
+            .filter((criterion) => !packageOverride.rubric.some((existing) => existing.id === criterion.id))
+            .map((criterion) => ({ ...criterion, weight: 0 })),
+        ]
+      : [
+          ...mandatoryCriteria(discipline, requiresReadme),
+          ...brief.acceptanceCriteria.map((label, index) => ({
+            id: `ac-${index + 1}`,
+            label,
+            weight: 1,
+            mandatory: false,
+          })),
+        ]
 
   const minWords = packageOverride?.writtenExplanationMinWords ?? (project.level === 'advanced' ? 120 : project.level === 'intermediate' ? 80 : 50)
-  const acceptanceCriteria = packageOverride?.acceptanceCriteria.length ? packageOverride.acceptanceCriteria : brief.acceptanceCriteria
+  const acceptanceCriteria = flagshipCapstone?.acceptanceCriteria
+    ?? (packageOverride?.acceptanceCriteria.length ? packageOverride.acceptanceCriteria : brief.acceptanceCriteria)
 
   return {
     projectId: project.id,
