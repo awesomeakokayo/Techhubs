@@ -273,6 +273,12 @@ export const AI_RESOURCE_REGISTRY: Record<string, AIResourceAuditEntry> = {
     provider: 'OpenAI Developers', free: true,
     competency: 'Navigate the API documentation for integrating model calls, tools, and structured responses.', stage: 1, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
   },
+  'ai-ag17': {
+    id: 'ai-ag17', trackId: 'ai-agents',
+    url: 'https://developers.openai.com/tracks/building-agents',
+    provider: 'OpenAI Developers', free: true,
+    competency: 'Understand the purpose of agents and map the learning sequence from core concepts to tools, guardrails, and evaluation.', stage: 1, type: 'docs', status: 'verified', lastChecked: '2026-10-28'
+  },
 }
 
 export function getAIResourceAuditsForStage(trackId: string, stage: number): AIResourceAuditEntry[] {
