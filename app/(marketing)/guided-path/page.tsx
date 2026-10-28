@@ -35,7 +35,7 @@ export default function GuidedPathOverviewPage() {
           </div>
           <PageHeader
             title="Guided Path"
-            subtitle="Everything you need to learn is free, forever. Guided Path is for when you want help staying on course."
+            subtitle="Explore the free catalogue and curated learning resources. Guided Path adds sequenced lessons, saved progress, checkpoints, and project feedback."
             breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Guided Path' }]}
           />
         </div>
@@ -73,13 +73,13 @@ export default function GuidedPathOverviewPage() {
         </div>
 
         <p className="mt-6 font-mono text-xs text-text-muted">
-          Guided Path unlocks from any free track. See one in action.
+          Preview the teaching before signing in. Saved progress and project submissions require an account.
         </p>
         <Link
-          href="/guided-path/frontend"
+          href="/guided-path-preview/ai-agents"
           className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-teal no-underline hover:text-teal-bright"
         >
-          Try the Frontend Guided Path <ArrowUpRight size={14} className="shrink-0" />
+          Preview an AI Agents lesson <ArrowUpRight size={14} className="shrink-0" />
         </Link>
       </div>
     </div>
