@@ -10,7 +10,7 @@ export interface Track {
   id: string; slug: string; name: string; tagline: string; category: TrackCategory;
   colorHex: string; icon: string; difficulty: 1|2|3|4|5; difficultyLabel: string;
   timeEstimate: string; techStack: string[];
-  overview: { description: string; whatYouCanBuild: string[]; jobTitles: string[]; salaryRange: string };
+  overview: { description: string; whatYouCanBuild: string[]; jobTitles: string[] };
   roadmap: Stage[]; resources: Resource[]; projects: Project[]; aiGuide: AIGuide; careerTip: string;
 }
 
@@ -44,7 +44,6 @@ export const TRACKS: Track[] = [
         "Web Developer",
         "Frontend Engineer",
       ],
-      salaryRange: "$40,000 to $120,000/year",
     },
     roadmap: [
       {
@@ -449,7 +448,6 @@ export const TRACKS: Track[] = [
         "Python Developer",
         "Software Engineer",
       ],
-      salaryRange: "$50,000 to $130,000/year",
     },
     roadmap: [
       {
@@ -813,7 +811,6 @@ export const TRACKS: Track[] = [
         "Product Engineer",
         "Web Application Developer",
       ],
-      salaryRange: "$60,000 to $150,000/year",
     },
     roadmap: [
       {
@@ -1091,7 +1088,6 @@ export const TRACKS: Track[] = [
         "Automation Engineer",
         "AI/ML Engineer",
       ],
-      salaryRange: "$50,000 to $130,000/year",
     },
     roadmap: [
       {
@@ -1357,7 +1353,6 @@ export const TRACKS: Track[] = [
         "UX Researcher",
         "Interaction Designer",
       ],
-      salaryRange: "$45,000 to $120,000/year",
     },
     roadmap: [
       {
@@ -1665,7 +1660,6 @@ export const TRACKS: Track[] = [
         "SDET",
         "Quality Analyst",
       ],
-      salaryRange: "$40,000 to $100,000/year",
     },
     roadmap: [
       {
@@ -1917,7 +1911,6 @@ export const TRACKS: Track[] = [
         "Reporting Analyst",
         "Operations Analyst",
       ],
-      salaryRange: "$45,000 to $100,000/year",
     },
     roadmap: [
       {
@@ -2218,7 +2211,6 @@ export const TRACKS: Track[] = [
         "NLP Engineer",
         "Computer Vision Engineer",
       ],
-      salaryRange: "$70,000 to $160,000/year",
     },
     roadmap: [
       {
@@ -2492,7 +2484,6 @@ export const TRACKS: Track[] = [
         "Platform Engineer",
         "Cloud Engineer",
       ],
-      salaryRange: "$70,000 to $160,000/year",
     },
     roadmap: [
       {
@@ -2773,7 +2764,6 @@ export const TRACKS: Track[] = [
         "SOC Analyst",
         "Ethical Hacker",
       ],
-      salaryRange: "$60,000 to $150,000/year",
     },
     roadmap: [
       {
@@ -3018,7 +3008,6 @@ export const TRACKS: Track[] = [
         "iOS Developer",
         "Android Developer",
       ],
-      salaryRange: "$55,000 to $130,000/year",
     },
     roadmap: [
       {
@@ -3268,7 +3257,6 @@ export const TRACKS: Track[] = [
         "Post-Production Editor",
         "Social Media Video Editor",
       ],
-      salaryRange: "$35,000 to $90,000/year (freelance varies widely)",
     },
     roadmap: [
       {
@@ -3513,7 +3501,6 @@ export const TRACKS: Track[] = [
         "Channel Manager",
         "Digital Media Producer",
       ],
-      salaryRange: "$0 to $50,000+/month (highly variable, performance-based)",
     },
     roadmap: [
       {
@@ -3760,7 +3747,6 @@ export const TRACKS: Track[] = [
         "Content Marketer",
         "Growth Marketer",
       ],
-      salaryRange: "$40,000 to $100,000/year",
     },
     roadmap: [
       {
@@ -4026,7 +4012,6 @@ export const TRACKS: Track[] = [
         "AI Product Manager",
         "LLM Application Developer",
       ],
-      salaryRange: "This track amplifies every other track's salary potential",
     },
     roadmap: [
       {
@@ -4243,7 +4228,6 @@ export const TRACKS: Track[] = [
         "Operations Manager",
         "Product Manager",
       ],
-      salaryRange: "$35,000 to $80,000/year",
     },
     roadmap: [
       {
@@ -4433,7 +4417,6 @@ export const TRACKS: Track[] = [
         "Developer Advocate",
         "Content Engineer",
       ],
-      salaryRange: "$50,000 to $120,000/year",
     },
     roadmap: [
       {
@@ -4650,7 +4633,6 @@ export const TRACKS: Track[] = [
         'Protocol Researcher',
         'On-Chain Data Analyst',
       ],
-      salaryRange: '$70,000–$200,000+/year',
     },
     roadmap: [
       {
@@ -4878,7 +4860,6 @@ export const TRACKS: Track[] = [
       description: 'Project management is how teams coordinate, how deadlines get met, and how budgets stay on track. Every organisation needs people who can run projects. This track covers both traditional (Waterfall) and modern (Agile/Scrum) approaches, the tools companies actually use, and the certifications that open doors — including the globally recognised PMP.',
       whatYouCanBuild: ['Full project plans with Gantt charts', 'Agile sprint boards', 'Risk registers and mitigation plans', 'Stakeholder communication plans', 'Project post-mortem reports'],
       jobTitles: ['Project Manager', 'Scrum Master', 'Agile Coach', 'Programme Manager', 'Technical Project Manager', 'Delivery Manager'],
-      salaryRange: '$50,000–$130,000/year',
     },
     roadmap: [
       { id: 1, title: 'PM Foundations', duration: '2–3 weeks', topics: ['Project lifecycle: initiation to closure', 'Triple constraint: scope, time, cost', 'Stakeholder identification and mapping', 'Project charter and WBS', 'RACI matrix', 'Risk management basics', 'Communication planning'], description: 'Master the universal language of project management before specialising in any methodology. Every framework is built on these foundations.' },
@@ -4940,7 +4921,6 @@ export const TRACKS: Track[] = [
       description: 'Product managers decide what gets built and why — not how. You sit at the intersection of business, technology, and user experience, translating real user needs into products engineers can build and customers will love. It is one of the highest-paid and most influential non-engineering roles in tech, and one of the few careers where deep human empathy is as valuable as analytical thinking.',
       whatYouCanBuild: ['Product requirement documents (PRDs)', 'Product roadmaps', 'User research reports', 'Competitive analysis frameworks', 'Full product case studies', 'A/B test designs and results analyses'],
       jobTitles: ['Product Manager', 'Associate PM', 'Senior PM', 'Technical PM', 'Growth PM', 'Director of Product', 'Chief Product Officer'],
-      salaryRange: '$70,000–$200,000+/year',
     },
     roadmap: [
       { id: 1, title: 'Product Thinking Foundations', duration: '2–3 weeks', topics: ['What PM is and is not', 'Jobs To Be Done (JTBD)', 'Product lifecycle: discovery to iteration', 'Business models and unit economics', 'North Star Metric', 'Stakeholder mapping', 'Building product intuition'], description: 'Product thinking is a mindset before it is a skill. Learn to see every product as a set of decisions and tradeoffs rather than a collection of features.' },
@@ -5005,7 +4985,6 @@ export const TRACKS: Track[] = [
       description: 'Dart is Google\'s programming language built for building fast, cross-platform applications. It powers Flutter — letting you write one codebase and deploy to Android, iOS, web, and desktop. Dart is strongly typed, null-safe, and deliberately readable. If Flutter is your destination, Dart is the road. This track takes you from syntax to async patterns to Flutter-ready Dart architecture.',
       whatYouCanBuild: ['CLI tools and scripts', 'Backend servers with Dart (Shelf/Frog)', 'Flutter mobile apps (after this track)', 'Dart packages published to pub.dev', 'Data processing scripts'],
       jobTitles: ['Flutter Developer', 'Mobile Developer', 'Dart Developer', 'Cross-Platform Developer'],
-      salaryRange: 'See Mobile Development track — Dart is the prerequisite for Flutter',
     },
     roadmap: [
       { id: 1, title: 'Dart Fundamentals', duration: '2–3 weeks', topics: ['Variables, types, and null safety', 'var, final, const — key differences', 'Null-aware operators: ??, ?., !', 'Functions: named, anonymous, optional parameters', 'Collections: List, Set, Map', 'Control flow and error handling'], description: 'Dart\'s null safety system is its most important modern feature — it eliminates an entire class of runtime errors. Understanding it from day one shapes good habits.' },
@@ -5064,7 +5043,6 @@ export const TRACKS: Track[] = [
       description: 'Sonic is a high-performance EVM-compatible blockchain evolved from Fantom — delivering 10,000 TPS, sub-second finality, and transactions under $0.01. Its Fee Monetisation (FeeM) mechanism pays developers a share of the fees generated by their deployed contracts, creating a direct economic incentive to build. This track follows the official HackQuest Sonic learning path and adds ecosystem depth, project work, and the FeeM strategy layer.',
       whatYouCanBuild: ['Smart contracts deployed on Sonic mainnet', 'FeeM-registered dApps earning on-chain revenue', 'DeFi primitives on a high-performance chain', 'ERC-20 tokens and NFT collections on Sonic', 'Full dApp frontends connected to Sonic contracts'],
       jobTitles: ['Sonic Ecosystem Developer', 'Smart Contract Developer', 'Web3 Engineer', 'Blockchain Developer', 'DeFi Protocol Engineer'],
-      salaryRange: '$70,000–$200,000+/year (see Crypto & Web3 track for full career path)',
     },
     roadmap: [
       { id: 1, title: 'Web3 Basics (HackQuest Phase 1)', duration: '1–2 weeks', topics: ['Blockchain fundamentals', 'Wallets and private keys', 'Transactions and gas', 'How decentralised networks reach consensus'], description: 'Complete Phase 1 of the HackQuest Sonic path. This foundation applies to every EVM chain you will ever build on.' },
@@ -5141,7 +5119,6 @@ export const TRACKS: Track[] = [
         'Content Strategist',
         'Productivity Consultant',
       ],
-      salaryRange: '$40,000 to $120,000/year',
     },
     roadmap: [
       {
@@ -5393,7 +5370,6 @@ export const TRACKS: Track[] = [
         'Marketing Manager',
         'Business Analyst',
       ],
-      salaryRange: '$40,000 to $110,000/year',
     },
     roadmap: [
       {
@@ -5593,7 +5569,6 @@ export const TRACKS: Track[] = [
         'Market Researcher',
         'Journalist',
       ],
-      salaryRange: '$40,000 to $100,000/year',
     },
     roadmap: [
       {
@@ -5767,7 +5742,6 @@ export const TRACKS: Track[] = [
         'Social Media Manager',
         'Freelance Writer',
       ],
-      salaryRange: '$35,000 to $90,000/year',
     },
     roadmap: [
       {
@@ -5971,7 +5945,6 @@ export const TRACKS: Track[] = [
         'Video Marketing Specialist',
         'Social Media Video Creator',
       ],
-      salaryRange: '$0 to $100,000+/year',
     },
     roadmap: [
       {
@@ -6153,7 +6126,6 @@ export const TRACKS: Track[] = [
         'Product Engineer',
         'Technical Founder',
       ],
-      salaryRange: '$50,000 to $150,000/year',
     },
     roadmap: [
       {
@@ -6339,7 +6311,6 @@ export const TRACKS: Track[] = [
         'No-Code Builder',
         'Business Process Analyst',
       ],
-      salaryRange: '$45,000 to $120,000/year',
     },
     roadmap: [
       {
@@ -6509,7 +6480,6 @@ export const TRACKS: Track[] = [
         'Automation Engineer',
         'AI Product Developer',
       ],
-      salaryRange: '$60,000 to $150,000/year',
     },
     roadmap: [
       {
@@ -6693,7 +6663,6 @@ export const TRACKS: Track[] = [
         'Full-Stack AI Developer',
         'AI Platform Engineer',
       ],
-      salaryRange: '$60,000 to $160,000/year',
     },
     roadmap: [
       {
@@ -6887,7 +6856,6 @@ export const TRACKS: Track[] = [
         'Creative Director',
         'Brand Designer',
       ],
-      salaryRange: '$40,000 to $110,000/year',
     },
     roadmap: [
       {
