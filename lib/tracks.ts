@@ -366,6 +366,13 @@ export const TRACKS: Track[] = [
         level: "advanced",
         techTags: ["React", "AI API", "Next.js"],
       },
+      {
+        id: "fe-client-capstone",
+        title: "Client Capstone: Service Booking Portal",
+        description: "Build a mobile-first service discovery and booking-request portal for a local home-maintenance company, with validated forms, accessible states, critical-path tests, and a deployed preview. No payment processing is required.",
+        level: "advanced",
+        techTags: ["React", "TypeScript", "Accessibility", "Jest", "Deployment"],
+      },
     ],
     aiGuide: {
       goodFor: [
@@ -734,6 +741,13 @@ export const TRACKS: Track[] = [
           "API that accepts text prompts and returns AI-generated responses via Groq.",
         level: "advanced",
         techTags: ["FastAPI", "Groq API", "PostgreSQL"],
+      },
+      {
+        id: "be-client-capstone",
+        title: "Client Capstone: Appointment Intake API",
+        description: "Build a documented appointment-intake API for a small repairs company, including validation, staff authorization, PostgreSQL integrity, duplicate-request handling, abuse controls, structured logs, and integration tests. Use synthetic data.",
+        level: "advanced",
+        techTags: ["FastAPI", "PostgreSQL", "Authentication", "Rate Limiting", "Testing"],
       },
     ],
     aiGuide: {
@@ -1288,6 +1302,13 @@ export const TRACKS: Track[] = [
           "Multi-turn AI chatbot backed by Groq LLM with conversation history.",
         level: "advanced",
         techTags: ["FastAPI", "Groq API", "PostgreSQL"],
+      },
+      {
+        id: "py-client-capstone",
+        title: "Client Capstone: Monthly Reconciliation Pipeline",
+        description: "Build a repeatable Python pipeline for a small distributor that imports branch records, normalizes and validates rows, flags duplicates, reconciles totals, and exports reviewer-ready reports. Use synthetic data.",
+        level: "advanced",
+        techTags: ["Python", "ETL", "Data Validation", "Reporting", "Testing"],
       },
     ],
     aiGuide: {
@@ -6587,14 +6608,27 @@ export const TRACKS: Track[] = [
     ],
     projects: [
       {
+        id: 'ai-ag-b0',
+        title: 'Policy FAQ Router',
+        description: 'Build a small, deterministic support router that classifies common questions against an approved FAQ, links the relevant policy section, and escalates anything unsupported. Explain why an agent is not needed for this first version.',
+        level: 'beginner',
+        techTags: ['AI Basics', 'Classification', 'Evidence', 'Escalation'],
+      },
+      {
         id: 'ai-ag-p1',
-        title: 'AI Research Agent',
-        description:
-          'Design or build a workflow where an AI agent accepts a research question, uses approved tools, collects evidence, structures findings, cites sources, and returns a bounded output.',
-        level: 'advanced',
+        title: 'Research Agent with Sources',
+        description: 'Design or build a workflow where an AI agent accepts a research question, uses approved tools, collects evidence, structures findings, cites sources, and returns a bounded output.',
+        level: 'intermediate',
         techTags: ['AI', 'Agents', 'Tool Use', 'Research'],
       },
-    ],
+      {
+        id: 'ai-ag-p2',
+        title: 'Client Capstone: Shop Support Triage Agent',
+        description: 'Build a support-triage agent for a small online shop that answers from approved FAQs and policies, classifies tickets, and drafts responses. Use a sandboxed mock order lookup and require human approval before any consequential action.',
+        level: 'advanced',
+        techTags: ['AI Agents', 'Retrieval', 'Tool Boundaries', 'Human Oversight', 'Evaluation'],
+      },
+    ],    ],
     aiGuide: {
       goodFor: [
         'Automating complex multi-step tasks',
