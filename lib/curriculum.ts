@@ -599,7 +599,11 @@ export function getProjectBrief(projectId: string | undefined, level: 'beginner'
   // (prerequisites, common failure cases), then overlay any authored brief.
   const derived = deriveProjectBrief(level, title)
   const packageBrief = projectId ? PACKAGE_PROJECT_BRIEFS[projectId] : undefined
-  const authored = packageBrief ?? (projectId ? (PROJECT_BRIEFS[projectId] ?? PROJECT_BRIEFS_EXTENDED[projectId]) : undefined)
+  const extendedBrief = projectId ? PROJECT_BRIEFS_EXTENDED[projectId] : undefined
+  const flagshipCapstoneIds = new Set(['fe-client-capstone', 'be-client-capstone', 'py-client-capstone', 'ai-ag-p2'])
+  const authored = projectId && flagshipCapstoneIds.has(projectId)
+    ? (extendedBrief ?? packageBrief ?? PROJECT_BRIEFS[projectId])
+    : (packageBrief ?? (projectId ? (PROJECT_BRIEFS[projectId] ?? extendedBrief) : undefined))
   if (!authored) return derived
   return {
     ...derived,
@@ -656,10 +660,10 @@ export const STAGE_PROJECT_MAP: Record<string, Record<number, string>> = (() => 
 
 /** The portfolio-grade project shown as the final build of a track. */
 export const PORTFOLIO_PROJECT: Record<string, string> = {
-  frontend: 'fe-p7',
-  backend: 'be-p5',
+  frontend: 'fe-client-capstone',
+  backend: 'be-client-capstone',
   fullstack: 'fs-p4',
-  python: 'py-p6',
+  python: 'py-client-capstone',
   uiux: 'ux-p5',
   qa: 'qa-p4',
   data: 'da-p5',
