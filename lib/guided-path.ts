@@ -560,6 +560,8 @@ export const EXTENDED_PATH_VERSION = 3
  */
 export const CONTENT_STEP_PATH_VERSION = 6
 export const CONTENT_STEP_TRACK_IDS = new Set([
+  'frontend',
+  'backend',
   'fullstack',
   'datascience',
   'devops',
