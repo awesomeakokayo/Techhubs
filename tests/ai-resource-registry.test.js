@@ -2,6 +2,8 @@ const test = require('node:test')
 const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const path = require('node:path')
+const { AI_RESOURCE_EXTENSIONS, AI_RESOURCE_STAGE_MAP } = require('../.test-dist/ai-curriculum.js')
+const { AI_RESOURCE_REGISTRY } = require('../.test-dist/ai-resource-registry.js')
 
 const root = path.resolve(__dirname, '..')
 const registry = fs.readFileSync(path.join(root, 'lib', 'ai-resource-registry.ts'), 'utf8')
@@ -77,14 +79,20 @@ test('no canonical AI resource is intentionally paid or unverified', () => {
 })
 
 
-test('AI Agents and AI Engineering have a mapped external learning resource for every stage', () => {
-  const curriculum = fs.readFileSync(path.join(root, 'lib', 'ai-curriculum.ts'), 'utf8')
+test('AI Agents and AI Engineering have a real mapped resource and registry record for every stage', () => {
   for (const trackId of ['ai-agents', 'ai-engineering']) {
-    const mapLine = curriculum.split('\n').find((line) => line.trim().startsWith("'" + trackId + "': {"))
-    assert.ok(mapLine, trackId + ' stage map missing')
-    const stages = [...mapLine.matchAll(/'[^']+': ([0-9]+)/g)].map((match) => Number(match[1]))
+    const mapping = AI_RESOURCE_STAGE_MAP[trackId] || {}
+    const resources = AI_RESOURCE_EXTENSIONS[trackId] || []
+    const resourceById = new Map(resources.map((resource) => [resource.id, resource]))
     for (let stage = 1; stage <= 10; stage += 1) {
-      assert.ok(stages.includes(stage), trackId + ' stage ' + stage + ' has no mapped extension resource')
+      const mappedIds = Object.entries(mapping).filter(([, stageId]) => stageId === stage).map(([id]) => id)
+      const hasLink = mappedIds.some((id) => {
+        const resource = resourceById.get(id)
+        return resource && /^https:\/\//.test(resource.url) && Boolean(resource.title && resource.description)
+      })
+      assert.ok(hasLink, trackId + ' stage ' + stage + ' has no real mapped extension resource')
+      const registered = Object.values(AI_RESOURCE_REGISTRY).some((entry) => entry.trackId === trackId && entry.stage === stage)
+      assert.ok(registered, trackId + ' stage ' + stage + ' has no canonical audit entry')
     }
   }
 })
