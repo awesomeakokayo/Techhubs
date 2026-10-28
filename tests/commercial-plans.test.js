@@ -84,8 +84,9 @@ test('assessment allowances are finite and tiered (never unlimited)', () => {
 })
 
 
-test('Track Pass copy clearly states a three-calendar-month one-time term', () => {
+test('Track Pass copy clearly states a track-specific one-time term', () => {
   const pass = getPlan('TRACK_PASS')
-  assert.match(pass.summary, /three calendar months/i)
-  assert.ok(pass.features.some((feature) => /three months/i.test(feature)))
+  assert.match(pass.summary, /track-specific access term/i)
+  assert.ok(pass.features.some((feature) => /selected track.*published learning estimate/i.test(feature)))
+  assert.doesNotMatch(pass.summary, /three calendar months/i)
 })
