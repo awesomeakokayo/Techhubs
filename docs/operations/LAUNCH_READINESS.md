@@ -7,7 +7,7 @@ audit summary, and the remaining release-readiness gates.
 ## 1. Security hardening applied
 
 - **Pricing decision (2026-10-24):** the code catalogue contains an individually approved
-  ₦6,000 Paystack Track Pass for three calendar months. Lemon Squeezy USD prices remain
+  ₦6,000 Paystack Track Pass amount, previously paired with a three-calendar-month term. Terms are now track-specific (Frontend 6, Backend 8, Python 5 months) and the old offer approval must be revisited before checkout/publication. Lemon Squeezy USD prices remain
   individually unapproved. The checkout master switch, price-publication switch and
   entitlement enforcement must not be enabled in production until the provider sandbox,
   existing-learner transition, and database migration-history checks are complete.
@@ -216,7 +216,7 @@ A track may be considered individually once signed off; an awaiting track is **n
 - [ ] Product definitions reconciled code ↔ docs (`docs/product/product-specification.md` §10): **consistent**.
 - [ ] Draft approval checklists (descriptions, prices, eligibility, disclosures, cancellation/refund,
       support): **drafted, not approved** (§11).
-- [ ] Global price publication: **off** (`COMMERCE_PRICES_APPROVED=false`). The Nigerian Track Pass price is individually approved in code at ₦6,000 for three calendar months; international USD prices remain unapproved.
+- [ ] Global price publication: **off** (`COMMERCE_PRICES_APPROVED=false`). The Nigerian Track Pass amount remains ₦6,000 in code, but the individual approval was for the old three-month offer; the changed per-track terms require review before checkout or price publication. International USD prices remain unapproved.
 - [ ] Additional NGN prices: **not configured**. Pro Monthly/Annual are not offered through Paystack; no extra NGN prices should be invented.
 
 ### 7.4 Provider sandbox verification
