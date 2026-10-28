@@ -43,7 +43,7 @@ tested to never deny access off-enforcement.
 ### Phase 2 — informational
 
 The dismissible `CommercialAnnouncement` explains that a few tracks are planned to
-become premium, that a Track Pass gives three months of access to one track, and
+become premium, that a Track Pass gives a track-specific term matched to the track’s published estimate (currently Frontend 6, Backend 8, Python 5 months), and
 that nothing changes today. It makes no price or launch-date claims, does not
 block the learning flow, and hiding it changes nothing about entitlement. The
 premium track pages show the same non-blocking notice; the checkout button is not
@@ -97,7 +97,7 @@ enabled automatically as a consequence of Phase 3.
   is retained.
 * After the window, a learner is retained if they have **any** recorded activity
   (enrolment, progress, submissions, completion, certificate) **or** a legacy
-  `TrackAccess` record — a legacy record is explicitly *not* treated as a three-month
+  `TrackAccess` record — a legacy record is explicitly *not* treated as a Track Pass
   Track Pass.
 * An **ambiguous** pre-cutover account with no activity (or an untrusted creation
   date) is retained and reported as `uncertain` — never silently revoked.
@@ -141,7 +141,7 @@ authorised operator can run it safely on a replica before any transition.
 ## 5. Applying the transition (checklist, later)
 
 1. Run the dry run on a replica; review the `uncertain` count.
-2. Publish the announcement (`docs/commercial-faq.md` copy) at least
+2. Publish the announcement (`docs/billing/commercial-faq.md` copy) at least
    `COMMERCE_TRANSITION_NOTICE_DAYS` in advance.
 3. Set the cutoff and deadline, keep mode `OPEN` until the notice period ends.
 4. Set mode `GRANDFATHERED` with a grace period; monitor shadow/`uncertain`.

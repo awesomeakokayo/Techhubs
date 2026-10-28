@@ -18,13 +18,14 @@ export function CheckoutButton({
 }: {
   planId: 'TRACK_PASS' | 'PRO_MONTHLY' | 'PRO_ANNUAL'
   trackId?: string
-  trackOptions?: Array<{ id: string; name: string }>
+  trackOptions?: Array<{ id: string; name: string; termMonths: number; timeEstimate: string }>
   label: string
   className?: string
 }) {
   const [busy, setBusy] = useState(false)
   const [selectedTrackId, setSelectedTrackId] = useState(trackId ?? trackOptions?.[0]?.id ?? '')
   const [message, setMessage] = useState<string | null>(null)
+  const selectedTrack = trackOptions?.find((track) => track.id === (trackId ?? selectedTrackId))
 
   const start = async () => {
     const chosenTrackId = trackId ?? selectedTrackId
@@ -70,9 +71,14 @@ export function CheckoutButton({
             disabled={busy}
             className="w-full rounded-md border border-border-default bg-surface px-3 py-2 text-sm text-text-primary"
           >
-            {trackOptions!.map((track) => <option key={track.id} value={track.id}>{track.name}</option>)}
+            {trackOptions!.map((track) => <option key={track.id} value={track.id}>{track.name} — {track.termMonths} months (estimated {track.timeEstimate})</option>)}
           </select>
         </label>
+      )}
+      {planId === 'TRACK_PASS' && selectedTrack && (
+        <p className="max-w-sm text-xs text-text-muted">
+          Access term: {selectedTrack.termMonths} calendar months. Published track estimate: {selectedTrack.timeEstimate}.
+        </p>
       )}
       <button type="button" onClick={start} disabled={busy} className={className ?? 'btn btn-primary inline-flex items-center gap-1.5'}>
         {busy ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}

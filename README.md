@@ -30,11 +30,11 @@ TechSkillHub is built with Next.js, React, TypeScript, Prisma, PostgreSQL, Tailw
 Active development is on `feat/retention-v3`, which is ahead of `main` and not yet
 merged. Production (`main`) is unchanged by that branch. For the verified architecture,
 feature status, test results, known issues and next tasks, see
-[docs/DEVELOPMENT_HANDOFF.md](./docs/DEVELOPMENT_HANDOFF.md).
+[development handoff](./docs/operations/DEVELOPMENT_HANDOFF.md).
 
 ## Documentation
 
-Start with [the documentation index](./docs/README.md). It links to the current architecture and development handoff, launch blockers, curriculum evidence, billing operations, and archived implementation prompts. Historical audit and planning files are kept under `docs/archive/`; they are retained for provenance, not treated as the current source of truth.
+Start with [the documentation index](./docs/README.md). It links to the current architecture and development handoff, launch blockers, curriculum evidence, billing operations, and archived implementation prompts. Historical implementation snapshots and older prompts are kept under `docs/archive/`; current operational, product, engineering, billing, AI-instruction, and curriculum audit documents are grouped in the folders linked from `docs/README.md`.
 
 ## Getting started
 

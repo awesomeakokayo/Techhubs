@@ -22,6 +22,30 @@ export interface Direction {
   tracks: DirectionTrack[]
 }
 
+// Free Pexels stock photos. Images are illustrative and do not depict TechSkillHub learners or imply endorsement.
+const DIRECTION_VISUALS: Record<string, { image: string; alt: string }> = {
+  build: {
+    image: 'https://images.pexels.com/photos/3880924/pexels-photo-3880924.jpeg?auto=compress&cs=tinysrgb&w=640',
+    alt: 'Black professional concentrating while working on a laptop',
+  },
+  design: {
+    image: 'https://images.pexels.com/photos/7971542/pexels-photo-7971542.jpeg?auto=compress&cs=tinysrgb&w=640',
+    alt: 'Black woman focused on work at a laptop in a modern office',
+  },
+  analyze: {
+    image: 'https://images.pexels.com/photos/8204353/pexels-photo-8204353.jpeg?auto=compress&cs=tinysrgb&w=640',
+    alt: 'Black woman concentrating while working at a computer',
+  },
+  grow: {
+    image: 'https://images.pexels.com/photos/9430884/pexels-photo-9430884.jpeg?auto=compress&cs=tinysrgb&w=640',
+    alt: 'Black colleagues discussing a project around a table',
+  },
+  ai: {
+    image: 'https://images.pexels.com/photos/6974804/pexels-photo-6974804.jpeg?auto=compress&cs=tinysrgb&w=640',
+    alt: 'Black professional working thoughtfully on a laptop',
+  },
+}
+
 /**
  * Five directions, one panel. Uses a real tablist with roving focus so the
  * interaction works with a keyboard and does not depend on hover.
@@ -83,16 +107,31 @@ export function DirectionExplorer({ directions }: { directions: Direction[] }) {
                   tabIndex={active === direction.id ? 0 : -1}
                   onClick={() => setActive(direction.id)}
                   onKeyDown={(event) => handleKeyDown(event, index)}
-                  className="landing-tab flex flex-col items-start rounded-[14px] px-4 py-3 text-left last:col-span-2 sm:last:col-span-1"
+                  className="landing-tab group overflow-hidden rounded-[14px] p-0 text-left last:col-span-2 sm:last:col-span-1"
                 >
-                  <span className="landing-tab-index font-mono text-[0.6rem] tracking-[0.12em] text-ink/70">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span className="mt-2 font-display text-sm font-semibold tracking-tight">
-                    {direction.label}
-                  </span>
-                  <span className="mt-0.5 font-mono text-[0.6rem] uppercase tracking-[0.08em] opacity-75">
-                    {direction.count} {direction.count === 1 ? 'path' : 'paths'}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-brand">
+                    <img
+                      src={DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}
+                      alt=""
+                      width={640}
+                      height={427}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                    <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+                    <span className="absolute left-3 top-3 font-mono text-[0.6rem] tracking-[0.12em] text-white/90">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="absolute bottom-3 left-3 right-3 font-display text-base font-semibold tracking-tight text-white">
+                      {direction.label}
+                    </span>
+                  </div>
+                  <span className="flex items-center justify-between gap-3 px-3.5 py-3">
+                    <span className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-ink/70">
+                      {direction.count} {direction.count === 1 ? 'path' : 'paths'}
+                    </span>
+                    <ArrowUpRight size={13} className="shrink-0 text-brand transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
                 </button>
               ))}
@@ -109,6 +148,21 @@ export function DirectionExplorer({ directions }: { directions: Direction[] }) {
               >
                 <div className="grid md:grid-cols-12">
                   <div className="border-b border-hairline p-6 md:col-span-5 md:border-b-0 md:border-r">
+                    <div
+                      aria-hidden="true"
+                      className="relative -mx-6 -mt-6 mb-5 h-36 overflow-hidden bg-brand md:h-44"
+                    >
+                      <img
+                        src={DIRECTION_VISUALS[direction.id]?.image ?? DIRECTION_VISUALS.build.image}
+                        alt={DIRECTION_VISUALS[direction.id]?.alt ?? ""}
+                        width={900}
+                        height={600}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink/50 to-transparent" />
+                    </div>
                     <p className="landing-index">Direction / {direction.label}</p>
                     <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink">
                       {direction.description}

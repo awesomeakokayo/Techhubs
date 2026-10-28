@@ -1,22 +1,47 @@
 /**
  * TechSkillHub — Track Pass term arithmetic (pure).
  *
- * A Track Pass is a ONE-TIME payment that grants access to one premium track for
- * three calendar months. The period is computed in UTC from the authoritative
- * verified-payment instant and is deliberately deterministic: it must not depend
- * on the server's or the learner's local timezone, and it must handle month-end
- * and leap-year boundaries predictably.
+ * Track Pass is a one-time payment. Its calendar-month term is matched to the
+ * published maximum duration of the selected eligible premium track:
+ * Frontend 4–6 months => 6; Backend 5–8 months => 8; Python 3–5 months => 5.
  *
- * Three calendar months is not a fixed 90 days. Month-end dates are clamped to
- * the final valid day of the target month (e.g. 2026-08-31 + 3 months ->
- * 2026-11-30). Month-overflow rollover is explicitly prevented.
+ * Keep this allowlist aligned with the current premium first-wave catalogue.
+ * A track without an explicit duration is not eligible for a Track Pass: fail
+ * closed so a new premium track cannot silently inherit the wrong term.
  *
- * No database or provider coupling lives here: the rules are exhaustively
- * unit-testable.
+ * Dates are computed in UTC from the authoritative verified-payment instant.
+ * Month-end dates are clamped to the final valid day (e.g. Aug 31 + 6 months
+ * => Feb 28/29). This module has no database or provider coupling.
  */
 
-/** Length of a Track Pass in whole calendar months. */
-export const TRACK_PASS_TERM_MONTHS = 3
+/** Calendar-month duration for the currently eligible Track Pass tracks. */
+export const TRACK_PASS_TERM_MONTHS_BY_TRACK = {
+  frontend: 6,
+  backend: 8,
+  python: 5,
+} as const
+
+export type TrackPassTrackId = keyof typeof TRACK_PASS_TERM_MONTHS_BY_TRACK
+
+/**
+ * Pricing version used by pending orders created before the track-specific term
+ * policy. A verified payment for one of these already-created orders must retain
+ * the original three-month offer instead of silently upgrading its duration.
+ */
+export const LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION =
+  'TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000'
+
+/**
+ * Return the configured pass term, or null when a track is not explicitly
+ * eligible. Existing pending orders retain the term under which they were
+ * created; new orders use the current track-specific term map.
+ */
+export function getTrackPassTermMonths(trackId: string, pricingVersion?: string | null): number | null {
+  if (pricingVersion === LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION) return 3
+  return Object.prototype.hasOwnProperty.call(TRACK_PASS_TERM_MONTHS_BY_TRACK, trackId)
+    ? TRACK_PASS_TERM_MONTHS_BY_TRACK[trackId as TrackPassTrackId]
+    : null
+}
 
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
@@ -60,15 +85,18 @@ export function addCalendarMonthsUtc(from: Date, months: number): Date {
 export interface TrackPassPeriod {
   /** Authoritative period start: the verified payment instant. */
   startedAt: Date
-  /** startedAt + three calendar months, computed in UTC. */
+  /** startedAt plus this track's configured calendar-month term, computed in UTC. */
   expiresAt: Date
 }
 
-/** Compute the three-month access period for a verified payment instant. */
+/** Compute a track-specific access period for a verified payment instant. */
 export function computeTrackPassPeriod(
   paymentAt: Date,
-  months: number = TRACK_PASS_TERM_MONTHS,
+  months: number,
 ): TrackPassPeriod {
+  if (!Number.isInteger(months) || months < 1 || months > 24) {
+    throw new RangeError('Track Pass duration must be a whole number from 1 to 24 calendar months.')
+  }
   return {
     startedAt: new Date(paymentAt.getTime()),
     expiresAt: addCalendarMonthsUtc(paymentAt, months),

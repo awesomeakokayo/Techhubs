@@ -1,20 +1,26 @@
 # TechSkillHub — Development Handoff
 
-**Last verified:** 2026-10-24
-**Feature branch (PR #4 head):** `feat/retention-v3` (`bed93f1`)
-**Security/cleanup branch (PR #5):** `audit/techskillhub-security-cleanup` (includes the Track Pass three-month correction and migration documentation updates)
-**Comparison:** the feature branch is 61 commits ahead of `origin/main`; PR #5 remains stacked on PR #4.
-**Local working tree:** not inspected by this remote review.
-**Production:** `main` = `a4dc39c`; PR #4 and PR #5 remain unmerged, so these branch changes have not been deployed to production.
+**Current status last checked:** 2026-10-28. GitHub repository metadata and source files were inspected remotely; the requested local commands were not executed in this session.
 
-This document records what is actually in the repository and what was actually executed.
-It does not authorise a merge, deployment, live migration, payment activation, or customer
-communication. Prior evidence records remain in `docs/LAUNCH_READINESS.md`,
-`docs/final-review-report.md`, and `docs/product-specification.md`.
+## Current repository state (2026-10-28)
+
+- **Production branch:** `main` at `610f0162c67436cdf804f5bfdb131b624d02122c` as last verified on October 28.
+- **PR #4 — `feat/retention-v3`:** GitHub records this PR as merged on 2026-10-24.
+- **PR #5 — `audit/techskillhub-security-cleanup`:** GitHub records this stacked PR as merged on 2026-10-24, after PR #4.
+- **Current Phase 2 work:** draft PR [#11](https://github.com/awesomeakokayo/Techhubs/pull/11), branch `fix/curriculum-resource-gaps-20261028`. It adds curriculum-resource remediation, track-specific audience copy, salary-range removal, flagship client capstones/rubrics, and track-specific Track Pass terms. Do not merge until a fresh branch build, tests, audit and disposable-database E2E succeed.
+- **Build failure diagnosis:** Vercel reported a syntax error in `lib/tracks.ts` at the duplicate array terminator `],    ],` in the AI Agents project list. That exact typo was removed in commit `eb1e94985378272aee7cc972c15d2d760cc73170`. Subsequent commits modify the branch further, so the newest Vercel status and build still need confirmation.
+- **GitHub Actions:** the historical account billing lock prevented Actions runs. The Phase 2 branch changes `.github/workflows/phase-3-validation.yml` to manual dispatch only, to avoid automatic runs while the owner runs checks locally. That workflow change does not alter GitHub account or billing settings, and it does not affect `main` unless the PR is merged.
+- **Track Pass term decision:** approved Option A for the current eligible premium tracks. The branch configures Frontend = 6 calendar months, Backend = 8 months, Python = 5 months, using the upper end of each published estimate. The ₦6,000 amount and payment-provider configuration are unchanged. The previous ₦6,000 review assumed a three-month term, so the revised offer requires commercial review before checkout or price publication is enabled.
+- **Commerce safeguards:** keep `COMMERCE_CHECKOUT_ENABLED=false`, `COMMERCE_ENTITLEMENTS_ENFORCED=false`, `COMMERCE_PRICES_APPROVED=false`, and `COMMERCE_PROVIDER_TEST_MODE=false`. Do not modify these flags or payment-provider settings without separate approval.
+- **Production database:** the migration guide records all 10 migrations as applied on 2026-10-24. This session did not query or modify the production database and did not run migrations.
+- **E2E database:** Created disposable Neon branch `e2e/techskillhub-pr11-20261028` (`br-noisy-field-atgrn40x`) in project `blue-bread-46258191`, parented to the PR preview branch `br-blue-shadow-atymjb43` (not production `main`). A separate empty database named `techskillhub_e2e` was then created inside that child branch; it does not reuse the copied `neondb` application database. The copied branch's `public._prisma_migrations` metadata shows 10 expected migrations finished and none rolled back. No migration was run against any database in this session. Set `E2E_DATABASE_URL` temporarily in the local PowerShell session to the `techskillhub_e2e` URI from Neon Console, run `npx prisma migrate deploy` with `DATABASE_URL` temporarily set to that same URI, restore the prior `DATABASE_URL`, then run `npm run test:e2e`. Do not store the URI in Git, and never point E2E at production `DATABASE_URL`.
+- **Local validation (user-provided Windows output, 2026-10-28):** `npx prisma validate` passed; `npm run build` completed successfully and generated 149/149 pages; `node scripts/curriculum-quality-audit.mjs --check` passed for all 32 catalogue tracks. `npm test` reported 515 passed, 1 failed, 29 skipped. The failure was a source-inspection assertion expecting LF-only line endings in `tests/security-hardening.test.js`; commit `90127d78c2e5d4430f375f68de796dae3c3adbac` normalizes CRLF before assertions. Pull the updated branch and rerun tests. A separate `npx tsc --noEmit -p tsconfig.json` invocation failed on stale `.next/types/app/page.ts` references to missing `app/page.js`, while the later production build's own lint/type-check phase passed. Clean `.next`, run the build, then rerun standalone TypeScript. The resource probe found 382/389 URLs reachable, with seven timeouts/fetch failures/403/429 results that need manual review; 300 URLs had content inspected. Playwright exited before running because the required `E2E_DATABASE_URL` was not set. `npm run lint` output is not present in the supplied log, so treat it as unverified.
+
+This current-state section supersedes contradictory status statements in the historical handoff below. The older notes are retained as dated evidence of what was inspected and executed at that time. This document does not authorize merging PR #11, changing payment settings, enabling checkout, or touching the production database.
 
 ---
 
-## 1. Verification scope
+## 1. Historical verification scope (2026-10-24 baseline)
 
 The previously recorded local validation results are a PR #4 baseline and are not a current-commit CI verdict for later PR #5 changes. GitHub Actions validation has been unable to start because GitHub reports an account billing lock; a green Vercel preview alone does not establish that the test suite passed.
 
@@ -45,7 +51,7 @@ At the time of the earlier repository inspection, no production database, deploy
 
 ---
 
-## 2. Repository and branch map
+## 2. Historical repository and branch map (2026-10-24 baseline)
 
 | Ref | Purpose | State |
 | --- | --- | --- |
@@ -62,7 +68,7 @@ At the time of the earlier repository inspection, no production database, deploy
 **Note:** the 12 unpushed commits are all authored by `Awesome Akokayo <awesomeakokayo@gmail.com>`.
 No AI agent, bot, or co-author trailer was added.
 
-### Publication and CI status at inspection
+### Publication and CI status at the 2026-10-24 inspection
 
 - `feat/retention-v3` is pushed and PR #4 targets `main`.
 - The Vercel preview for commit `7c2d5e8` succeeded at the time of the publication record.
@@ -136,7 +142,7 @@ journey is missing or unverified; **Blocked** = requires credentials, approval, 
 | Payments (Lemon Squeezy / Paystack) | Implemented, externally unverified | Webhook verification, idempotency and fulfilment tests pass. Merchant, variant, NGN pricing, payout and sandbox verification are outstanding. |
 | SEO | Implemented | Metadata helpers, `sitemap.ts`, `robots.ts`, static generation for catalogue routes. No Lighthouse/Core Web Vitals run in this session. |
 | Responsive design and accessibility | Partial | A prior E2E suite reported a mobile-layout and no-hydration pass; that suite was not re-run here. No dedicated automated accessibility audit. |
-| Rate limiting | Missing (launch blocker) | No shared-store limiter for contact or authenticated write endpoints. See `docs/LAUNCH_READINESS.md` §2. |
+| Rate limiting | Missing (launch blocker) | No shared-store limiter for contact or authenticated write endpoints. See `docs/operations/LAUNCH_READINESS.md` §2. |
 | Live migration history | Reconciled (2026-10-24) | Ten migrations applied to production Neon branch `main`. Final `migrate status` clean, `migrate diff` empty, learner rows unchanged. Restore branch `backup/pre-migration-20261024` retained. See `docs/database/NEON_MIGRATION_GUIDE.md`. |
 
 ### Catalogue quality

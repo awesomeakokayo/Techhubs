@@ -1,15 +1,10 @@
-name: Phase 3 validation
+name: Phase 3 validation (manual only)
 
+# Automatic runs are intentionally disabled while GitHub Actions billing is
+# unavailable. Run the same checks locally; this workflow can be dispatched
+# manually once the owner chooses to use GitHub-hosted runners again.
 on:
-  pull_request:
-    branches: [main]
-  push:
-    branches:
-      - phase-3-ai-world-class-rebuild
-      - feat/retention-v1
-      - feat/retention-v2
-      - feat/retention-v3
-      - audit/techskillhub-security-cleanup
+  workflow_dispatch:
 
 jobs:
   validate:

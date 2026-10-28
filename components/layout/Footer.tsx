@@ -83,6 +83,21 @@ export function Footer() {
           </div>
         </div>
 
+        <div
+          className="relative mt-12 h-32 overflow-hidden rounded-[18px] border border-hairline bg-brand sm:h-40 md:mt-14 md:h-48"
+        >
+          <img
+            src="https://images.pexels.com/photos/9431442/pexels-photo-9431442.jpeg?auto=compress&cs=tinysrgb&w=1100"
+            alt="Black colleagues collaborating at a whiteboard in a shared workspace"
+            width={1100}
+            height={700}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-ink/35 to-transparent" />
+        </div>
+
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-hairline py-6">
           <p className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink/70">
             © 2026 TechSkillHub. All rights reserved.

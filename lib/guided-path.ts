@@ -559,6 +559,9 @@ export const EXTENDED_PATH_VERSION = 3
  * cannot be translated safely across those changes.
  */
 export const CONTENT_STEP_PATH_VERSION = 6
+/** Incremented only for flagship paths whose final client-capstone project changed. */
+export const FLAGSHIP_CAPSTONE_PATH_VERSION = 7
+export const FLAGSHIP_CAPSTONE_TRACK_IDS = new Set(['frontend', 'backend', 'python'])
 export const CONTENT_STEP_TRACK_IDS = new Set([
   'fullstack',
   'datascience',
@@ -579,6 +582,7 @@ export const CONTENT_STEP_TRACK_IDS = new Set([
 
 export function expectedPathVersion(trackId: string, isExtended: boolean): number {
   if (trackId.startsWith('ai-')) return AI_GUIDED_PATH_VERSION
+  if (FLAGSHIP_CAPSTONE_TRACK_IDS.has(trackId)) return FLAGSHIP_CAPSTONE_PATH_VERSION
   if (CONTENT_STEP_TRACK_IDS.has(trackId)) return CONTENT_STEP_PATH_VERSION
   return isExtended ? EXTENDED_PATH_VERSION : GUIDED_PATH_VERSION
 }

@@ -10,6 +10,7 @@ import { CheckoutButton } from '@/components/commercial/CheckoutButton'
 import { isPremiumTrack } from '@/lib/commercial/plans'
 import { checkoutEnabled, selectProvider, type ProviderId } from '@/lib/commercial/providers'
 import { launchReadiness } from '@/lib/commercial/launch'
+import { getTrackPassTermMonths } from '@/lib/commercial/track-pass'
 import type { Metadata } from 'next'
 import { getPageMetadata } from '@/lib/seo/utils'
 import { PageViewTracker } from '@/components/analytics/page-view-tracker'
@@ -57,10 +58,11 @@ export default async function TrackPage({ params }: Props) {
   const enrichedTrack = getAIEnrichedTrack(track)
   const resourcesByStage = groupResourcesByStage(enrichedTrack.id, enrichedTrack.resources)
   const premium = isPremiumTrack(enrichedTrack.id)
+  const passTermMonths = getTrackPassTermMonths(enrichedTrack.id)
   const country = headers().get('x-vercel-ip-country')?.trim().toUpperCase() ?? ''
   const preferredProvider: ProviderId = country === 'NG' ? 'paystack' : 'lemonsqueezy'
   const provider = selectProvider('TRACK_PASS', preferredProvider)
-  const canCheckout = checkoutEnabled() && launchReadiness(process.env, 'TRACK_PASS', provider).ready
+  const canCheckout = passTermMonths !== null && checkoutEnabled() && launchReadiness(process.env, 'TRACK_PASS', provider).ready
 
   return (
     <>
@@ -72,13 +74,18 @@ export default async function TrackPage({ params }: Props) {
               <h2 className="font-display text-lg font-semibold text-text-primary">Premium track</h2>
               <p className="text-sm text-text-secondary">
                 {canCheckout
-                  ? 'Get three months of access to this track with a Track Pass (one-time, no auto-renewal), or unlock every premium track with Pro.'
-                  : 'This track is planned to be part of the premium offering. When it opens, a Track Pass will give three months of access to this track (one-time, no auto-renewal). Your access to what you are learning now, and your progress, are unchanged.'}
+                  ? `Get ${passTermMonths} calendar months of access to this track with a one-time Track Pass, or unlock every premium track with Pro.`
+                  : 'This track is planned to be part of the premium offering. Its Track Pass term will match its published learning estimate. Your current access and progress remain unchanged.'}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
               {canCheckout && (
-                <CheckoutButton planId="TRACK_PASS" trackId={enrichedTrack.id} label="Get 3-Month Track Pass" />
+                <CheckoutButton
+                  planId="TRACK_PASS"
+                  trackId={enrichedTrack.id}
+                  trackOptions={passTermMonths !== null ? [{ id: enrichedTrack.id, name: enrichedTrack.name, termMonths: passTermMonths, timeEstimate: enrichedTrack.timeEstimate }] : undefined}
+                  label={`Get ${passTermMonths ?? ''}-Month Track Pass`}
+                />
               )}
               <a href="/pricing" className="btn btn-secondary text-sm">See plans</a>
             </div>

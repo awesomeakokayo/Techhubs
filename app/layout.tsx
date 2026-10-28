@@ -17,6 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.pexels.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
       </head>
       <body className="min-h-screen bg-deep antialiased">
         <StructuredData blocks={[organizationJsonLd(), websiteJsonLd()]} />

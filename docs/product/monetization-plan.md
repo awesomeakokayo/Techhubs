@@ -1,11 +1,6 @@
 # TechSkillHUB — Monetization Plan (Free vs Pro)
 
-Status: **billing remains inactive; release approval is pending.** The Nigerian
-Track Pass price of ₦6,000 for three calendar months is individually approved in
-the code catalogue, but it is not published or chargeable while the global gates
-remain off and provider/database checks are incomplete. The international USD
-prices, assessment allowances, transition dates and remaining launch policies below
-remain proposals unless explicitly marked otherwise.
+Status: **billing remains inactive; release approval is pending.** The Nigerian Track Pass amount of ₦6,000 remains in the code catalogue, but its previous review assumed a three-calendar-month term. Terms now vary by eligible track (Frontend 6, Backend 8, Python 5 months), so the changed offer requires commercial re-review before publication or checkout. The global commerce flags remain off, and no charge can be taken while the global gates and provider/database checks are incomplete. The international USD prices, assessment allowances, transition dates and remaining launch policies below remain proposals unless explicitly marked otherwise.
 
 Evidence basis: inspection of the working tree on `feat/retention-v3`
 (32 tracks, 180 roadmap stages, 271 resources, 114 projects; guided paths are
@@ -123,7 +118,7 @@ Project verification calls a paid model (`deepseek-flash`) after retrieving real
 artifact evidence (up to ~52,000 characters of README/source/README/page text per
 submission; `lib/project-verification/prompt.ts:56`). This is the platform's only
 material variable cost. Full unit economics are in
-`docs/assessment-economics.md`; the summary:
+`docs/product/assessment-economics.md`; the summary:
 
 | | Off-peak | Peak |
 | --- | --- | --- |
@@ -150,7 +145,7 @@ Those figures are **legacy internal values, not approved**. For planning only:
 
 > **Update — canonical commercial model.** The single source of truth is
 > `lib/commercial/plans.ts` / `lib/commercial/pricing.ts`. The approved Nigerian
-> Track Pass is a one-time **₦6,000 Paystack payment** for **three calendar months**
+> Track Pass is a one-time **₦6,000 Paystack payment** with a **track-specific calendar-month term** (currently Frontend 6, Backend 8, Python 5 months). The amount is unchanged, but the previous approval applied to the old three-month term; do not enable checkout or price publication until the changed offer is reviewed.
 > of access to one selected premium track. It does not renew automatically; expiry
 > is calculated server-side from the verified payment instant. Pro Monthly ($12)
 > and Pro Annual ($96) remain provisional, unapproved subscription prices for the

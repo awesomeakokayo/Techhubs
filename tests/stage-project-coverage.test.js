@@ -18,6 +18,8 @@ const {
   AI_GUIDED_PATH_VERSION,
   CONTENT_STEP_PATH_VERSION,
   CONTENT_STEP_TRACK_IDS,
+  FLAGSHIP_CAPSTONE_PATH_VERSION,
+  FLAGSHIP_CAPSTONE_TRACK_IDS,
 } = require('../.test-dist/guided-path.js')
 const { resolveStepAssessment } = require('../.test-dist/section-mastery.js')
 const { TRACKS } = require('../.test-dist/tracks.js')
@@ -45,14 +47,19 @@ test('the previously reported project-gap tracks all gained projects', () => {
 })
 
 test('tracks that gained content-verified resources carry the content-step path version', () => {
-  for (const trackId of ['python', 'uiux', 'data', 'cyber']) {
+  for (const trackId of ['uiux', 'data', 'cyber']) {
     assert.ok(CONTENT_STEP_TRACK_IDS.has(trackId), `${trackId} should carry the content-step path version`)
     assert.equal(expectedPathVersion(trackId, false), CONTENT_STEP_PATH_VERSION)
   }
+  // Python is also a flagship-capstone track and takes the more specific version below.
 })
 
-test('tracks that did not change their path shape keep their version', () => {
-  assert.equal(expectedPathVersion('frontend', false), GUIDED_PATH_VERSION)
+test('flagship capstone replacements bump only their affected learner paths', () => {
+  for (const trackId of ['frontend', 'backend', 'python']) {
+    assert.ok(FLAGSHIP_CAPSTONE_TRACK_IDS.has(trackId), `${trackId} should carry the flagship path version`)
+    assert.equal(expectedPathVersion(trackId, false), FLAGSHIP_CAPSTONE_PATH_VERSION)
+  }
+  assert.equal(expectedPathVersion('qa', false), GUIDED_PATH_VERSION)
   assert.equal(expectedPathVersion('ai-foundations', false), AI_GUIDED_PATH_VERSION)
 })
 

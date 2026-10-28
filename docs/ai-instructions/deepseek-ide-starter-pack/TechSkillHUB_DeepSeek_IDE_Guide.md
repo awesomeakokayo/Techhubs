@@ -59,17 +59,17 @@ git -C $repo status --short --untracked-files=normal
 
 Copy the directory containing `01_STAGE_MANIFEST.csv` into the IDE prompt as `CURRICULUM_PACKAGE_DIR`. The archive may wrap files in a parent folder; use the exact path printed by the command. Keep the extracted inputs outside the repository and do not run `git clean` to manage them.
 
-The tracked prompts are already in `local-research\TechSkillHUB_DeepSeek_IDE_Starter_Pack\`. You do not need to extract another copy of the prompt pack.
+The tracked prompts are already in `docs\ai-instructions\deepseek-ide-starter-pack\`. You do not need to extract another copy of the prompt pack.
 
 ## Step 3 — run read-only preflight first
 
-Open the tracked `local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/01_PREFLIGHT_PROMPT.md` and paste its full contents into the IDE agent chat. Give the agent the verified `CURRICULUM_PACKAGE_DIR` path printed in Step 2. The agent must inspect actual app types and data sources and create the preflight report without editing app source.
+Open the tracked `docs/ai-instructions/deepseek-ide-starter-pack/01_PREFLIGHT_PROMPT.md` and paste its full contents into the IDE agent chat. Give the agent the verified `CURRICULUM_PACKAGE_DIR` path printed in Step 2. The agent must inspect actual app types and data sources and create the preflight report without editing app source.
 
 Read `docs/curriculum-import-preflight.md` and JSON before implementation. Check that it identifies the real target files for curriculum, quizzes, answer-key protection, resources, AI mastery, projects and progress compatibility. If the mapping is vague, ask for exact target files and schema field mapping before proceeding.
 
 ## Step 4 — run the implementation prompt
 
-Only after reviewing preflight, open the tracked `local-research/TechSkillHUB_DeepSeek_IDE_Starter_Pack/02_IMPLEMENTATION_MASTER_PROMPT.md` and paste it to the IDE agent. Reuse the same `CURRICULUM_PACKAGE_DIR`. Keep the agent in the `C:\Tech Skill Hub` repository root.
+Only after reviewing preflight, open the tracked `docs/ai-instructions/deepseek-ide-starter-pack/02_IMPLEMENTATION_MASTER_PROMPT.md` and paste it to the IDE agent. Reuse the same `CURRICULUM_PACKAGE_DIR`. Keep the agent in the `C:\Tech Skill Hub` repository root.
 
 The prompt starts with a 20-stage pilot covering four disciplines:
 - Frontend: 5 stages.

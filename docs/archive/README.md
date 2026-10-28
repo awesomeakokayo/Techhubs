@@ -2,7 +2,7 @@
 
 This directory preserves implementation prompts, planning notes, test plans, and audit snapshots that were previously scattered across the repository root. Their contents are retained for provenance and reuse; files were moved, not deleted.
 
-**These are historical snapshots, not the current source of truth.** Begin with [the documentation index](../README.md), [the development handoff](../DEVELOPMENT_HANDOFF.md), and [launch readiness](../LAUNCH_READINESS.md) before acting on any implementation or deployment guidance.
+**These are historical snapshots, not the current source of truth.** Begin with [the documentation index](../README.md), [the development handoff](../operations/DEVELOPMENT_HANDOFF.md), and [launch readiness](../operations/LAUNCH_READINESS.md) before acting on any implementation or deployment guidance.
 
 ## Audits
 

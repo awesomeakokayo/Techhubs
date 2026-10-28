@@ -14,6 +14,7 @@ import {
 } from '@/lib/commercial/providers'
 import { createPendingOrder, getActiveTrackPass } from '@/lib/commercial/service'
 import { launchReadiness } from '@/lib/commercial/launch'
+import { getTrackPassTermMonths } from '@/lib/commercial/track-pass'
 import { createLemonSqueezyCheckout } from '@/lib/commercial/lemonsqueezy'
 import { paymentLog, paymentLogError } from '@/lib/payment-log'
 
@@ -52,6 +53,9 @@ export async function POST(req: Request) {
     }
     if (!isPremiumTrack(requested)) {
       return NextResponse.json({ error: 'This track is already included in the free plan.' }, { status: 400 })
+    }
+    if (getTrackPassTermMonths(requested) === null) {
+      return NextResponse.json({ error: 'A Track Pass duration has not been configured for this track yet.' }, { status: 400 })
     }
     // Prevent accidental duplicate purchases while a pass for this track is
     // still active: show the current status/expiry instead of charging again.

@@ -26,7 +26,7 @@ are:
 
 The name of the historical second migration must **not** be changed: Prisma records
 migration names and checksums. The Track Pass term has now changed in application code
-to three calendar months; its verified expiry is already stored in TrackPassPurchase,
+to track-specific calendar-month terms (Frontend 6, Backend 8, Python 5 months); each verified expiry is already stored in TrackPassPurchase,
 so that term change does not require an ALTER TABLE.
 
 ## Step 1 — read-only Neon preflight
