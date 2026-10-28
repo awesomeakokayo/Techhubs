@@ -32,8 +32,8 @@ export function GuidedPath() {
             The knowledge is free. The structure can go further.
           </h2>
           <p className="lead mt-4">
-            Everything you need to learn is free, forever. Guided Path is for when you want
-            the same material delivered as a sequenced, tracked, hands-on course.
+            Explore the free catalogue and curated learning resources. Guided Path adds
+            sequenced lessons, saved progress, checkpoints, and project feedback.
           </p>
         </div>
 
