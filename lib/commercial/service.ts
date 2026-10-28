@@ -366,7 +366,7 @@ async function grantTrackPass(
   // supplies one, otherwise the server's verified processing time. Never the
   // instant a checkout session was merely created.
   const paymentAt = parseDate(event.occurredAt) ?? now
-  const termMonths = getTrackPassTermMonths(trackId)
+  const termMonths = getTrackPassTermMonths(trackId, order.pricingVersion)
   if (termMonths === null) throw new Error(`TRACK_PASS_TERM_NOT_CONFIGURED:${trackId}`)
   const period = computeTrackPassPeriod(paymentAt, termMonths)
 
