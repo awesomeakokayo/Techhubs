@@ -114,7 +114,7 @@ Staged rollout and the existing-user transition are documented in
 
 ## 7. Track Pass — track-specific term, non-recurring model
 
-A Track Pass is a **one-time payment for a track-specific calendar-month term** to one selected eligible premium track. The current first-wave terms use the published maximum estimate: Frontend 6 months, Backend 8 months, Python 5 months. It is not a subscription and never auto-renews. The ₦6,000 amount is unchanged, but the old approval was for a three-month term; do not enable checkout/publication until this offer change is re-reviewed.
+A Track Pass is a **one-time payment for a track-specific calendar-month term** to one selected eligible premium track. The current first-wave terms use the published maximum estimate: Frontend 6 months, Backend 8 months, Python 5 months. It is not a subscription and never auto-renews. The ₦6,000 amount is unchanged, but the old approval was for a three-month term; do not enable checkout/publication until this offer change is re-reviewed. Pending orders stamped with the legacy pricing version retain the original three-month term; newly created orders use the track-specific term in the current pricing version.
 
 - **Term arithmetic** (`lib/commercial/track-pass.ts`): the period starts at the
   verified payment instant (provider `paid_at`/order timestamp; server verified
