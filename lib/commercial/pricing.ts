@@ -25,9 +25,12 @@ export interface PlanPrice {
 }
 
 /**
- * Internal price catalogue. The existing USD values remain provisional. The
- * only owner-approved price here is ₦6,000 for a three-calendar-month Track Pass
- * through Paystack. Publication and checkout still require their master flags.
+ * Internal price catalogue. Existing USD values remain provisional. The
+ * ₦6,000 Paystack Track Pass amount was previously reviewed for a three-month
+ * term. The current offer now has track-specific terms, so that historical
+ * review must not be treated as approval of the revised offer. Keep
+ * COMMERCE_PRICES_APPROVED false until the owner reviews the full offer.
+ * This module does not enable checkout; the master flags remain the final gate.
  */
 export const PRICE_CATALOGUE: Partial<Record<ProviderId, Partial<Record<PlanId, PlanPrice>>>> = {
   lemonsqueezy: {
