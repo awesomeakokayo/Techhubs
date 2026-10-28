@@ -8,6 +8,7 @@ const assert = require('node:assert/strict')
 
 const {
   TRACK_PASS_TERM_MONTHS_BY_TRACK,
+  LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION,
   getTrackPassTermMonths,
   daysInUtcMonth,
   addCalendarMonthsUtc,
@@ -18,11 +19,14 @@ const {
 
 const iso = (d) => d.toISOString()
 
-test('eligible premium tracks use the upper end of their published learning estimate', () => {
+test('new terms match published estimates and legacy pending orders keep their original term', () => {
   assert.deepEqual(TRACK_PASS_TERM_MONTHS_BY_TRACK, { frontend: 6, backend: 8, python: 5 })
   assert.equal(getTrackPassTermMonths('frontend'), 6)
   assert.equal(getTrackPassTermMonths('backend'), 8)
   assert.equal(getTrackPassTermMonths('python'), 5)
+  assert.equal(getTrackPassTermMonths('frontend', LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION), 3)
+  assert.equal(getTrackPassTermMonths('backend', LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION), 3)
+  assert.equal(getTrackPassTermMonths('python', LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION), 3)
   assert.equal(getTrackPassTermMonths('ai-agents'), null)
   assert.equal(getTrackPassTermMonths('not-a-track'), null)
 })
