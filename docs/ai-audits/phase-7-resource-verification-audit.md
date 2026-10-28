@@ -25,9 +25,9 @@ Redirects to a current provider destination are acceptable when the submitted pu
 
 ## Current verification date
 
-**2026-08-26**
+**2026-10-28 for the new AI Agents and AI Engineering entries.** Existing entries retain their own `lastChecked` date; a new date must not be interpreted as a full recertification of the entire AI catalogue.
 
-The registry currently contains the deployment-safe external resources used by the AI guided path. Legacy raw resource catalogs may remain in the repository for historical context, but the learner-facing AI sequence reads from the canonical registry only.
+The registry is the canonical inventory for audited entries, but the current resolver still combines registry items with extension, researched, and package-selected sources. Do not assume every link across all ten AI tracks has been re-reviewed just because this registry has been updated. The focused 2026-10-28 additions below cover every stage of AI Agents and AI Engineering; the remaining AI tracks still need a full source-to-learner reconciliation.
 
 ## Provider verification notes
 
@@ -39,6 +39,36 @@ The registry currently contains the deployment-safe external resources used by t
 - GitHub Docs: Copilot documentation, code review, and custom review instructions were checked.
 - n8n: official learning-resource guidance confirms `docs.n8n.io` as the documentation starting point and the error-handling path is retained as the canonical stage resource.
 - LangChain, Canva Design School, and Figma Help were checked as current public learning/documentation destinations.
+
+
+## Focused stage coverage added on 2026-10-28
+
+The following official/public documentation mappings were added to the AI Agents and AI Engineering extension map and the canonical registry. Their exact destinations were checked against current provider documentation or authoritative search results on 2026-10-28. Stage-to-URL alignment remains subject to learner-rendered verification and expert curriculum review.
+
+| Track | Stage | Competency | Resource |
+|---|---:|---|---|
+| AI Agents | 1 | Agent purpose and learning sequence | [OpenAI — Building Agents](https://developers.openai.com/tracks/building-agents) |
+| AI Agents | 2 | Workflow versus agent design | [OpenAI — Building Agents](https://developers.openai.com/tracks/building-agents) |
+| AI Agents | 3 | Agent runtime, state, and definitions | [OpenAI Agents SDK](https://developers.openai.com/api/docs/guides/agents/sdk) |
+| AI Agents | 4 | Tool schemas and execution lifecycle | [OpenAI — Function Calling](https://developers.openai.com/api/docs/guides/function-calling) |
+| AI Agents | 5 | Context and conversation state | [OpenAI — Conversation State](https://developers.openai.com/api/docs/guides/conversation-state) |
+| AI Agents | 6 | Guardrails and failure handling | [OpenAI Agents SDK — Guardrails](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals) |
+| AI Agents | 7 | Traces and observability | [OpenAI Agents SDK — Observability](https://developers.openai.com/api/docs/guides/agents/integrations-observability) |
+| AI Agents | 8 | Human approval boundaries | [OpenAI Agents SDK — Human Review](https://developers.openai.com/api/docs/guides/agents/guardrails-approvals) |
+| AI Agents | 9 | Agent evaluation and regression | [OpenAI — Evaluate Agent Workflows](https://developers.openai.com/api/docs/guides/agent-evals) |
+| AI Agents | 10 | Multi-agent orchestration | [OpenAI — Orchestration and Handoffs](https://developers.openai.com/api/docs/guides/agents/orchestration) |
+| AI Engineering | 1 | API integration and application patterns | [OpenAI API Documentation](https://developers.openai.com/api/docs) |
+| AI Engineering | 2 | Model selection and workload fit | [OpenAI — Model Selection](https://developers.openai.com/api/docs/guides/model-selection) |
+| AI Engineering | 3 | Structured output schemas | [OpenAI — Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs) |
+| AI Engineering | 4 | Embeddings and semantic similarity | [OpenAI — Embeddings](https://developers.openai.com/api/docs/guides/embeddings) |
+| AI Engineering | 5 | Retrieval, ranking, and chunking | [OpenAI — Retrieval](https://developers.openai.com/api/docs/guides/retrieval) |
+| AI Engineering | 6 | File search and grounded generation | [OpenAI — File Search](https://developers.openai.com/api/docs/guides/tools-file-search) |
+| AI Engineering | 7 | Hybrid lexical and vector search | [Microsoft Learn — Hybrid Search](https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview) |
+| AI Engineering | 8 | Repeatable evaluation tests | [Promptfoo — Intro](https://www.promptfoo.dev/docs/intro/) |
+| AI Engineering | 9 | Cost and request optimization | [OpenAI — Cost Optimization](https://developers.openai.com/api/docs/guides/cost-optimization) |
+| AI Engineering | 10 | Production readiness | [OpenAI — API Deployment Checklist](https://developers.openai.com/api/docs/guides/deployment-checklist) |
+
+The existing resource evidence snapshot in `docs/curriculum-stage-evidence.md` was generated on 2026-10-24 and has **not** been regenerated as part of this focused change. The updated mappings demonstrate that the intended source entries exist; they do not certify that every other AI track is complete or that every link has been checked inside the deployed learner UI.
 
 ## Resource policy
 
