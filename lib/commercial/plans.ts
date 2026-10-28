@@ -48,9 +48,9 @@ export const PLANS: Record<PlanId, PlanDefinition> = {
     displayName: 'Track Pass',
     // NOTE: copy must never imply lifetime/permanent access, auto-renewal, or a
     // price (prices are gated behind `COMMERCE_PRICES_APPROVED`).
-    summary: 'One-time purchase for three calendar months of access to one premium track you choose.',
+    summary: 'One-time purchase for a track-specific access term aligned with the selected track’s published learning estimate.',
     features: [
-      'Three months of access to one premium track you choose',
+      'Access term matches the selected track’s published learning estimate',
       'Includes the track\x27s AI project assessments',
       'No automatic renewal — nothing is charged when the term ends',
       'Your progress, submissions and certificates are kept when the term ends',
