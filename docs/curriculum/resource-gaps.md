@@ -233,7 +233,7 @@ The entries below are copied from the missing-outcome rows in `docs/curriculum-i
 | --- | --- | --- | --- |
 | AI Agents — stage 2 | When to use agents versus deterministic workflows | Added Anthropic’s workflow-versus-agent article | Confirm learner-path mapping and run audit |
 | AI Agents — stage 5 | Context/memory boundaries and persistence | Canonicalized memory URL and added LangGraph persistence | Confirm both resources render on the stage |
-| AI Agents — stage 6 | Planning and control flow | Existing LangGraph overview mapping retained | Reconcile prior live-site observation against current runtime |
+| AI Agents — stage 6 | Planning, task decomposition, replanning and recovery | Added LangGraph “Thinking in LangGraph” alongside its overview | Confirm both resources render and cover recovery/escalation in the lesson |
 | AI Agents — stage 8 | Human approval, escalation and monitoring | Added NIST AI Risk Management Framework alongside Microsoft Responsible AI | Ensure authored practice requires explicit approval boundaries |
 | AI Agents — stage 9 | Failure cases and agent evaluation | Added Anthropic’s Jan 2026 agent-evals guide | Confirm failure testing is mandatory evidence |
 | Frontend — stage 3 | TypeScript with React | Added official React TypeScript guide | Run audit and inspect rendered stage |
@@ -266,6 +266,7 @@ The URLs in this table were opened and checked on 2026-10-28 before being added 
 | Python stage 4 — Scheduling | Python — sched | https://docs.python.org/3/library/sched.html | Official standard-library reference for timed task automation. |
 | AI Agents stage 2 — Agent vs workflow | Anthropic — Building Effective Agents | https://www.anthropic.com/research/building-effective-agents | First-party guide compares fixed workflows and dynamic agents; note that some tool details date from 2024. |
 | AI Agents stage 5 — Persistence | LangGraph — Persistence | https://docs.langchain.com/oss/python/langgraph/persistence | Current official docs distinguish thread checkpoints from long-term stores and cover recovery. |
+| AI Agents stage 6 — planning and recovery | LangGraph — Thinking in LangGraph | https://docs.langchain.com/oss/python/langgraph/thinking-in-langgraph | Official walkthrough explains node decomposition, control flow, state, and where to add human review. |
 | AI Agents stage 8 — Oversight | NIST — AI Risk Management Framework | https://www.nist.gov/itl/ai-risk-management-framework | Official risk-management structure for governing and monitoring AI risk. |
 | AI Agents stage 9 — Evaluation | Anthropic — Demystifying Evals for AI Agents | https://www.anthropic.com/research/demystifying-evals-for-ai-agents | Current article published Jan 9, 2026 covers eval cases, graders and agent failure evaluation. |
 
