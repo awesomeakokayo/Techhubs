@@ -9,7 +9,7 @@
 import type { PlanId } from './plans'
 import type { ProviderId } from './providers'
 
-export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000'
+export const COMMERCIAL_PRICING_VERSION = 'TSH-COMMERCE-2026-10-TRACKPASS-TRACK-TERMS-NGN6000'
 
 export interface PlanPrice {
   planId: PlanId
