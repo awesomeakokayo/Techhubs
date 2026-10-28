@@ -275,8 +275,8 @@ model PaymentOrder {
 
 /// Auditable record of one verified three-month Track Pass purchase period.
 ///
-/// A Track Pass is a ONE-TIME payment that grants access to a single premium
-/// track for three calendar months. Each verified purchase writes exactly one row
+/// A Track Pass is a ONE-TIME payment that grants access to a single eligible
+/// premium track for its configured track-specific calendar-month term. Each verified purchase writes exactly one row
 /// here (keyed by the internal order reference, so webhook retries and duplicate
 /// deliveries cannot create a second period). Historical rows are retained after
 /// expiry: repurchasing appends a new period rather than overwriting history.
@@ -291,7 +291,7 @@ model TrackPassPurchase {
   status            TrackPassStatus @default(ACTIVE)
   /// Authoritative period start: the verified successful-payment instant (UTC).
   startedAt         DateTime
-  /// startedAt + three calendar months (UTC), stored and enforced server-side.
+  /// Track-specific term after startedAt (UTC), stored and enforced server-side.
   expiresAt         DateTime
   /// Verified amount in minor units, retained for reconciliation.
   amount            Int
