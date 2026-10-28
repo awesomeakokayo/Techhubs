@@ -76,7 +76,7 @@ Internal plan ids are stable and are **not** display text.
 - Same core Pro entitlements as monthly (all premium tracks, 150/month allowance),
   billed once per year at a discounted effective monthly price.
 
- > **Pricing approval is per product and offer.** The ₦6,000 Paystack amount remains in code, but its previous approval was for a three-month Track Pass; the changed duration is a new offer and must be re-reviewed before enabling checkout or price publication. The Lemon Squeezy USD prices remain
+> **Pricing approval is per product and offer.** The ₦6,000 Paystack amount remains in code, but its previous approval was for a three-month Track Pass; the changed duration is a new offer and must be re-reviewed before enabling checkout or price publication. The Lemon Squeezy USD prices remain
 > unapproved. The master `COMMERCE_PRICES_APPROVED` flag must remain off until the
 > pre-release checks are complete; turning it on does not approve the other prices.
 
@@ -146,7 +146,7 @@ off. Every other track stays in the Free catalogue.
 
 The global publication/checkout gate `COMMERCE_PRICES_APPROVED` remains **false**, so
 the price is still hidden. Pricing version stamp:
-`TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000`.
+`TSH-COMMERCE-2026-10-TRACKPASS-TRACK-TERMS-NGN6000`.
 
 ---
 
@@ -239,7 +239,7 @@ code wins and the document was corrected.
 | Access starts at the **verified-payment** instant, not at order creation | `service.ts` (entitlement from verified webhook state) | ✅ |
 | Cancellation continues to period end; past-due gets a grace to period end | `entitlements.ts` (PAST_DUE/CANCELLED grant until `currentPeriodEnd`) | ✅ |
 | Progress/completions/submissions/achievements/certificates are retained after expiry | `transition.ts` + `docs/engineering/learner-continuity.md` (retention on any recorded activity) | ✅ |
-| USD prices 900 / 1200 / 9600 remain provisional; NGN Track Pass is ₦6,000; NGN Pro plans are undefined | `lib/commercial/pricing.ts` (`PRICE_CATALOGUE`; only Paystack Track Pass individually approved) | ✅ |
+| USD prices 900 / 1200 / 9600 remain provisional; NGN Track Pass amount is ₦6,000; NGN Pro plans are undefined | `lib/commercial/pricing.ts` (`PRICE_CATALOGUE`; previous Paystack amount review was for the old three-month offer; new track-specific terms need re-review) | Term change requires commercial review before activation |
 | Premium wave = frontend, backend, python | `lib/commercial/premium.ts` (`PREMIUM_WAVE_1`, `PREMIUM_TRACK_IDS`) | ✅ |
 | Checkout is fail-closed behind `launch.ts` | `lib/commercial/launch.ts`, `app/api/billing/checkout/route.ts` | ✅ |
 
