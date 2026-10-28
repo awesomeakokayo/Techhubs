@@ -1226,7 +1226,7 @@ export const TRACKS: Track[] = [
         title: "LangChain Python Docs",
         description:
           "Build AI-powered apps with LangChain, agents, chains, and memory.",
-        url: "https://python.langchain.com/docs/get_started/introduction",
+        url: "https://docs.langchain.com/oss/python/langchain/overview",
         type: "docs",
         free: true,
         source: "LangChain",
@@ -6579,7 +6579,7 @@ export const TRACKS: Track[] = [
         title: 'LangChain Documentation',
         description:
           'Build AI-powered applications with LangChain — agents, chains, memory, and tool integration.',
-        url: 'https://python.langchain.com/docs/get_started/introduction',
+        url: 'https://docs.langchain.com/oss/python/langchain/overview',
         type: 'docs',
         free: true,
         source: 'LangChain',
@@ -6772,7 +6772,7 @@ export const TRACKS: Track[] = [
         title: 'LangChain Python Docs',
         description:
           'Build AI-powered apps with LangChain — chains, memory, and retrieval.',
-        url: 'https://python.langchain.com/docs/get_started/introduction',
+        url: 'https://docs.langchain.com/oss/python/langchain/overview',
         type: 'docs',
         free: true,
         source: 'LangChain',
