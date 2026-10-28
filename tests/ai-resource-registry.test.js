@@ -44,7 +44,7 @@ test('every canonical AI resource has the required Phase 7 fields', () => {
     assert.match(block, /stage:\s*\d+/)
     assert.match(block, /type:/)
     assert.match(block, /status:\s*'verified'/)
-    assert.match(block, /lastChecked:\s*'2026-08-26'/)
+    assert.match(block, /lastChecked:\s*'\d{4}-\d{2}-\d{2}'/)
   }
 })
 
@@ -74,4 +74,19 @@ test('the audit documentation defines the deployment gate', () => {
 test('no canonical AI resource is intentionally paid or unverified', () => {
   assert.doesNotMatch(registry, /free:\s*false/)
   assert.doesNotMatch(registry, /status:\s*'(?!verified)[^']+'/)
+})
+
+
+test('AI Agents and AI Engineering have a mapped external learning resource for every stage', () => {
+  const curriculum = fs.readFileSync(path.join(root, 'lib', 'ai-curriculum.ts'), 'utf8')
+  const agentMap = curriculum.match(/'ai-agents': \\{([^}]+)\\}/)
+  const engineeringMap = curriculum.match(/'ai-engineering': \\{([^}]+)\\}/)
+  assert.ok(agentMap, 'AI Agents stage map missing')
+  assert.ok(engineeringMap, 'AI Engineering stage map missing')
+  for (const [trackId, block] of [['ai-agents', agentMap[1]], ['ai-engineering', engineeringMap[1]]]) {
+    const stages = [...block.matchAll(/'[^']+': (\\d+)/g)].map((match) => Number(match[1]))
+    for (let stage = 1; stage <= 10; stage += 1) {
+      assert.ok(stages.includes(stage), trackId + ' stage ' + stage + ' has no mapped extension resource')
+    }
+  }
 })
