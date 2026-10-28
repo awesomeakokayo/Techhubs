@@ -30,8 +30,8 @@ function LessonText({ text }: { text: string }) {
     if (!line) continue
     if (/^[A-Z0-9][A-Z0-9 ,'’&/-]*$/.test(line) && line.length <= 52) {
       blocks.push({ kind: 'heading', text: line })
-    } else if (/^[•-*]\s+/.test(line)) {
-      blocks.push({ kind: 'bullet', text: line.replace(/^[•-*]\s+/, '') })
+    } else if (/^(?:•|-|\*)\s+/.test(line)) {
+      blocks.push({ kind: 'bullet', text: line.replace(/^(?:•|-|\*)\s+/, '') })
     } else {
       blocks.push({ kind: 'paragraph', text: line })
     }
