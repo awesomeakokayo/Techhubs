@@ -24,10 +24,20 @@ export const TRACK_PASS_TERM_MONTHS_BY_TRACK = {
 export type TrackPassTrackId = keyof typeof TRACK_PASS_TERM_MONTHS_BY_TRACK
 
 /**
- * Return the configured pass term, or null when a track is not explicitly
- * eligible. Callers must not substitute a generic term for an unmapped track.
+ * Pricing version used by pending orders created before the track-specific term
+ * policy. A verified payment for one of these already-created orders must retain
+ * the original three-month offer instead of silently upgrading its duration.
  */
-export function getTrackPassTermMonths(trackId: string): number | null {
+export const LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION =
+  'TSH-COMMERCE-2026-10-TRACKPASS-3M-NGN6000'
+
+/**
+ * Return the configured pass term, or null when a track is not explicitly
+ * eligible. Existing pending orders retain the term under which they were
+ * created; new orders use the current track-specific term map.
+ */
+export function getTrackPassTermMonths(trackId: string, pricingVersion?: string | null): number | null {
+  if (pricingVersion === LEGACY_THREE_MONTH_TRACK_PASS_PRICING_VERSION) return 3
   return Object.prototype.hasOwnProperty.call(TRACK_PASS_TERM_MONTHS_BY_TRACK, trackId)
     ? TRACK_PASS_TERM_MONTHS_BY_TRACK[trackId as TrackPassTrackId]
     : null
