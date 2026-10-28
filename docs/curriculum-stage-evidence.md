@@ -1,6 +1,6 @@
 # TechSkillHub — Per-Stage Curriculum Evidence Record
 
-Generated: 2026-10-24T12:12:48.614Z
+Generated: 2026-10-28T20:22:38.668Z
 
 One row per progression-bearing stage, produced by `scripts/curriculum-quality-audit.mjs`
 from the served learner path. This is an evidence record, **not** an approval: every

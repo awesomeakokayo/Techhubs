@@ -1,6 +1,6 @@
 # TechSkillHub — Curriculum Quality & Premium-Eligibility Audit
 
-Generated: 2026-10-24T12:12:48.614Z
+Generated: 2026-10-28T20:22:38.668Z
 
 Produced by `scripts/curriculum-quality-audit.mjs` from the live catalogue using the
 served learner path. Scoring rules live in `lib/curriculum-quality.ts`.

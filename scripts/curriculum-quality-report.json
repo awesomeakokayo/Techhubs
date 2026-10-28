@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-24T12:12:48.614Z",
+  "generatedAt": "2026-10-28T20:22:38.668Z",
   "thresholds": {
     "minimumDimensionScore": 90,
     "gates": "all-mandatory"
